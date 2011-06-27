@@ -22,8 +22,11 @@
   </Dependencies>
   <VirtualDirectory Name="include">
     <File Name="include/liteser/liteserExport.h"/>
+    <File Name="include/liteser/Serializable.h"/>
   </VirtualDirectory>
-  <VirtualDirectory Name="src"/>
+  <VirtualDirectory Name="src">
+    <File Name="src/Serializable.cpp"/>
+  </VirtualDirectory>
   <Settings Type="Dynamic Library">
     <GlobalSettings>
       <Compiler Options="" C_Options="">

@@ -23,7 +23,7 @@
 		#define liteserFnExport
 	#else
 		#ifdef _WIN32
-			#ifdef HLTYPES_EXPORTS
+			#ifdef LITESER_EXPORTS
 				#define liteserExport __declspec(dllexport)
 				#define liteserFnExport __declspec(dllexport)
 			#else
