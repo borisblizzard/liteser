@@ -90,6 +90,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\liteser\liteserExport.h" />
+    <ClInclude Include="include\liteser\Serializable.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Serializable.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

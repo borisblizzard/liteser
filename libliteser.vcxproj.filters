@@ -14,5 +14,13 @@
     <ClInclude Include="include\liteser\liteserExport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\liteser\Serializable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Serializable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
