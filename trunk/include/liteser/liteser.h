@@ -14,8 +14,7 @@
 #ifndef LITESER_H
 #define LITESER_H
 
-#define LS_
-#define LS_MAKE_SERIALIZABLE : public liteser::Serializable
+#include "liteserExport.h"
 
 #define LS_SERIALIZE_BEGIN(file, superclass) \
 	if (!superclass::serialize(file)) \
@@ -35,26 +34,10 @@
 #define LS_DESERIALIZE_END \
 	return true;
 
-#define LS_SERIALIZE_UCHAR(file, name) file->dump(name);
-#define LS_DESERIALIZE_UCHAR(file, name) name = file->load_uchar();
-#define LS_SERIALIZE_INT(file, name) file->dump(name);
-#define LS_DESERIALIZE_INT(file, name) name = file->load_int();
-#define LS_SERIALIZE_UINT(file, name) file->dump(name);
-#define LS_DESERIALIZE_UINT(file, name) name = file->load_uint();
-#define LS_SERIALIZE_LONG(file, name) file->dump(name);
-#define LS_DESERIALIZE_LONG(file, name) name = file->load_long();
-#define LS_SERIALIZE_ULONG(file, name) file->dump(name);
-#define LS_DESERIALIZE_ULONG(file, name) name = file->load_ulong();
-#define LS_SERIALIZE_SHORT(file, name) file->dump(name);
-#define LS_DESERIALIZE_SHORT(file, name) name = file->load_short();
-#define LS_SERIALIZE_USHORT(file, name) file->dump(name);
-#define LS_DESERIALIZE_USHORT(file, name) name = file->load_ushort();
-#define LS_SERIALIZE_BOOL(file, name) file->dump(name);
-#define LS_DESERIALIZE_BOOL(file, name) name = file->load_bool();
-#define LS_SERIALIZE_FLOAT(file, name) file->dump(name);
-#define LS_DESERIALIZE_FLOAT(file, name) name = file->load_float();
-#define LS_SERIALIZE_DOUBLE(file, name) file->dump(name);
-#define LS_DESERIALIZE_DOUBLE(file, name) name = file->load_double();
+/// @note "type" can be char, uchar, int, uint, long, ulong, short, ushort, bool, float, double or hstr
+#define LS_SERIALIZE(file, name) file->dump(name);
+/// @note "type" can be char, uchar, int, uint, long, ulong, short, ushort, bool, float, double or hstr
+#define LS_DESERIALIZE(file, name, type) name = file->load_ ## type();
 
 #define LS_SERIALIZE_OBJECT(file, object) object.serialize(file);
 #define LS_DESERIALIZE_OBJECT(file, object) \
@@ -99,8 +82,8 @@ namespace liteser
 {
 	class Serializable;
 
-	void serialize(hfile* file, Serializable* object);
-	void deserialize(hfile* file, Serializable* object);
+	liteserFnExport void serialize(hfile* file, Serializable* object);
+	liteserFnExport void deserialize(hfile* file, Serializable* object);
 
 }
 #endif

@@ -13,8 +13,8 @@
 #include "liteser.h"
 #include "Serializable.h"
 
-#define VERSION_MAJOR "1"
-#define VERSION_MINOR "0"
+#define VERSION_MAJOR 1
+#define VERSION_MINOR 0
 
 namespace liteser
 {
@@ -23,17 +23,18 @@ namespace liteser
 	void serialize(hfile* file, Serializable* object)
 	{
 		ids.clear();
-		file->dump(VERSION_MAJOR);
-		file->dump(VERSION_MINOR);
-		LS_SERIALIZE_OBJECT_PTR(file, object);
+		file->dump((unsigned char)VERSION_MAJOR);
+		file->dump((unsigned char)VERSION_MINOR);
+		object->serialize(file);
 	}
 	
 	void deserialize(hfile* file, Serializable* object)
 	{
 		ids.clear();
-		char major = file->load_uchar();
-		char minor = file->load_uchar();
-		// TODO - check version
+		unsigned char major = file->load_uchar();
+		unsigned char minor = file->load_uchar();
+		// TODO - check version here
+		object->deserialize(file);
 	}
 	
 }
