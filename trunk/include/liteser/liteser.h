@@ -14,13 +14,25 @@
 #ifndef LITESER_H
 #define LITESER_H
 
-#define LS_SERALIZE_BEGIN(file, superclass) \
+#define LS_
+#define LS_MAKE_SERIALIZABLE : public liteser::Serializable
+
+#define LS_SERIALIZE_BEGIN(file, superclass) \
 	if (!superclass::serialize(file)) \
 	{ \
 		return false; \
 	} \
 	unsigned int _lsId;
-#define LS_SERALIZE_END \
+#define LS_SERIALIZE_END \
+	return true;
+
+#define LS_DESERIALIZE_BEGIN(file, superclass) \
+	if (!superclass::deserialize(file)) \
+	{ \
+		return false; \
+	} \
+	unsigned int _lsId;
+#define LS_DESERIALIZE_END \
 	return true;
 
 #define LS_SERIALIZE_UCHAR(file, name) file->dump(name);
