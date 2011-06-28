@@ -8,21 +8,14 @@
   <Description/>
   <Dependencies/>
   <Dependencies Name="Release"/>
-  <Dependencies Name="Linux_Debug">
-    <Project Name="libgtypes"/>
-    <Project Name="libhltypes"/>
-    <Project Name="libapril"/>
-    <Project Name="libatres"/>
-  </Dependencies>
-  <Dependencies Name="Release_Win32">
-    <Project Name="libhltypes"/>
-  </Dependencies>
   <VirtualDirectory Name="include">
     <File Name="include/liteser/liteserExport.h"/>
     <File Name="include/liteser/Serializable.h"/>
+    <File Name="include/liteser/liteser.h"/>
   </VirtualDirectory>
   <VirtualDirectory Name="src">
     <File Name="src/Serializable.cpp"/>
+    <File Name="src/liteser.cpp"/>
   </VirtualDirectory>
   <Settings Type="Dynamic Library">
     <GlobalSettings>
@@ -144,6 +137,15 @@
     </Configuration>
   </Settings>
   <Dependencies Name="Debug">
+    <Project Name="libhltypes"/>
+  </Dependencies>
+  <Dependencies Name="Linux_Debug">
+    <Project Name="libgtypes"/>
+    <Project Name="libhltypes"/>
+    <Project Name="libapril"/>
+    <Project Name="libatres"/>
+  </Dependencies>
+  <Dependencies Name="Release_Win32">
     <Project Name="libhltypes"/>
   </Dependencies>
 </CodeLite_Project>
