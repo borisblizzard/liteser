@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="libliteser"
-	ProjectGUID="{621983AF-1DFF-4186-9A40-F5841EF37C64}"
+	ProjectGUID="{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}"
 	RootNamespace="hltypes"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"

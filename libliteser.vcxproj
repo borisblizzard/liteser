@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{621983AF-1DFF-4186-9A40-F5841EF37C64}</ProjectGuid>
+    <ProjectGuid>{572A78A4-8516-407F-9DC3-2E3493663168}</ProjectGuid>
     <RootNamespace>hltypes</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>

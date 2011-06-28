@@ -17,9 +17,6 @@
   <Dependencies Name="Release_Win32">
     <Project Name="libhltypes"/>
   </Dependencies>
-  <Dependencies Name="Debug">
-    <Project Name="libhltypes"/>
-  </Dependencies>
   <VirtualDirectory Name="include">
     <File Name="include/liteser/liteserExport.h"/>
     <File Name="include/liteser/Serializable.h"/>
@@ -146,4 +143,7 @@
       </AdditionalRules>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug">
+    <Project Name="libhltypes"/>
+  </Dependencies>
 </CodeLite_Project>
