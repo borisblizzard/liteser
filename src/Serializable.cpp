@@ -8,11 +8,14 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <hltypes/hfile.h>
+#include <hltypes/hmap.h>
 
 #include "Serializable.h"
 
 namespace liteser
 {
+	extern hmap<unsigned int, Serializable*> ids;
+
 	Serializable::Serializable()
 	{
 	}
@@ -21,12 +24,22 @@ namespace liteser
 	{
 	}
 
-	void Serializable::serialize(hfile* file)
+	bool Serializable::serialize(hfile* file)
 	{
+		bool result = false;
+		unsigned int id = ids.size() + 1; // necessary to avoid incorrect size() since ids[this] could be evaluated first
+		if (!ids.has_value(this))
+		{
+			ids[id] = this;
+			result = true;
+		}
+		file->dump(id);
+		return result;
 	}
 
-	void Serializable::deserialize(hfile* file)
+	bool Serializable::deserialize(hfile* file)
 	{
+		return true;
 	}
 		
 }

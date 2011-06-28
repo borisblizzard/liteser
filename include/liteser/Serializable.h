@@ -24,8 +24,8 @@ namespace liteser
 		Serializable();
 		virtual ~Serializable();
 
-		virtual void serialize(hfile* file);
-		virtual void deserialize(hfile* file);
+		virtual bool serialize(hfile* file);
+		virtual bool deserialize(hfile* file);
 		
 	};
 
