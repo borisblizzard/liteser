@@ -110,16 +110,16 @@
 
 #define LS_SERIALIZE_ARRAY_OBJECT_PTR(file, name, classe) \
 	(file)->dump((name).size()); \
-	foreach (classe, _lsIt, (name)) \
+	foreach (classe*, _lsIt, (name)) \
 	{ \
-		(*_lsIt)->serialize(file); \
+		LS_SERIALIZE_OBJECT_PTR(file, (*_lsIt)); \
 	}
 #define LS_DESERIALIZE_ARRAY_OBJECT_PTR(file, name, classe) \
 	_lsCount = (file)->load_int(); \
 	for (int _lsI = 0; _lsI < _lsCount; _lsI++) \
 	{ \
-		classe _lsClasse = new classe(); \
-		_lsClasse->deserialize(file); \
+		classe* _lsClasse = NULL; \
+		LS_DESERIALIZE_OBJECT_PTR(file, classe, _lsClasse); \
 		(name) += _lsClasse; \
 	}
 
