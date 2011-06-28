@@ -35,3 +35,4 @@ Lite Serializer does not support following types:
 2. c-type arrays (basically the same as 1.)
 3. pointers to objects that are allocated on the stack
 4. instances of classes that are not derived from liteser::Serializable
+5. classes without an empty default constructor
