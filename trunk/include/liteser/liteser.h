@@ -34,7 +34,7 @@
 #define LS_DESERIALIZE_END \
 	return true;
 
-/// @note "type" can be char, uchar, int, uint, long, ulong, short, ushort, bool, float, double or hstr
+/// @note "type" can be char, uchar, int, uint, long, ulong, short, ushort, bool, float, double or hstr (or const char* instead of hstr)
 #define LS_SERIALIZE(file, name) file->dump(name);
 /// @note "type" can be char, uchar, int, uint, long, ulong, short, ushort, bool, float, double or hstr
 #define LS_DESERIALIZE(file, name, type) name = file->load_ ## type();
