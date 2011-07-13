@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C++ Express 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libliteser", "libliteser.vcproj", "{621983AF-1DFF-4186-9A40-F5841EF37C64}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libliteser", "libliteser.vcproj", "{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E4D373BF-E227-48B9-99E6-84987E8674EC} = {E4D373BF-E227-48B9-99E6-84987E8674EC}
 	EndProjectSection
@@ -14,10 +14,10 @@ Global
 		win32_Release|Win32 = win32_Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{621983AF-1DFF-4186-9A40-F5841EF37C64}.win32_Debug|Win32.ActiveCfg = win32_Debug|Win32
-		{621983AF-1DFF-4186-9A40-F5841EF37C64}.win32_Debug|Win32.Build.0 = win32_Debug|Win32
-		{621983AF-1DFF-4186-9A40-F5841EF37C64}.win32_Release|Win32.ActiveCfg = win32_Release|Win32
-		{621983AF-1DFF-4186-9A40-F5841EF37C64}.win32_Release|Win32.Build.0 = win32_Release|Win32
+		{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}.win32_Debug|Win32.ActiveCfg = win32_Debug|Win32
+		{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}.win32_Debug|Win32.Build.0 = win32_Debug|Win32
+		{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}.win32_Release|Win32.ActiveCfg = win32_Release|Win32
+		{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}.win32_Release|Win32.Build.0 = win32_Release|Win32
 		{E4D373BF-E227-48B9-99E6-84987E8674EC}.win32_Debug|Win32.ActiveCfg = win32_Debug|Win32
 		{E4D373BF-E227-48B9-99E6-84987E8674EC}.win32_Debug|Win32.Build.0 = win32_Debug|Win32
 		{E4D373BF-E227-48B9-99E6-84987E8674EC}.win32_Release|Win32.ActiveCfg = win32_Release|Win32
