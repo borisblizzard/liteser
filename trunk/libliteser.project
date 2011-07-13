@@ -16,6 +16,7 @@
   <VirtualDirectory Name="src">
     <File Name="src/Serializable.cpp"/>
     <File Name="src/liteser.cpp"/>
+    <File Name="fileproperties.rc"/>
   </VirtualDirectory>
   <Settings Type="Dynamic Library">
     <GlobalSettings>
