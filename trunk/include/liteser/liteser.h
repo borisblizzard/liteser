@@ -33,7 +33,7 @@
 		{ \
 			return false; \
 		} \
-		static unsigned int _lsId;
+		unsigned int _lsId;
 #define LS_SER_END \
 		return true; \
 	} 
@@ -45,8 +45,8 @@
 		{ \
 			return false; \
 		} \
-		static unsigned int _lsId;
-		static int _lsCount;
+		unsigned int _lsId; \
+		int _lsCount;
 #define LS_DES_END \
 		return true; \
 	}
