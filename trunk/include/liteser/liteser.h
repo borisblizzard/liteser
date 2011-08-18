@@ -14,119 +14,188 @@
 #ifndef LITESER_H
 #define LITESER_H
 
+#include <hltypes/harray.h>
+#include <hltypes/hfile.h>
+#include <hltypes/hmap.h>
+#include <hltypes/hstring.h>
+
 #include "liteserExport.h"
+#include "Serializable.h"
 
-#define LS_SERIALIZE_BEGIN(file, superclass) \
-	if (!superclass::serialize(file)) \
+#define LS_MAKE_SERIALIZABLE \
+	bool serialize(hfile* file); \
+	bool deserialize(hfile* file);
+
+#define LS_SER_BEGIN(classe, superclass) \
+	bool classe::serialize(hfile* file)\
 	{ \
-		return false; \
-	} \
-	unsigned int _lsId;
-#define LS_SERIALIZE_END \
-	return true;
+		if (!superclass::serialize(file)) \
+		{ \
+			return false; \
+		} \
+		static unsigned int _lsId;
+#define LS_SER_END \
+		return true; \
+	} 
 
-#define LS_DESERIALIZE_BEGIN(file, superclass) \
-	if (!superclass::deserialize(file)) \
+#define LS_DES_BEGIN(classe, superclass) \
+	bool classe::deserialize(hfile* file)\
 	{ \
-		return false; \
-	} \
-	unsigned int _lsId;
-	int _lsCount;
-#define LS_DESERIALIZE_END \
-	return true;
+		if (!superclass::deserialize(file)) \
+		{ \
+			return false; \
+		} \
+		static unsigned int _lsId;
+		static int _lsCount;
+#define LS_DES_END \
+		return true; \
+	}
 
-#define LS_SERIALIZE(file, name) (file)->dump(name);
+#define LS_SER(name) file->dump(name);
 /// @note "type" can be char, uchar, int, uint, long, ulong, short, ushort, bool, float, double or hstr
-#define LS_DESERIALIZE(file, name, type) (name) = (file)->load_ ## type();
+#define LS_DES(name, type) name = file->load_ ## type();
 
-/// @note "type" can be char, unsigned char, int, unsigned int, long, unsigned long, short, unsigned short, bool, float, double or hstr
-#define LS_SERIALIZE_ARRAY(file, name, type) \
-	(file)->dump((name).size()); \
-	foreach (type, it, (name)) \
+#define LS_SER_ARRAY(name, size) \
+	file->dump(size); \
+	for (int _lsI = 0; _lsI < size; _lsI++) \
 	{ \
-		(file)->dump(*it); \
+		file->dump(name[_lsI]); \
 	}
 /// @note "type" can be char, uchar, int, uint, long, ulong, short, ushort, bool, float, double or hstr
-#define LS_DESERIALIZE_ARRAY(file, name, type) \
-	_lsCount = (file)->load_int(); \
+/// @note "cppType" can be char, unsigned char, int, unsigned uint, long, unsigned long, short, unsigned short, bool, float, double or hstr
+#define LS_DES_ARRAY(name, type, cppType) \
+	_lsCount = file->load_int(); \
+	if (name != NULL) \
+	{ \
+		delete [] name; \
+		name = new cppType[_lsCount]; \
+	} \
 	for (int _lsI = 0; _lsI < _lsCount; _lsI++) \
 	{ \
-		(name) += (file)->load_ ## type(*it); \
+		name[_lsI] = file->load_ ## type(); \
 	}
 
-#define LS_SERIALIZE_OBJECT(file, object) (object).serialize(file);
-#define LS_DESERIALIZE_OBJECT(file, object) \
-	_lsId = (file)->load_uint(); \
-	ids[_lsId] = &(object); \
-	(object).deserialize(file);
-
-#define LS_SERIALIZE_ARRAY_OBJECT(file, name, classe) \
-	(file)->dump((name).size()); \
-	foreach (classe, _lsIt, (name)) \
+#define LS_SER_HARRAY(name) \
+	file->dump(name.size()); \
+	for (int _lsI = 0; _lsI < name.size(); _lsI++) \
 	{ \
-		(*_lsIt).serialize(file); \
+		file->dump(name[_lsI]); \
 	}
-#define LS_DESERIALIZE_ARRAY_OBJECT(file, name, classe) \
-	_lsCount = (file)->load_int(); \
+/// @note "type" can be char, uchar, int, uint, long, ulong, short, ushort, bool, float, double or hstr
+#define LS_DES_HARRAY(name, type) \
+	name.clear(); \
+	_lsCount = file->load_int(); \
 	for (int _lsI = 0; _lsI < _lsCount; _lsI++) \
 	{ \
-		classe _lsClasse; \
-		_lsClasse.deserialize(file); \
-		(name) += _lsClasse; \
+		name += file->load_ ## type(); \
 	}
 
-#define LS_SERIALIZE_OBJECT_PTR(file, object) \
-	if ((object) != NULL) \
+#define LS_SER_OBJECT(name) name.serialize(file);
+#define LS_DES_OBJECT(name) \
+	_lsId = file->load_uint(); \
+	ids[_lsId] = &name; \
+	name.deserialize(file);
+
+#define LS_SER_ARRAY_OBJECT(name, size) \
+	file->dump(size); \
+	for (int _lsI = 0; _lsI < size; _lsI++) \
 	{ \
-		(object)->serialize(file); \
+		name[_lsI].serialize(file); \
+	}
+#define LS_DES_ARRAY_OBJECT(name, classe) \
+	_lsCount = file->load_int(); \
+	if (name != NULL) \
+	{ \
+		delete [] name; \
+		name = new classe[_lsCount]; \
+	} \
+	for (int _lsI = 0; _lsI < _lsCount; _lsI++) \
+	{ \
+		classe _lsInstance; \
+		_lsInstance.deserialize(file); \
+		name[i] = _lsInstance; \
+	}
+
+#define LS_SER_HARRAY_OBJECT(name) \
+	file->dump(name.size()); \
+	for (int _lsI = 0; _lsI < name.size(); _lsI++) \
+	{ \
+		name[_lsI].serialize(file); \
+	}
+#define LS_DES_HARRAY_OBJECT(name, classe) \
+	_lsCount = file->load_int(); \
+	for (int _lsI = 0; _lsI < _lsCount; _lsI++) \
+	{ \
+		classe _lsInstance; \
+		_lsInstance.deserialize(file); \
+		name += _lsInstance; \
+	}
+
+#define LS_SER_OBJECT_PTR(name) \
+	if (name != NULL) \
+	{ \
+		name->serialize(file); \
 	} \
 	else \
 	{ \
-		(file)->dump(0); \
+		file->dump(0); \
 	}
-#define LS_DESERIALIZE_OBJECT_PTR(file, classe, object) \
-	_lsId = (file)->load_uint(); \
+#define LS_DES_OBJECT_PTR(name, classe) \
+	_lsId = file->load_uint(); \
 	if (_lsId != 0) \
 	{ \
 		if (ids.has_key(_lsId)) \
 		{ \
-			(object) = (classe*)ids[_lsId]; \
+			name = (classe*)ids[_lsId]; \
 		} \
 		else \
 		{ \
-			if ((object) == NULL) \
+			if (name == NULL) \
 			{ \
-				(object) = new classe(); \
+				name = new classe(); \
 			} \
-			ids[_lsId] = (object); \
-			(object)->deserialize(file); \
+			ids[_lsId] = name; \
+			name->deserialize(file); \
 		} \
 	} \
-	else if ((object) != NULL) \
+	else if (name != NULL) \
 	{ \
-		delete (object); \
-		(object) = NULL; \
+		delete name; \
+		name = NULL; \
 	}
 
-#define LS_SERIALIZE_ARRAY_OBJECT_PTR(file, name, classe) \
-	(file)->dump((name).size()); \
-	foreach (classe*, _lsIt, (name)) \
+#define LS_SER_ARRAY_OBJECT_PTR(name, size) \
+	file->dump(size); \
+	for (int _lsI = 0; _lsI < size; _lsI++) \
 	{ \
-		LS_SERIALIZE_OBJECT_PTR(file, (*_lsIt)); \
+		LS_SER_OBJECT_PTR(name[_lsI]); \
 	}
-#define LS_DESERIALIZE_ARRAY_OBJECT_PTR(file, name, classe) \
-	_lsCount = (file)->load_int(); \
+#define LS_DES_ARRAY_OBJECT_PTR(name, classe) \
+	_lsCount = file->load_int(); \
 	for (int _lsI = 0; _lsI < _lsCount; _lsI++) \
 	{ \
-		classe* _lsClasse = NULL; \
-		LS_DESERIALIZE_OBJECT_PTR(file, classe, _lsClasse); \
-		(name) += _lsClasse; \
+		classe* _lsInstance = NULL; \
+		LS_DES_OBJECT_PTR(_lsInstance, classe); \
+		name[_lsI] = _lsInstance; \
+	}
+
+#define LS_SER_HARRAY_OBJECT_PTR(name) \
+	file->dump(name.size()); \
+	for (int _lsI = 0; _lsI < name.size(); _lsI++) \
+	{ \
+		LS_SER_OBJECT_PTR(name[_lsI]); \
+	}
+#define LS_DES_HARRAY_OBJECT_PTR(name, classe) \
+	_lsCount = file->load_int(); \
+	for (int _lsI = 0; _lsI < _lsCount; _lsI++) \
+	{ \
+		classe* _lsInstance = NULL; \
+		LS_DES_OBJECT_PTR(_lsInstance, classe); \
+		name += _lsInstance; \
 	}
 
 namespace liteser
 {
-	class Serializable;
-
 	liteserFnExport void serialize(hfile* file, Serializable* object);
 	liteserFnExport void deserialize(hfile* file, Serializable* object);
 
