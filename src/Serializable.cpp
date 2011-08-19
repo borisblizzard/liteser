@@ -10,12 +10,11 @@
 #include <hltypes/hfile.h>
 #include <hltypes/hmap.h>
 
+#include "liteser.h"
 #include "Serializable.h"
 
 namespace liteser
 {
-	extern hmap<unsigned int, Serializable*> ids;
-
 	Serializable::Serializable()
 	{
 	}
@@ -27,10 +26,10 @@ namespace liteser
 	bool Serializable::serialize(hfile* file)
 	{
 		bool result = false;
-		unsigned int id = ids.size() + 1; // necessary to avoid incorrect size() since ids[this] could be evaluated first
-		if (!ids.has_value(this))
+		unsigned int id = _lsIds.size() + 1; // necessary to avoid incorrect size() since ids[this] could be evaluated first
+		if (!_lsIds.has_value(this))
 		{
-			ids[id] = this;
+			_lsIds[id] = this;
 			result = true;
 		}
 		file->dump(id);
