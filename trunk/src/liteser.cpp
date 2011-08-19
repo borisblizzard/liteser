@@ -14,9 +14,6 @@
 #include "liteser.h"
 #include "Serializable.h"
 
-#define VERSION_MAJOR 1
-#define VERSION_MINOR 0
-
 namespace liteser
 {
 	hmap<unsigned int, Serializable*> _lsIds;
@@ -24,8 +21,8 @@ namespace liteser
 	void serialize(hfile* file, Serializable* object)
 	{
 		_lsIds.clear();
-		file->dump((unsigned char)VERSION_MAJOR);
-		file->dump((unsigned char)VERSION_MINOR);
+		file->dump((unsigned char)_LS_VERSION_MAJOR);
+		file->dump((unsigned char)_LS_VERSION_MINOR);
 		object->serialize(file);
 	}
 	
@@ -40,10 +37,10 @@ namespace liteser
 
 	void checkVersion(unsigned char major, unsigned char minor)
 	{
-		if (major != VERSION_MAJOR || minor != VERSION_MINOR)
+		if (major != _LS_VERSION_MAJOR || minor != _LS_VERSION_MINOR)
 		{
 			throw hl_exception(hsprintf("Liteser Read Error! Version mismatch: expected %d.%d, got %d.%d",
-				VERSION_MAJOR, VERSION_MINOR, major, minor));
+				_LS_VERSION_MAJOR, _LS_VERSION_MINOR, major, minor));
 		}
 	}
 	
