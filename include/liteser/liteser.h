@@ -220,7 +220,7 @@
 /// @note "keyType" and "valueType" can be char, unsigned char, int, unsigned uint, long, unsigned long, short, unsigned short, bool, float, double or hstr
 #define LS_SER_HMAP(name, keyType, valueType) \
 	harray<keyType> _lsKeys ## name = name.keys(); \
-	harray<valueType> _lsValues ## name = name.values(); \
+	harray<valueType> _lsValues ## name = name.values(_lsKeys ## name); \
 	LS_SER_HARRAY(_lsKeys ## name); \
 	LS_SER_HARRAY(_lsValues ## name);
 /// @note "keyType" and "valueType" can be char, unsigned char, int, unsigned uint, long, unsigned long, short, unsigned short, bool, float, double or hstr
@@ -236,7 +236,7 @@
 /// @note "keyType" can be char, unsigned char, int, unsigned uint, long, unsigned long, short, unsigned short, bool, float, double or hstr
 #define LS_SER_HMAP_V_OBJ(name, keyType, valueClass) \
 	harray<keyType> _lsKeys ## name = name.keys(); \
-	harray<valueClass> _lsValues ## name = name.values(); \
+	harray<valueClass> _lsValues ## name = name.values(_lsKeys ## name); \
 	LS_SER_HARRAY(_lsKeys ## name); \
 	LS_SER_HARRAY_OBJ(_lsValues ## name);
 /// @note "keyType" can be char, unsigned char, int, unsigned uint, long, unsigned long, short, unsigned short, bool, float, double or hstr
@@ -252,7 +252,7 @@
 /// @note "keyType" can be char, unsigned char, int, unsigned uint, long, unsigned long, short, unsigned short, bool, float, double or hstr
 #define LS_SER_HMAP_V_OBJ_PTR(name, keyType, valueClass) \
 	harray<keyType> _lsKeys ## name = name.keys(); \
-	harray<valueClass> _lsValues ## name = name.values(); \
+	harray<valueClass> _lsValues ## name = name.values(_lsKeys ## name); \
 	LS_SER_HARRAY(_lsKeys ## name); \
 	LS_SER_HARRAY_OBJ_PTR(_lsValues ## name);
 /// @note "keyType" can be char, unsigned char, int, unsigned uint, long, unsigned long, short, unsigned short, bool, float, double or hstr
@@ -268,7 +268,7 @@
 /// @note "valueType" can be char, unsigned char, int, unsigned uint, long, unsigned long, short, unsigned short, bool, float, double or hstr
 #define LS_SER_HMAP_K_OBJ(name, valueType, keyClass) \
 	harray<keyClass> _lsKeys ## name = name.keys(); \
-	harray<valueType> _lsValues ## name = name.values(); \
+	harray<valueType> _lsValues ## name = name.values(_lsKeys ## name); \
 	LS_SER_HARRAY_OBJ(_lsKeys ## name); \
 	LS_SER_HARRAY(_lsValues ## name);
 /// @note "valueType" can be char, unsigned char, int, unsigned uint, long, unsigned long, short, unsigned short, bool, float, double or hstr
@@ -283,7 +283,7 @@
 
 #define LS_SER_HMAP_K_OBJ_V_OBJ(name, valueType, valueClass) \
 	harray<keyClass> _lsKeys ## name = name.keys(); \
-	harray<valueClass> _lsValues ## name = name.values(); \
+	harray<valueClass> _lsValues ## name = name.values(_lsKeys ## name); \
 	LS_SER_HARRAY_OBJ(_lsKeys ## name); \
 	LS_SER_HARRAY_OBJ(_lsValues ## name);
 #define LS_DES_HMAP_K_OBJ_V_OBJ(name, keyClass, valueClass) \
@@ -296,7 +296,7 @@
 
 #define LS_SER_HMAP_K_OBJ_V_OBJ_PTR(name, valueType, valueClass) \
 	harray<keyClass> _lsKeys ## name = name.keys(); \
-	harray<valueClass*> _lsValues ## name = name.values(); \
+	harray<valueClass*> _lsValues ## name = name.values(_lsKeys ## name); \
 	LS_SER_HARRAY_OBJ(_lsKeys ## name); \
 	LS_SER_HARRAY_OBJ_PTR(_lsValues ## name);
 #define LS_DES_HMAP_K_OBJ_V_OBJ_PTR(name, keyClass, valueClass) \
@@ -310,7 +310,7 @@
 /// @note "valueType" can be char, unsigned char, int, unsigned uint, long, unsigned long, short, unsigned short, bool, float, double or hstr
 #define LS_SER_HMAP_K_OBJ_PTR(name, valueType, keyClass) \
 	harray<keyClass*> _lsKeys ## name = name.keys(); \
-	harray<valueType> _lsValues ## name = name.values(); \
+	harray<valueType> _lsValues ## name = name.values(_lsKeys ## name); \
 	LS_SER_HARRAY_OBJ_PTR(_lsKeys ## name); \
 	LS_SER_HARRAY(_lsValues ## name);
 /// @note "valueType" can be char, unsigned char, int, unsigned uint, long, unsigned long, short, unsigned short, bool, float, double or hstr
@@ -325,7 +325,7 @@
 
 #define LS_SER_HMAP_K_OBJ_PTR_V_OBJ(name, valueType, valueClass) \
 	harray<keyClass*> _lsKeys ## name = name.keys(); \
-	harray<valueClass> _lsValues ## name = name.values(); \
+	harray<valueClass> _lsValues ## name = name.values(_lsKeys ## name); \
 	LS_SER_HARRAY_OBJ_PTR(_lsKeys ## name); \
 	LS_SER_HARRAY_OBJ(_lsValues ## name);
 #define LS_DES_HMAP_K_OBJ_PTR_V_OBJ(name, keyClass, valueClass) \
@@ -338,7 +338,7 @@
 
 #define LS_SER_HMAP_K_OBJ_PTR_V_OBJ_PTR(name, valueType, valueClass) \
 	harray<keyClass*> _lsKeys ## name = name.keys(); \
-	harray<valueClass*> _lsValues ## name = name.values(); \
+	harray<valueClass*> _lsValues ## name = name.values(_lsKeys ## name); \
 	LS_SER_HARRAY_OBJ_PTR(_lsKeys ## name); \
 	LS_SER_HARRAY_OBJ_PTR(_lsValues ## name);
 #define LS_DES_HMAP_K_OBJ_PTR_V_OBJ_PTR(name, keyClass, valueClass) \
