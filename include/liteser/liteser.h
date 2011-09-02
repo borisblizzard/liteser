@@ -71,6 +71,7 @@
 #define LS_SER(name) file->dump(name);
 /// @note "loadType" can be char, uchar, int, uint, long, ulong, short, ushort, bool, float, double or hstr
 #define LS_DES(name, loadType) name = file->load_ ## loadType();
+#define LS_DES_ENUM(name, type) name = (type)file->load_int();
 
 #define LS_SER_OBJ(name) name.serialize(file);
 #define LS_DES_OBJ(name) \
