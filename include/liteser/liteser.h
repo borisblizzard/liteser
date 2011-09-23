@@ -69,6 +69,7 @@
 // single serialization
 
 #define LS_SER(name) file->dump(name);
+#define LS_SER_ENUM(name) file->dump((int)name);
 /// @note "loadType" can be char, uchar, int, uint, long, ulong, short, ushort, bool, float, double or hstr
 #define LS_DES(name, loadType) name = file->load_ ## loadType();
 #define LS_DES_ENUM(name, type) name = (type)file->load_int();
