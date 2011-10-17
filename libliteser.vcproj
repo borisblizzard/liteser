@@ -64,7 +64,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="libhltypes_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
-				AdditionalLibraryDirectories="../hltypes/bin/win32_Debug"
+				AdditionalLibraryDirectories="$(SolutionDir)bin/lib/msvc90"
 				GenerateDebugInformation="true"
 			/>
 			<Tool
@@ -87,6 +87,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="mkdir $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib $(SolutionDir)bin\lib\msvc90"
 			/>
 		</Configuration>
 		<Configuration
@@ -137,7 +138,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libhltypes.lib"
-				AdditionalLibraryDirectories="../hltypes/bin/win32_Release"
+				AdditionalLibraryDirectories="$(SolutionDir)bin/lib/msvc90"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -159,6 +160,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="mkdir $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.dll $(SolutionDir)bin\lib\msvc90&#x0D;&#x0A;copy bin\$(ConfigurationName)\*.lib $(SolutionDir)bin\lib\msvc90"
 			/>
 		</Configuration>
 	</Configurations>
