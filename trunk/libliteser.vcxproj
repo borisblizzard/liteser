@@ -59,9 +59,14 @@
     <Link>
       <AdditionalDependencies>libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>../hltypes/bin/win32_Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>mkdir $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='win32_Release|Win32'">
     <ClCompile>
@@ -79,8 +84,13 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>libhltypes.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../hltypes/bin/win32_Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)bin\lib\msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>mkdir $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.dll $(SolutionDir)bin\lib\msvc100
+copy bin\$(Configuration)\*.lib $(SolutionDir)bin\lib\msvc100</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ProjectReference Include="..\hltypes\libhltypes.vcxproj">
