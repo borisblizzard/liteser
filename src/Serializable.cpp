@@ -26,11 +26,15 @@ namespace liteser
 	bool Serializable::serialize(hfile* file)
 	{
 		bool result = false;
-		unsigned int id = _lsIds.size() + 1; // necessary to avoid incorrect size() since ids[this] could be evaluated first
-		if (!_lsIds.has_value(this))
+		unsigned int id = liteser::_lsIds.size() + 1; // necessary to avoid incorrect size() since ids[this] could be evaluated first
+		if (!liteser::_lsIds.has_value(this))
 		{
-			_lsIds[id] = this;
+			liteser::_lsIds[id] = this;
 			result = true;
+		}
+		else
+		{
+			id = liteser::_lsIds(this);
 		}
 		file->dump(id);
 		return result;

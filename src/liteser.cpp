@@ -32,6 +32,8 @@ namespace liteser
 		unsigned char major = file->load_uchar();
 		unsigned char minor = file->load_uchar();
 		checkVersion(major, minor);
+		int _lsId = file->load_uint();
+		_lsIds[_lsId] = object;
 		object->deserialize(file);
 	}
 
