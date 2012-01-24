@@ -10,18 +10,18 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libhltypes", "..\hltypes\li
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		win32_Debug|Win32 = win32_Debug|Win32
-		win32_Release|Win32 = win32_Release|Win32
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}.win32_Debug|Win32.ActiveCfg = win32_Debug|Win32
-		{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}.win32_Debug|Win32.Build.0 = win32_Debug|Win32
-		{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}.win32_Release|Win32.ActiveCfg = win32_Release|Win32
-		{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}.win32_Release|Win32.Build.0 = win32_Release|Win32
-		{E4D373BF-E227-48B9-99E6-84987E8674EC}.win32_Debug|Win32.ActiveCfg = win32_Debug|Win32
-		{E4D373BF-E227-48B9-99E6-84987E8674EC}.win32_Debug|Win32.Build.0 = win32_Debug|Win32
-		{E4D373BF-E227-48B9-99E6-84987E8674EC}.win32_Release|Win32.ActiveCfg = win32_Release|Win32
-		{E4D373BF-E227-48B9-99E6-84987E8674EC}.win32_Release|Win32.Build.0 = win32_Release|Win32
+		{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}.Debug|Win32.Build.0 = Debug|Win32
+		{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}.Release|Win32.ActiveCfg = Release|Win32
+		{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}.Release|Win32.Build.0 = Release|Win32
+		{E4D373BF-E227-48B9-99E6-84987E8674EC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E4D373BF-E227-48B9-99E6-84987E8674EC}.Debug|Win32.Build.0 = Debug|Win32
+		{E4D373BF-E227-48B9-99E6-84987E8674EC}.Release|Win32.ActiveCfg = Release|Win32
+		{E4D373BF-E227-48B9-99E6-84987E8674EC}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
