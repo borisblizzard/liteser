@@ -7,8 +7,8 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
-#include <hltypes/hfile.h>
 #include <hltypes/hmap.h>
+#include <hltypes/hsbase.h>
 
 #include "liteser.h"
 #include "Serializable.h"
@@ -23,7 +23,7 @@ namespace liteser
 	{
 	}
 
-	bool Serializable::serialize(hfile* file)
+	bool Serializable::serialize(hsbase* stream)
 	{
 		bool result = false;
 		unsigned int id = liteser::_lsIds.size() + 1; // necessary to avoid incorrect size() since ids[this] could be evaluated first
@@ -36,11 +36,11 @@ namespace liteser
 		{
 			id = liteser::_lsIds(this);
 		}
-		file->dump(id);
+		stream->dump(id);
 		return result;
 	}
 
-	bool Serializable::deserialize(hfile* file)
+	bool Serializable::deserialize(hsbase* stream)
 	{
 		return true;
 	}
