@@ -14,6 +14,8 @@
 #ifndef LITESER_SERIALIZABLE_H
 #define LITESER_SERIALIZABLE_H
 
+#include <hltypes/hsbase.h>
+
 #include "liteserExport.h"
 
 namespace liteser
@@ -24,8 +26,8 @@ namespace liteser
 		Serializable();
 		virtual ~Serializable();
 
-		virtual bool serialize(hfile* file);
-		virtual bool deserialize(hfile* file);
+		virtual bool serialize(hsbase* stream);
+		virtual bool deserialize(hsbase* stream);
 		
 	};
 

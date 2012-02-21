@@ -15,8 +15,8 @@
 #define LITESER_H
 
 #include <hltypes/harray.h>
-#include <hltypes/hfile.h>
 #include <hltypes/hmap.h>
+#include <hltypes/hsbase.h>
 #include <hltypes/hstring.h>
 
 #include "liteserExport.h"
@@ -27,12 +27,12 @@
 
 #define _LS_INIT_MANUAL_SERIALIZATION \
 	liteser::_lsIds.clear(); \
-	file->dump((unsigned char)_LS_VERSION_MAJOR); \
-	file->dump((unsigned char)_LS_VERSION_MINOR);
+	stream->dump((unsigned char)_LS_VERSION_MAJOR); \
+	stream->dump((unsigned char)_LS_VERSION_MINOR);
 #define _LS_INIT_MANUAL_DESERIALIZATION \
 	liteser::_lsIds.clear(); \
-	unsigned char major = file->load_uchar(); \
-	unsigned char minor = file->load_uchar(); \
+	unsigned char major = stream->load_uchar(); \
+	unsigned char minor = stream->load_uchar(); \
 	liteser::checkVersion(major, minor);
 #define _LS_ASSIGN_HMAP_KEYS_VALUES(name) \
 	for (int _lsI ## name = 0; _lsI ## name < _lsKeys ## name.size(); _lsI ## name++) \
@@ -41,13 +41,13 @@
 	}
 
 #define LS_MAKE_SERIALIZABLE \
-	bool serialize(hfile* file); \
-	bool deserialize(hfile* file);
+	bool serialize(hsbase* stream); \
+	bool deserialize(hsbase* stream);
 
 #define LS_SER_BEGIN(classe, superclass) \
-	bool classe::serialize(hfile* file)\
+	bool classe::serialize(hsbase* stream)\
 	{ \
-		if (!superclass::serialize(file)) \
+		if (!superclass::serialize(stream)) \
 		{ \
 			return false; \
 		}
@@ -56,9 +56,9 @@
 	} 
 
 #define LS_DES_BEGIN(classe, superclass) \
-	bool classe::deserialize(hfile* file)\
+	bool classe::deserialize(hsbase* stream)\
 	{ \
-		if (!superclass::deserialize(file)) \
+		if (!superclass::deserialize(stream)) \
 		{ \
 			return false; \
 		}
@@ -68,29 +68,29 @@
 
 // single serialization
 
-#define LS_SER(name) file->dump(name);
-#define LS_SER_ENUM(name) file->dump((int)name);
+#define LS_SER(name) stream->dump(name);
+#define LS_SER_ENUM(name) stream->dump((int)name);
 /// @note "loadType" can be char, uchar, int, uint, long, ulong, short, ushort, bool, float, double or hstr
-#define LS_DES(name, loadType) name = file->load_ ## loadType();
-#define LS_DES_ENUM(name, type) name = (type)file->load_int();
+#define LS_DES(name, loadType) name = stream->load_ ## loadType();
+#define LS_DES_ENUM(name, type) name = (type)stream->load_int();
 
-#define LS_SER_OBJ(name) name.serialize(file);
+#define LS_SER_OBJ(name) name.serialize(stream);
 #define LS_DES_OBJ(name) \
-	int _lsId ## name = file->load_uint(); \
+	int _lsId ## name = stream->load_uint(); \
 	liteser::_lsIds[_lsId ## name] = &name; \
-	name.deserialize(file);
+	name.deserialize(stream);
 
 #define LS_SER_OBJ_PTR(name) \
 	if (name != NULL) \
 	{ \
-		name->serialize(file); \
+		name->serialize(stream); \
 	} \
 	else \
 	{ \
-		file->dump(0); \
+		stream->dump(0); \
 	}
 #define LS_DES_OBJ_PTR(name, classe) \
-	int _lsId ## name = file->load_uint(); \
+	int _lsId ## name = stream->load_uint(); \
 	if (_lsId ## name != 0) \
 	{ \
 		if (liteser::_lsIds.has_key(_lsId ## name)) \
@@ -104,7 +104,7 @@
 				name = new classe(); \
 			} \
 			liteser::_lsIds[_lsId ## name] = name; \
-			name->deserialize(file); \
+			name->deserialize(stream); \
 		} \
 	} \
 	else if (name != NULL) \
@@ -116,15 +116,15 @@
 // array serialization
 
 #define LS_SER_ARRAY(name, size) \
-	file->dump(size); \
+	stream->dump(size); \
 	for (int _lsI ## name = 0; _lsI ## name < size; _lsI ## name++) \
 	{ \
-		file->dump(name[_lsI ## name]); \
+		stream->dump(name[_lsI ## name]); \
 	}
 /// @note "type" can be char, unsigned char, int, unsigned uint, long, unsigned long, short, unsigned short, bool, float, double or hstr
 /// @note "loadType" can be char, uchar, int, uint, long, ulong, short, ushort, bool, float, double or hstr and has to correspond with "type"
 #define LS_DES_ARRAY(name, type, loadType) \
-	int _lsCount ## name = file->load_int(); \
+	int _lsCount ## name = stream->load_int(); \
 	if (name != NULL) \
 	{ \
 		delete [] name; \
@@ -132,17 +132,17 @@
 	} \
 	for (int _lsI ## name = 0; _lsI ## name < _lsCount ## name; _lsI ## name++) \
 	{ \
-		name[_lsI ## name] = file->load_ ## loadType(); \
+		name[_lsI ## name] = stream->load_ ## loadType(); \
 	}
 
 #define LS_SER_ARRAY_OBJ(name, size) \
-	file->dump(size); \
+	stream->dump(size); \
 	for (int _lsI ## name = 0; _lsI ## name < size; _lsI ## name++) \
 	{ \
 		LS_SER_OBJ(name[_lsI ## name]); \
 	}
 #define LS_DES_ARRAY_OBJ(name, classe) \
-	int _lsCount ## name = file->load_int(); \
+	int _lsCount ## name = stream->load_int(); \
 	if (name != NULL) \
 	{ \
 		delete [] name; \
@@ -156,13 +156,13 @@
 	}
 
 #define LS_SER_ARRAY_OBJ_PTR(name, size) \
-	file->dump(size); \
+	stream->dump(size); \
 	for (int _lsI ## name = 0; _lsI ## name < size; _lsI ## name++) \
 	{ \
 		LS_SER_OBJ_PTR(name[_lsI ## name]); \
 	}
 #define LS_DES_ARRAY_OBJ_PTR(name, classe) \
-	int _lsCount ## name = file->load_int(); \
+	int _lsCount ## name = stream->load_int(); \
 	for (int _lsI ## name = 0; _lsI ## name < _lsCount; _lsI ## name++) \
 	{ \
 		classe* _lsInstance = NULL; \
@@ -173,28 +173,28 @@
 // harray serialization
 
 #define LS_SER_HARRAY(name) \
-	file->dump(name.size()); \
+	stream->dump(name.size()); \
 	for (int _lsI ## name = 0; _lsI ## name < name.size(); _lsI ## name++) \
 	{ \
-		file->dump(name[_lsI ## name]); \
+		stream->dump(name[_lsI ## name]); \
 	}
 /// @note "type" can be char, uchar, int, uint, long, ulong, short, ushort, bool, float, double or hstr
 #define LS_DES_HARRAY(name, type) \
 	name.clear(); \
-	int _lsCount ## name = file->load_int(); \
+	int _lsCount ## name = stream->load_int(); \
 	for (int _lsI ## name = 0; _lsI ## name < _lsCount ## name; _lsI ## name++) \
 	{ \
-		name += file->load_ ## type(); \
+		name += stream->load_ ## type(); \
 	}
 
 #define LS_SER_HARRAY_OBJ(name) \
-	file->dump(name.size()); \
+	stream->dump(name.size()); \
 	for (int _lsI ## name = 0; _lsI ## name < name.size(); _lsI ## name++) \
 	{ \
 		LS_SER_OBJ(name[_lsI ## name]); \
 	}
 #define LS_DES_HARRAY_OBJ(name, classe) \
-	int _lsCount ## name = file->load_int(); \
+	int _lsCount ## name = stream->load_int(); \
 	for (int _lsI ## name = 0; _lsI ## name < _lsCount ## name; _lsI ## name++) \
 	{ \
 		classe _lsInstance; \
@@ -203,13 +203,13 @@
 	}
 
 #define LS_SER_HARRAY_OBJ_PTR(name) \
-	file->dump(name.size()); \
+	stream->dump(name.size()); \
 	for (int _lsI ## name = 0; _lsI ## name < name.size(); _lsI ## name++) \
 	{ \
 		LS_SER_OBJ_PTR(name[_lsI ## name]); \
 	}
 #define LS_DES_HARRAY_OBJ_PTR(name, classe) \
-	int _lsCount ## name = file->load_int(); \
+	int _lsCount ## name = stream->load_int(); \
 	for (int _lsI ## name = 0; _lsI ## name < _lsCount ## name; _lsI ## name++) \
 	{ \
 		classe* _lsInstance = NULL; \
@@ -353,14 +353,14 @@
 
 namespace liteser
 {
-	liteserFnExport void serialize(hfile* file, Serializable* object);
-	liteserFnExport void deserialize(hfile* file, Serializable* object);
+	liteserFnExport void serialize(hsbase* stream, Serializable* object);
+	liteserFnExport void deserialize(hsbase* stream, Serializable* object);
 	liteserFnExport void checkVersion(unsigned char major, unsigned char minor);
 
 	/*
 	/// @note Use only with integral types and hstr
 	template <class T>
-	void serialize(hfile* file, harray<T>& objects)
+	void serialize(hsbase* stream, harray<T>& objects)
 	{
 		_LS_INIT_SERIALIZATION;
 		LS_SER_HARRAY(objects);
@@ -368,35 +368,35 @@ namespace liteser
 	
 	/// @note Use only with integral types and hstr
 	template <class T>
-	void deserialize(hfile* file, harray<T>& objects)
+	void deserialize(hsbase* stream, harray<T>& objects)
 	{
 		_LS_INIT_DESERIALIZATION;
 		LS_DES_HARRAY(objects, T);
 	}
 	
 	template <class T>
-	void serialize_obj(hfile* file, harray<T>& objects)
+	void serialize_obj(hsbase* stream, harray<T>& objects)
 	{
 		_LS_INIT_SERIALIZATION;
 		LS_SER_HARRAY_OBJ(objects);
 	}
 	
 	template <class T>
-	void deserialize_obj(hfile* file, harray<T>& objects)
+	void deserialize_obj(hsbase* stream, harray<T>& objects)
 	{
 		_LS_INIT_DESERIALIZATION;
 		LS_DES_HARRAY_OBJ(objects, T);
 	}
 	
 	template <class T>
-	void serialize_obj(hfile* file, harray<T*>& objects)
+	void serialize_obj(hsbase* stream, harray<T*>& objects)
 	{
 		_LS_INIT_SERIALIZATION;
 		LS_SER_HARRAY_OBJ_PTR(objects);
 	}
 	
 	template <class T>
-	void deserialize_obj(hfile* file, harray<T*>& objects)
+	void deserialize_obj(hsbase* stream, harray<T*>& objects)
 	{
 		_LS_INIT_DESERIALIZATION;
 		LS_DES_HARRAY_OBJ_PTR(objects, T);

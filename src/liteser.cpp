@@ -8,8 +8,8 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <hltypes/exception.h>
-#include <hltypes/hfile.h>
 #include <hltypes/hmap.h>
+#include <hltypes/hsbase.h>
 
 #include "liteser.h"
 #include "Serializable.h"
@@ -18,23 +18,23 @@ namespace liteser
 {
 	hmap<unsigned int, Serializable*> _lsIds;
 	
-	void serialize(hfile* file, Serializable* object)
+	void serialize(hsbase* stream, Serializable* object)
 	{
 		_lsIds.clear();
-		file->dump((unsigned char)_LS_VERSION_MAJOR);
-		file->dump((unsigned char)_LS_VERSION_MINOR);
-		object->serialize(file);
+		stream->dump((unsigned char)_LS_VERSION_MAJOR);
+		stream->dump((unsigned char)_LS_VERSION_MINOR);
+		object->serialize(stream);
 	}
 	
-	void deserialize(hfile* file, Serializable* object)
+	void deserialize(hsbase* stream, Serializable* object)
 	{
 		_lsIds.clear();
-		unsigned char major = file->load_uchar();
-		unsigned char minor = file->load_uchar();
+		unsigned char major = stream->load_uchar();
+		unsigned char minor = stream->load_uchar();
 		checkVersion(major, minor);
-		int _lsId = file->load_uint();
+		int _lsId = stream->load_uint();
 		_lsIds[_lsId] = object;
-		object->deserialize(file);
+		object->deserialize(stream);
 	}
 
 	void checkVersion(unsigned char major, unsigned char minor)
