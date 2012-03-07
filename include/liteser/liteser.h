@@ -15,6 +15,7 @@
 #define LITESER_H
 
 #include <hltypes/harray.h>
+#include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
 #include <hltypes/hstring.h>
@@ -35,7 +36,7 @@
 	unsigned char minor = stream->load_uchar(); \
 	liteser::checkVersion(major, minor);
 #define _LS_ASSIGN_HMAP_KEYS_VALUES(name) \
-	for (int _lsI ## name = 0; _lsI ## name < _lsKeys ## name.size(); _lsI ## name++) \
+	for_iter (_lsI ## name, 0, _lsKeys ## name.size()) \
 	{ \
 		name[_lsKeys ## name[_lsI ## name]] = _lsValues ## name[_lsI ## name]; \
 	}
@@ -117,7 +118,7 @@
 
 #define LS_SER_ARRAY(name, size) \
 	stream->dump(size); \
-	for (int _lsI ## name = 0; _lsI ## name < size; _lsI ## name++) \
+	for_iter (_lsI ## name, 0, size) \
 	{ \
 		stream->dump(name[_lsI ## name]); \
 	}
@@ -130,14 +131,14 @@
 		delete [] name; \
 		name = new type[_lsCount ## name]; \
 	} \
-	for (int _lsI ## name = 0; _lsI ## name < _lsCount ## name; _lsI ## name++) \
+	for_iter (_lsI ## name, 0, _lsCount ## name) \
 	{ \
 		name[_lsI ## name] = stream->load_ ## loadType(); \
 	}
 
 #define LS_SER_ARRAY_OBJ(name, size) \
 	stream->dump(size); \
-	for (int _lsI ## name = 0; _lsI ## name < size; _lsI ## name++) \
+	for_iter (_lsI ## name, 0, size) \
 	{ \
 		LS_SER_OBJ(name[_lsI ## name]); \
 	}
@@ -148,7 +149,7 @@
 		delete [] name; \
 		name = new classe[_lsCount ## name]; \
 	} \
-	for (int _lsI ## name = 0; _lsI ## name < _lsCount ## name; _lsI ## name++) \
+	for_iter (_lsI ## name, 0, _lsCount ## name) \
 	{ \
 		classe _lsInstance; \
 		LS_DES_OBJ(_lsInstance); \
@@ -157,13 +158,13 @@
 
 #define LS_SER_ARRAY_OBJ_PTR(name, size) \
 	stream->dump(size); \
-	for (int _lsI ## name = 0; _lsI ## name < size; _lsI ## name++) \
+	for_iter (_lsI ## name, 0, size) \
 	{ \
 		LS_SER_OBJ_PTR(name[_lsI ## name]); \
 	}
 #define LS_DES_ARRAY_OBJ_PTR(name, classe) \
 	int _lsCount ## name = stream->load_int(); \
-	for (int _lsI ## name = 0; _lsI ## name < _lsCount; _lsI ## name++) \
+	for_iter (_lsI ## name, 0, _lsCount) \
 	{ \
 		classe* _lsInstance = NULL; \
 		LS_DES_OBJ_PTR(_lsInstance, classe); \
@@ -174,7 +175,7 @@
 
 #define LS_SER_HARRAY(name) \
 	stream->dump(name.size()); \
-	for (int _lsI ## name = 0; _lsI ## name < name.size(); _lsI ## name++) \
+	for_iter (_lsI ## name, 0, name.size()) \
 	{ \
 		stream->dump(name[_lsI ## name]); \
 	}
@@ -182,20 +183,20 @@
 #define LS_DES_HARRAY(name, type) \
 	name.clear(); \
 	int _lsCount ## name = stream->load_int(); \
-	for (int _lsI ## name = 0; _lsI ## name < _lsCount ## name; _lsI ## name++) \
+	for_iter (_lsI ## name, 0, _lsCount ## name) \
 	{ \
 		name += stream->load_ ## type(); \
 	}
 
 #define LS_SER_HARRAY_OBJ(name) \
 	stream->dump(name.size()); \
-	for (int _lsI ## name = 0; _lsI ## name < name.size(); _lsI ## name++) \
+	for_iter (_lsI ## name, 0, name.size()) \
 	{ \
 		LS_SER_OBJ(name[_lsI ## name]); \
 	}
 #define LS_DES_HARRAY_OBJ(name, classe) \
 	int _lsCount ## name = stream->load_int(); \
-	for (int _lsI ## name = 0; _lsI ## name < _lsCount ## name; _lsI ## name++) \
+	for_iter (_lsI ## name, 0, _lsCount ## name) \
 	{ \
 		classe _lsInstance; \
 		LS_DES_OBJ(_lsInstance); \
@@ -204,13 +205,13 @@
 
 #define LS_SER_HARRAY_OBJ_PTR(name) \
 	stream->dump(name.size()); \
-	for (int _lsI ## name = 0; _lsI ## name < name.size(); _lsI ## name++) \
+	for_iter (_lsI ## name, 0, name.size()) \
 	{ \
 		LS_SER_OBJ_PTR(name[_lsI ## name]); \
 	}
 #define LS_DES_HARRAY_OBJ_PTR(name, classe) \
 	int _lsCount ## name = stream->load_int(); \
-	for (int _lsI ## name = 0; _lsI ## name < _lsCount ## name; _lsI ## name++) \
+	for_iter (_lsI ## name, 0, _lsCount ## name) \
 	{ \
 		classe* _lsInstance = NULL; \
 		LS_DES_OBJ_PTR(_lsInstance, classe); \
