@@ -12,11 +12,8 @@
 		C9C04D1114BAE83A005BD333 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04D0E14BAE83A005BD333 /* Serializable.cpp */; };
 		C9C04D1214BAE83A005BD333 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04D0E14BAE83A005BD333 /* Serializable.cpp */; };
 		C9C04D1614BAE84B005BD333 /* liteser.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04D1314BAE84B005BD333 /* liteser.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C9C04D1714BAE84B005BD333 /* liteser.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04D1314BAE84B005BD333 /* liteser.h */; };
 		C9C04D1814BAE84B005BD333 /* liteserExport.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04D1414BAE84B005BD333 /* liteserExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C9C04D1914BAE84B005BD333 /* liteserExport.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04D1414BAE84B005BD333 /* liteserExport.h */; };
 		C9C04D1A14BAE84B005BD333 /* Serializable.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04D1514BAE84B005BD333 /* Serializable.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C9C04D1B14BAE84B005BD333 /* Serializable.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04D1514BAE84B005BD333 /* Serializable.h */; };
 		C9C04D3E14BAEA01005BD333 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9C04D3D14BAEA01005BD333 /* hltypes.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,13 +35,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9C04D3E14BAEA01005BD333 /* hltypes.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D1522F19140F79500012F290 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,16 +102,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D1522F1A140F79500012F290 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C9C04D1714BAE84B005BD333 /* liteser.h in Headers */,
-				C9C04D1914BAE84B005BD333 /* liteserExport.h in Headers */,
-				C9C04D1B14BAE84B005BD333 /* Serializable.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -132,7 +112,6 @@
 				8DC2EF540486A6940098B216 /* Sources */,
 				8DC2EF560486A6940098B216 /* Frameworks */,
 				8DC2EF500486A6940098B216 /* Headers */,
-				8DC2EF520486A6940098B216 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -149,8 +128,6 @@
 			buildConfigurationList = D1522F2B140F79500012F290 /* Build configuration list for PBXNativeTarget "liteser (iOS)" */;
 			buildPhases = (
 				D1522F18140F79500012F290 /* Sources */,
-				D1522F19140F79500012F290 /* Frameworks */,
-				D1522F1A140F79500012F290 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -189,16 +166,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		8DC2EF520486A6940098B216 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8DC2EF540486A6940098B216 /* Sources */ = {
