@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.0
+/// @version 1.1
 /// 
 /// @section LICENSE
 /// 
@@ -122,6 +122,12 @@
 	{ \
 		stream->dump(name[_lsI ## name]); \
 	}
+#define LS_SER_ARRAY_ENUM(name, size) \
+	stream->dump(size); \
+	for_iter (_lsI ## name, 0, size) \
+	{ \
+		stream->dump((int)name[_lsI ## name]); \
+	}
 /// @note "type" can be char, unsigned char, int, unsigned uint, long, unsigned long, short, unsigned short, bool, float, double or hstr
 /// @note "loadType" can be char, uchar, int, uint, long, ulong, short, ushort, bool, float, double or hstr and has to correspond with "type"
 #define LS_DES_ARRAY(name, type, loadType) \
@@ -134,6 +140,17 @@
 	for_iter (_lsI ## name, 0, _lsCount ## name) \
 	{ \
 		name[_lsI ## name] = stream->load_ ## loadType(); \
+	}
+#define LS_DES_ARRAY_ENUM(name, type, loadType) \
+	int _lsCount ## name = stream->load_int(); \
+	if (name != NULL) \
+	{ \
+		delete [] name; \
+		name = new type[_lsCount ## name]; \
+	} \
+	for_iter (_lsI ## name, 0, _lsCount ## name) \
+	{ \
+		name[_lsI ## name] = (type)stream->load_int(); \
 	}
 
 #define LS_SER_ARRAY_OBJ(name, size) \
@@ -179,6 +196,12 @@
 	{ \
 		stream->dump(name[_lsI ## name]); \
 	}
+#define LS_SER_HARRAY_ENUM(name) \
+	stream->dump(name.size()); \
+	for_iter (_lsI ## name, 0, name.size()) \
+	{ \
+		stream->dump((int)name[_lsI ## name]); \
+	}
 /// @note "type" can be char, uchar, int, uint, long, ulong, short, ushort, bool, float, double or hstr
 #define LS_DES_HARRAY(name, type) \
 	name.clear(); \
@@ -186,6 +209,13 @@
 	for_iter (_lsI ## name, 0, _lsCount ## name) \
 	{ \
 		name += stream->load_ ## type(); \
+	}
+#define LS_DES_HARRAY_ENUM(name, type) \
+	name.clear(); \
+	int _lsCount ## name = stream->load_int(); \
+	for_iter (_lsI ## name, 0, _lsCount ## name) \
+	{ \
+		name += (type)stream->load_int(); \
 	}
 
 #define LS_SER_HARRAY_OBJ(name) \
