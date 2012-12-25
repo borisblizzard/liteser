@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libliteser", "libliteser.vcproj", "{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E4D373BF-E227-48B9-99E6-84987E8674EC} = {E4D373BF-E227-48B9-99E6-84987E8674EC}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libhltypes", "..\hltypes\libhltypes.vcproj", "{E4D373BF-E227-48B9-99E6-84987E8674EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}.Debug|Win32.Build.0 = Debug|Win32
+		{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}.Release|Win32.ActiveCfg = Release|Win32
+		{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}.Release|Win32.Build.0 = Release|Win32
+		{E4D373BF-E227-48B9-99E6-84987E8674EC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E4D373BF-E227-48B9-99E6-84987E8674EC}.Debug|Win32.Build.0 = Debug|Win32
+		{E4D373BF-E227-48B9-99E6-84987E8674EC}.Release|Win32.ActiveCfg = Release|Win32
+		{E4D373BF-E227-48B9-99E6-84987E8674EC}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
