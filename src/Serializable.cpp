@@ -15,6 +15,8 @@
 
 namespace liteser
 {
+	extern hmap<unsigned int, Serializable*> _lsIds;
+
 	Serializable::Serializable()
 	{
 	}

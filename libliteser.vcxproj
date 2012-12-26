@@ -193,6 +193,7 @@
   <ItemGroup>
     <ClInclude Include="include\liteser\liteser.h" />
     <ClInclude Include="include\liteser\liteserExport.h" />
+    <ClInclude Include="include\liteser\macros.h" />
     <ClInclude Include="include\liteser\Serializable.h" />
   </ItemGroup>
   <ItemGroup>
