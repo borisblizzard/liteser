@@ -23,6 +23,9 @@
     <ClInclude Include="include\liteser\liteser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\liteser\macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Serializable.cpp">

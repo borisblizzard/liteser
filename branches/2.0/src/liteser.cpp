@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.1
+/// @version 2.0
 /// 
 /// @section LICENSE
 /// 
@@ -17,7 +17,7 @@
 namespace liteser
 {
 	hmap<unsigned int, Serializable*> _lsIds;
-	
+
 	void serialize(hsbase* stream, Serializable* object)
 	{
 		_lsIds.clear();
@@ -26,15 +26,15 @@ namespace liteser
 		object->serialize(stream);
 	}
 	
-	void deserialize(hsbase* stream, Serializable* object)
+	void deserialize(hsbase* stream, Serializable** object)
 	{
 		_lsIds.clear();
 		unsigned char major = stream->load_uchar();
 		unsigned char minor = stream->load_uchar();
 		checkVersion(major, minor);
 		int _lsId = stream->load_uint();
-		_lsIds[_lsId] = object;
-		object->deserialize(stream);
+		_lsIds[_lsId] = (*object);
+		(*object)->deserialize(stream);
 	}
 
 	void checkVersion(unsigned char major, unsigned char minor)

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.1
+/// @version 2.0
 /// 
 /// @section LICENSE
 /// 
@@ -21,10 +21,13 @@
 #include <hltypes/hstring.h>
 
 #include "liteserExport.h"
+#include "macros.h"
 #include "Serializable.h"
 
-#define _LS_VERSION_MAJOR 1
+#define _LS_VERSION_MAJOR 2
 #define _LS_VERSION_MINOR 0
+
+/*
 
 #define _LS_INIT_MANUAL_SERIALIZATION \
 	liteser::_lsIds.clear(); \
@@ -382,11 +385,84 @@
 	LS_DES_HARRAY_OBJ_PTR(_lsValues ## name, valueClass); \
 	_LS_ASSIGN_HMAP_KEYS_VALUES(name);
 
+*/
+/*
+#define LS_MAKE_SERIALIZABLE \
+	static harray<chstr> _lsVariableNames; \
+	static harray<chstr> _lsVariableOffsets; \
+	bool serialize(hsbase* stream); \
+	bool deserialize(hsbase* stream);
+*/
+
+#define REFLECTABLE(...) \
+static const int fields_n = LS_ARGC(__VA_ARGS__); \
+friend struct reflector; \
+template<int N, class Self = void> \
+struct field_data {}; \
+BOOST_PP_SEQ_FOR_EACH_I(REFLECT_EACH, data, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))
+
+
+#define LS_SERIALIZABLE_COUNT(count) \
+	static const int _lsFieldsCount = count; \
+	template<int N, class Self = void> \
+	struct _lsField {};
+
+#define LS_SERIALIZABLE(...) \
+	static const int _lsFieldsCount = __LS_VA_ARGC(__VA_ARGS__); \
+	template<int I, class Self = void> struct _lsField { }; \
+	__LS_FOREACH(__LS_VAR, (__VA_ARGS__)) \
+	__LS_FOREACH(__LS_REF, (__VA_ARGS__))
+
+
+#define LS_MAKE_SERIALIZABLE
+#define LS_REGISTER_TOP_CLASS(classe) \
+	classe::__lsRegister()
+
+#define __LS_VAR(i, x)/* \
+	__LS_PAIR(x);*/
+#define __LS_REF(i, x) \
+	template <class Self> \
+	struct _lsField<i, Self> \
+	{ \
+		Self& self; \
+		_lsField(Self& self) : self(self) { } \
+		hstr getName() { return __LS_STRIP(x); } \
+		/*__LS_TYPEOF(x) getValue() { return self.__LS_STRIP(x); } const*/ \
+	};
+
+		/*
+		typename make_const<Self, TYPEOF(x)>::type & getValue() const \
+		{ \
+			return self.__LS_STRIP(x); \
+		}\
+		*/
+
+//struct Liteser
+
 namespace liteser
 {
+	//liteserFnExport
+
+	//hsbase& hsbase::operator<<(const char c);
+	//hsbase& hsbase::operator>>(char& c);
+
+	/*
+	
+	
+	
+	*/
+
+
 	liteserFnExport void serialize(hsbase* stream, Serializable* object);
-	liteserFnExport void deserialize(hsbase* stream, Serializable* object);
+	liteserFnExport void deserialize(hsbase* stream, Serializable** object);
 	liteserFnExport void checkVersion(unsigned char major, unsigned char minor);
+
+	/*
+	void __lsRegisterValue(unsigned int variable)
+	{
+
+	}
+	*/
 
 	/*
 	/// @note Use only with integral types and hstr
@@ -434,7 +510,5 @@ namespace liteser
 	}
 	*/
 	
-	liteserExport extern hmap<unsigned int, Serializable*> _lsIds;
-
 }
 #endif
