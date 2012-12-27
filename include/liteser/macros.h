@@ -14,24 +14,36 @@
 #ifndef LITESER_MACROS_H
 #define LITESER_MACROS_H
 
-
+// a little bit of magic
 #define __LS_EXPAND(x) x
 #define __LS_FIRSTARG(x, ...) (x)
 #define __LS_RESTARGS(x, ...) (__VA_ARGS__)
 
 #define __LS_REM(...) __VA_ARGS__
 #define __LS_EAT(...)
-// Retrieve the type
+#define __LS_STRINGIFY(x) __LS_X1STRINGIFY(x)
+#define __LS_X1STRINGIFY(x) __LS_X2STRINGIFY(x)
+#define __LS_X2STRINGIFY(x) #x
+// some more magic for type retrieval
+//#define __LS_TYPEOF(x) __LS_EAT x
+//#define __LS_TYPEOF(x) __LS_EAT __LS_REM x
+/*
+#define TYPEOF(x) DETAIL_TYPEOF(DETAIL_TYPEOF_PROBE x,)
+#define DETAIL_TYPEOF(...) DETAIL_TYPEOF_HEAD(__VA_ARGS__)
+#define DETAIL_TYPEOF_HEAD(x, ...) REM x
+#define DETAIL_TYPEOF_PROBE(...) (__VA_ARGS__),
+*/
+
 #define __LS_TYPEOF(x) __LS_DETAIL_TYPEOF(__LS_DETAIL_TYPEOF_PROBE x,)
-#define __LS_DETAIL_TYPEOF(...) __LS_DETAIL_TYPEOF_HEAD(__VA_ARGS__)
+#define __LS_DETAIL_TYPEOF(x, ...) __LS_DETAIL_TYPEOF_HEAD(__VA_ARGS__)
 #define __LS_DETAIL_TYPEOF_HEAD(x, ...) __LS_REM x
-#define __LS_DETAIL_TYPEOF_PROBE(...) (__VA_ARGS__)
-// Strip off the type
+#define __LS_DETAIL_TYPEOF_PROBE(...) __VA_ARGS__,
+// strip off the type
 #define __LS_STRIP(x) __LS_EAT x
-// Show the type without parenthesis
+// show the argument without parenthesis
 #define __LS_PAIR(x) __LS_REM x
 
-
+// reversal indexing
 #define __LS_VA_ARGC_INDEX( \
 	 _0,  _1,  _2,  _3,  _4,  _5,  _6,  _7,  _8,  _9, \
 	_10, _11, _12, _13, _14, _15, _16, _17, _18, _19, \
@@ -49,11 +61,12 @@
 	20, 19, 18, 17, 16, 15, 14, 13, 12, 11, \
 	10,  9,  8,  7,  6,  5,  4,  3,  2,  1,  0))
 
+// some recursive magic
 #define __LS_FOREACH(m, args) __LS_FOREACH_(m, __LS_VA_ARGC(args), (args))
 #define __LS_FOREACH_(m, n, args) __LS_FOREACH__(m, n, args)
 #define __LS_FOREACH__(m, n, args) __LS_FOREACH_ ## n(m, n, args)
 
-#define  __LS_FOREACH_1(m, n, args) m(n, args)
+#define  __LS_FOREACH_1(m, n, args) m(n, __LS_FIRSTARG args)
 #define  __LS_FOREACH_2(m, n, args) m(n, __LS_FIRSTARG args)  __LS_FOREACH_1(m, (n - 1), __LS_RESTARGS args)
 #define  __LS_FOREACH_3(m, n, args) m(n, __LS_FIRSTARG args)  __LS_FOREACH_2(m, (n - 1), __LS_RESTARGS args)
 #define  __LS_FOREACH_4(m, n, args) m(n, __LS_FIRSTARG args)  __LS_FOREACH_3(m, (n - 1), __LS_RESTARGS args)

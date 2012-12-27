@@ -24,12 +24,22 @@
 class Type1 : public liteser::Serializable
 {
 public:
+	LS_SERIALIZABLE_CLASS;
 	Type1() : varInt(1), varFloat(2.0f), varBool(false) { }
 	~Type1() { }
 
 	HL_DEFINE_GETSET(int, varInt, VarInt);
 	HL_DEFINE_GETSET(float, varFloat, VarFloat);
 	HL_DEFINE_ISSET(bool, varBool, VarBool);
+
+	//*/
+	/*
+    template<int N, class T>
+    static typename T::template _lsField<N, T> _lsVar2(T& x)
+    {
+        return typename T::template _lsField<N, T>(x);
+    }
+	//*/
 
 protected:
 	LS_SERIALIZABLE
@@ -39,13 +49,35 @@ protected:
 		(bool) varBool
 	)
 
+	/*
+	template <class Self>
+	struct _lsField<0, Self>
+	{
+		Self& self;
+		_lsField(Self& self) : self(self) { }
+		chstr name() { return "varInt"; }
+		int& value() { return self.varInt; }
+	};
+	*/
+
+public:
+	//*
+    template<int N = n, class T>
+    _lsField<N, T> _lsVar()
+    {
+        return _lsField<N, T>(*this);
+    }
+
 };
 
 int main(int argc, char **argv)
 {
 	Type1 type1;
+	type1._lsVar<0, Type1>();
+	//Type1::_lsVar2<0, Type1>(type1);
+	///*
+	printf("%d\n", type1._lsVar<0, Type1>().value());
 	/*
-	printf("%d\n", type1.getVarInt());
 	printf("%f\n", type1.getVarFloat());
 	printf("%d\n", type1.getVarBool());
 	*/

@@ -401,35 +401,48 @@ template<int N, class Self = void> \
 struct field_data {}; \
 BOOST_PP_SEQ_FOR_EACH_I(REFLECT_EACH, data, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__))
 
-
-#define LS_SERIALIZABLE_COUNT(count) \
-	static const int _lsFieldsCount = count; \
-	template<int N, class Self = void> \
-	struct _lsField {};
+#define LS_SERIALIZABLE_CLASS \
+	friend class liteser::Serializable;
+/*\
+    template<int N, class T> \
+    typename T::template T::_lsField<N, T> _lsVar(int index) \
+    { \
+        return typename T::template _lsField<index, T>(*this); \
+    }
+	*/
 
 #define LS_SERIALIZABLE(...) \
 	static const int _lsFieldsCount = __LS_VA_ARGC(__VA_ARGS__); \
-	template<int I, class Self = void> struct _lsField { }; \
-	__LS_FOREACH(__LS_VAR, __VA_ARGS__)
-/*
-\
+	template<int I, class Self = void> \
+	struct _lsField { }; \
+	__LS_FOREACH(__LS_VAR, __VA_ARGS__) \
 	__LS_FOREACH(__LS_REF, __VA_ARGS__)
-	*/
 
 #define LS_MAKE_SERIALIZABLE
 #define LS_REGISTER_TOP_CLASS(classe) \
 	classe::__lsRegister()
 
+// separate variable declaration
 #define __LS_VAR(i, x) \
 	__LS_PAIR(x);
+// template voodoo magic
 #define __LS_REF(i, x) \
 	template <class Self> \
 	struct _lsField<i, Self> \
 	{ \
 		Self& self; \
 		_lsField(Self& self) : self(self) { } \
+		chstr name() { return hstr(__LS_STRINGIFY(__LS_STRIP x)).trim(); } \
+		__LS_TYPEOF x & value() { return self.__LS_STRIP x; } \
+	};
+/*\
+	template <class Self> \
+	struct _lsField<i, Self> \
+	{ \
+		Self& self; \
+		_lsField(Self& self) : self(self) { } \
 		hstr getName() { return __LS_STRIP(x); } \
-		/*__LS_TYPEOF(x) getValue() { return self.__LS_STRIP(x); } const*/ \
+		/*__LS_TYPEOF(x) getValue() { return self.__LS_STRIP(x); } const*/ // \
 	};
 
 		/*
