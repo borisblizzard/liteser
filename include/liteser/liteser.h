@@ -410,16 +410,18 @@ BOOST_PP_SEQ_FOR_EACH_I(REFLECT_EACH, data, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__
 #define LS_SERIALIZABLE(...) \
 	static const int _lsFieldsCount = __LS_VA_ARGC(__VA_ARGS__); \
 	template<int I, class Self = void> struct _lsField { }; \
-	__LS_FOREACH(__LS_VAR, (__VA_ARGS__)) \
-	__LS_FOREACH(__LS_REF, (__VA_ARGS__))
-
+	__LS_FOREACH(__LS_VAR, __VA_ARGS__)
+/*
+\
+	__LS_FOREACH(__LS_REF, __VA_ARGS__)
+	*/
 
 #define LS_MAKE_SERIALIZABLE
 #define LS_REGISTER_TOP_CLASS(classe) \
 	classe::__lsRegister()
 
-#define __LS_VAR(i, x)/* \
-	__LS_PAIR(x);*/
+#define __LS_VAR(i, x) \
+	__LS_PAIR(x);
 #define __LS_REF(i, x) \
 	template <class Self> \
 	struct _lsField<i, Self> \
