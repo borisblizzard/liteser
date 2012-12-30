@@ -13,37 +13,45 @@
 
 #include "liteser.h"
 #include "Serializable.h"
+#include "Utility.h"
+#include "Variable.h"
 
 namespace liteser
 {
-	hmap<unsigned int, Serializable*> _lsIds;
+	char header[4] = {'L', 'S', (char)_LS_VERSION_MAJOR, (char)_LS_VERSION_MINOR };
 
 	void serialize(hsbase* stream, Serializable* object)
 	{
-		_lsIds.clear();
-		stream->dump((unsigned char)_LS_VERSION_MAJOR);
-		stream->dump((unsigned char)_LS_VERSION_MINOR);
-		object->serialize(stream);
+		if (!stream->is_open())
+		{
+			throw file_not_open("Liteser Stream");
+		}
+		// TODO - add exception handling
+		_start();
+		stream->write_raw(header, 4);
+		_dump(stream, &object);
+		_finish();
 	}
 	
 	void deserialize(hsbase* stream, Serializable** object)
 	{
-		_lsIds.clear();
-		unsigned char major = stream->load_uchar();
-		unsigned char minor = stream->load_uchar();
-		checkVersion(major, minor);
-		int _lsId = stream->load_uint();
-		_lsIds[_lsId] = (*object);
-		(*object)->deserialize(stream);
+		if (!stream->is_open())
+		{
+			throw file_not_open("Liteser Stream");
+		}
+		// TODO - add exception handling
+		_start();
+		unsigned char readHeader[4];
+		stream->read_raw(readHeader, 4);
+		unsigned char major = readHeader[2];
+		unsigned char minor = readHeader[3];
+		_checkVersion(major, minor);
+		/*
+		int id = stream->load_uint();
+		ids[id] = (*object);
+		*/
+		//(*object)->deserialize(stream);
+		_finish();
 	}
 
-	void checkVersion(unsigned char major, unsigned char minor)
-	{
-		if (major != _LS_VERSION_MAJOR || minor != _LS_VERSION_MINOR)
-		{
-			throw hl_exception(hsprintf("Liteser Read Error! Version mismatch: expected %d.%d, got %d.%d",
-				_LS_VERSION_MAJOR, _LS_VERSION_MINOR, major, minor));
-		}
-	}
-	
 }

@@ -9,6 +9,9 @@
 
 #define LOG_TAG "demo_simple"
 
+#include <hltypes/hfile.h>
+#include <hltypes/hstring.h>
+
 /*
 #include <stdio.h>
 
@@ -21,73 +24,63 @@
 #include <liteser/liteser.h>
 #include <liteser/Serializable.h>
 
+class Type2 : public liteser::Serializable
+{
+public:
+	Type2() : liteser::Serializable()
+	{
+
+	}
+	~Type2() { }
+
+	LS_SERIALIZABLE
+	(
+		liteser::Serializable,
+		(hstr) string
+	)
+};
+
+class Type3 : public Type2
+{
+public:
+	Type3() : Type2()
+	{
+		this->string = "NO WAY";
+		this->string2 = "MY WORLD IS BETTER";
+	}
+	~Type3() { }
+
+	LS_SERIALIZABLE
+	(
+		Type2,
+		(hstr) string2
+	)
+};
+
 class Type1 : public liteser::Serializable
 {
 public:
-	LS_SERIALIZABLE_CLASS;
-	Type1() : varInt(1), varFloat(2.0f), varBool(false) { }
+	Type1() : liteser::Serializable()
+	{
+
+	}
 	~Type1() { }
 
-	HL_DEFINE_GETSET(int, varInt, VarInt);
-	HL_DEFINE_GETSET(float, varFloat, VarFloat);
-	HL_DEFINE_ISSET(bool, varBool, VarBool);
-
-	//*/
-	/*
-    template<int N, class T>
-    static typename T::template _lsField<N, T> _lsVar2(T& x)
-    {
-        return typename T::template _lsField<N, T>(x);
-    }
-	//*/
-
-//protected:
 	LS_SERIALIZABLE
 	(
-		(int) varInt,
-		(float) varFloat,
-		(bool) varBool
+		liteser::Serializable,
+		(char) v_int8/*,
+		(unsigned char) v_uint8,
+		(short) v_int16,
+		(unsigned short) v_uint16,
+		(int) v_int32,
+		(unsigned int) v_uint32,
+		(float) v_float,
+		(double) v_double,
+		(bool) v_bool*/,
+		(Type3*) v_type3/*,
+		(Type2) v_type2*/
 	)
-
-	/*
-	template <class Self>
-	struct _lsField<0, Self>
-	{
-		Self& self;
-		_lsField(Self& self) : self(self) { }
-		chstr name() { return "varInt"; }
-		int& value() { return self.varInt; }
-	};
-	*/
-
-public:
-	//*
-    template<int N, class T>
-    _lsField<N, T> _lsVar()
-    {
-        return template _lsField<N, T>(*this);
-    }
-	//*/
-
-	/*
-	struct reflector
-	{
-	public:
-		//Get field_data at index N
-		template <int N, class T>
-		static typename T::template _lsField<N, T> _lsVar(T& x)
-		{
-			return typename T::template _lsField<N, T>(x);
-		}
-
-		// Get the number of fields
-		template <class T>
-		struct fields
-		{
-			static const int n = T::fields_n;
-		};
-	};
-	//*/
 
 };
 
@@ -97,8 +90,17 @@ int main(int argc, char **argv)
 	//type1._lsVar<0, Type1>();
 	//Type1::_lsVar2<0, Type1>(type1);
 	///*
-	int& value = type1._lsVar<3, Type1>().value();
+	/*
+	int& value = type1._lsVar<0, Type1>().value();
 	printf("%d\n", value);
+	int vars = type1._lsVarCount();
+	for_iter (i, 0, vars)
+	{
+		printf("%s = %s\n", type1._lsVar<i, Type1>().name().c_str())
+	}
+	*/
+	hfile file("demo_simple.lsb");
+	//liteser::serialize(&file, &type1);
 	/*
 	printf("%f\n", type1.getVarFloat());
 	printf("%d\n", type1.getVarBool());
