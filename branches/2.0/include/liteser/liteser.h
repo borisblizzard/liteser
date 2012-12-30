@@ -430,27 +430,12 @@ BOOST_PP_SEQ_FOR_EACH_I(REFLECT_EACH, data, BOOST_PP_VARIADIC_TO_SEQ(__VA_ARGS__
 	template <class Self> \
 	struct _lsField<i, Self> \
 	{ \
+	public: \
 		Self& self; \
 		_lsField(Self& self) : self(self) { } \
 		chstr name() { return hstr(__LS_STRINGIFY(__LS_STRIP x)).trim(); } \
 		__LS_TYPEOF x & value() { return self.__LS_STRIP x; } \
 	};
-/*\
-	template <class Self> \
-	struct _lsField<i, Self> \
-	{ \
-		Self& self; \
-		_lsField(Self& self) : self(self) { } \
-		hstr getName() { return __LS_STRIP(x); } \
-		/*__LS_TYPEOF(x) getValue() { return self.__LS_STRIP(x); } const*/ // \
-	};
-
-		/*
-		typename make_const<Self, TYPEOF(x)>::type & getValue() const \
-		{ \
-			return self.__LS_STRIP(x); \
-		}\
-		*/
 
 //struct Liteser
 

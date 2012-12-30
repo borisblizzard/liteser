@@ -19,29 +19,23 @@
 #define __LS_FIRSTARG(x, ...) (x)
 #define __LS_RESTARGS(x, ...) (__VA_ARGS__)
 
+// macros for messing around with the preprocessor
 #define __LS_REM(...) __VA_ARGS__
+#define __LS_REM2(x) __LS_REM x
 #define __LS_EAT(...)
+// stringifying stuff
 #define __LS_STRINGIFY(x) __LS_X1STRINGIFY(x)
 #define __LS_X1STRINGIFY(x) __LS_X2STRINGIFY(x)
 #define __LS_X2STRINGIFY(x) #x
-// some more magic for type retrieval
-//#define __LS_TYPEOF(x) __LS_EAT x
-//#define __LS_TYPEOF(x) __LS_EAT __LS_REM x
-/*
-#define TYPEOF(x) DETAIL_TYPEOF(DETAIL_TYPEOF_PROBE x,)
-#define DETAIL_TYPEOF(...) DETAIL_TYPEOF_HEAD(__VA_ARGS__)
-#define DETAIL_TYPEOF_HEAD(x, ...) REM x
-#define DETAIL_TYPEOF_PROBE(...) (__VA_ARGS__),
-*/
 
-#define __LS_TYPEOF(x) __LS_DETAIL_TYPEOF(__LS_DETAIL_TYPEOF_PROBE x,)
-#define __LS_DETAIL_TYPEOF(x, ...) __LS_DETAIL_TYPEOF_HEAD(__VA_ARGS__)
-#define __LS_DETAIL_TYPEOF_HEAD(x, ...) __LS_REM x
-#define __LS_DETAIL_TYPEOF_PROBE(...) __VA_ARGS__,
+// some more magic for type retrieval
+#define __LS_TYPEOF_EAT2(x, y) x
+#define __LS_TYPEOF_ARG1(x) (x,
+#define __LS_TYPEOF(x) __LS_EXPAND(__LS_TYPEOF_EAT2 __LS_TYPEOF_ARG1 x))
 // strip off the type
 #define __LS_STRIP(x) __LS_EAT x
 // show the argument without parenthesis
-#define __LS_PAIR(x) __LS_REM x
+#define __LS_PAIR(x) __LS_REM2 x
 
 // reversal indexing
 #define __LS_VA_ARGC_INDEX( \

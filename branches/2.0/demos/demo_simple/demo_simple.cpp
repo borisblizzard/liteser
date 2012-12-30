@@ -41,7 +41,7 @@ public:
     }
 	//*/
 
-protected:
+//protected:
 	LS_SERIALIZABLE
 	(
 		(int) varInt,
@@ -62,21 +62,43 @@ protected:
 
 public:
 	//*
-    template<int N = n, class T>
+    template<int N, class T>
     _lsField<N, T> _lsVar()
     {
-        return _lsField<N, T>(*this);
+        return template _lsField<N, T>(*this);
     }
+	//*/
+
+	/*
+	struct reflector
+	{
+	public:
+		//Get field_data at index N
+		template <int N, class T>
+		static typename T::template _lsField<N, T> _lsVar(T& x)
+		{
+			return typename T::template _lsField<N, T>(x);
+		}
+
+		// Get the number of fields
+		template <class T>
+		struct fields
+		{
+			static const int n = T::fields_n;
+		};
+	};
+	//*/
 
 };
 
 int main(int argc, char **argv)
 {
 	Type1 type1;
-	type1._lsVar<0, Type1>();
+	//type1._lsVar<0, Type1>();
 	//Type1::_lsVar2<0, Type1>(type1);
 	///*
-	printf("%d\n", type1._lsVar<0, Type1>().value());
+	int& value = type1._lsVar<3, Type1>().value();
+	printf("%d\n", value);
 	/*
 	printf("%f\n", type1.getVarFloat());
 	printf("%d\n", type1.getVarBool());
