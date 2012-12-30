@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 1.1
+/// @version 2.0
 /// 
 /// @section LICENSE
 /// 
@@ -19,6 +19,8 @@
 #include <hltypes/hsbase.h>
 
 #include "liteserExport.h"
+#include "macros.h"
+#include "Variable.h"
 
 /*
 
@@ -52,7 +54,7 @@ struct make_const<const M, T>
 
 
 #define REFLECTABLE(...) \
-static const int fields_n = BOOST_PP_VARIADIC_SIZE(__VA_ARGS__); \
+static const int variables_n = BOOST_PP_VARIADIC_SIZE(__VA_ARGS__); \
 friend struct reflector; \
 template<int N, class Self = void> \
 struct field_data {}; \
@@ -92,11 +94,11 @@ struct reflector
         return typename T::template field_data<N, T>(x);
     }
 
-    // Get the number of fields
+    // Get the number of variables
     template<class T>
-    struct fields
+    struct variables
     {
-        static const int n = T::fields_n;
+        static const int n = T::variables_n;
     };
 };
 
@@ -123,7 +125,7 @@ struct field_visitor
 template<class C, class Action>
 void visit_each(C & c, Action a)
 {
-    typedef boost::mpl::range_c<int,0,reflector::fields<C>::n> range;
+    typedef boost::mpl::range_c<int,0,reflector::variables<C>::n> range;
     field_visitor<C, Action> visitor(a, c);
     boost::mpl::for_each<range>(visitor);
 }
@@ -142,7 +144,7 @@ struct print_visitor
 };
 
 template<class T>
-void print_fields(T & x)
+void print_variables(T & x)
 {
     visit_each(x, print_visitor());
 }
@@ -150,40 +152,54 @@ void print_fields(T & x)
 
 
 
+// template voodoo:
+/*
+#define LS_SERIALIZABLE(x, ...) \
+	int _lsVarCount() { return __LS_VA_ARGC(__VA_ARGS__); } \
+	template<int I, class Self = void> \
+	struct _lsVariable { }; \
+	__LS_FOREACH(__LS_VAR, __VA_ARGS__) \
+	__LS_FOREACH(__LS_REF, __VA_ARGS__)
 
+// separate variable declaration
+#define __LS_VAR(i, x) \
+	__LS_PAIR(x);
+// template voodoo magic
+#define __LS_REF(i, x) \
+	template <class Self> \
+	struct _lsVariable<i, Self> \
+	{ \
+	public: \
+		Self& self; \
+		_lsVariable(Self& self) : self(self) { } \
+		chstr name() { return hstr(__LS_STRINGIFY(__LS_STRIP x)).trim(); } \
+		__LS_TYPEOF x & value() { return self.__LS_STRIP x; } \
+	};
+*/
+
+#define LS_SERIALIZABLE(superclass, ...) \
+	__LS_FOREACH(__LS_VAR, __VA_ARGS__) \
+	harray<liteser::Variable> _lsVars() \
+	{ \
+		harray<liteser::Variable> variables = superclass::_lsVars(); \
+		__LS_FOREACH(__LS_REF, __VA_ARGS__) \
+		return variables; \
+	}
+#define __LS_VAR(i, x) \
+	__LS_PAIR(x);
+#define __LS_REF(i, x) \
+	variables += liteser::Variable(hstr(__LS_STRINGIFY(__LS_STRIP x)).trim(), &this->__LS_STRIP x);
 
 namespace liteser
 {
 	class liteserExport Serializable
 	{
 	public:
-		/*
-		template <class T>
-		class Field<T>
-		{
-			hstr name;
-			T
-		}
-
-
-		struct Definition
-		{
-			harray<hstr> names;
-			harray<hstr> offsets;
-		};
-		*/
-
 		Serializable();
 		virtual ~Serializable();
 
-		virtual bool serialize(hsbase* stream);
-		virtual bool deserialize(hsbase* stream);
+		harray<Variable> _lsVars() { return harray<Variable>(); }
 
-	protected:
-		//Definition* currentDefinition;
-
-		//static void __registerValue(chstr name, int32_t variable);
-		
 	};
 
 }
