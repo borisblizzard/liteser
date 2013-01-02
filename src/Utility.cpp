@@ -8,6 +8,7 @@
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
 #include <hltypes/hmap.h>
+#include <hltypes/hsbase.h>
 
 #include "liteser.h"
 #include "Serializable.h"
@@ -15,10 +16,10 @@
 
 namespace liteser
 {
-	bool active = false;
 	hmap<unsigned int, Serializable*> objects;
+	hsbase* stream = NULL;
 
-	bool _tryMapObject(unsigned int* id, Serializable* object)
+	bool __tryMapObject(unsigned int* id, Serializable* object)
 	{
 		if (!objects.has_value(object))
 		{
@@ -31,26 +32,26 @@ namespace liteser
 		return false;
 	}
 
-	Serializable* _getObject(unsigned int id)
+	Serializable* __getObject(unsigned int id)
 	{
 		return objects.try_get_by_key(id, NULL);
 	}
 
-	void _start()
+	void _start(hsbase* stream)
 	{
 		objects.clear();
-		active = true;
+		liteser::stream = stream;
 	}
 
-	void _finish()
+	void _finish(hsbase* stream)
 	{
 		objects.clear();
-		active = false;
+		liteser::stream = NULL;
 	}
 
 	bool _isActive()
 	{
-		return active;
+		return (stream != NULL);
 	}
 
 	void _checkVersion(unsigned char major, unsigned char minor)
@@ -61,106 +62,116 @@ namespace liteser
 				_LS_VERSION_MAJOR, _LS_VERSION_MINOR, major, minor));
 		}
 	}
-	
-	void _dump(hsbase* stream, Variable* variable)
+
+	void __dumpVariableType(Variable::Type type)
 	{
-		_dump(stream, variable->name);
-		_dump(stream, (unsigned char)variable->type);
+		stream->dump((unsigned char)type);
+	}
+	
+	void _dump(Variable* variable)
+	{
+		_dump(&variable->name);
+		unsigned char type = (unsigned char)variable->type;
+		_dump(&type);
 		switch (variable->type)
 		{
-		case Variable::TYPE_INT8:	_dump(stream, *(int8_t*)(variable->value));			break;
-		case Variable::TYPE_UINT8:	_dump(stream, *(uint8_t*)(variable->value));			break;
-		case Variable::TYPE_INT16:	_dump(stream, *(int16_t*)(variable->value));			break;
-		case Variable::TYPE_UINT16:	_dump(stream, *(uint16_t*)(variable->value));		break;
-		case Variable::TYPE_INT32:	_dump(stream, *(int32_t*)(variable->value));			break;
-		case Variable::TYPE_UINT32:	_dump(stream, *(uint32_t*)(variable->value));		break;
-		case Variable::TYPE_FLOAT:	_dump(stream, *(float*)(variable->value));			break;
-		case Variable::TYPE_DOUBLE:	_dump(stream, *(double*)(variable->value));			break;
-		case Variable::TYPE_BOOL:	_dump(stream, *(bool*)(variable->value));			break;
-		case Variable::TYPE_OBJECT:	_dump(stream, *(Serializable*)(variable->value));	break;
-		case Variable::TYPE_OBJPTR:	_dump(stream, *(Serializable**)(variable->value));	break;
-		case Variable::TYPE_HSTR:	_dump(stream, *(hstr*)(variable->value));			break;
+		case Variable::TYPE_INT8:	_dump((char*)(variable->value));				break;
+		case Variable::TYPE_UINT8:	_dump((unsigned char*)(variable->value));	break;
+		case Variable::TYPE_INT16:	_dump((int16_t*)(variable->value));			break;
+		case Variable::TYPE_UINT16:	_dump((uint16_t*)(variable->value));			break;
+		case Variable::TYPE_INT32:	_dump((int32_t*)(variable->value));			break;
+		case Variable::TYPE_UINT32:	_dump((uint32_t*)(variable->value));			break;
+		case Variable::TYPE_FLOAT:	_dump((float*)(variable->value));			break;
+		case Variable::TYPE_DOUBLE:	_dump((double*)(variable->value));			break;
+		case Variable::TYPE_BOOL:	_dump((bool*)(variable->value));				break;
+		case Variable::TYPE_OBJECT:	_dump((Serializable*)(variable->value));		break;
+		case Variable::TYPE_OBJPTR:	_dump((Serializable**)(variable->value));	break;
+		case Variable::TYPE_HSTR:	_dump((hstr*)(variable->value));				break;
 		/*
-		case Variable::TYPE_HDEQUE:	_dump(stream, *(hdeque*)(variable->value));			break;
-		case Variable::TYPE_HARRAY:	_dump(stream, *(harray*)(variable->value));			break;
-		case Variable::TYPE_HLIST:	_dump(stream, *(hlist*)(variable->value));			break;
-		case Variable::TYPE_HMAP:	_dump(stream, *(hmap*)(variable->value));			break;
+		case Variable::TYPE_HDEQUE:	_dump(*(hdeque*)(variable->value));			break;
+		case Variable::TYPE_HARRAY:	_dump(*(harray*)(variable->value));			break;
+		case Variable::TYPE_HLIST:	_dump(*(hlist*)(variable->value));			break;
+		case Variable::TYPE_HMAP:	_dump(*(hmap*)(variable->value));			break;
 		*/
 		}
 	}
 
-	void _dump(hsbase* stream, char* value)
+	void _dump(char* value)
 	{
-		stream->dump(value);
+		stream->dump(*value);
 	}
 
-	void _dump(hsbase* stream, unsigned char* value)
+	void _dump(unsigned char* value)
 	{
-		stream->dump(value);
+		stream->dump(*value);
 	}
 
-	void _dump(hsbase* stream, int16_t* value)
+	void _dump(int16_t* value)
 	{
-		stream->dump(value);
+		stream->dump(*value);
 	}
 
-	void _dump(hsbase* stream, uint16_t* value)
+	void _dump(uint16_t* value)
 	{
-		stream->dump(value);
+		stream->dump(*value);
 	}
 
-	void _dump(hsbase* stream, int32_t* value)
+	void _dump(int32_t* value)
 	{
-		stream->dump(value);
+		stream->dump(*value);
 	}
 
-	void _dump(hsbase* stream, uint32_t* value)
+	void _dump(uint32_t* value)
 	{
-		stream->dump(value);
+		stream->dump(*value);
 	}
 
-	void _dump(hsbase* stream, float* value)
+	void _dump(float* value)
 	{
-		stream->dump(value);
+		stream->dump(*value);
 	}
 
-	void _dump(hsbase* stream, double* value)
+	void _dump(double* value)
 	{
-		stream->dump(value);
+		stream->dump(*value);
 	}
 
-	void _dump(hsbase* stream, bool* value)
+	void _dump(bool* value)
 	{
-		stream->dump(value);
+		stream->dump(*value);
 	}
 
-	void _dump(hsbase* stream, Serializable* value)
-	{
-		//stream->dump(value);
-	}
-
-	void _dump(hsbase* stream, Serializable** object)
+	void _dump(Serializable* object)
 	{
 		uint32_t id;
-		bool added = _tryMapObject(&id, *object);
-		_dump(stream, &id);
+		bool added = __tryMapObject(&id, object);
+		_dump(&id);
 		if (added)
 		{
-			harray<Variable> variables = (*object)->_lsVars();
+			harray<Variable> variables = object->_lsVars();
 			uint32_t size = (uint32_t)variables.size();
-			_dump(stream, &size);
+			_dump(&size);
 			foreach (Variable, it, variables)
 			{
-				_dump(stream, &(*it));
+				_dump(&(*it));
 			}
 		}
 	}
 
-	void _dump(hsbase* stream, hstr* value)
+	void _dump(Serializable** object)
+	{
+		if (dynamic_cast<Serializable*>(*object) == NULL)
+		{
+			throw hl_exception("Trying to serialize object that does not inherit liteser::Serializable.");
+		}
+		_dump(*object);
+	}
+
+	void _dump(hstr* value)
 	{
 		// TODO - implement own way of saving stuff
 		// TODO - index variable names and strings
-		stream->dump(value);
+		stream->dump(*value);
 	}
 
 }

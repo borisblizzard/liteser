@@ -177,8 +177,9 @@ void print_variables(T & x)
 	};
 */
 
-#define LS_SERIALIZABLE(superclass, ...) \
+#define LS_SERIALIZABLE(thisclass, superclass, ...) \
 	__LS_FOREACH(__LS_VAR, __VA_ARGS__) \
+	hstr _lsName() { return #thisclass; } \
 	harray<liteser::Variable> _lsVars() \
 	{ \
 		harray<liteser::Variable> variables = superclass::_lsVars(); \
@@ -198,7 +199,8 @@ namespace liteser
 		Serializable();
 		virtual ~Serializable();
 
-		harray<Variable> _lsVars() { return harray<Variable>(); }
+		virtual hstr _lsName() { return "liteser::Serializer"; }
+		virtual harray<Variable> _lsVars() { return harray<Variable>(); }
 
 	};
 
