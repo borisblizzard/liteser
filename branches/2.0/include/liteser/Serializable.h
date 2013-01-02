@@ -18,6 +18,7 @@
 
 #include <hltypes/hsbase.h>
 
+#include "Factory.h"
 #include "liteserExport.h"
 #include "macros.h"
 #include "Variable.h"
@@ -177,15 +178,22 @@ void print_variables(T & x)
 	};
 */
 
-#define LS_SERIALIZABLE(thisclass, superclass, ...) \
+#define LS_CLASS_DECLARE(classe) \
+	/*static liteser::Serializable* _lsCreate() { return new classe(); }*/ \
+	hstr _lsName() { return #classe; } \
+	static liteser::Factory::Register<classe> _lsRegister;
+	/*static _lsFactory liteser::Factory<classe>*/
+#define LS_CLASS_DEFINE(classe) \
+	liteser::Factory::Register<classe> classe::_lsRegister(#classe);
+#define LS_VARS(superclass, ...) \
 	__LS_FOREACH(__LS_VAR, __VA_ARGS__) \
-	hstr _lsName() { return #thisclass; } \
 	harray<liteser::Variable> _lsVars() \
 	{ \
 		harray<liteser::Variable> variables = superclass::_lsVars(); \
 		__LS_FOREACH(__LS_REF, __VA_ARGS__) \
 		return variables; \
 	}
+
 #define __LS_VAR(i, x) \
 	__LS_PAIR(x);
 #define __LS_REF(i, x) \
