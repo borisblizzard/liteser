@@ -27,10 +27,10 @@ namespace liteser
 			throw file_not_open("Liteser Stream");
 		}
 		// TODO - add exception handling
-		_start();
+		_start(stream);
 		stream->write_raw(header, 4);
-		_dump(stream, &object);
-		_finish();
+		_dump(&object);
+		_finish(stream);
 	}
 	
 	void deserialize(hsbase* stream, Serializable** object)
@@ -40,7 +40,7 @@ namespace liteser
 			throw file_not_open("Liteser Stream");
 		}
 		// TODO - add exception handling
-		_start();
+		_start(stream);
 		unsigned char readHeader[4];
 		stream->read_raw(readHeader, 4);
 		unsigned char major = readHeader[2];
@@ -51,7 +51,7 @@ namespace liteser
 		ids[id] = (*object);
 		*/
 		//(*object)->deserialize(stream);
-		_finish();
+		_finish(stream);
 	}
 
 }

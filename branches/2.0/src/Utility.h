@@ -16,32 +16,34 @@
 
 #include <hltypes/hsbase.h>
 
+#include "Variable.h"
+
 namespace liteser
 {
 	class Serializable;
-	class Variable;
 
-	bool _tryMapObject(unsigned int* id, Serializable* object);
-	Serializable* _getObject(unsigned int id);
-	void _start();
-	void _finish();
+	bool __tryMapObject(unsigned int* id, Serializable* object);
+	Serializable* __getObject(unsigned int id);
+	void _start(hsbase* stream);
+	void _finish(hsbase* stream);
 	bool _isActive();
 	void _checkVersion(unsigned char major, unsigned char minor);
 
-	void _dump(hsbase* stream, char* value);
-	void _dump(hsbase* stream, unsigned char* value);
-	void _dump(hsbase* stream, int16_t* value);
-	void _dump(hsbase* stream, uint16_t* value);
-	void _dump(hsbase* stream, int32_t* value);
-	void _dump(hsbase* stream, uint32_t* value);
-	void _dump(hsbase* stream, float* value);
-	void _dump(hsbase* stream, double* value);
-	void _dump(hsbase* stream, bool* value);
-	void _dump(hsbase* stream, Serializable* value);
-	void _dump(hsbase* stream, Serializable** value);
-	void _dump(hsbase* stream, hstr* value);
+	void __dumpVariable(Variable* variable);
 
-	void _dump(hsbase* stream, Variable* variable);
+	void _dump(char* value);
+	void _dump(unsigned char* value);
+	void _dump(int16_t* value);
+	void _dump(uint16_t* value);
+	void _dump(int32_t* value);
+	void _dump(uint32_t* value);
+	void _dump(float* value);
+	void _dump(double* value);
+	void _dump(bool* value);
+	void _dump(Serializable* value);
+	void _dump(Serializable** value);
+	void _dump(hstr* value);
+
 
 }
 #endif

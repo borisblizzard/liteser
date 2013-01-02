@@ -29,12 +29,13 @@ class Type2 : public liteser::Serializable
 public:
 	Type2() : liteser::Serializable()
 	{
-
+		this->string = "HELLO WORLD";
 	}
 	~Type2() { }
 
 	LS_SERIALIZABLE
 	(
+		Type2,
 		liteser::Serializable,
 		(hstr) string
 	)
@@ -52,6 +53,7 @@ public:
 
 	LS_SERIALIZABLE
 	(
+		Type3,
 		Type2,
 		(hstr) string2
 	)
@@ -68,8 +70,9 @@ public:
 
 	LS_SERIALIZABLE
 	(
+		Type1,
 		liteser::Serializable,
-		(char) v_int8/*,
+		(char) v_int8,
 		(unsigned char) v_uint8,
 		(short) v_int16,
 		(unsigned short) v_uint16,
@@ -77,8 +80,8 @@ public:
 		(unsigned int) v_uint32,
 		(float) v_float,
 		(double) v_double,
-		(bool) v_bool*/,
-		(Type3*) v_type3/*,
+		(bool) v_bool/*,
+		(Type3*) v_type3,
 		(Type2) v_type2*/
 	)
 
@@ -99,7 +102,9 @@ int main(int argc, char **argv)
 		printf("%s = %s\n", type1._lsVar<i, Type1>().name().c_str())
 	}
 	*/
-	hfile file("demo_simple.lsb");
+	hfile file("demo_simple.lsb", hfile::WRITE);
+	liteser::serialize(&file, &type1);
+	file.close();
 	//liteser::serialize(&file, &type1);
 	/*
 	printf("%f\n", type1.getVarFloat());
