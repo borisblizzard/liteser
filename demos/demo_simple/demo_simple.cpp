@@ -27,23 +27,26 @@
 class Type2 : public liteser::Serializable
 {
 public:
+	LS_CLASS_DECLARE(Type2);
 	Type2() : liteser::Serializable()
 	{
 		this->string = "HELLO WORLD";
 	}
 	~Type2() { }
 
-	LS_SERIALIZABLE
+	LS_VARS
 	(
-		Type2,
 		liteser::Serializable,
 		(hstr) string
 	)
+
 };
+LS_CLASS_DEFINE(Type2);
 
 class Type3 : public Type2
 {
 public:
+	LS_CLASS_DECLARE(Type3);
 	Type3() : Type2()
 	{
 		this->string = "NO WAY";
@@ -51,26 +54,27 @@ public:
 	}
 	~Type3() { }
 
-	LS_SERIALIZABLE
+	LS_VARS
 	(
-		Type3,
 		Type2,
 		(hstr) string2
 	)
+
 };
+LS_CLASS_DEFINE(Type3);
 
 class Type1 : public liteser::Serializable
 {
 public:
+	LS_CLASS_DECLARE(Type1);
 	Type1() : liteser::Serializable()
 	{
 
 	}
 	~Type1() { }
 
-	LS_SERIALIZABLE
+	LS_VARS
 	(
-		Type1,
 		liteser::Serializable,
 		(char) v_int8,
 		(unsigned char) v_uint8,
@@ -86,30 +90,20 @@ public:
 	)
 
 };
+LS_CLASS_DEFINE(Type1);
 
 int main(int argc, char **argv)
 {
+	hfile file;
 	Type1 type1;
-	//type1._lsVar<0, Type1>();
-	//Type1::_lsVar2<0, Type1>(type1);
-	///*
-	/*
-	int& value = type1._lsVar<0, Type1>().value();
-	printf("%d\n", value);
-	int vars = type1._lsVarCount();
-	for_iter (i, 0, vars)
-	{
-		printf("%s = %s\n", type1._lsVar<i, Type1>().name().c_str())
-	}
-	*/
-	hfile file("demo_simple.lsb", hfile::WRITE);
+
+	file.open("demo_simple.lsb", hfile::WRITE);
 	liteser::serialize(&file, &type1);
 	file.close();
-	//liteser::serialize(&file, &type1);
-	/*
-	printf("%f\n", type1.getVarFloat());
-	printf("%d\n", type1.getVarBool());
-	*/
+
+	liteser::Serializable* a = liteser::Factory::create("Type1");
+	delete a;
+
 	system("pause");
 	return 0;
 }

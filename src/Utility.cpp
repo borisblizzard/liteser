@@ -148,6 +148,7 @@ namespace liteser
 		_dump(&id);
 		if (added)
 		{
+			_dump(&object->_lsName());
 			harray<Variable> variables = object->_lsVars();
 			uint32_t size = (uint32_t)variables.size();
 			_dump(&size);

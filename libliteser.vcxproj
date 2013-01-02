@@ -191,6 +191,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\liteser\Factory.h" />
     <ClInclude Include="include\liteser\liteser.h" />
     <ClInclude Include="include\liteser\liteserExport.h" />
     <ClInclude Include="include\liteser\macros.h" />
@@ -199,6 +200,7 @@
     <ClInclude Include="src\Utility.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Factory.cpp" />
     <ClCompile Include="src\liteser.cpp" />
     <ClCompile Include="src\Serializable.cpp" />
     <ClCompile Include="src\Utility.cpp" />
