@@ -197,12 +197,16 @@
     <ClInclude Include="include\liteser\macros.h" />
     <ClInclude Include="include\liteser\Serializable.h" />
     <ClInclude Include="include\liteser\Variable.h" />
+    <ClInclude Include="src\Deserialize.h" />
+    <ClInclude Include="src\Serialize.h" />
     <ClInclude Include="src\Utility.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Deserialize.cpp" />
     <ClCompile Include="src\Factory.cpp" />
     <ClCompile Include="src\liteser.cpp" />
     <ClCompile Include="src\Serializable.cpp" />
+    <ClCompile Include="src\Serialize.cpp" />
     <ClCompile Include="src\Utility.cpp" />
     <ClCompile Include="src\Variable.cpp" />
   </ItemGroup>

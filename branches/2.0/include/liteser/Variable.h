@@ -51,25 +51,58 @@ namespace liteser
 			TYPE_HMAP	= 0xC1
 		};
 
+		template<class T>
+		struct Ptr
+		{
+		public:
+			T* value;
+			Ptr(T* value) { this->value = value; }
+			~Ptr() { }
+		};
+
 		hstr name;
-		void* value;
+		void* ptr;
 		Type type;
 
-		Variable(chstr name, char* value); // char is always 8 bits
-		Variable(chstr name, unsigned char* value); // char is always 8 bits
-		Variable(chstr name, int16_t* value);
-		Variable(chstr name, uint16_t* value);
-		Variable(chstr name, int32_t* value);
-		Variable(chstr name, uint32_t* value);
-		Variable(chstr name, float* value);
-		Variable(chstr name, double* value);
-		Variable(chstr name, bool* value);
-		Variable(chstr name, Serializable* value);
-		Variable(chstr name, void* value);
-		Variable(chstr name, hstr* value);
+		Variable(chstr name, Ptr<char>* ptr); // char is always 8 bits
+		Variable(chstr name, Ptr<unsigned char>* ptr); // char is always 8 bits
+		Variable(chstr name, Ptr<int16_t>* ptr);
+		Variable(chstr name, Ptr<uint16_t>* ptr);
+		Variable(chstr name, Ptr<int32_t>* ptr);
+		Variable(chstr name, Ptr<uint32_t>* ptr);
+		Variable(chstr name, Ptr<float>* ptr);
+		Variable(chstr name, Ptr<double>* ptr);
+		Variable(chstr name, Ptr<bool>* ptr);
+		Variable(chstr name, Ptr<hstr>* ptr);
 		//template <class T>
 		//Variable(chstr name, harray<T> value);
+		template <class T>
+		Variable(chstr name, Ptr<T*>* ptr)
+		{
+			Serializable* obj = dynamic_cast<Serializable*>(*ptr->value);
+			this->name = name;
+			this->ptr = (void*)(new Ptr<Serializable*>((Serializable**)ptr->value));
+			this->type = TYPE_OBJPTR;
+			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable.
+			Ptr<Serializable>(*ptr->value);
+			delete ptr;
+		}
+		template <class T>
+		Variable(chstr name, Ptr<T>* ptr)
+		{
+			this->name = name;
+			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable.
+			this->ptr = (void*)(new Ptr<Serializable>(ptr->value));
+			this->type = TYPE_OBJECT;
+			delete ptr;
+		}
 		~Variable();
+
+		template <class T>
+		T* value()
+		{
+			return ((Variable::Ptr<T>*)this->ptr)->value;
+		}
 
 	};
 
