@@ -24,6 +24,12 @@
 #include <liteser/liteser.h>
 #include <liteser/Serializable.h>
 
+class Type4
+{
+	int var;
+	virtual void a() { return; };
+};
+
 class Type2 : public liteser::Serializable
 {
 public:
@@ -69,9 +75,21 @@ public:
 	LS_CLASS_DECLARE(Type1);
 	Type1() : liteser::Serializable()
 	{
-
+		this->v_int8 = -8;
+		this->v_uint8 = 18;
+		this->v_int16 = -16;
+		this->v_uint16 = 116;
+		this->v_int32 = -32;
+		this->v_uint32 = 132;
+		this->v_float = 1.0f;
+		this->v_double = 2.0f;
+		this->v_bool = true;
+		this->v_type3 = new Type3();
 	}
-	~Type1() { }
+	~Type1()
+	{
+		delete this->v_type3;
+	}
 
 	LS_VARS
 	(
@@ -84,9 +102,9 @@ public:
 		(unsigned int) v_uint32,
 		(float) v_float,
 		(double) v_double,
-		(bool) v_bool/*,
-		(Type3*) v_type3,
-		(Type2) v_type2*/
+		(bool) v_bool,
+		(Type2) v_type2,
+		(Type3*) v_type3
 	)
 
 };

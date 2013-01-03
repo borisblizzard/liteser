@@ -35,6 +35,12 @@
     <ClInclude Include="include\liteser\Factory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Deserialize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Serialize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Serializable.cpp">
@@ -50,6 +56,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Factory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Deserialize.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Serialize.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

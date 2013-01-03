@@ -22,28 +22,14 @@ namespace liteser
 {
 	class Serializable;
 
+	extern hsbase* stream;
+
 	bool __tryMapObject(unsigned int* id, Serializable* object);
 	Serializable* __getObject(unsigned int id);
 	void _start(hsbase* stream);
 	void _finish(hsbase* stream);
 	bool _isActive();
 	void _checkVersion(unsigned char major, unsigned char minor);
-
-	void __dumpVariable(Variable* variable);
-
-	void _dump(char* value);
-	void _dump(unsigned char* value);
-	void _dump(int16_t* value);
-	void _dump(uint16_t* value);
-	void _dump(int32_t* value);
-	void _dump(uint32_t* value);
-	void _dump(float* value);
-	void _dump(double* value);
-	void _dump(bool* value);
-	void _dump(Serializable* value);
-	void _dump(Serializable** value);
-	void _dump(hstr* value);
-
 
 }
 #endif

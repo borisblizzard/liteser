@@ -11,16 +11,18 @@
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
 
+#include "Deserialize.h"
 #include "liteser.h"
 #include "Serializable.h"
+#include "Serialize.h"
 #include "Utility.h"
 #include "Variable.h"
 
 namespace liteser
 {
-	char header[4] = {'L', 'S', (char)_LS_VERSION_MAJOR, (char)_LS_VERSION_MINOR };
+	char header[4] = {'L', 'S', (char)_LS_VERSION_MAJOR, (char)_LS_VERSION_MINOR};
 
-	void serialize(hsbase* stream, Serializable* object)
+	bool serialize(hsbase* stream, Serializable* object)
 	{
 		if (!stream->is_open())
 		{
@@ -31,9 +33,10 @@ namespace liteser
 		stream->write_raw(header, 4);
 		_dump(&object);
 		_finish(stream);
+		return true;
 	}
 	
-	void deserialize(hsbase* stream, Serializable** object)
+	bool deserialize(hsbase* stream, Serializable** object)
 	{
 		if (!stream->is_open())
 		{
@@ -52,6 +55,7 @@ namespace liteser
 		*/
 		//(*object)->deserialize(stream);
 		_finish(stream);
+		return true;
 	}
 
 }
