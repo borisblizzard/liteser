@@ -39,7 +39,7 @@ namespace liteser
 
 	void checkVersion(unsigned char major, unsigned char minor)
 	{
-		if (major != _LS_VERSION_MAJOR || minor != _LS_VERSION_MINOR)
+		if (major != _LS_VERSION_MAJOR || minor > _LS_VERSION_MINOR)
 		{
 			throw hl_exception(hsprintf("Liteser Read Error! Version mismatch: expected %d.%d, got %d.%d",
 				_LS_VERSION_MAJOR, _LS_VERSION_MINOR, major, minor));
