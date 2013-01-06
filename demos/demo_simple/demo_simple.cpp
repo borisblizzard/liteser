@@ -10,19 +10,17 @@
 #define LOG_TAG "demo_simple"
 
 #include <hltypes/hfile.h>
-#include <hltypes/hstring.h>
-
-/*
-#include <stdio.h>
-
 #include <hltypes/hlog.h>
-#include <hltypes/harray.h>
-#include <hltypes/hltypesUtil.h>
-#include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
-*/
+
 #include <liteser/liteser.h>
 #include <liteser/Serializable.h>
+
+#define CHECK_VALUE(name) \
+	if (this->name != other.name) \
+	{ \
+		hlog::warn(LOG_TAG, "NO MATCH: " #name); \
+	}
 
 class Type4
 {
@@ -40,6 +38,12 @@ public:
 	}
 	~Type2() { }
 
+	void check(const Type2& other)
+	{
+		CHECK_VALUE(string);
+	}
+
+protected:
 	LS_VARS
 	(
 		liteser::Serializable,
@@ -60,6 +64,13 @@ public:
 	}
 	~Type3() { }
 
+	void check(const Type3& other)
+	{
+		CHECK_VALUE(string2);
+		Type2::check(other);
+	}
+
+protected:
 	LS_VARS
 	(
 		Type2,
@@ -91,6 +102,23 @@ public:
 		delete this->v_type3;
 	}
 
+	void check(const Type1& other)
+	{
+		CHECK_VALUE(v_int8);
+		CHECK_VALUE(v_uint8);
+		CHECK_VALUE(v_int16);
+		CHECK_VALUE(v_uint16);
+		CHECK_VALUE(v_int32);
+		CHECK_VALUE(v_uint32);
+		CHECK_VALUE(v_float);
+		CHECK_VALUE(v_double);
+		CHECK_VALUE(v_bool);
+		this->v_type2.check(other.v_type2);
+		this->v_type3->check(*other.v_type3);
+	}
+
+protected:
+
 	LS_VARS
 	(
 		liteser::Serializable,
@@ -119,8 +147,12 @@ int main(int argc, char **argv)
 	liteser::serialize(&file, &type1);
 	file.close();
 
-	liteser::Serializable* a = liteser::Factory::create("Type1");
-	delete a;
+	Type1* loaded = NULL;
+	file.open("demo_simple.lsb");
+	liteser::deserialize(&file, (liteser::Serializable**)&loaded);
+	file.close();
+
+	type1.check(*loaded);
 
 	system("pause");
 	return 0;

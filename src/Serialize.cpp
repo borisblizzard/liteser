@@ -7,6 +7,8 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
+#include <stdint.h>
+
 #include <hltypes/harray.h>
 #include <hltypes/hdeque.h>
 #include <hltypes/hlist.h>
@@ -17,15 +19,11 @@
 #include "Serializable.h"
 #include "Serialize.h"
 #include "Utility.h"
+#include "Variable.h"
 
 namespace liteser
 {
-	void __dumpVariableType(Variable::Type type)
-	{
-		stream->dump((unsigned char)type);
-	}
-	
-	void _dump(Variable* variable)
+	void __dumpVariable(Variable* variable)
 	{
 		_dump(&variable->name);
 		unsigned char type = (unsigned char)variable->type;
@@ -105,28 +103,28 @@ namespace liteser
 		stream->dump(*value);
 	}
 
-	void _dump(Serializable* object)
+	void _dump(Serializable* value)
 	{
 		uint32_t id;
-		bool added = __tryMapObject(&id, object);
+		bool added = __tryMapObject(&id, value);
 		_dump(&id);
 		if (added)
 		{
-			_dump(&object->_lsName());
-			harray<Variable*> variables = object->_lsVars();
+			_dump(&value->_lsName());
+			harray<Variable*> variables = value->_lsVars();
 			uint32_t size = (uint32_t)variables.size();
 			_dump(&size);
 			foreach (Variable*, it, variables)
 			{
-				_dump(*it);
+				__dumpVariable(*it);
 				delete (*it);
 			}
 		}
 	}
 
-	void _dump(Serializable** object)
+	void _dump(Serializable** value)
 	{
-		_dump(*object);
+		_dump(*value);
 	}
 
 }

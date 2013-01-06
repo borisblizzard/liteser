@@ -14,13 +14,14 @@
 #ifndef LITESER_SERIALIZE_H
 #define LITESER_SERIALIZE_H
 
-#include <hltypes/hsbase.h>
+#include <stdint.h>
 
-#include "Variable.h"
+#include <hltypes/hsbase.h>
 
 namespace liteser
 {
 	class Serializable;
+	class Variable;
 
 	void __dumpVariable(Variable* variable);
 

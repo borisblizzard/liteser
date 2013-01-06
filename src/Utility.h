@@ -25,7 +25,7 @@ namespace liteser
 	extern hsbase* stream;
 
 	bool __tryMapObject(unsigned int* id, Serializable* object);
-	Serializable* __getObject(unsigned int id);
+	bool __tryGetObject(unsigned int id, Serializable** object);
 	void _start(hsbase* stream);
 	void _finish(hsbase* stream);
 	bool _isActive();

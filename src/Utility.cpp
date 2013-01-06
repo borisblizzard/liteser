@@ -37,9 +37,19 @@ namespace liteser
 		return false;
 	}
 
-	Serializable* __getObject(unsigned int id)
+	bool __tryGetObject(unsigned int id, Serializable** object)
 	{
-		return objects.try_get_by_key(id, NULL);
+		if (id == 0)
+		{
+			*object = NULL;
+			return true;
+		}
+		if (!objects.has_key(id))
+		{
+			return false;
+		}
+		*object = objects[id];
+		return true;
 	}
 
 	void _start(hsbase* stream)
@@ -61,7 +71,7 @@ namespace liteser
 
 	void _checkVersion(unsigned char major, unsigned char minor)
 	{
-		if (major != _LS_VERSION_MAJOR || minor != _LS_VERSION_MINOR)
+		if (major != _LS_VERSION_MAJOR || minor > _LS_VERSION_MINOR)
 		{
 			throw hl_exception(hsprintf("Liteser Read Error! Version mismatch: expected %d.%d, got %d.%d",
 				_LS_VERSION_MAJOR, _LS_VERSION_MINOR, major, minor));
