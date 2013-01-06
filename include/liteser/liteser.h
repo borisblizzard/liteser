@@ -24,7 +24,7 @@
 #include "Serializable.h"
 
 #define _LS_VERSION_MAJOR 1
-#define _LS_VERSION_MINOR 0
+#define _LS_VERSION_MINOR 1
 
 #define _LS_INIT_MANUAL_SERIALIZATION \
 	liteser::_lsIds.clear(); \
