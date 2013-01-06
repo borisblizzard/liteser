@@ -10,6 +10,7 @@
 #include <hltypes/exception.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
+#include <hltypes/hstring.h>
 
 #include "Deserialize.h"
 #include "liteser.h"
@@ -18,9 +19,14 @@
 #include "Utility.h"
 #include "Variable.h"
 
+#define _LS_HEADER_0 'L'
+#define _LS_HEADER_1 'S'
+
 namespace liteser
 {
-	char header[4] = {'L', 'S', (char)_LS_VERSION_MAJOR, (char)_LS_VERSION_MINOR};
+	char header[4] = {_LS_HEADER_0, _LS_HEADER_1, (char)_LS_VERSION_MAJOR, (char)_LS_VERSION_MINOR};
+
+	hstr logTag = "liteser";
 
 	bool serialize(hsbase* stream, Serializable* object)
 	{
@@ -42,18 +48,22 @@ namespace liteser
 		{
 			throw file_not_open("Liteser Stream");
 		}
+		if (*object != NULL)
+		{
+			throw hl_exception("Given pointer to object for deserialization is not NULL.");
+		}
 		// TODO - add exception handling
 		_start(stream);
 		unsigned char readHeader[4];
 		stream->read_raw(readHeader, 4);
+		if (readHeader[0] != _LS_HEADER_0 || readHeader[1] != _LS_HEADER_1)
+		{
+			throw hl_exception("Invalid header.");
+		}
 		unsigned char major = readHeader[2];
 		unsigned char minor = readHeader[3];
 		_checkVersion(major, minor);
-		/*
-		int id = stream->load_uint();
-		ids[id] = (*object);
-		*/
-		//(*object)->deserialize(stream);
+		_load(object);
 		_finish(stream);
 		return true;
 	}

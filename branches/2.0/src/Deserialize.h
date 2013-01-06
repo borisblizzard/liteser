@@ -14,11 +14,30 @@
 #ifndef LITESER_DESERIALIZE_H
 #define LITESER_DESERIALIZE_H
 
-#include <hltypes/hsbase.h>
+#include <stdint.h>
 
-#include "Variable.h"
+#include <hltypes/hsbase.h>
 
 namespace liteser
 {
+	class Serializable;
+	class Variable;
+
+	void __loadVariable(Variable* variable);
+
+	void _load(char* value);
+	void _load(unsigned char* value);
+	void _load(int16_t* value);
+	void _load(uint16_t* value);
+	void _load(int32_t* value);
+	void _load(uint32_t* value);
+	void _load(float* value);
+	void _load(double* value);
+	void _load(bool* value);
+	void _load(hstr* value);
+	void _load(Serializable* value);
+	void _load(Serializable** value);
+	void __loadObject(Serializable** value);
+
 }
 #endif
