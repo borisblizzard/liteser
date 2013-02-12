@@ -16,83 +16,110 @@
 #include <hltypes/hstring.h>
 
 #include "liteser.h"
+#include "Ptr.h"
+#include "Type.h"
 #include "Variable.h"
 
 namespace liteser
 {
-	Variable::Variable(chstr name, Variable::Ptr<char>* ptr)
+	Variable::Variable(chstr name, Ptr<char>* ptr)
 	{
 		this->name = name;
+		this->type = new Type(ptr);
 		this->ptr = (void*)ptr;
-		this->type = TYPE_INT8;
 	}
 
-	Variable::Variable(chstr name, Variable::Ptr<unsigned char>* ptr)
+	Variable::Variable(chstr name, Ptr<unsigned char>* ptr)
 	{
 		this->name = name;
+		this->type = new Type(ptr);
 		this->ptr = (void*)ptr;
-		this->type = TYPE_UINT8;
 	}
 
-	Variable::Variable(chstr name, Variable::Ptr<int16_t>* ptr)
+	Variable::Variable(chstr name, Ptr<int16_t>* ptr)
 	{
 		this->name = name;
+		this->type = new Type(ptr);
 		this->ptr = (void*)ptr;
-		this->type = TYPE_INT16;
 	}
 
-	Variable::Variable(chstr name, Variable::Ptr<uint16_t>* ptr)
+	Variable::Variable(chstr name, Ptr<uint16_t>* ptr)
 	{
 		this->name = name;
+		this->type = new Type(ptr);
 		this->ptr = (void*)ptr;
-		this->type = TYPE_UINT16;
 	}
 
-	Variable::Variable(chstr name, Variable::Ptr<int32_t>* ptr)
+	Variable::Variable(chstr name, Ptr<int32_t>* ptr)
 	{
 		this->name = name;
+		this->type = new Type(ptr);
 		this->ptr = (void*)ptr;
-		this->type = TYPE_INT32;
 	}
 
-	Variable::Variable(chstr name, Variable::Ptr<uint32_t>* ptr)
+	Variable::Variable(chstr name, Ptr<uint32_t>* ptr)
 	{
 		this->name = name;
+		this->type = new Type(ptr);
 		this->ptr = (void*)ptr;
-		this->type = TYPE_UINT32;
 	}
 
-	Variable::Variable(chstr name, Variable::Ptr<float>* ptr)
+	Variable::Variable(chstr name, Ptr<float>* ptr)
 	{
 		this->name = name;
+		this->type = new Type(ptr);
 		this->ptr = (void*)ptr;
-		this->type = TYPE_FLOAT;
 	}
 
-	Variable::Variable(chstr name, Variable::Ptr<double>* ptr)
+	Variable::Variable(chstr name, Ptr<double>* ptr)
 	{
 		this->name = name;
+		this->type = new Type(ptr);
 		this->ptr = (void*)ptr;
-		this->type = TYPE_DOUBLE;
 	}
 
-	Variable::Variable(chstr name, Variable::Ptr<bool>* ptr)
+	Variable::Variable(chstr name, Ptr<bool>* ptr)
 	{
 		this->name = name;
+		this->type = new Type(ptr);
 		this->ptr = (void*)ptr;
-		this->type = TYPE_BOOL;
 	}
 
-	Variable::Variable(chstr name, Variable::Ptr<hstr>* ptr)
+	Variable::Variable(chstr name, Ptr<hstr>* ptr)
 	{
 		this->name = name;
+		this->type = new Type(ptr);
 		this->ptr = (void*)ptr;
-		this->type = TYPE_HSTR;
 	}
 	
 	Variable::~Variable()
 	{
-		delete this->ptr;
+		if (this->type != NULL)
+		{
+			delete this->type;
+		}
+		if (this->ptr != NULL)
+		{
+			delete this->ptr;
+		}
+		foreach (Variable*, it, this->subVariables)
+		{
+			delete (*it);
+		}
+	}
+
+	Variable* Variable::createSubVariable()
+	{
+		if (this->type->subType == NULL)
+		{
+			throw hl_exception(hsprintf("Variable type does not contain a subtype anymore: %s", this->name.c_str()));
+		}
+		Variable* variable = this->type->createSubVariable();
+		if (variable == NULL)
+		{
+			throw hl_exception(hsprintf("Subtype of variable does not exist: %s; type: %02X", this->name.c_str(), this->type->subType->value));
+		}
+		return variable;
 	}
 
 }

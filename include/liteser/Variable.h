@@ -23,6 +23,8 @@
 #include <hltypes/hstring.h>
 
 #include "liteserExport.h"
+#include "Ptr.h"
+#include "Type.h"
 
 namespace liteser
 {
@@ -31,38 +33,10 @@ namespace liteser
 	class liteserExport Variable
 	{
 	public:
-		enum Type
-		{
-			TYPE_INT8	= 0x01,
-			TYPE_UINT8	= 0x02,
-			TYPE_INT16	= 0x03,
-			TYPE_UINT16	= 0x04,
-			TYPE_INT32	= 0x05,
-			TYPE_UINT32	= 0x06,
-			TYPE_FLOAT	= 0x21,
-			TYPE_DOUBLE	= 0x22,
-			TYPE_BOOL	= 0x41,
-			TYPE_OBJECT	= 0x61,
-			TYPE_OBJPTR	= 0x62,
-			TYPE_HSTR	= 0x81,
-			TYPE_HARRAY	= 0xA1,
-			TYPE_HLIST	= 0xA2,
-			TYPE_HDEQUE	= 0xA3,
-			TYPE_HMAP	= 0xC1
-		};
-
-		template<class T>
-		struct Ptr
-		{
-		public:
-			T* value;
-			Ptr(T* value) { this->value = value; }
-			~Ptr() { }
-		};
-
 		hstr name;
+		Type* type;
 		void* ptr;
-		Type type;
+		harray<Variable*> subVariables;
 
 		Variable(chstr name, Ptr<char>* ptr); // char is always 8 bits
 		Variable(chstr name, Ptr<unsigned char>* ptr); // char is always 8 bits
@@ -74,15 +48,15 @@ namespace liteser
 		Variable(chstr name, Ptr<double>* ptr);
 		Variable(chstr name, Ptr<bool>* ptr);
 		Variable(chstr name, Ptr<hstr>* ptr);
-		//template <class T>
-		//Variable(chstr name, harray<T> value);
+
 		template <class T>
 		Variable(chstr name, Ptr<T*>* ptr)
 		{
-			Serializable* obj = dynamic_cast<Serializable*>(*ptr->value);
 			this->name = name;
-			this->ptr = (void*)(new Ptr<Serializable*>((Serializable**)ptr->value));
-			this->type = TYPE_OBJPTR;
+			Serializable* obj = dynamic_cast<Serializable*>(*ptr->value);
+			Ptr<Serializable*>* tempPtr = new Ptr<Serializable*>((Serializable**)ptr->value);
+			this->ptr = (void*)tempPtr;
+			this->type = new Type(tempPtr);
 			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable.
 			Ptr<Serializable>(*ptr->value);
 			delete ptr;
@@ -92,17 +66,32 @@ namespace liteser
 		{
 			this->name = name;
 			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable.
-			this->ptr = (void*)(new Ptr<Serializable>(ptr->value));
-			this->type = TYPE_OBJECT;
+			Ptr<Serializable>* tempPtr = new Ptr<Serializable>(ptr->value);
+			this->ptr = (void*)tempPtr;
+			this->type = new Type(tempPtr);
 			delete ptr;
 		}
 		~Variable();
 
 		template <class T>
+		Variable(chstr name, Ptr<harray<T> >* ptr)
+		{
+			this->name = name;
+			this->type = new Type(ptr);
+			this->ptr = (void*)ptr;
+			foreach (T, it, *ptr->value)
+			{
+				this->subVariables += new Variable("", new Ptr<T>(&(*it)));
+			}
+		}
+
+		template <class T>
 		T* value()
 		{
-			return ((Variable::Ptr<T>*)this->ptr)->value;
+			return ((Ptr<T>*)this->ptr)->value;
 		}
+
+		Variable* createSubVariable();
 
 	};
 

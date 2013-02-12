@@ -96,6 +96,8 @@ public:
 		this->v_double = 2.0f;
 		this->v_bool = true;
 		this->v_type3 = new Type3();
+		this->v_harray_int += 1;
+		this->v_harray_int += 2;
 	}
 	~Type1()
 	{
@@ -113,6 +115,7 @@ public:
 		CHECK_VALUE(v_float);
 		CHECK_VALUE(v_double);
 		CHECK_VALUE(v_bool);
+		CHECK_VALUE(v_harray_int);
 		this->v_type2.check(other.v_type2);
 		this->v_type3->check(*other.v_type3);
 	}
@@ -132,7 +135,8 @@ protected:
 		(double) v_double,
 		(bool) v_bool,
 		(Type2) v_type2,
-		(Type3*) v_type3
+		(Type3*) v_type3,
+		(harray<int>) v_harray_int
 	)
 
 };

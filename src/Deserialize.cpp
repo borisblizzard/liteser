@@ -20,6 +20,7 @@
 #include "Factory.h"
 #include "liteser.h"
 #include "Serializable.h"
+#include "Type.h"
 #include "Utility.h"
 #include "Variable.h"
 
@@ -29,24 +30,58 @@ namespace liteser
 	{
 		unsigned char loadType;
 		_load(&loadType);
-		if (loadType != variable->type)
+		if (loadType != variable->type->value)
 		{
-			throw hl_exception(hsprintf("Variable type has changed. Expected: %02x, Got: %02x", variable->type, loadType));
+			throw hl_exception(hsprintf("Variable type has changed. Expected: %02X, Got: %02X", variable->type->value, loadType));
 		}
+		__loadVariableValue(variable, loadType);
+	}
+
+	void __loadVariableValue(Variable* variable, unsigned char loadType)
+	{
 		switch (loadType)
 		{
-		case Variable::TYPE_INT8:	_load(variable->value<char>());				break;
-		case Variable::TYPE_UINT8:	_load(variable->value<unsigned char>());		break;
-		case Variable::TYPE_INT16:	_load(variable->value<int16_t>());			break;
-		case Variable::TYPE_UINT16:	_load(variable->value<uint16_t>());			break;
-		case Variable::TYPE_INT32:	_load(variable->value<int32_t>());			break;
-		case Variable::TYPE_UINT32:	_load(variable->value<uint32_t>());			break;
-		case Variable::TYPE_FLOAT:	_load(variable->value<float>());				break;
-		case Variable::TYPE_DOUBLE:	_load(variable->value<double>());			break;
-		case Variable::TYPE_BOOL:	_load(variable->value<bool>());				break;
-		case Variable::TYPE_HSTR:	_load(variable->value<hstr>());				break;
-		case Variable::TYPE_OBJECT:	_load(variable->value<Serializable>());		break;
-		case Variable::TYPE_OBJPTR:	_load(variable->value<Serializable*>());		break;
+		case Type::INT8:	_load(variable->value<char>());				break;
+		case Type::UINT8:	_load(variable->value<unsigned char>());	break;
+		case Type::INT16:	_load(variable->value<int16_t>());			break;
+		case Type::UINT16:	_load(variable->value<uint16_t>());			break;
+		case Type::INT32:	_load(variable->value<int32_t>());			break;
+		case Type::UINT32:	_load(variable->value<uint32_t>());			break;
+		case Type::FLOAT:	_load(variable->value<float>());			break;
+		case Type::DOUBLE:	_load(variable->value<double>());			break;
+		case Type::BOOL:	_load(variable->value<bool>());				break;
+		case Type::HSTR:	_load(variable->value<hstr>());				break;
+		case Type::OBJECT:	_load(variable->value<Serializable>());		break;
+		case Type::OBJPTR:	_load(variable->value<Serializable*>());	break;
+		case Type::HARRAY:	__loadHarray(variable);						break;
+		}
+	}
+
+	void __loadHarray(Variable* variable)
+	{
+		uint32_t size = 0;
+		_load(&size);
+		if (size > 0)
+		{
+			unsigned char loadType = 0;
+			_load(&loadType);
+			if (loadType != variable->type->value)
+			{
+				throw hl_exception(hsprintf("Variable type has changed. Expected: %02x, Got: %02x", variable->type->value, loadType));
+			}
+			_load(&loadType);
+			Variable* newVariable = NULL;
+			for_itert (uint32_t, i, 0, size)
+			{
+				newVariable = variable->createSubVariable();
+				//__loadVariableValue(
+			}
+			/*
+			foreach (Variable*, it, variable->subVariables)
+			{
+				__dumpVariable(*it);
+			}
+			*/
 		}
 	}
 
