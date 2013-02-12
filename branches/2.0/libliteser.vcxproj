@@ -28,7 +28,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-	<PlatformToolset>v110_xp</PlatformToolset>
+    <PlatformToolset>v110_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -39,7 +39,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-	<PlatformToolset>v110_xp</PlatformToolset>
+    <PlatformToolset>v110_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -197,7 +197,9 @@
     <ClInclude Include="include\liteser\liteser.h" />
     <ClInclude Include="include\liteser\liteserExport.h" />
     <ClInclude Include="include\liteser\macros.h" />
+    <ClInclude Include="include\liteser\Ptr.h" />
     <ClInclude Include="include\liteser\Serializable.h" />
+    <ClInclude Include="include\liteser\Type.h" />
     <ClInclude Include="include\liteser\Variable.h" />
     <ClInclude Include="src\Deserialize.h" />
     <ClInclude Include="src\Serialize.h" />
@@ -209,6 +211,7 @@
     <ClCompile Include="src\liteser.cpp" />
     <ClCompile Include="src\Serializable.cpp" />
     <ClCompile Include="src\Serialize.cpp" />
+    <ClCompile Include="src\Type.cpp" />
     <ClCompile Include="src\Utility.cpp" />
     <ClCompile Include="src\Variable.cpp" />
   </ItemGroup>

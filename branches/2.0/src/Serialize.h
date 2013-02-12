@@ -24,6 +24,9 @@ namespace liteser
 	class Variable;
 
 	void __dumpVariable(Variable* variable);
+	void __dumpVariableData(Variable* variable);
+
+	void __dumpHarray(Variable* variable);
 
 	void _dump(char* value);
 	void _dump(unsigned char* value);
