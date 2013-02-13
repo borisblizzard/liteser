@@ -18,6 +18,8 @@
 
 #include <hltypes/hsbase.h>
 
+#include "Type.h"
+
 namespace liteser
 {
 	class Serializable;
@@ -26,7 +28,7 @@ namespace liteser
 	void __loadVariable(Variable* variable);
 	void __loadVariableValue(Variable* variable, unsigned char loadType);
 
-	void __loadHarray(Variable* variable);
+	void __loadContainer(Variable* variable, Type::Value type);
 
 	void _load(char* value);
 	void _load(unsigned char* value);

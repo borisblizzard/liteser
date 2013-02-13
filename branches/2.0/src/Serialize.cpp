@@ -40,28 +40,31 @@ namespace liteser
 		case Type::HSTR:	_dump(variable->value<hstr>());				break;
 		case Type::OBJECT:	_dump(variable->value<Serializable>());		break;
 		case Type::OBJPTR:	_dump(variable->value<Serializable*>());	break;
-		case Type::HARRAY:	__dumpHarray(variable);						break;
-		/*
-		case Type::HDEQUE:	_dump(*(hdeque*)(variable->value));			break;
-		case Type::HLIST:	_dump(*(hlist*)(variable->value));			break;
-		case Type::HMAP:	_dump(*(hmap*)(variable->value));			break;
-		*/
+		case Type::HARRAY:	__dumpContainer(variable);					break;
+		case Type::HLIST:	__dumpContainer(variable);					break;
+		case Type::HDEQUE:	__dumpContainer(variable);					break;
+		//case Type::HMAP:	__dumpContainer(variable);					break;
 		}
 	}
 
 	void __dumpVariableData(Variable* variable)
 	{
 		_dump(&variable->name);
-		_dump((unsigned char*)(&variable->type));
+		_dump((unsigned char*)&variable->type->value);
 	}
 
-	void __dumpHarray(Variable* variable)
+	void __dumpContainer(Variable* variable)
 	{
 		uint32_t size = (uint32_t)variable->subVariables.size();
 		_dump(&size);
 		if (size > 0)
 		{
-			_dump((unsigned char*)(&variable->subVariables.first()->type));
+			size = (uint32_t)variable->type->subTypes.size();
+			_dump(&size);
+			foreach (Type*, it, variable->type->subTypes)
+			{
+				_dump((unsigned char*)(&(*it)->value));
+			}
 			foreach (Variable*, it, variable->subVariables)
 			{
 				__dumpVariable(*it);
