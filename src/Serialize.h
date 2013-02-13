@@ -18,6 +18,8 @@
 
 #include <hltypes/hsbase.h>
 
+#include "Type.h"
+
 namespace liteser
 {
 	class Serializable;
@@ -26,7 +28,7 @@ namespace liteser
 	void __dumpVariable(Variable* variable);
 	void __dumpVariableData(Variable* variable);
 
-	void __dumpHarray(Variable* variable);
+	void __dumpContainer(Variable* variable);
 
 	void _dump(char* value);
 	void _dump(unsigned char* value);

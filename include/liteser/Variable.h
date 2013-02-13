@@ -16,12 +16,14 @@
 
 #include <stdint.h>
 
+#include <hltypes/exception.h>
 #include <hltypes/harray.h>
 #include <hltypes/hdeque.h>
 #include <hltypes/hlist.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
+#include "liteser.h"
 #include "liteserExport.h"
 #include "Ptr.h"
 #include "Type.h"
@@ -84,6 +86,42 @@ namespace liteser
 				this->subVariables += new Variable("", new Ptr<T>(&(*it)));
 			}
 		}
+		template <class T>
+		Variable(chstr name, Ptr<hlist<T> >* ptr)
+		{
+			this->name = name;
+			this->type = new Type(ptr);
+			this->ptr = (void*)ptr;
+			foreach_l (T, it, *ptr->value)
+			{
+				this->subVariables += new Variable("", new Ptr<T>(&(*it)));
+			}
+		}
+		template <class T>
+		Variable(chstr name, Ptr<hdeque<T> >* ptr)
+		{
+			this->name = name;
+			this->type = new Type(ptr);
+			this->ptr = (void*)ptr;
+			foreach_q (T, it, *ptr->value)
+			{
+				this->subVariables += new Variable("", new Ptr<T>(&(*it)));
+			}
+		}
+		/*
+		template <class K, class V>
+		Variable(chstr name, Ptr<hmap<K, V> >* ptr)
+		{
+			this->name = name;
+			this->type = new Type(ptr);
+			this->ptr = (void*)ptr;
+			foreach_map (K, V, it, *ptr->value)
+			{
+				this->subVariables += new Variable("", new Ptr<K>(&it->first));
+				this->subVariables += new Variable("", new Ptr<V>(&it->second));
+			}
+		}
+		*/
 
 		template <class T>
 		T* value()
@@ -91,7 +129,71 @@ namespace liteser
 			return ((Ptr<T>*)this->ptr)->value;
 		}
 
-		Variable* createSubVariable();
+		void createSubVariables(unsigned int size, Type::Value type);
+
+	protected:
+		template <class T>
+		void _addSubVariablesHarray(unsigned int size)
+		{
+			harray<T>* container = ((Ptr<harray<T> >*)this->ptr)->value;
+			if (container->size() > 0)
+			{
+				throw hl_exception("Harray in default constructor not empty initially: " + this->name);
+			}
+			container->add(T(), size); // requires adding first because of possible reallocation of memory to another block
+			for_itert (unsigned int, i, 0, size)
+			{
+				this->subVariables += new Variable("", new Ptr<T>(&container->operator[](i)));
+			}
+		}
+		template <class T>
+		void _addSubVariablesHlist(unsigned int size)
+		{
+			hlist<T>* container = ((Ptr<hlist<T> >*)this->ptr)->value;
+			if (container->size() > 0)
+			{
+				throw hl_exception("Hlist in default constructor not empty initially: " + this->name);
+			}
+			container->add(T(), size); // requires adding first because of possible reallocation of memory to another block
+			for_itert (unsigned int, i, 0, size)
+			{
+				this->subVariables += new Variable("", new Ptr<T>(&container->operator[](i)));
+			}
+		}
+		template <class T>
+		void _addSubVariablesHdeque(unsigned int size)
+		{
+			hdeque<T>* container = ((Ptr<hdeque<T> >*)this->ptr)->value;
+			if (container->size() > 0)
+			{
+				throw hl_exception("Hdeque in default constructor not empty initially: " + this->name);
+			}
+			container->add(T(), size); // requires adding first because of possible reallocation of memory to another block
+			for_itert (unsigned int, i, 0, size)
+			{
+				this->subVariables += new Variable("", new Ptr<T>(&container->operator[](i)));
+			}
+		}
+		/*
+		template <class K, class V>
+		void _addSubVariablesHmap(unsigned int size)
+		{
+			std::map<K, V>* container = (std::map<K, V>*)((Ptr<hmap<K, V> >*)this->ptr)->value;
+			if (container->size() > 0)
+			{
+				throw hl_exception("Hmap in default constructor not empty initially: " + this->name);
+			}
+			for_itert (unsigned int, i, 0, size) // requires adding first because of possible reallocation of memory to another block
+			{
+				container->insert(std::pair<K, V>(K(), V()));
+			}
+			for (std::map<K, V>::iterator it = container->begin(); it != container->end(); it++)
+			{
+				this->subVariables += new Variable("", new Ptr<K>(&it->first));
+				this->subVariables += new Variable("", new Ptr<V>(&it->second));
+			}
+		}
+		*/
 
 	};
 

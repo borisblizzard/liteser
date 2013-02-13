@@ -53,35 +53,43 @@ namespace liteser
 		case Type::HSTR:	_load(variable->value<hstr>());				break;
 		case Type::OBJECT:	_load(variable->value<Serializable>());		break;
 		case Type::OBJPTR:	_load(variable->value<Serializable*>());	break;
-		case Type::HARRAY:	__loadHarray(variable);						break;
+		case Type::HARRAY:	__loadContainer(variable, Type::HARRAY);	break;
+		case Type::HLIST:	__loadContainer(variable, Type::HLIST);		break;
+		case Type::HDEQUE:	__loadContainer(variable, Type::HDEQUE);	break;
+		//case Type::HMAP:	__loadContainer(variable, Type::HMAP);		break;
 		}
 	}
 
-	void __loadHarray(Variable* variable)
+	void __loadContainer(Variable* variable, Type::Value type)
 	{
 		uint32_t size = 0;
 		_load(&size);
 		if (size > 0)
 		{
-			unsigned char loadType = 0;
-			_load(&loadType);
-			if (loadType != variable->type->value)
+			Type::Value loadType = Type::NONE;
+			uint32_t typeSize = 0;
+			_load(&typeSize);
+			if (typeSize != variable->type->subTypes.size())
 			{
-				throw hl_exception(hsprintf("Variable type has changed. Expected: %02x, Got: %02x", variable->type->value, loadType));
+				throw hl_exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", variable->type->subTypes.size(), typeSize));
 			}
-			_load(&loadType);
-			Variable* newVariable = NULL;
-			for_itert (uint32_t, i, 0, size)
+			for_itert (unsigned int, i, 0, typeSize)
 			{
-				newVariable = variable->createSubVariable();
-				//__loadVariableValue(
+				_load((unsigned char*)&loadType);
+				if (loadType != variable->type->subTypes[i]->value)
+				{
+					throw hl_exception(hsprintf("Variable type has changed. Expected: %02X, Got: %02X", variable->type->value, loadType));
+				}
+				if (loadType == Type::HARRAY || loadType == Type::HLIST || loadType == Type::HDEQUE || loadType == Type::HMAP)
+				{
+					throw hl_exception(hsprintf("Template container within a template container detected, not supported: %02X", loadType));
+				}
 			}
-			/*
+			variable->createSubVariables(size, type);
 			foreach (Variable*, it, variable->subVariables)
 			{
-				__dumpVariable(*it);
+				__loadVariableValue((*it), (*it)->type->value);
 			}
-			*/
 		}
 	}
 

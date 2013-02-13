@@ -20,93 +20,72 @@
 
 namespace liteser
 {
-	Type::Type(Ptr<char>* arg) : subType(NULL)
+	Type::Type(Ptr<char>* arg)
 	{
 		this->value = INT8;
 	}
 
-	Type::Type(Ptr<unsigned char>* arg) : subType(NULL)
+	Type::Type(Ptr<unsigned char>* arg)
 	{
 		this->value = UINT8;
 	}
 
-	Type::Type(Ptr<int16_t>* arg) : subType(NULL)
+	Type::Type(Ptr<int16_t>* arg)
 	{
 		this->value = INT16;
 	}
 
-	Type::Type(Ptr<uint16_t>* arg) : subType(NULL)
+	Type::Type(Ptr<uint16_t>* arg)
 	{
 		this->value = UINT16;
 	}
 
-	Type::Type(Ptr<int32_t>* arg) : subType(NULL)
+	Type::Type(Ptr<int32_t>* arg)
 	{
 		this->value = INT32;
 	}
 
-	Type::Type(Ptr<uint32_t>* arg) : subType(NULL)
+	Type::Type(Ptr<uint32_t>* arg)
 	{
 		this->value = UINT32;
 	}
 
-	Type::Type(Ptr<float>* arg) : subType(NULL)
+	Type::Type(Ptr<float>* arg)
 	{
 		this->value = FLOAT;
 	}
 
-	Type::Type(Ptr<double>* arg) : subType(NULL)
+	Type::Type(Ptr<double>* arg)
 	{
 		this->value = DOUBLE;
 	}
 
-	Type::Type(Ptr<bool>* arg) : subType(NULL)
+	Type::Type(Ptr<bool>* arg)
 	{
 		this->value = BOOL;
 	}
 
-	Type::Type(Ptr<hstr>* arg) : subType(NULL)
+	Type::Type(Ptr<hstr>* arg)
 	{
 		this->value = HSTR;
 	}
 
-	Type::Type(Ptr<Serializable>* arg) : subType(NULL)
+	Type::Type(Ptr<Serializable>* arg)
 	{
 		this->value = OBJECT;
 	}
 
-	Type::Type(Ptr<Serializable*>* arg) : subType(NULL)
+	Type::Type(Ptr<Serializable*>* arg)
 	{
 		this->value = OBJPTR;
 	}
 
 	Type::~Type()
 	{
-		if (this->subType != NULL)
+		foreach (Type*, it, this->subTypes)
 		{
-			delete this->subType;
+			delete (*it);
 		}
-	}
-
-	Variable* Type::createSubVariable()
-	{
-		switch (this->subType->value)
-		{
-		case Type::INT8:	return new Variable("", new Ptr<char>(NULL));
-		case Type::UINT8:	return new Variable("", new Ptr<unsigned char>(NULL));
-		case Type::INT16:	return new Variable("", new Ptr<int16_t>(NULL));
-		case Type::UINT16:	return new Variable("", new Ptr<uint16_t>(NULL));
-		case Type::INT32:	return new Variable("", new Ptr<int32_t>(NULL));
-		case Type::UINT32:	return new Variable("", new Ptr<uint32_t>(NULL));
-		case Type::FLOAT:	return new Variable("", new Ptr<float>(NULL));
-		case Type::DOUBLE:	return new Variable("", new Ptr<double>(NULL));
-		case Type::BOOL:	return new Variable("", new Ptr<bool>(NULL));
-		case Type::HSTR:	return new Variable("", new Ptr<hstr>(NULL));
-		case Type::OBJECT:	return new Variable("", new Ptr<Serializable>(NULL));
-		case Type::OBJPTR:	return new Variable("", new Ptr<Serializable*>(NULL));
-		case Type::HARRAY:	return this->subType->createSubVariable();
-		}
-		return NULL;
 	}
 
 }

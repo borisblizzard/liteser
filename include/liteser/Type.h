@@ -28,6 +28,7 @@
 
 namespace liteser
 {
+	class Serializable;
 	class Variable;
 
 	class liteserExport Type
@@ -35,6 +36,7 @@ namespace liteser
 	public:
 		enum Value
 		{
+			NONE    = 0x00,
 			INT8	= 0x01,
 			UINT8	= 0x02,
 			INT16	= 0x03,
@@ -54,7 +56,7 @@ namespace liteser
 		};
 
 		Value value;
-		Type* subType;
+		harray<Type*> subTypes;
 
 		Type(Ptr<char>* arg);
 		Type(Ptr<unsigned char>* arg);
@@ -73,13 +75,36 @@ namespace liteser
 		Type(Ptr<harray<T> >* arg)
 		{
 			this->value = HARRAY;
-			Ptr<T> tempPtr(NULL);
-			this->subType = new Type(&tempPtr);
+			Ptr<T> subPtr(NULL);
+			this->subTypes += new Type(&subPtr);
 		}
+		template <class T>
+		Type(Ptr<hlist<T> >* arg)
+		{
+			this->value = HLIST;
+			Ptr<T> subPtr(NULL);
+			this->subTypes += new Type(&subPtr);
+		}
+		template <class T>
+		Type(Ptr<hdeque<T> >* arg)
+		{
+			this->value = HDEQUE;
+			Ptr<T> subPtr(NULL);
+			this->subTypes += new Type(&subPtr);
+		}
+		/*
+		template <class K, class V>
+		Type(Ptr<hmap<K, V> >* arg)
+		{
+			this->value = HMAP;
+			Ptr<K> keyPtr(NULL);
+			Ptr<V> valuePtr(NULL);
+			this->subTypes += new Type(&keyPtr);
+			this->subTypes += new Type(&valuePtr);
+		}
+		*/
 
 		~Type();
-
-		Variable* createSubVariable();
 
 	};
 

@@ -16,10 +16,13 @@
 #include <liteser/liteser.h>
 #include <liteser/Serializable.h>
 
+static int __test_count = 0;
+
 #define CHECK_VALUE(name) \
 	if (this->name != other.name) \
 	{ \
 		hlog::warn(LOG_TAG, "NO MATCH: " #name); \
+		__test_count++; \
 	}
 
 class Type4
@@ -96,8 +99,20 @@ public:
 		this->v_double = 2.0f;
 		this->v_bool = true;
 		this->v_type3 = new Type3();
-		this->v_harray_int += 1;
-		this->v_harray_int += 2;
+	}
+	Type1(harray<int> args) : liteser::Serializable()
+	{
+		this->v_int8 = -8;
+		this->v_uint8 = 18;
+		this->v_int16 = -16;
+		this->v_uint16 = 116;
+		this->v_int32 = -32;
+		this->v_uint32 = 132;
+		this->v_float = 1.0f;
+		this->v_double = 2.0f;
+		this->v_bool = true;
+		this->v_type3 = new Type3();
+		this->v_harray_int = args;
 	}
 	~Type1()
 	{
@@ -145,18 +160,26 @@ LS_CLASS_DEFINE(Type1);
 int main(int argc, char **argv)
 {
 	hfile file;
-	Type1 type1;
-
+	harray<int> args;
+	args += 4;
+	args += 8;
+	Type1 type1(args);
+	
 	file.open("demo_simple.lsb", hfile::WRITE);
 	liteser::serialize(&file, &type1);
 	file.close();
-
+	
 	Type1* loaded = NULL;
 	file.open("demo_simple.lsb");
 	liteser::deserialize(&file, (liteser::Serializable**)&loaded);
 	file.close();
-
+	
 	type1.check(*loaded);
+
+	if (__test_count == 0)
+	{
+		hlog::write(LOG_TAG, "Serialization test was successful.");
+	}
 
 	system("pause");
 	return 0;
