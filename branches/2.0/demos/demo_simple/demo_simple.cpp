@@ -100,7 +100,7 @@ public:
 		this->v_bool = true;
 		this->v_type3 = new Type3();
 	}
-	Type1(harray<int> args) : liteser::Serializable()
+	Type1(harray<int> arg1, harray<Type3*> arg2) : liteser::Serializable()
 	{
 		this->v_int8 = -8;
 		this->v_uint8 = 18;
@@ -112,11 +112,16 @@ public:
 		this->v_double = 2.0f;
 		this->v_bool = true;
 		this->v_type3 = new Type3();
-		this->v_harray_int = args;
+		this->v_harray_int = arg1;
+		this->v_harray_type3 = arg2;
 	}
 	~Type1()
 	{
 		delete this->v_type3;
+		foreach (Type3*, it, this->v_harray_type3)
+		{
+			delete (*it);
+		}
 	}
 
 	void check(const Type1& other)
@@ -151,7 +156,8 @@ protected:
 		(bool) v_bool,
 		(Type2) v_type2,
 		(Type3*) v_type3,
-		(harray<int>) v_harray_int
+		(harray<int>) v_harray_int,
+		(harray<Type3*>) v_harray_type3
 	)
 
 };
@@ -160,10 +166,13 @@ LS_CLASS_DEFINE(Type1);
 int main(int argc, char **argv)
 {
 	hfile file;
-	harray<int> args;
-	args += 4;
-	args += 8;
-	Type1 type1(args);
+	harray<int> arg1;
+	arg1 += 4;
+	arg1 += 8;
+	harray<Type3*> arg2;
+	arg2 += new Type3();
+	arg2 += new Type3();
+	Type1 type1(arg1, arg2);
 	
 	file.open("demo_simple.lsb", hfile::WRITE);
 	liteser::serialize(&file, &type1);

@@ -10,8 +10,6 @@
 #include <stdint.h>
 
 #include <hltypes/harray.h>
-#include <hltypes/hdeque.h>
-#include <hltypes/hlist.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
@@ -54,8 +52,6 @@ namespace liteser
 		case Type::OBJECT:	_load(variable->value<Serializable>());		break;
 		case Type::OBJPTR:	_load(variable->value<Serializable*>());	break;
 		case Type::HARRAY:	__loadContainer(variable, Type::HARRAY);	break;
-		case Type::HLIST:	__loadContainer(variable, Type::HLIST);		break;
-		case Type::HDEQUE:	__loadContainer(variable, Type::HDEQUE);	break;
 		//case Type::HMAP:	__loadContainer(variable, Type::HMAP);		break;
 		}
 	}
@@ -80,7 +76,7 @@ namespace liteser
 				{
 					throw hl_exception(hsprintf("Variable type has changed. Expected: %02X, Got: %02X", variable->type->value, loadType));
 				}
-				if (loadType == Type::HARRAY || loadType == Type::HLIST || loadType == Type::HDEQUE || loadType == Type::HMAP)
+				if (loadType == Type::HARRAY || loadType == Type::HMAP)
 				{
 					throw hl_exception(hsprintf("Template container within a template container detected, not supported: %02X", loadType));
 				}
@@ -204,6 +200,22 @@ namespace liteser
 			if (variables.size() > 0)
 			{
 				hlog::warn(liteser::logTag, "Not all variables were previously saved in class: " + className);
+			}
+		}
+	}
+
+	void _loadHarray(harray<Serializable*>* value)
+	{
+		uint32_t size = 0;
+		_load(&size);
+		if (size > 0)
+		{
+			Serializable* object;
+			for_itert (unsigned int, i, 0, size)
+			{
+				object = NULL;
+				__loadObject(&object);
+				value->add(object);
 			}
 		}
 	}

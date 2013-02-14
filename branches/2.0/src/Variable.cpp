@@ -10,8 +10,6 @@
 #include <stdint.h>
 
 #include <hltypes/harray.h>
-#include <hltypes/hdeque.h>
-#include <hltypes/hlist.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
@@ -27,6 +25,20 @@
 		this->type = new Type(ptr); \
 		this->ptr = (void*)ptr; \
 	}
+#define DEFINE_CONSTRUCTOR_HARRAY(typeName) \
+	Variable::Variable(chstr name, Ptr<harray<typeName> >* ptr) \
+	{ \
+		this->name = name; \
+		this->type = new Type(ptr); \
+		this->ptr = (void*)ptr; \
+		foreach (typeName, it, *ptr->value) \
+		{ \
+			this->subVariables += new Variable("", new Ptr<typeName>(&(*it))); \
+		} \
+	}
+#define DEFINE_CONSTRUCTORS(typeName) \
+	DEFINE_CONSTRUCTOR(typeName); \
+	DEFINE_CONSTRUCTOR_HARRAY(typeName);
 
 #define CHECK_MAP_KEY_VALUE_TYPE(keyTypeValue, valueTypeValue) \
 	switch (keyTypeValue) \
@@ -62,16 +74,16 @@
 
 namespace liteser
 {
-	DEFINE_CONSTRUCTOR(char);
-	DEFINE_CONSTRUCTOR(unsigned char);
-	DEFINE_CONSTRUCTOR(int16_t);
-	DEFINE_CONSTRUCTOR(uint16_t);
-	DEFINE_CONSTRUCTOR(int32_t);
-	DEFINE_CONSTRUCTOR(uint32_t);
-	DEFINE_CONSTRUCTOR(float);
-	DEFINE_CONSTRUCTOR(double);
+	DEFINE_CONSTRUCTORS(char);
+	DEFINE_CONSTRUCTORS(unsigned char);
+	DEFINE_CONSTRUCTORS(int16_t);
+	DEFINE_CONSTRUCTORS(uint16_t);
+	DEFINE_CONSTRUCTORS(int32_t);
+	DEFINE_CONSTRUCTORS(uint32_t);
+	DEFINE_CONSTRUCTORS(float);
+	DEFINE_CONSTRUCTORS(double);
 	DEFINE_CONSTRUCTOR(bool);
-	DEFINE_CONSTRUCTOR(hstr);
+	DEFINE_CONSTRUCTORS(hstr);
 
 	Variable::~Variable()
 	{
@@ -113,42 +125,6 @@ namespace liteser
 			case Type::OBJPTR:	this->_addSubVariablesHarray<Serializable*>(size);	return;
 			}
 			throw hl_exception(hsprintf("Subtype is not supported within harray: %s; type: %02X",
-				this->name.c_str(), this->type->subTypes[0]->value));
-			break;
-		case Type::HLIST:
-			switch (this->type->subTypes[0]->value)
-			{
-			case Type::INT8:	this->_addSubVariablesHlist<char>(size);			return;
-			case Type::UINT8:	this->_addSubVariablesHlist<unsigned char>(size);	return;
-			case Type::INT16:	this->_addSubVariablesHlist<int16_t>(size);			return;
-			case Type::UINT16:	this->_addSubVariablesHlist<uint16_t>(size);		return;
-			case Type::INT32:	this->_addSubVariablesHlist<int32_t>(size);			return;
-			case Type::UINT32:	this->_addSubVariablesHlist<uint32_t>(size);		return;
-			case Type::FLOAT:	this->_addSubVariablesHlist<float>(size);			return;
-			case Type::DOUBLE:	this->_addSubVariablesHlist<double>(size);			return;
-			case Type::HSTR:	this->_addSubVariablesHlist<hstr>(size);			return;
-			case Type::OBJECT:	this->_addSubVariablesHlist<Serializable>(size);	return;
-			case Type::OBJPTR:	this->_addSubVariablesHlist<Serializable*>(size);	return;
-			}
-			throw hl_exception(hsprintf("Subtype is not supported within hlist: %s; type: %02X",
-				this->name.c_str(), this->type->subTypes[0]->value));
-			break;
-		case Type::HDEQUE:
-			switch (this->type->subTypes[0]->value)
-			{
-			case Type::INT8:	this->_addSubVariablesHdeque<char>(size);			return;
-			case Type::UINT8:	this->_addSubVariablesHdeque<unsigned char>(size);	return;
-			case Type::INT16:	this->_addSubVariablesHdeque<int16_t>(size);		return;
-			case Type::UINT16:	this->_addSubVariablesHdeque<uint16_t>(size);		return;
-			case Type::INT32:	this->_addSubVariablesHdeque<int32_t>(size);		return;
-			case Type::UINT32:	this->_addSubVariablesHdeque<uint32_t>(size);		return;
-			case Type::FLOAT:	this->_addSubVariablesHdeque<float>(size);			return;
-			case Type::DOUBLE:	this->_addSubVariablesHdeque<double>(size);			return;
-			case Type::HSTR:	this->_addSubVariablesHdeque<hstr>(size);			return;
-			case Type::OBJECT:	this->_addSubVariablesHdeque<Serializable>(size);	return;
-			case Type::OBJPTR:	this->_addSubVariablesHdeque<Serializable*>(size);	return;
-			}
-			throw hl_exception(hsprintf("Subtype is not supported within hdeque: %s; type: %02X",
 				this->name.c_str(), this->type->subTypes[0]->value));
 			break;
 			/*

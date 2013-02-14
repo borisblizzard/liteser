@@ -18,8 +18,6 @@
 
 #include <hltypes/exception.h>
 #include <hltypes/harray.h>
-#include <hltypes/hdeque.h>
-#include <hltypes/hlist.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
@@ -50,62 +48,59 @@ namespace liteser
 		Variable(chstr name, Ptr<double>* ptr);
 		Variable(chstr name, Ptr<bool>* ptr);
 		Variable(chstr name, Ptr<hstr>* ptr);
+		Variable(chstr name, Ptr<harray<char> >* ptr); // char is always 8 bits
+		Variable(chstr name, Ptr<harray<unsigned char> >* ptr); // char is always 8 bits
+		Variable(chstr name, Ptr<harray<int16_t> >* ptr);
+		Variable(chstr name, Ptr<harray<uint16_t> >* ptr);
+		Variable(chstr name, Ptr<harray<int32_t> >* ptr);
+		Variable(chstr name, Ptr<harray<uint32_t> >* ptr);
+		Variable(chstr name, Ptr<harray<float> >* ptr);
+		Variable(chstr name, Ptr<harray<double> >* ptr);
+		Variable(chstr name, Ptr<harray<bool> >* ptr);
+		Variable(chstr name, Ptr<harray<hstr> >* ptr);
 
 		template <class T>
 		Variable(chstr name, Ptr<T*>* ptr)
 		{
 			this->name = name;
-			Serializable* obj = dynamic_cast<Serializable*>(*ptr->value);
-			Ptr<Serializable*>* tempPtr = new Ptr<Serializable*>((Serializable**)ptr->value);
-			this->ptr = (void*)tempPtr;
-			this->type = new Type(tempPtr);
+			this->ptr = (void*)ptr;
+			this->type = new Type((Ptr<Serializable*>*)NULL);
 			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable.
 			Ptr<Serializable>(*ptr->value);
-			delete ptr;
 		}
 		template <class T>
 		Variable(chstr name, Ptr<T>* ptr)
 		{
 			this->name = name;
+			this->ptr = (void*)ptr;
+			this->type = new Type((Ptr<Serializable>*)NULL);
 			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable.
-			Ptr<Serializable>* tempPtr = new Ptr<Serializable>(ptr->value);
-			this->ptr = (void*)tempPtr;
-			this->type = new Type(tempPtr);
-			delete ptr;
+			Ptr<Serializable>(ptr->value);
 		}
 		~Variable();
 
 		template <class T>
+		Variable(chstr name, Ptr<harray<T*> >* ptr)
+		{
+			this->name = name;
+			this->ptr = (void*)ptr;
+			this->type = new Type((Ptr<harray<Serializable*> >*)NULL);
+			harray<Serializable*> obj = (*ptr->value).dyn_cast<Serializable*>();
+			foreach (Serializable*, it, obj)
+			{
+				this->subVariables += new Variable("", new Ptr<Serializable*>(&(*it)));
+			}
+		}
+		template <class T>
 		Variable(chstr name, Ptr<harray<T> >* ptr)
 		{
 			this->name = name;
-			this->type = new Type(ptr);
 			this->ptr = (void*)ptr;
-			foreach (T, it, *ptr->value)
+			this->type = new Type((Ptr<harray<Serializable*> >*)NULL);
+			harray<Serializable> obj = (*ptr->value).dyn_cast<Serializable>();
+			foreach (Serializable, it, obj)
 			{
-				this->subVariables += new Variable("", new Ptr<T>(&(*it)));
-			}
-		}
-		template <class T>
-		Variable(chstr name, Ptr<hlist<T> >* ptr)
-		{
-			this->name = name;
-			this->type = new Type(ptr);
-			this->ptr = (void*)ptr;
-			foreach_l (T, it, *ptr->value)
-			{
-				this->subVariables += new Variable("", new Ptr<T>(&(*it)));
-			}
-		}
-		template <class T>
-		Variable(chstr name, Ptr<hdeque<T> >* ptr)
-		{
-			this->name = name;
-			this->type = new Type(ptr);
-			this->ptr = (void*)ptr;
-			foreach_q (T, it, *ptr->value)
-			{
-				this->subVariables += new Variable("", new Ptr<T>(&(*it)));
+				this->subVariables += new Variable("", new Ptr<Serializable>(&(*it)));
 			}
 		}
 		/*
@@ -139,34 +134,6 @@ namespace liteser
 			if (container->size() > 0)
 			{
 				throw hl_exception("Harray in default constructor not empty initially: " + this->name);
-			}
-			container->add(T(), size); // requires adding first because of possible reallocation of memory to another block
-			for_itert (unsigned int, i, 0, size)
-			{
-				this->subVariables += new Variable("", new Ptr<T>(&container->operator[](i)));
-			}
-		}
-		template <class T>
-		void _addSubVariablesHlist(unsigned int size)
-		{
-			hlist<T>* container = ((Ptr<hlist<T> >*)this->ptr)->value;
-			if (container->size() > 0)
-			{
-				throw hl_exception("Hlist in default constructor not empty initially: " + this->name);
-			}
-			container->add(T(), size); // requires adding first because of possible reallocation of memory to another block
-			for_itert (unsigned int, i, 0, size)
-			{
-				this->subVariables += new Variable("", new Ptr<T>(&container->operator[](i)));
-			}
-		}
-		template <class T>
-		void _addSubVariablesHdeque(unsigned int size)
-		{
-			hdeque<T>* container = ((Ptr<hdeque<T> >*)this->ptr)->value;
-			if (container->size() > 0)
-			{
-				throw hl_exception("Hdeque in default constructor not empty initially: " + this->name);
 			}
 			container->add(T(), size); // requires adding first because of possible reallocation of memory to another block
 			for_itert (unsigned int, i, 0, size)
