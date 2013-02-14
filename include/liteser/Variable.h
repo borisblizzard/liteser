@@ -85,8 +85,8 @@ namespace liteser
 			this->name = name;
 			this->ptr = (void*)ptr;
 			this->type = new Type((Ptr<harray<Serializable*> >*)NULL);
-			harray<Serializable*> obj = (*ptr->value).dyn_cast<Serializable*>();
-			foreach (Serializable*, it, obj)
+			harray<Serializable*>* obj = (harray<Serializable*>*)ptr->value;
+			foreach (Serializable*, it, *obj)
 			{
 				this->subVariables += new Variable("", new Ptr<Serializable*>(&(*it)));
 			}
@@ -94,11 +94,12 @@ namespace liteser
 		template <class T>
 		Variable(chstr name, Ptr<harray<T> >* ptr)
 		{
+			throw hl_exception("");
 			this->name = name;
 			this->ptr = (void*)ptr;
-			this->type = new Type((Ptr<harray<Serializable*> >*)NULL);
-			harray<Serializable> obj = (*ptr->value).dyn_cast<Serializable>();
-			foreach (Serializable, it, obj)
+			this->type = new Type((Ptr<harray<Serializable> >*)NULL);
+			harray<Serializable>* obj = (harray<Serializable>*)ptr->value;
+			foreach (Serializable, it, *obj)
 			{
 				this->subVariables += new Variable("", new Ptr<Serializable>(&(*it)));
 			}
