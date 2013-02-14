@@ -17,8 +17,6 @@
 #include <stdint.h>
 
 #include <hltypes/harray.h>
-#include <hltypes/hdeque.h>
-#include <hltypes/hlist.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
@@ -50,8 +48,6 @@ namespace liteser
 			OBJPTR	= 0x62,
 			HSTR	= 0x81,
 			HARRAY	= 0xA1,
-			HLIST	= 0xA2,
-			HDEQUE	= 0xA3,
 			HMAP	= 0xC1
 		};
 
@@ -75,21 +71,7 @@ namespace liteser
 		Type(Ptr<harray<T> >* arg)
 		{
 			this->value = HARRAY;
-			Ptr<T> subPtr(NULL);
-			this->subTypes += new Type(&subPtr);
-		}
-		template <class T>
-		Type(Ptr<hlist<T> >* arg)
-		{
-			this->value = HLIST;
-			Ptr<T> subPtr(NULL);
-			this->subTypes += new Type(&subPtr);
-		}
-		template <class T>
-		Type(Ptr<hdeque<T> >* arg)
-		{
-			this->value = HDEQUE;
-			Ptr<T> subPtr(NULL);
+			Ptr<T> subPtr((T*)NULL);
 			this->subTypes += new Type(&subPtr);
 		}
 		/*

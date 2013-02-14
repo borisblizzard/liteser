@@ -43,5 +43,7 @@ namespace liteser
 	void _dump(Serializable* value);
 	void _dump(Serializable** value);
 
+	void _dumpHarray(harray<Serializable*>* value);
+
 }
 #endif

@@ -44,5 +44,7 @@ namespace liteser
 	void _load(Serializable** value);
 	void __loadObject(Serializable** value);
 
+	void _loadHarray(harray<Serializable*>* value);
+
 }
 #endif

@@ -10,8 +10,6 @@
 #include <stdint.h>
 
 #include <hltypes/harray.h>
-#include <hltypes/hdeque.h>
-#include <hltypes/hlist.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 

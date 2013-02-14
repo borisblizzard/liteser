@@ -10,8 +10,6 @@
 #include <stdint.h>
 
 #include <hltypes/harray.h>
-#include <hltypes/hdeque.h>
-#include <hltypes/hlist.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 
@@ -41,8 +39,6 @@ namespace liteser
 		case Type::OBJECT:	_dump(variable->value<Serializable>());		break;
 		case Type::OBJPTR:	_dump(variable->value<Serializable*>());	break;
 		case Type::HARRAY:	__dumpContainer(variable);					break;
-		case Type::HLIST:	__dumpContainer(variable);					break;
-		case Type::HDEQUE:	__dumpContainer(variable);					break;
 		//case Type::HMAP:	__dumpContainer(variable);					break;
 		}
 	}
@@ -147,6 +143,16 @@ namespace liteser
 	void _dump(Serializable** value)
 	{
 		_dump(*value);
+	}
+
+	void _dumpHarray(harray<Serializable*>* value)
+	{
+		uint32_t size = (uint32_t)value->size();
+		_dump(&size);
+		foreach (Serializable*, it, *value)
+		{
+			_dump(*it);
+		}
 	}
 
 }
