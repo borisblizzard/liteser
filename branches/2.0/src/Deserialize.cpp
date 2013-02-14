@@ -220,4 +220,30 @@ namespace liteser
 		}
 	}
 
+#define DEFINE_LOAD_HARRAY(type) \
+	void _loadHarray(harray<type>* value) \
+	{ \
+		uint32_t size = 0; \
+		_load(&size); \
+		if (size > 0) \
+		{ \
+			type object; \
+			for_itert (unsigned int, i, 0, size) \
+			{ \
+				_load(&object); \
+				value->add(object); \
+			} \
+		} \
+	}
+
+	DEFINE_LOAD_HARRAY(char);
+	DEFINE_LOAD_HARRAY(unsigned char);
+	DEFINE_LOAD_HARRAY(int16_t);
+	DEFINE_LOAD_HARRAY(uint16_t);
+	DEFINE_LOAD_HARRAY(int32_t);
+	DEFINE_LOAD_HARRAY(uint32_t);
+	DEFINE_LOAD_HARRAY(float);
+	DEFINE_LOAD_HARRAY(double);
+	DEFINE_LOAD_HARRAY(hstr);
+
 }

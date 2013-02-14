@@ -67,7 +67,6 @@
 		case Type::FLOAT:	this->_addSubVariablesHmap<keyType, float>(size);			return; \
 		case Type::DOUBLE:	this->_addSubVariablesHmap<keyType, double>(size);			return; \
 		case Type::HSTR:	this->_addSubVariablesHmap<keyType, hstr>(size);			return; \
-		case Type::OBJECT:	this->_addSubVariablesHmap<keyType, Serializable>(size);	return; \
 		case Type::OBJPTR:	this->_addSubVariablesHmap<keyType, Serializable*>(size);	return; \
 		} \
 	}
@@ -82,8 +81,8 @@ namespace liteser
 	DEFINE_CONSTRUCTORS(uint32_t);
 	DEFINE_CONSTRUCTORS(float);
 	DEFINE_CONSTRUCTORS(double);
-	DEFINE_CONSTRUCTOR(bool);
 	DEFINE_CONSTRUCTORS(hstr);
+	DEFINE_CONSTRUCTOR(bool);
 
 	Variable::~Variable()
 	{

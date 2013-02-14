@@ -44,6 +44,15 @@ namespace liteser
 	void _load(Serializable** value);
 	void __loadObject(Serializable** value);
 
+	void _loadHarray(harray<char>* value);
+	void _loadHarray(harray<unsigned char>* value);
+	void _loadHarray(harray<int16_t>* value);
+	void _loadHarray(harray<uint16_t>* value);
+	void _loadHarray(harray<int32_t>* value);
+	void _loadHarray(harray<uint32_t>* value);
+	void _loadHarray(harray<float>* value);
+	void _loadHarray(harray<double>* value);
+	void _loadHarray(harray<hstr>* value);
 	void _loadHarray(harray<Serializable*>* value);
 
 }
