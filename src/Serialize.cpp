@@ -155,4 +155,25 @@ namespace liteser
 		}
 	}
 
+#define DEFINE_DUMP_HARRAY(type) \
+	void _dumpHarray(harray<type>* value) \
+	{ \
+		uint32_t size = (uint32_t)value->size(); \
+		_dump(&size); \
+		foreach (type, it, *value) \
+		{ \
+			_dump(&(*it)); \
+		} \
+	}
+
+	DEFINE_DUMP_HARRAY(char);
+	DEFINE_DUMP_HARRAY(unsigned char);
+	DEFINE_DUMP_HARRAY(int16_t);
+	DEFINE_DUMP_HARRAY(uint16_t);
+	DEFINE_DUMP_HARRAY(int32_t);
+	DEFINE_DUMP_HARRAY(uint32_t);
+	DEFINE_DUMP_HARRAY(float);
+	DEFINE_DUMP_HARRAY(double);
+	DEFINE_DUMP_HARRAY(hstr);
+
 }

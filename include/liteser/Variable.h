@@ -56,7 +56,6 @@ namespace liteser
 		Variable(chstr name, Ptr<harray<uint32_t> >* ptr);
 		Variable(chstr name, Ptr<harray<float> >* ptr);
 		Variable(chstr name, Ptr<harray<double> >* ptr);
-		Variable(chstr name, Ptr<harray<bool> >* ptr);
 		Variable(chstr name, Ptr<harray<hstr> >* ptr);
 
 		template <class T>
@@ -142,7 +141,7 @@ namespace liteser
 				this->subVariables += new Variable("", new Ptr<T>(&container->operator[](i)));
 			}
 		}
-		/*
+			/*
 		template <class K, class V>
 		void _addSubVariablesHmap(unsigned int size)
 		{
@@ -161,7 +160,7 @@ namespace liteser
 				this->subVariables += new Variable("", new Ptr<V>(&it->second));
 			}
 		}
-		*/
+			*/
 
 	};
 
