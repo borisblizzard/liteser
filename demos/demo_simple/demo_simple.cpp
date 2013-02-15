@@ -24,6 +24,19 @@ static int __test_count = 0;
 		hlog::warn(LOG_TAG, "NO MATCH: " #name); \
 		__test_count++; \
 	}
+#define CHECK_VALUE_HARRAY_OBJECTS(name) \
+	if (this->name.size() != other.name.size()) \
+	{ \
+		hlog::warn(LOG_TAG, "NO MATCH: " #name); \
+		__test_count++; \
+	} \
+	else \
+	{ \
+		for_iter (i, 0, this->name.size()) \
+		{ \
+			this->name[i]->check(*other.name[i]); \
+		} \
+	}
 
 class Type4
 {
@@ -51,7 +64,7 @@ protected:
 	(
 		liteser::Serializable,
 		(hstr) string
-	)
+	);
 
 };
 LS_CLASS_DEFINE(Type2);
@@ -78,7 +91,7 @@ protected:
 	(
 		Type2,
 		(hstr) string2
-	)
+	);
 
 };
 LS_CLASS_DEFINE(Type3);
@@ -100,7 +113,7 @@ public:
 		this->v_bool = true;
 		this->v_type3 = new Type3();
 	}
-	Type1(harray<int> arg1, harray<Type3*> arg2) : liteser::Serializable()
+	Type1(harray<int> arg1, harray<Type3*> arg2, hmap<hstr, int> arg3) : liteser::Serializable()
 	{
 		this->v_int8 = -8;
 		this->v_uint8 = 18;
@@ -114,6 +127,7 @@ public:
 		this->v_type3 = new Type3();
 		this->v_harray_int = arg1;
 		this->v_harray_type3 = arg2;
+		this->v_hmap_hstr_int = arg3;
 	}
 	~Type1()
 	{
@@ -138,6 +152,8 @@ public:
 		CHECK_VALUE(v_harray_int);
 		this->v_type2.check(other.v_type2);
 		this->v_type3->check(*other.v_type3);
+		CHECK_VALUE_HARRAY_OBJECTS(v_harray_type3);
+		CHECK_VALUE(v_hmap_hstr_int);
 	}
 
 protected:
@@ -157,7 +173,8 @@ protected:
 		(Type2) v_type2,
 		(Type3*) v_type3,
 		(harray<int>) v_harray_int,
-		(harray<Type3*>) v_harray_type3
+		(harray<Type3*>) v_harray_type3,
+		(HL_HMAP_MACRO_FIX(hstr, int)) v_hmap_hstr_int
 	)
 
 };
@@ -172,7 +189,10 @@ int main(int argc, char **argv)
 	harray<Type3*> arg2;
 	arg2 += new Type3();
 	arg2 += new Type3();
-	Type1 type1(arg1, arg2);
+	hmap<hstr, int> arg3;
+	arg3["first"] = 10;
+	arg3["second"] = 20;
+	Type1 type1(arg1, arg2, arg3);
 	
 	file.open("demo_simple.lsb", hfile::WRITE);
 	liteser::serialize(&file, &type1);

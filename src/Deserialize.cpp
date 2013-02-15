@@ -26,8 +26,8 @@ namespace liteser
 {
 	void __loadVariable(Variable* variable)
 	{
-		unsigned char loadType;
-		_load(&loadType);
+		Type::Value loadType = Type::NONE;
+		_load((unsigned char*)&loadType);
 		if (loadType != variable->type->value)
 		{
 			throw hl_exception(hsprintf("Variable type has changed. Expected: %02X, Got: %02X", variable->type->value, loadType));
@@ -35,7 +35,7 @@ namespace liteser
 		__loadVariableValue(variable, loadType);
 	}
 
-	void __loadVariableValue(Variable* variable, unsigned char loadType)
+	void __loadVariableValue(Variable* variable, Type::Value loadType)
 	{
 		switch (loadType)
 		{
@@ -51,8 +51,8 @@ namespace liteser
 		case Type::HSTR:	_load(variable->value<hstr>());				break;
 		case Type::OBJECT:	_load(variable->value<Serializable>());		break;
 		case Type::OBJPTR:	_load(variable->value<Serializable*>());	break;
-		case Type::HARRAY:	__loadContainer(variable, Type::HARRAY);	break;
-		//case Type::HMAP:	__loadContainer(variable, Type::HMAP);		break;
+		case Type::HARRAY:	__loadContainer(variable, loadType);		break;
+		case Type::HMAP:	__loadContainer(variable, loadType);		break;
 		}
 	}
 
@@ -81,10 +81,18 @@ namespace liteser
 					throw hl_exception(hsprintf("Template container within a template container detected, not supported: %02X", loadType));
 				}
 			}
-			variable->createSubVariables(size, type);
+			variable->createSubVariables(type, size);
 			foreach (Variable*, it, variable->subVariables)
 			{
 				__loadVariableValue((*it), (*it)->type->value);
+			}
+			if (type == Type::HMAP)
+			{
+				foreach (Variable*, it, variable->subVariables)
+				{
+					__loadVariableValue((*it), (*it)->type->value);
+				}
+				variable->applyHmapSubVariables(type);
 			}
 		}
 	}

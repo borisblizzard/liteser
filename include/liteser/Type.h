@@ -71,20 +71,15 @@ namespace liteser
 		Type(Ptr<harray<T> >* arg)
 		{
 			this->value = HARRAY;
-			Ptr<T> subPtr((T*)NULL);
-			this->subTypes += new Type(&subPtr);
+			this->subTypes += new Type((Ptr<T>*)NULL);
 		}
-		/*
 		template <class K, class V>
 		Type(Ptr<hmap<K, V> >* arg)
 		{
 			this->value = HMAP;
-			Ptr<K> keyPtr(NULL);
-			Ptr<V> valuePtr(NULL);
-			this->subTypes += new Type(&keyPtr);
-			this->subTypes += new Type(&valuePtr);
+			this->subTypes += new Type((Ptr<K>*)NULL);
+			this->subTypes += new Type((Ptr<V>*)NULL);
 		}
-		*/
 
 		~Type();
 

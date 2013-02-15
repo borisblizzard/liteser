@@ -26,7 +26,7 @@ namespace liteser
 	class Variable;
 
 	void __loadVariable(Variable* variable);
-	void __loadVariableValue(Variable* variable, unsigned char loadType);
+	void __loadVariableValue(Variable* variable, Type::Value loadType);
 
 	void __loadContainer(Variable* variable, Type::Value type);
 

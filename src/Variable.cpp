@@ -24,6 +24,8 @@
 		this->name = name; \
 		this->type = new Type(ptr); \
 		this->ptr = (void*)ptr; \
+		this->ptrKeys = NULL; \
+		this->ptrValues = NULL; \
 	}
 #define DEFINE_CONSTRUCTOR_HARRAY(typeName) \
 	Variable::Variable(chstr name, Ptr<harray<typeName> >* ptr) \
@@ -31,6 +33,8 @@
 		this->name = name; \
 		this->type = new Type(ptr); \
 		this->ptr = (void*)ptr; \
+		this->ptrKeys = NULL; \
+		this->ptrValues = NULL; \
 		foreach (typeName, it, *ptr->value) \
 		{ \
 			this->subVariables += new Variable("", new Ptr<typeName>(&(*it))); \
@@ -40,21 +44,20 @@
 	DEFINE_CONSTRUCTOR(typeName); \
 	DEFINE_CONSTRUCTOR_HARRAY(typeName);
 
-#define CHECK_MAP_KEY_VALUE_TYPE(keyTypeValue, valueTypeValue) \
+#define CHECK_HMAP_KEY_VALUE_TYPE(keyTypeValue, valueTypeValue) \
 	switch (keyTypeValue) \
 	{ \
-	case Type::INT8:	_CHECK_MAP_VALUE_TYPE(char, valueTypeValue);			break; \
-	case Type::UINT8:	_CHECK_MAP_VALUE_TYPE(unsigned char, valueTypeValue);	break; \
-	case Type::INT16:	_CHECK_MAP_VALUE_TYPE(int16_t, valueTypeValue);			break; \
-	case Type::UINT16:	_CHECK_MAP_VALUE_TYPE(uint16_t, valueTypeValue);		break; \
-	case Type::INT32:	_CHECK_MAP_VALUE_TYPE(int32_t, valueTypeValue);			break; \
-	case Type::UINT32:	_CHECK_MAP_VALUE_TYPE(uint32_t, valueTypeValue);		break; \
-	case Type::FLOAT:	_CHECK_MAP_VALUE_TYPE(float, valueTypeValue);			break; \
-	case Type::DOUBLE:	_CHECK_MAP_VALUE_TYPE(double, valueTypeValue);			break; \
-	case Type::HSTR:	_CHECK_MAP_VALUE_TYPE(hstr, valueTypeValue);			break; \
+	case Type::INT8:	_CHECK_HMAP_VALUE_TYPE(char, valueTypeValue);			break; \
+	case Type::UINT8:	_CHECK_HMAP_VALUE_TYPE(unsigned char, valueTypeValue);	break; \
+	case Type::INT16:	_CHECK_HMAP_VALUE_TYPE(int16_t, valueTypeValue);			break; \
+	case Type::UINT16:	_CHECK_HMAP_VALUE_TYPE(uint16_t, valueTypeValue);		break; \
+	case Type::INT32:	_CHECK_HMAP_VALUE_TYPE(int32_t, valueTypeValue);			break; \
+	case Type::UINT32:	_CHECK_HMAP_VALUE_TYPE(uint32_t, valueTypeValue);		break; \
+	case Type::FLOAT:	_CHECK_HMAP_VALUE_TYPE(float, valueTypeValue);			break; \
+	case Type::DOUBLE:	_CHECK_HMAP_VALUE_TYPE(double, valueTypeValue);			break; \
+	case Type::HSTR:	_CHECK_HMAP_VALUE_TYPE(hstr, valueTypeValue);			break; \
 	}
-
-#define _CHECK_MAP_VALUE_TYPE(keyType, value) \
+#define _CHECK_HMAP_VALUE_TYPE(keyType, value) \
 	{ \
 		switch (value) \
 		{ \
@@ -70,6 +73,37 @@
 		case Type::OBJPTR:	this->_addSubVariablesHmap<keyType, Serializable*>(size);	return; \
 		} \
 	}
+
+#define APPLY_HMAP_KEYS_VALUES(keyTypeValue, valueTypeValue) \
+	switch (keyTypeValue) \
+	{ \
+	case Type::INT8:	_APPLY_HMAP_VALUES(char, valueTypeValue);			break; \
+	case Type::UINT8:	_APPLY_HMAP_VALUES(unsigned char, valueTypeValue);	break; \
+	case Type::INT16:	_APPLY_HMAP_VALUES(int16_t, valueTypeValue);		break; \
+	case Type::UINT16:	_APPLY_HMAP_VALUES(uint16_t, valueTypeValue);		break; \
+	case Type::INT32:	_APPLY_HMAP_VALUES(int32_t, valueTypeValue);		break; \
+	case Type::UINT32:	_APPLY_HMAP_VALUES(uint32_t, valueTypeValue);		break; \
+	case Type::FLOAT:	_APPLY_HMAP_VALUES(float, valueTypeValue);			break; \
+	case Type::DOUBLE:	_APPLY_HMAP_VALUES(double, valueTypeValue);			break; \
+	case Type::HSTR:	_APPLY_HMAP_VALUES(hstr, valueTypeValue);			break; \
+	}
+#define _APPLY_HMAP_VALUES(keyType, value) \
+	{ \
+		switch (value) \
+		{ \
+		case Type::INT8:	this->_applyHmapSubVariables<keyType, char>();			return; \
+		case Type::UINT8:	this->_applyHmapSubVariables<keyType, unsigned char>();	return; \
+		case Type::INT16:	this->_applyHmapSubVariables<keyType, int16_t>();		return; \
+		case Type::UINT16:	this->_applyHmapSubVariables<keyType, uint16_t>();		return; \
+		case Type::INT32:	this->_applyHmapSubVariables<keyType, int32_t>();		return; \
+		case Type::UINT32:	this->_applyHmapSubVariables<keyType, uint32_t>();		return; \
+		case Type::FLOAT:	this->_applyHmapSubVariables<keyType, float>();			return; \
+		case Type::DOUBLE:	this->_applyHmapSubVariables<keyType, double>();		return; \
+		case Type::HSTR:	this->_applyHmapSubVariables<keyType, hstr>();			return; \
+		case Type::OBJPTR:	this->_applyHmapSubVariables<keyType, Serializable*>();	return; \
+		} \
+	}
+	
 
 namespace liteser
 {
@@ -94,13 +128,21 @@ namespace liteser
 		{
 			delete this->ptr;
 		}
+		if (this->ptrKeys != NULL)
+		{
+			delete this->ptrKeys;
+		}
+		if (this->ptrValues != NULL)
+		{
+			delete this->ptrValues;
+		}
 		foreach (Variable*, it, this->subVariables)
 		{
 			delete (*it);
 		}
 	}
 
-	void Variable::createSubVariables(unsigned int size, Type::Value type)
+	void Variable::createSubVariables(Type::Value type, unsigned int size)
 	{
 		if (this->type->subTypes.size() == 0)
 		{
@@ -126,15 +168,24 @@ namespace liteser
 			throw hl_exception(hsprintf("Subtype is not supported within harray: %s; type: %02X",
 				this->name.c_str(), this->type->subTypes[0]->value));
 			break;
-			/*
 		case Type::HMAP:
-			CHECK_MAP_KEY_VALUE_TYPE(this->type->subTypes[0]->value, this->type->subTypes[1]->value);
+			CHECK_HMAP_KEY_VALUE_TYPE(this->type->subTypes[0]->value, this->type->subTypes[1]->value);
 			throw hl_exception(hsprintf("Subtype is not supported within hmap: %s; types: %02X %02X",
 				this->name.c_str(), this->type->subTypes[0]->value, this->type->subTypes[1]->value));
 			break;
-			*/
 		}
 		throw hl_exception(hsprintf("Type is not supported for: %s; type: %02X", this->name.c_str(), type));
+	}
+
+	void Variable::applyHmapSubVariables(Type::Value type)
+	{
+		if (type != Type::HMAP)
+		{
+			throw hl_exception("Variable type is not hmap!");
+		}
+		APPLY_HMAP_KEYS_VALUES(this->type->subTypes[0]->value, this->type->subTypes[1]->value);
+		throw hl_exception(hsprintf("Subtype is not supported within hmap: %s; types: %02X %02X",
+			this->name.c_str(), this->type->subTypes[0]->value, this->type->subTypes[1]->value));
 	}
 
 }

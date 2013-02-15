@@ -64,6 +64,8 @@ namespace liteser
 			this->name = name;
 			this->ptr = (void*)ptr;
 			this->type = new Type((Ptr<Serializable*>*)NULL);
+			this->ptrKeys = NULL;
+			this->ptrValues = NULL;
 			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable.
 			Ptr<Serializable>(*ptr->value);
 		}
@@ -73,6 +75,8 @@ namespace liteser
 			this->name = name;
 			this->ptr = (void*)ptr;
 			this->type = new Type((Ptr<Serializable>*)NULL);
+			this->ptrKeys = NULL;
+			this->ptrValues = NULL;
 			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable.
 			Ptr<Serializable>(ptr->value);
 		}
@@ -84,6 +88,8 @@ namespace liteser
 			this->name = name;
 			this->ptr = (void*)ptr;
 			this->type = new Type((Ptr<harray<Serializable*> >*)NULL);
+			this->ptrKeys = NULL;
+			this->ptrValues = NULL;
 			harray<Serializable*>* obj = (harray<Serializable*>*)ptr->value;
 			foreach (Serializable*, it, *obj)
 			{
@@ -97,26 +103,31 @@ namespace liteser
 			this->name = name;
 			this->ptr = (void*)ptr;
 			this->type = new Type((Ptr<harray<Serializable> >*)NULL);
+			this->ptrKeys = NULL;
+			this->ptrValues = NULL;
 			harray<Serializable>* obj = (harray<Serializable>*)ptr->value;
 			foreach (Serializable, it, *obj)
 			{
 				this->subVariables += new Variable("", new Ptr<Serializable>(&(*it)));
 			}
 		}
-		/*
 		template <class K, class V>
 		Variable(chstr name, Ptr<hmap<K, V> >* ptr)
 		{
 			this->name = name;
 			this->type = new Type(ptr);
 			this->ptr = (void*)ptr;
-			foreach_map (K, V, it, *ptr->value)
+			harray<K>* keys = new harray<K>(ptr->value->keys());
+			harray<V>* values = new harray<V>();
+			for_iter (i, 0, keys->size()) // cannot use foreach here because GCC can't compile it properly
 			{
-				this->subVariables += new Variable("", new Ptr<K>(&it->first));
-				this->subVariables += new Variable("", new Ptr<V>(&it->second));
+				values->add(ptr->value->operator[](keys->operator[](i)));
 			}
+			this->ptrKeys = keys;
+			this->ptrValues = values;
+			this->subVariables += new Variable("", new Ptr<harray<K> >(keys));
+			this->subVariables += new Variable("", new Ptr<harray<V> >(values));
 		}
-		*/
 
 		template <class T>
 		T* value()
@@ -124,9 +135,13 @@ namespace liteser
 			return ((Ptr<T>*)this->ptr)->value;
 		}
 
-		void createSubVariables(unsigned int size, Type::Value type);
+		void createSubVariables(Type::Value type, unsigned int size);
+		void applyHmapSubVariables(Type::Value type);
 
 	protected:
+		void* ptrKeys;
+		void* ptrValues;
+
 		template <class T>
 		void _addSubVariablesHarray(unsigned int size)
 		{
@@ -141,26 +156,26 @@ namespace liteser
 				this->subVariables += new Variable("", new Ptr<T>(&container->operator[](i)));
 			}
 		}
-			/*
 		template <class K, class V>
 		void _addSubVariablesHmap(unsigned int size)
 		{
-			std::map<K, V>* container = (std::map<K, V>*)((Ptr<hmap<K, V> >*)this->ptr)->value;
+			hmap<K, V>* container = ((Ptr<hmap<K, V> >*)this->ptr)->value;
 			if (container->size() > 0)
 			{
 				throw hl_exception("Hmap in default constructor not empty initially: " + this->name);
 			}
-			for_itert (unsigned int, i, 0, size) // requires adding first because of possible reallocation of memory to another block
+		}
+		template <class K, class V>
+		void _applyHmapSubVariables()
+		{
+			hmap<K, V>* container = ((Ptr<hmap<K, V> >*)this->ptr)->value;
+			harray<K>* keys = (harray<K>*)this->ptrKeys;
+			harray<V>* values = (harray<V>*)this->ptrValues;
+			for_iter (i, 0, keys->size())
 			{
-				container->insert(std::pair<K, V>(K(), V()));
-			}
-			for (std::map<K, V>::iterator it = container->begin(); it != container->end(); it++)
-			{
-				this->subVariables += new Variable("", new Ptr<K>(&it->first));
-				this->subVariables += new Variable("", new Ptr<V>(&it->second));
+				container->operator[](keys->operator[](i)) = values->operator[](i);
 			}
 		}
-			*/
 
 	};
 

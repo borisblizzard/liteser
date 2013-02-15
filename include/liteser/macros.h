@@ -29,13 +29,13 @@
 #define __LS_X2STRINGIFY(x) #x
 
 // some more magic for type retrieval
-#define __LS_TYPEOF_EAT2(x, y) x
-#define __LS_TYPEOF_ARG1(x) (x,
+#define __LS_TYPEOF_EAT2(x, y) __LS_REM x
+#define __LS_TYPEOF_ARG1(...) ((__VA_ARGS__),
 #define __LS_TYPEOF(x) __LS_EXPAND(__LS_TYPEOF_EAT2 __LS_TYPEOF_ARG1 x))
 // strip off the type
 #define __LS_STRIP(x) __LS_EAT x
 // show the argument without parenthesis
-#define __LS_PAIR(x) __LS_REM x
+#define __LS_PAIR(x) __LS_REM2 x
 
 // reversal indexing
 #define __LS_VA_ARGC_INDEX( \
@@ -56,7 +56,7 @@
 	10,  9,  8,  7,  6,  5,  4,  3,  2,  1,  0))
 
 // some recursive magic
-#define __LS_FOREACH(m, args) __LS_FOREACH_(m, __LS_VA_ARGC(args), (args))
+#define __LS_FOREACH(m, args) __LS_FOREACH_(m, __LS_VA_ARGC args, args)
 #define __LS_FOREACH_(m, n, args) __LS_FOREACH__(m, n, args)
 #define __LS_FOREACH__(m, n, args) __LS_FOREACH_ ## n(m, 0, args)
 
