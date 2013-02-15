@@ -39,7 +39,7 @@ namespace liteser
 		case Type::OBJECT:	_dump(variable->value<Serializable>());		break;
 		case Type::OBJPTR:	_dump(variable->value<Serializable*>());	break;
 		case Type::HARRAY:	__dumpContainer(variable);					break;
-		//case Type::HMAP:	__dumpContainer(variable);					break;
+		case Type::HMAP:	__dumpContainer(variable);					break;
 		}
 	}
 
@@ -127,7 +127,8 @@ namespace liteser
 		_dump(&id);
 		if (added)
 		{
-			_dump(&value->_lsName());
+			hstr name = value->_lsName();
+			_dump(&name);
 			harray<Variable*> variables = value->_lsVars();
 			uint32_t size = (uint32_t)variables.size();
 			_dump(&size);

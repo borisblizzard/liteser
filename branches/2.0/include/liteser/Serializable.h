@@ -32,11 +32,11 @@
 #define LS_CLASS_DECLARE_ABSTRACT(classe) \
 	hstr _lsName() { return #classe; }
 #define LS_VARS(superclass, ...) \
-	__LS_FOREACH(__LS_VAR, __VA_ARGS__) \
+	__LS_FOREACH(__LS_VAR, (__VA_ARGS__)) \
 	harray<liteser::Variable*> _lsVars() \
 	{ \
 		harray<liteser::Variable*> variables = superclass::_lsVars(); \
-		__LS_FOREACH(__LS_REF, __VA_ARGS__) \
+		__LS_FOREACH(__LS_REF, (__VA_ARGS__)) \
 		return variables; \
 	}
 
