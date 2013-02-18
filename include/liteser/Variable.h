@@ -66,7 +66,8 @@ namespace liteser
 			this->ptr = (void*)ptr;
 			this->ptrKeys = NULL;
 			this->ptrValues = NULL;
-			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable.
+			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable
+			// or there is a forward declaration of the class instead of including the actual header.
 			Ptr<Serializable>(*ptr->value);
 		}
 		template <class T>
@@ -77,7 +78,8 @@ namespace liteser
 			this->ptr = (void*)ptr;
 			this->ptrKeys = NULL;
 			this->ptrValues = NULL;
-			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable.
+			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable
+			// or there is a forward declaration of the class instead of including the actual header.
 			Ptr<Serializable>(ptr->value);
 		}
 		~Variable();
