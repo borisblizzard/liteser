@@ -62,8 +62,8 @@ namespace liteser
 		Variable(chstr name, Ptr<T*>* ptr)
 		{
 			this->name = name;
-			this->ptr = (void*)ptr;
 			this->type = new Type((Ptr<Serializable*>*)NULL);
+			this->ptr = (void*)ptr;
 			this->ptrKeys = NULL;
 			this->ptrValues = NULL;
 			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable.
@@ -73,8 +73,8 @@ namespace liteser
 		Variable(chstr name, Ptr<T>* ptr)
 		{
 			this->name = name;
-			this->ptr = (void*)ptr;
 			this->type = new Type((Ptr<Serializable>*)NULL);
+			this->ptr = (void*)ptr;
 			this->ptrKeys = NULL;
 			this->ptrValues = NULL;
 			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable.
@@ -86,8 +86,8 @@ namespace liteser
 		Variable(chstr name, Ptr<harray<T*> >* ptr)
 		{
 			this->name = name;
-			this->ptr = (void*)ptr;
 			this->type = new Type((Ptr<harray<Serializable*> >*)NULL);
+			this->ptr = (void*)ptr;
 			this->ptrKeys = NULL;
 			this->ptrValues = NULL;
 			harray<Serializable*>* obj = (harray<Serializable*>*)ptr->value;
@@ -96,20 +96,23 @@ namespace liteser
 				this->subVariables += new Variable("", new Ptr<Serializable*>(&(*it)));
 			}
 		}
-		template <class T>
-		Variable(chstr name, Ptr<harray<T> >* ptr)
+		template <class K, class V>
+		Variable(chstr name, Ptr<hmap<K*, V> >* ptr)
 		{
-			throw hl_exception("");
 			this->name = name;
+			this->type = new Type((Ptr<harray<Serializable*> >*)NULL);
 			this->ptr = (void*)ptr;
-			this->type = new Type((Ptr<harray<Serializable> >*)NULL);
-			this->ptrKeys = NULL;
-			this->ptrValues = NULL;
-			harray<Serializable>* obj = (harray<Serializable>*)ptr->value;
-			foreach (Serializable, it, *obj)
+			harray<K*> originalKeys = ptr->value->keys();
+			harray<Serializable*>* keys = new harray<Serializable*>(originalKeys.cast<Serializable*>());
+			harray<V>* values = new harray<V>();
+			for_iter (i, 0, originalKeys.size()) // cannot use foreach here because GCC can't compile it properly
 			{
-				this->subVariables += new Variable("", new Ptr<Serializable>(&(*it)));
+				values->add(ptr->value->operator[](originalKeys[i]));
 			}
+			this->ptrKeys = keys;
+			this->ptrValues = values;
+			this->subVariables += new Variable("", new Ptr<harray<Serializable*> >(keys));
+			this->subVariables += new Variable("", new Ptr<harray<V> >(values));
 		}
 		template <class K, class V>
 		Variable(chstr name, Ptr<hmap<K, V> >* ptr)

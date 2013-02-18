@@ -92,23 +92,19 @@ Following types can be declared as serializable variables.
 	- hltypes::Map (see "Limitations" for more information)
 
 3. classes that inherit liteser::Serializable:
-	- allocated on the stack only (e.g. Serializable)
 	- allocated on the heap only (e.g. Serializable*)
 
 Limitations:
+- Stack-allocated objects are not supported due to differences in memory allocation and the
+  impossibility of dynamic casting of objects that are not pointers to objects.
 - hltypes::Array does not support bool due to the implementation of bool within std::vector which
   does not allow them to be modified in a simple way.
 - hltypes::Array can only contain hltypes::String from the extended types.
-- hltypes::Array does not support stack-allocated objects due to differences in memory allocation and
-  the impossibility of dynamic casting of objects that are not pointers to objects.
 - hltypes::Map requires a simple workaround. Instead of directly declaring
   hltypes::Map<keyType, valueType>, use the provided helper macro HL_HMAP_MACRO_FIX(keyType, valueType).
-- hltypes::Map keys only support simple types (except bool) and hltypes::String.
-- hltypes::Map does not support bool for values due to the implementation of bool within std::vector
-  which does not allow them to be modified in a simple way.
-- hltypes::Map can only contain hltypes::String as values from the extended types.
-- hltypes::Map values do not support stack-allocated objects due to differences in memory allocation and
-  the impossibility of dynamic casting of objects that are not pointers to objects.
+- hltypes::Map keys do not support bool due to the implementation of bool within std::map which does
+  not allow them to be modified in a simple way.
+- hltypes::Map values do not support hltypes::Array and hltypes::Map.
 - enum is not supported directly (see below for more information).
 
 ------------------------------------------------------------------------------------------------------
@@ -118,5 +114,3 @@ Limitations:
 If you want to serialize an enum, there is an indirect way to do this without changing too much of
 your code. Instead of creating an enum, create a typedef for int (or unsigned int) and instead of
 declaring a possible list of enum values, declare all values as static const values of the new type.
-You also might want to rename the name of the enums if it is located within a namespace in order to
-avoid name conflicts with other types.
