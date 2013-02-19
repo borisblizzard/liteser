@@ -114,3 +114,34 @@ Limitations:
 If you want to serialize an enum, there is an indirect way to do this without changing too much of
 your code. Instead of creating an enum, create a typedef for int (or unsigned int) and instead of
 declaring a possible list of enum values, declare all values as static const values of the new type.
+
+------------------------------------------------------------------------------------------------------
+
+	6. Object models with loops
+
+If you have classes that have pointers to classes which inherit the first class, you cannot use
+LS_VARS, because you would have to include the derived class' header which would result in an
+inclusion loop and your code won't compile. For this problem you are offered 2 additional macros.
+LS_VARS_DECLARE(...) is added in the header while LS_VARS_DEFINE(class, superclass, ...) is added in
+the source file.
+
+Example:
+
+	// in your header
+	LS_VARS_DECLARE
+	(
+		(int) var1,
+		(float) anotherVar
+	);
+	// in your source file
+	LS_VARS_DEFINE
+	(
+		mynamespace::MyClass,
+		liteser::Serializable,
+		(int) var1,
+		(float) anotherVar
+	);
+
+Note that this approach allows you to serialize variables that have different scopes (public,
+protected, private, etc.) and variables that are not actually included in LS_VARS_DEFINE which is not
+possible when using LS_VARS only.
