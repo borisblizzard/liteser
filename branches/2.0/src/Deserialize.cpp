@@ -88,10 +88,6 @@ namespace liteser
 			}
 			if (type == Type::HMAP)
 			{
-				foreach (Variable*, it, variable->subVariables)
-				{
-					__loadVariableValue((*it), (*it)->type->value);
-				}
 				variable->applyHmapSubVariables(type);
 			}
 		}
@@ -144,7 +140,13 @@ namespace liteser
 
 	void _load(hstr* value)
 	{
-		*value = stream->load_hstr();
+		uint32_t id;
+		_load(&id);
+		if (!__tryGetString(id, value))
+		{
+			*value = stream->load_hstr();
+			__tryMapString(&id, *value);
+		}
 	}
 
 	void _load(Serializable* value)
@@ -166,8 +168,7 @@ namespace liteser
 	{
 		uint32_t id;
 		_load(&id);
-		bool found = __tryGetObject(id, value);
-		if (!found)
+		if (!__tryGetObject(id, value))
 		{
 			hstr className;
 			_load(&className);
@@ -209,6 +210,10 @@ namespace liteser
 			{
 				hlog::warn(liteser::logTag, "Not all variables were previously saved in class: " + className);
 			}
+		}
+		else
+		{
+			*value = NULL;
 		}
 	}
 

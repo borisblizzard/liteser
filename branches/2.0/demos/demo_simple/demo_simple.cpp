@@ -194,12 +194,12 @@ int main(int argc, char **argv)
 	arg3["second"] = 20;
 	Type1 type1(arg1, arg2, arg3);
 	
-	file.open("demo_simple.lsb", hfile::WRITE);
+	file.open("demo_simple.ls2", hfile::WRITE);
 	liteser::serialize(&file, &type1);
 	file.close();
 	
 	Type1* loaded = NULL;
-	file.open("demo_simple.lsb");
+	file.open("demo_simple.ls2");
 	liteser::deserialize(&file, (liteser::Serializable**)&loaded);
 	file.close();
 	

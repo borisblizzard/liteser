@@ -17,6 +17,7 @@
 namespace liteser
 {
 	hmap<unsigned int, Serializable*> objects;
+	hmap<unsigned int, hstr> strings;
 	hsbase* stream = NULL;
 
 	bool __tryMapObject(unsigned int* id, Serializable* object)
@@ -24,7 +25,7 @@ namespace liteser
 		if (object == NULL)
 		{
 			*id = 0;
-			return true;
+			return false;
 		}
 		if (!objects.has_value(object))
 		{
@@ -52,15 +53,50 @@ namespace liteser
 		return true;
 	}
 
+	bool __tryMapString(unsigned int* id, chstr string)
+	{
+		if (string == "")
+		{
+			*id = 0;
+			return false;
+		}
+		if (!strings.has_value(string))
+		{
+			// necessary to avoid incorrect size() since objects[*id] could be evaluated first
+			*id = strings.size() + 1;
+			strings[*id] = string;
+			return true;
+		}
+		*id = strings(string);
+		return false;
+	}
+
+	bool __tryGetString(unsigned int id, hstr* string)
+	{
+		if (id == 0)
+		{
+			*string = "";
+			return true;
+		}
+		if (!strings.has_key(id))
+		{
+			return false;
+		}
+		*string = strings[id];
+		return true;
+	}
+
 	void _start(hsbase* stream)
 	{
 		objects.clear();
+		strings.clear();
 		liteser::stream = stream;
 	}
 
 	void _finish(hsbase* stream)
 	{
 		objects.clear();
+		strings.clear();
 		liteser::stream = NULL;
 	}
 
