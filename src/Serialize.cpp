@@ -115,18 +115,24 @@ namespace liteser
 
 	void _dump(hstr* value)
 	{
-		// TODO - implement own way of saving stuff
-		// TODO - index variable names and strings
-		stream->dump(*value);
+		uint32_t id;
+		if (__tryMapString(&id, *value))
+		{
+			_dump(&id);
+			stream->dump(*value);
+		}
+		else
+		{
+			_dump(&id);
+		}
 	}
 
 	void _dump(Serializable* value)
 	{
 		uint32_t id;
-		bool added = __tryMapObject(&id, value);
-		_dump(&id);
-		if (added)
+		if (__tryMapObject(&id, value))
 		{
+			_dump(&id);
 			hstr name = value->_lsName();
 			_dump(&name);
 			harray<Variable*> variables = value->_lsVars();
@@ -138,6 +144,10 @@ namespace liteser
 				__dumpVariable(*it);
 				delete (*it);
 			}
+		}
+		else
+		{
+			_dump(&id);
 		}
 	}
 

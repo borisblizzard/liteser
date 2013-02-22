@@ -26,6 +26,8 @@ namespace liteser
 
 	bool __tryMapObject(unsigned int* id, Serializable* object);
 	bool __tryGetObject(unsigned int id, Serializable** object);
+	bool __tryMapString(unsigned int* id, chstr string);
+	bool __tryGetString(unsigned int id, hstr* string);
 	void _start(hsbase* stream);
 	void _finish(hsbase* stream);
 	bool _isActive();

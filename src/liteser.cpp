@@ -23,7 +23,7 @@
 #define _LS_HEADER_1 'S'
 
 #define DECLARE_HARRAY_SERIALIZER(type) \
-	bool serialize(hsbase* stream, harray<type> object) \
+	bool serialize(hsbase* stream, harray<type> value) \
 	{ \
 		if (!stream->is_open()) \
 		{ \
@@ -31,29 +31,33 @@
 		} \
 		_start(stream); \
 		stream->write_raw(header, 4); \
-		_dumpHarray(&object); \
+		_dumpHarray(&value); \
 		_finish(stream); \
 		return true; \
 	}
 	
 #define DECLARE_HARRAY_DESERIALIZER(type) \
-	bool deserialize(hsbase* stream, harray<type>* object) \
+	bool deserialize(hsbase* stream, harray<type>* value) \
 	{ \
 		if (!stream->is_open()) \
 		{ \
 			throw file_not_open("Liteser Stream"); \
+		} \
+		if (value->size() > 0) \
+		{ \
+			throw hl_exception("Output harray is not empty!"); \
 		} \
 		_start(stream); \
 		unsigned char readHeader[4]; \
 		stream->read_raw(readHeader, 4); \
 		if (readHeader[0] != _LS_HEADER_0 || readHeader[1] != _LS_HEADER_1) \
 		{ \
-			throw hl_exception("Invalid header."); \
+			throw hl_exception("Invalid header!"); \
 		} \
 		unsigned char major = readHeader[2]; \
 		unsigned char minor = readHeader[3]; \
 		_checkVersion(major, minor); \
-		_loadHarray(object); \
+		_loadHarray(value); \
 		_finish(stream); \
 		return true; \
 	}
