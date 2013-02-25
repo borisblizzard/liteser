@@ -10,6 +10,7 @@
 #include <hltypes/exception.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
+#include <hltypes/hstream.h>
 #include <hltypes/hstring.h>
 
 #include "Deserialize.h"
@@ -130,4 +131,15 @@ namespace liteser
 	DECLARE_HARRAY_DESERIALIZER(double);
 	DECLARE_HARRAY_DESERIALIZER(hstr);
 	
+	bool clone(Serializable* input, Serializable** output)
+	{
+		hstream stream;
+		_start(&stream);
+		_dump(&input);
+		stream.rewind();
+		_load(output);
+		_finish(&stream);
+		return true;
+	}
+
 }
