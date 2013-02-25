@@ -204,10 +204,18 @@ int main(int argc, char **argv)
 	file.close();
 	
 	type1.check(*loaded);
-
 	if (__test_count == 0)
 	{
 		hlog::write(LOG_TAG, "Serialization test was successful.");
+	}
+
+	Type1* cloned = NULL;
+	liteser::clone(&type1, (liteser::Serializable**)&cloned);
+	__test_count = 0;
+	type1.check(*loaded);
+	if (__test_count == 0)
+	{
+		hlog::write(LOG_TAG, "Cloning test was successful.");
 	}
 
 	system("pause");

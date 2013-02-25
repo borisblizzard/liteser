@@ -33,7 +33,6 @@ namespace liteser
 {
 	extern hstr logTag;
 
-
 	liteserFnExport bool serialize(hsbase* stream, Serializable* object);
 	liteserFnExport bool serialize(hsbase* stream, harray<Serializable*> object);
 	liteserFnExport bool serialize(hsbase* stream, harray<char> value);
@@ -45,6 +44,7 @@ namespace liteser
 	liteserFnExport bool serialize(hsbase* stream, harray<float> value);
 	liteserFnExport bool serialize(hsbase* stream, harray<double> value);
 	liteserFnExport bool serialize(hsbase* stream, harray<hstr> value);
+
 	liteserFnExport bool deserialize(hsbase* stream, Serializable** object);
 	liteserFnExport bool deserialize(hsbase* stream, harray<Serializable*>* object);
 	liteserFnExport bool deserialize(hsbase* stream, harray<char>* value);
@@ -56,6 +56,10 @@ namespace liteser
 	liteserFnExport bool deserialize(hsbase* stream, harray<float>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<double>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<hstr>* value);
+
+	/// @brief Creates a deep copy of an object.
+	/// @note The cloning only affects variables that were declared as serializable.
+	liteserFnExport bool clone(Serializable* input, Serializable** output);
 
 }
 #endif
