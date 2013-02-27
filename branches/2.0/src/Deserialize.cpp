@@ -58,9 +58,8 @@ namespace liteser
 
 	void __loadContainer(Variable* variable, Type::Value type)
 	{
-		uint32_t size = 0;
-		_load(&size);
-		if (size > 0)
+		_load(&variable->containerSize);
+		if (variable->containerSize > 0)
 		{
 			Type::Value loadType = Type::NONE;
 			uint32_t typeSize = 0;
@@ -81,7 +80,7 @@ namespace liteser
 					throw hl_exception(hsprintf("Template container within a template container detected, not supported: %02X", loadType));
 				}
 			}
-			variable->createSubVariables(type, size);
+			variable->createSubVariables(type);
 			foreach (Variable*, it, variable->subVariables)
 			{
 				__loadVariableValue((*it), (*it)->type->value);

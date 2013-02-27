@@ -37,6 +37,7 @@ namespace liteser
 		Type* type;
 		void* ptr;
 		harray<Variable*> subVariables;
+		unsigned int containerSize;
 
 		Variable(chstr name, Ptr<char>* ptr); // char is always 8 bits
 		Variable(chstr name, Ptr<unsigned char>* ptr); // char is always 8 bits
@@ -64,6 +65,7 @@ namespace liteser
 			this->name = name;
 			this->type = new Type((Ptr<Serializable*>*)NULL);
 			this->ptr = (void*)ptr;
+			this->containerSize = 0;
 			this->ptrKeys = NULL;
 			this->ptrValues = NULL;
 			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable
@@ -76,6 +78,7 @@ namespace liteser
 			this->name = name;
 			this->type = new Type((Ptr<Serializable>*)NULL);
 			this->ptr = (void*)ptr;
+			this->containerSize = 0;
 			this->ptrKeys = NULL;
 			this->ptrValues = NULL;
 			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable
@@ -90,6 +93,7 @@ namespace liteser
 			this->name = name;
 			this->type = new Type((Ptr<harray<Serializable*> >*)NULL);
 			this->ptr = (void*)ptr;
+			this->containerSize = ptr->value->size();
 			this->ptrKeys = NULL;
 			this->ptrValues = NULL;
 			harray<Serializable*>* obj = (harray<Serializable*>*)ptr->value;
@@ -104,6 +108,7 @@ namespace liteser
 			this->name = name;
 			this->type = new Type((Ptr<harray<Serializable*> >*)NULL);
 			this->ptr = (void*)ptr;
+			this->containerSize = keys->size();
 			harray<K*> originalKeys = ptr->value->keys();
 			harray<Serializable*>* keys = new harray<Serializable*>(originalKeys.cast<Serializable*>());
 			harray<V>* values = new harray<V>();
@@ -122,6 +127,7 @@ namespace liteser
 			this->name = name;
 			this->type = new Type(ptr);
 			this->ptr = (void*)ptr;
+			this->containerSize = ptr->value->size();
 			harray<K>* keys = new harray<K>(ptr->value->keys());
 			harray<V>* values = new harray<V>();
 			for_iter (i, 0, keys->size()) // cannot use foreach here because GCC can't compile it properly
@@ -140,7 +146,7 @@ namespace liteser
 			return ((Ptr<T>*)this->ptr)->value;
 		}
 
-		void createSubVariables(Type::Value type, unsigned int size);
+		void createSubVariables(Type::Value type);
 		void applyHmapSubVariables(Type::Value type);
 
 	protected:
@@ -148,21 +154,21 @@ namespace liteser
 		void* ptrValues;
 
 		template <class T>
-		void _addSubVariablesHarray(unsigned int size)
+		void _addSubVariablesHarray()
 		{
 			harray<T>* container = ((Ptr<harray<T> >*)this->ptr)->value;
 			if (container->size() > 0)
 			{
 				throw hl_exception("Harray in default constructor not empty initially: " + this->name);
 			}
-			container->add(T(), size); // requires adding first because of possible reallocation of memory to another block
-			for_itert (unsigned int, i, 0, size)
+			container->add(T(), this->containerSize); // requires adding first because of possible reallocation of memory to another block
+			for_itert (unsigned int, i, 0, this->containerSize)
 			{
 				this->subVariables += new Variable("", new Ptr<T>(&container->operator[](i)));
 			}
 		}
 		template <class K, class V>
-		void _addSubVariablesHmap(unsigned int size)
+		void _addSubVariablesHmap()
 		{
 			hmap<K, V>* container = ((Ptr<hmap<K, V> >*)this->ptr)->value;
 			if (container->size() > 0)

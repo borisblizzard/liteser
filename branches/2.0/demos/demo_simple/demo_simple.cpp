@@ -127,7 +127,7 @@ public:
 		this->v_type3 = new Type3();
 		this->v_harray_int = arg1;
 		this->v_harray_type3 = arg2;
-		this->v_hmap_hstr_int = arg3;
+		this->v_hmap_hstr_int2 = arg3;
 	}
 	~Type1()
 	{
@@ -154,6 +154,7 @@ public:
 		this->v_type3->check(*other.v_type3);
 		CHECK_VALUE_HARRAY_OBJECTS(v_harray_type3);
 		CHECK_VALUE(v_hmap_hstr_int);
+		CHECK_VALUE(v_hmap_hstr_int2);
 	}
 
 protected:
@@ -174,7 +175,8 @@ protected:
 		(Type3*) v_type3,
 		(harray<int>) v_harray_int,
 		(harray<Type3*>) v_harray_type3,
-		(HL_HMAP_MACRO_FIX(hstr, int)) v_hmap_hstr_int
+		(HL_HMAP_MACRO_FIX(hstr, int)) v_hmap_hstr_int,
+		(HL_HMAP_MACRO_FIX(hstr, int)) v_hmap_hstr_int2
 	)
 
 };
