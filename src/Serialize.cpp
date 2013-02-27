@@ -51,11 +51,10 @@ namespace liteser
 
 	void __dumpContainer(Variable* variable)
 	{
-		uint32_t size = (uint32_t)variable->subVariables.size();
-		_dump(&size);
-		if (size > 0)
+		_dump(&variable->containerSize);
+		if (variable->containerSize > 0)
 		{
-			size = (uint32_t)variable->type->subTypes.size();
+			uint32_t size = (uint32_t)variable->type->subTypes.size();
 			_dump(&size);
 			foreach (Type*, it, variable->type->subTypes)
 			{

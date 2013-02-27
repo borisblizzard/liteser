@@ -24,6 +24,7 @@
 		this->name = name; \
 		this->type = new Type(ptr); \
 		this->ptr = (void*)ptr; \
+		this->containerSize = 0; \
 		this->ptrKeys = NULL; \
 		this->ptrValues = NULL; \
 	}
@@ -33,6 +34,7 @@
 		this->name = name; \
 		this->type = new Type(ptr); \
 		this->ptr = (void*)ptr; \
+		this->containerSize = ptr->value->size(); \
 		this->ptrKeys = NULL; \
 		this->ptrValues = NULL; \
 		foreach (typeName, it, *ptr->value) \
@@ -49,9 +51,9 @@
 	{ \
 	case Type::INT8:	_CHECK_HMAP_VALUE_TYPE(char, valueTypeValue);			break; \
 	case Type::UINT8:	_CHECK_HMAP_VALUE_TYPE(unsigned char, valueTypeValue);	break; \
-	case Type::INT16:	_CHECK_HMAP_VALUE_TYPE(int16_t, valueTypeValue);			break; \
+	case Type::INT16:	_CHECK_HMAP_VALUE_TYPE(int16_t, valueTypeValue);		break; \
 	case Type::UINT16:	_CHECK_HMAP_VALUE_TYPE(uint16_t, valueTypeValue);		break; \
-	case Type::INT32:	_CHECK_HMAP_VALUE_TYPE(int32_t, valueTypeValue);			break; \
+	case Type::INT32:	_CHECK_HMAP_VALUE_TYPE(int32_t, valueTypeValue);		break; \
 	case Type::UINT32:	_CHECK_HMAP_VALUE_TYPE(uint32_t, valueTypeValue);		break; \
 	case Type::FLOAT:	_CHECK_HMAP_VALUE_TYPE(float, valueTypeValue);			break; \
 	case Type::DOUBLE:	_CHECK_HMAP_VALUE_TYPE(double, valueTypeValue);			break; \
@@ -61,16 +63,16 @@
 	{ \
 		switch (value) \
 		{ \
-		case Type::INT8:	this->_addSubVariablesHmap<keyType, char>(size);			return; \
-		case Type::UINT8:	this->_addSubVariablesHmap<keyType, unsigned char>(size);	return; \
-		case Type::INT16:	this->_addSubVariablesHmap<keyType, int16_t>(size);			return; \
-		case Type::UINT16:	this->_addSubVariablesHmap<keyType, uint16_t>(size);		return; \
-		case Type::INT32:	this->_addSubVariablesHmap<keyType, int32_t>(size);			return; \
-		case Type::UINT32:	this->_addSubVariablesHmap<keyType, uint32_t>(size);		return; \
-		case Type::FLOAT:	this->_addSubVariablesHmap<keyType, float>(size);			return; \
-		case Type::DOUBLE:	this->_addSubVariablesHmap<keyType, double>(size);			return; \
-		case Type::HSTR:	this->_addSubVariablesHmap<keyType, hstr>(size);			return; \
-		case Type::OBJPTR:	this->_addSubVariablesHmap<keyType, Serializable*>(size);	return; \
+		case Type::INT8:	this->_addSubVariablesHmap<keyType, char>();			return; \
+		case Type::UINT8:	this->_addSubVariablesHmap<keyType, unsigned char>();	return; \
+		case Type::INT16:	this->_addSubVariablesHmap<keyType, int16_t>();			return; \
+		case Type::UINT16:	this->_addSubVariablesHmap<keyType, uint16_t>();		return; \
+		case Type::INT32:	this->_addSubVariablesHmap<keyType, int32_t>();			return; \
+		case Type::UINT32:	this->_addSubVariablesHmap<keyType, uint32_t>();		return; \
+		case Type::FLOAT:	this->_addSubVariablesHmap<keyType, float>();			return; \
+		case Type::DOUBLE:	this->_addSubVariablesHmap<keyType, double>();			return; \
+		case Type::HSTR:	this->_addSubVariablesHmap<keyType, hstr>();			return; \
+		case Type::OBJPTR:	this->_addSubVariablesHmap<keyType, Serializable*>();	return; \
 		} \
 	}
 
@@ -104,7 +106,6 @@
 		} \
 	}
 	
-
 namespace liteser
 {
 	DEFINE_CONSTRUCTORS(char);
@@ -142,7 +143,7 @@ namespace liteser
 		}
 	}
 
-	void Variable::createSubVariables(Type::Value type, unsigned int size)
+	void Variable::createSubVariables(Type::Value type)
 	{
 		if (this->type->subTypes.size() == 0)
 		{
@@ -153,17 +154,17 @@ namespace liteser
 		case Type::HARRAY:
 			switch (this->type->subTypes[0]->value)
 			{
-			case Type::INT8:	this->_addSubVariablesHarray<char>(size);			return;
-			case Type::UINT8:	this->_addSubVariablesHarray<unsigned char>(size);	return;
-			case Type::INT16:	this->_addSubVariablesHarray<int16_t>(size);		return;
-			case Type::UINT16:	this->_addSubVariablesHarray<uint16_t>(size);		return;
-			case Type::INT32:	this->_addSubVariablesHarray<int32_t>(size);		return;
-			case Type::UINT32:	this->_addSubVariablesHarray<uint32_t>(size);		return;
-			case Type::FLOAT:	this->_addSubVariablesHarray<float>(size);			return;
-			case Type::DOUBLE:	this->_addSubVariablesHarray<double>(size);			return;
-			case Type::HSTR:	this->_addSubVariablesHarray<hstr>(size);			return;
-			case Type::OBJECT:	this->_addSubVariablesHarray<Serializable>(size);	return;
-			case Type::OBJPTR:	this->_addSubVariablesHarray<Serializable*>(size);	return;
+			case Type::INT8:	this->_addSubVariablesHarray<char>();			return;
+			case Type::UINT8:	this->_addSubVariablesHarray<unsigned char>();	return;
+			case Type::INT16:	this->_addSubVariablesHarray<int16_t>();		return;
+			case Type::UINT16:	this->_addSubVariablesHarray<uint16_t>();		return;
+			case Type::INT32:	this->_addSubVariablesHarray<int32_t>();		return;
+			case Type::UINT32:	this->_addSubVariablesHarray<uint32_t>();		return;
+			case Type::FLOAT:	this->_addSubVariablesHarray<float>();			return;
+			case Type::DOUBLE:	this->_addSubVariablesHarray<double>();			return;
+			case Type::HSTR:	this->_addSubVariablesHarray<hstr>();			return;
+			case Type::OBJECT:	this->_addSubVariablesHarray<Serializable>();	return;
+			case Type::OBJPTR:	this->_addSubVariablesHarray<Serializable*>();	return;
 			}
 			throw hl_exception(hsprintf("Subtype is not supported within harray: %s; type: %02X",
 				this->name.c_str(), this->type->subTypes[0]->value));
