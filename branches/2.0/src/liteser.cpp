@@ -136,7 +136,9 @@ namespace liteser
 		hstream stream;
 		_start(&stream);
 		_dump(&input);
+		_finish(&stream);
 		stream.rewind();
+		_start(&stream);
 		_load(output);
 		_finish(&stream);
 		return true;
