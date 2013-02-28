@@ -210,7 +210,7 @@ namespace liteser
 				hlog::warn(liteser::logTag, "Not all variables were previously saved in class: " + className);
 			}
 		}
-		else
+		else if (id == 0)
 		{
 			*value = NULL;
 		}
