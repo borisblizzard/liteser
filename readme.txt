@@ -87,11 +87,15 @@ Following types can be declared as serializable variables.
 	- double
 
 2. extended types:
+	- gtypes::Vector2
+	- gtypes::Rectangle
 	- hltypes::String
+	
+3. container types:
 	- hltypes::Array (see "Limitations" for more information)
 	- hltypes::Map (see "Limitations" for more information)
 
-3. classes that inherit liteser::Serializable:
+4. classes that inherit liteser::Serializable:
 	- allocated on the heap only (e.g. Serializable*)
 
 Limitations:
@@ -99,12 +103,12 @@ Limitations:
   impossibility of dynamic casting of objects that are not pointers to objects.
 - hltypes::Array does not support bool due to the implementation of bool within std::vector which
   does not allow them to be modified in a simple way.
-- hltypes::Array can only contain hltypes::String from the extended types.
+- hltypes::Array cannot contain another container type.
 - hltypes::Map requires a simple workaround. Instead of directly declaring
   hltypes::Map<keyType, valueType>, use the provided helper macro HL_HMAP_MACRO_FIX(keyType, valueType).
 - hltypes::Map keys do not support bool due to the implementation of bool within std::map which does
   not allow them to be modified in a simple way.
-- hltypes::Map values do not support hltypes::Array and hltypes::Map.
+- hltypes::Map keys and values do not support container types.
 - enum is not supported directly (see below for more information).
 
 ------------------------------------------------------------------------------------------------------

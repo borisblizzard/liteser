@@ -16,6 +16,8 @@
 
 #include <stdint.h>
 
+#include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/exception.h>
 #include <hltypes/harray.h>
 #include <hltypes/hmap.h>
@@ -49,6 +51,8 @@ namespace liteser
 		Variable(chstr name, Ptr<double>* ptr);
 		Variable(chstr name, Ptr<bool>* ptr);
 		Variable(chstr name, Ptr<hstr>* ptr);
+		Variable(chstr name, Ptr<gvec2>* ptr);
+		Variable(chstr name, Ptr<grect>* ptr);
 		Variable(chstr name, Ptr<harray<char> >* ptr); // char is always 8 bits
 		Variable(chstr name, Ptr<harray<unsigned char> >* ptr); // char is always 8 bits
 		Variable(chstr name, Ptr<harray<int16_t> >* ptr);
@@ -58,6 +62,8 @@ namespace liteser
 		Variable(chstr name, Ptr<harray<float> >* ptr);
 		Variable(chstr name, Ptr<harray<double> >* ptr);
 		Variable(chstr name, Ptr<harray<hstr> >* ptr);
+		Variable(chstr name, Ptr<harray<gvec2> >* ptr);
+		Variable(chstr name, Ptr<harray<grect> >* ptr);
 
 		template <class T>
 		Variable(chstr name, Ptr<T*>* ptr)

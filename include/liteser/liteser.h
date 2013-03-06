@@ -16,6 +16,8 @@
 
 #include <stdint.h>
 
+#include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/harray.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
@@ -44,6 +46,8 @@ namespace liteser
 	liteserFnExport bool serialize(hsbase* stream, harray<float> value);
 	liteserFnExport bool serialize(hsbase* stream, harray<double> value);
 	liteserFnExport bool serialize(hsbase* stream, harray<hstr> value);
+	liteserFnExport bool serialize(hsbase* stream, harray<gvec2> value);
+	liteserFnExport bool serialize(hsbase* stream, harray<grect> value);
 
 	liteserFnExport bool deserialize(hsbase* stream, Serializable** object);
 	liteserFnExport bool deserialize(hsbase* stream, harray<Serializable*>* object);
@@ -56,6 +60,8 @@ namespace liteser
 	liteserFnExport bool deserialize(hsbase* stream, harray<float>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<double>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<hstr>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<gvec2>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<grect>* value);
 
 	/// @brief Creates a deep copy of an object.
 	/// @note The cloning only affects variables that were declared as serializable.

@@ -16,7 +16,12 @@
 
 #include <stdint.h>
 
+#include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
+#include <hltypes/harray.h>
+#include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
+#include <hltypes/hstring.h>
 
 #include "Type.h"
 
@@ -40,6 +45,8 @@ namespace liteser
 	void _dump(double* value);
 	void _dump(bool* value);
 	void _dump(hstr* value);
+	void _dump(gvec2* value);
+	void _dump(grect* value);
 	void _dump(Serializable* value);
 	void _dump(Serializable** value);
 
@@ -52,6 +59,8 @@ namespace liteser
 	void _dumpHarray(harray<float>* value);
 	void _dumpHarray(harray<double>* value);
 	void _dumpHarray(harray<hstr>* value);
+	void _dumpHarray(harray<gvec2>* value);
+	void _dumpHarray(harray<grect>* value);
 	void _dumpHarray(harray<Serializable*>* value);
 
 }

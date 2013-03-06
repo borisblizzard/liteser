@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="src;include/liteser;../hltypes/include;../include"
+				AdditionalIncludeDirectories="src;include/liteser;../hltypes/include;../gtypes/include;../include"
 				PreprocessorDefinitions="_WIN32;LITESER_EXPORTS;_DEBUG;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libhltypes.lib"
+				AdditionalDependencies="libhltypes.lib libgtypes.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				AdditionalLibraryDirectories="$(SolutionDir)bin\$(PlatformName)"
 				GenerateDebugInformation="true"
@@ -117,7 +117,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="src;include/liteser;../hltypes/include;../include"
+				AdditionalIncludeDirectories="src;include/liteser;../hltypes/include;../gtypes/include;../include"
 				PreprocessorDefinitions="_WIN32;LITESER_EXPORTS;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -137,7 +137,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libhltypes.lib"
+				AdditionalDependencies="libhltypes.lib libgtypes.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				AdditionalLibraryDirectories="$(SolutionDir)bin\$(PlatformName)"
 			/>

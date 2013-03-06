@@ -9,9 +9,12 @@
 
 #include <stdint.h>
 
+#include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/harray.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hmap.h>
+#include <hltypes/hsbase.h>
 #include <hltypes/hstring.h>
 
 #include "Deserialize.h"
@@ -49,6 +52,8 @@ namespace liteser
 		case Type::DOUBLE:	_load(variable->value<double>());			break;
 		case Type::BOOL:	_load(variable->value<bool>());				break;
 		case Type::HSTR:	_load(variable->value<hstr>());				break;
+		case Type::GVEC2:	_load(variable->value<gvec2>());			break;
+		case Type::GRECT:	_load(variable->value<grect>());			break;
 		case Type::OBJECT:	_load(variable->value<Serializable>());		break;
 		case Type::OBJPTR:	_load(variable->value<Serializable*>());	break;
 		case Type::HARRAY:	__loadContainer(variable, loadType);		break;
@@ -146,6 +151,20 @@ namespace liteser
 			*value = stream->load_hstr();
 			__tryMapString(&id, *value);
 		}
+	}
+
+	void _load(gvec2* value)
+	{
+		value->x = stream->load_float();
+		value->y = stream->load_float();
+	}
+
+	void _load(grect* value)
+	{
+		value->x = stream->load_float();
+		value->y = stream->load_float();
+		value->w = stream->load_float();
+		value->h = stream->load_float();
 	}
 
 	void _load(Serializable* value)
@@ -257,5 +276,7 @@ namespace liteser
 	DEFINE_LOAD_HARRAY(float);
 	DEFINE_LOAD_HARRAY(double);
 	DEFINE_LOAD_HARRAY(hstr);
+	DEFINE_LOAD_HARRAY(gvec2);
+	DEFINE_LOAD_HARRAY(grect);
 
 }

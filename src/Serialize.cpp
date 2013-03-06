@@ -9,8 +9,11 @@
 
 #include <stdint.h>
 
+#include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/harray.h>
 #include <hltypes/hmap.h>
+#include <hltypes/hsbase.h>
 #include <hltypes/hstring.h>
 
 #include "liteser.h"
@@ -36,6 +39,8 @@ namespace liteser
 		case Type::DOUBLE:	_dump(variable->value<double>());			break;
 		case Type::BOOL:	_dump(variable->value<bool>());				break;
 		case Type::HSTR:	_dump(variable->value<hstr>());				break;
+		case Type::GVEC2:	_dump(variable->value<gvec2>());			break;
+		case Type::GRECT:	_dump(variable->value<grect>());			break;
 		case Type::OBJECT:	_dump(variable->value<Serializable>());		break;
 		case Type::OBJPTR:	_dump(variable->value<Serializable*>());	break;
 		case Type::HARRAY:	__dumpContainer(variable);					break;
@@ -126,6 +131,20 @@ namespace liteser
 		}
 	}
 
+	void _dump(gvec2* value)
+	{
+		stream->dump(value->x);
+		stream->dump(value->y);
+	}
+
+	void _dump(grect* value)
+	{
+		stream->dump(value->x);
+		stream->dump(value->y);
+		stream->dump(value->w);
+		stream->dump(value->h);
+	}
+
 	void _dump(Serializable* value)
 	{
 		uint32_t id;
@@ -185,5 +204,7 @@ namespace liteser
 	DEFINE_DUMP_HARRAY(float);
 	DEFINE_DUMP_HARRAY(double);
 	DEFINE_DUMP_HARRAY(hstr);
+	DEFINE_DUMP_HARRAY(gvec2);
+	DEFINE_DUMP_HARRAY(grect);
 
 }
