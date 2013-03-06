@@ -16,6 +16,8 @@
 
 #include <stdint.h>
 
+#include <gtypes/Rectangle.h>
+#include <gtypes/Vector2.h>
 #include <hltypes/harray.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
@@ -47,6 +49,8 @@ namespace liteser
 			OBJECT	= 0x61,
 			OBJPTR	= 0x62,
 			HSTR	= 0x81,
+			GVEC2	= 0x91,
+			GRECT	= 0x92,
 			HARRAY	= 0xA1,
 			HMAP	= 0xC1
 		};
@@ -64,6 +68,8 @@ namespace liteser
 		Type(Ptr<double>* arg);
 		Type(Ptr<bool>* arg);
 		Type(Ptr<hstr>* arg);
+		Type(Ptr<gvec2>* arg);
+		Type(Ptr<grect>* arg);
 		Type(Ptr<Serializable>* arg);
 		Type(Ptr<Serializable*>* arg);
 		

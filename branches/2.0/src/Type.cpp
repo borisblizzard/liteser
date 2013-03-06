@@ -68,6 +68,16 @@ namespace liteser
 		this->value = HSTR;
 	}
 
+	Type::Type(Ptr<gvec2>* arg)
+	{
+		this->value = GVEC2;
+	}
+
+	Type::Type(Ptr<grect>* arg)
+	{
+		this->value = GRECT;
+	}
+
 	Type::Type(Ptr<Serializable>* arg)
 	{
 		this->value = OBJECT;

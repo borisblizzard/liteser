@@ -72,6 +72,8 @@
 		case Type::FLOAT:	this->_addSubVariablesHmap<keyType, float>();			return; \
 		case Type::DOUBLE:	this->_addSubVariablesHmap<keyType, double>();			return; \
 		case Type::HSTR:	this->_addSubVariablesHmap<keyType, hstr>();			return; \
+		case Type::GVEC2:	this->_addSubVariablesHmap<keyType, gvec2>();			return; \
+		case Type::GRECT:	this->_addSubVariablesHmap<keyType, grect>();			return; \
 		case Type::OBJPTR:	this->_addSubVariablesHmap<keyType, Serializable*>();	return; \
 		} \
 	}
@@ -102,6 +104,8 @@
 		case Type::FLOAT:	this->_applyHmapSubVariables<keyType, float>();			return; \
 		case Type::DOUBLE:	this->_applyHmapSubVariables<keyType, double>();		return; \
 		case Type::HSTR:	this->_applyHmapSubVariables<keyType, hstr>();			return; \
+		case Type::GVEC2:	this->_applyHmapSubVariables<keyType, gvec2>();			return; \
+		case Type::GRECT:	this->_applyHmapSubVariables<keyType, grect>();			return; \
 		case Type::OBJPTR:	this->_applyHmapSubVariables<keyType, Serializable*>();	return; \
 		} \
 	}
@@ -117,6 +121,8 @@ namespace liteser
 	DEFINE_CONSTRUCTORS(float);
 	DEFINE_CONSTRUCTORS(double);
 	DEFINE_CONSTRUCTORS(hstr);
+	DEFINE_CONSTRUCTORS(gvec2);
+	DEFINE_CONSTRUCTORS(grect);
 	DEFINE_CONSTRUCTOR(bool);
 
 	Variable::~Variable()
@@ -163,6 +169,8 @@ namespace liteser
 			case Type::FLOAT:	this->_addSubVariablesHarray<float>();			return;
 			case Type::DOUBLE:	this->_addSubVariablesHarray<double>();			return;
 			case Type::HSTR:	this->_addSubVariablesHarray<hstr>();			return;
+			case Type::GVEC2:	this->_addSubVariablesHarray<gvec2>();			return;
+			case Type::GRECT:	this->_addSubVariablesHarray<grect>();			return;
 			case Type::OBJECT:	this->_addSubVariablesHarray<Serializable>();	return;
 			case Type::OBJPTR:	this->_addSubVariablesHarray<Serializable*>();	return;
 			}
