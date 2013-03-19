@@ -99,6 +99,7 @@ LS_CLASS_DEFINE(Type3);
 class Type1 : public liteser::Serializable
 {
 public:
+	typedef hmap<hstr, int> hmap_hstr_int;
 	LS_CLASS_DECLARE(Type1);
 	Type1() : liteser::Serializable()
 	{
@@ -175,8 +176,8 @@ protected:
 		(Type3*) v_type3,
 		(harray<int>) v_harray_int,
 		(harray<Type3*>) v_harray_type3,
-		(HL_HMAP_MACRO_FIX(hstr, int)) v_hmap_hstr_int,
-		(HL_HMAP_MACRO_FIX(hstr, int)) v_hmap_hstr_int2
+		(hmap_hstr_int) v_hmap_hstr_int,
+		(hmap_hstr_int) v_hmap_hstr_int2
 	)
 
 };
