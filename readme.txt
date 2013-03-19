@@ -104,8 +104,8 @@ Limitations:
 - hltypes::Array does not support bool due to the implementation of bool within std::vector which
   does not allow them to be modified in a simple way.
 - hltypes::Array cannot contain another container type.
-- hltypes::Map requires a simple workaround. Instead of directly declaring
-  hltypes::Map<keyType, valueType>, use the provided helper macro HL_HMAP_MACRO_FIX(keyType, valueType).
+- hltypes::Map requires a workaround. Instead of directly declaring hltypes::Map<keyType, valueType>,
+  you have to create a typedef first.
 - hltypes::Map keys do not support bool due to the implementation of bool within std::map which does
   not allow them to be modified in a simple way.
 - hltypes::Map keys and values do not support container types.
