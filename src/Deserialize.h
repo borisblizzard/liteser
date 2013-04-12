@@ -32,6 +32,9 @@ namespace liteser
 
 	void __loadVariable(Variable* variable);
 	void __loadVariableValue(Variable* variable, Type::Value loadType);
+	bool __skipVariable();
+	bool __skipVariableValue(Type::Value loadType);
+	bool __skipContainer(Type::Value loadType);
 
 	void __loadContainer(Variable* variable, Type::Value type);
 
