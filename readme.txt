@@ -1,10 +1,77 @@
-	!!! IMPORTANT !!!
+------------------------------------------------------------------------------------------------------
+Lite Serializer 2.0 Readme
+------------------------------------------------------------------------------------------------------
 
-The term "object" is used in the context of an instance of a class derived from liteser::Serializable!
+	1. About
+
+Lite Serializer is a library intended for simplifying serialization and deserialization procedures in
+C++. As C++ does not support reflection and automatic serialization, this library is a utility that
+can be used to make these procedures as simple and painless as possible. Due to the nature of C++, how
+objects are stored in memory and how C++ is compiled, there are certain limits that apply for objects
+that you wish to serialize.
 
 ------------------------------------------------------------------------------------------------------
 
-Lite Serializer supports following types:
+	2. Usage
+
+In order to make one of your classes serializable, it needs to fulfill 5 prerequisites. If your class
+is abstract (i.e. it has pure virtual methods), then it must fulfill 4 slightly different
+requirements.
+
+1. Your class must inherit the class liteser::Serializable.
+2. Your class must possess a default constructor without parameters. This constructor will be used to
+   create new instances of your classes during deserialization.
+3. In your header you must add a call for the macro LS_CLASS_DECLARE(CLASS_PATH) where CLASS_PATH
+   is the full path identifier for your class with all prepending namespaces. This is important due
+   to the nature how objects are deserialized.
+4. In your implementation file (NEVER IN YOUR HEADER), you must add a call for the macro
+   LS_CLASS_DEFINE(CLASS_PATH) where CLASS_PATH is the full path identifier for your class with all
+   prepending namespaces.
+5. You must have variables for serialization defined (see below form more information).
+
+If you are using an abstract class, requirement 4 is not needed and in requirement 3 use
+LS_CLASS_DECLARE_ABSTRACT(CLASS_PATH) instead of LS_CLASS_DECLARE(CLASS_PATH).
+
+------------------------------------------------------------------------------------------------------
+
+	3. Variable declarations
+
+In order to make variables serializable, you have to declare them within the LS_VARS(superclass, ...)
+macro. The first argument of LS_VARS is the superclass of the current class. Technically you can skip
+classes in the inheritance hierarchy, but it is not recommended as this contradicts clean design.
+The other arguments are variable definitions in a special format with the type being surrounded by
+parenthesis followed by a space and the variable name within a single argument.
+
+Example:
+
+	LS_VARS
+	(
+		liteser::Serializable,
+		(int) var1,
+		(float) anotherVar
+	);
+
+Example:
+
+	LS_VARS
+	(
+		liteser::Serializable, (int) var1, (float) anotherVar
+	);
+
+This format is important because of the nature how the macro definitions translate into automated
+typed serialization and deserialization procedures.
+This macro call will declare all variables within the class as well as their serialization and
+deserialization procedures.
+
+Limitations:
+Keep in mind that you are limited to defining serializable variables only within one of the scopes
+(public, protected, private, etc.).
+
+------------------------------------------------------------------------------------------------------
+
+	4. Serializable types
+
+Following types can be declared as serializable variables.
 
 1. simple types:
 	- char
@@ -18,21 +85,67 @@ Lite Serializer supports following types:
 	- bool
 	- float
 	- double
-2. extended types:
-	- hltypes::String
-	- hltypes::Array (containing either simple types, objects or object pointers)
-3. objects:
-	- allocated on the stack only
-	- allocated on the heap only
 
+2. extended types:
+	- gtypes::Vector2
+	- gtypes::Rectangle
+	- hltypes::String
+	
+3. container types:
+	- hltypes::Array (see "Limitations" for more information)
+	- hltypes::Map (see "Limitations" for more information)
+
+4. classes that inherit liteser::Serializable:
+	- allocated on the heap only (e.g. Serializable*)
+
+Limitations:
+- Stack-allocated objects are not supported due to differences in memory allocation and the
+  impossibility of dynamic casting of objects that are not pointers to objects.
+- hltypes::Array does not support bool due to the implementation of bool within std::vector which
+  does not allow them to be modified in a simple way.
+- hltypes::Array cannot contain another container type.
+- hltypes::Map requires a workaround. Instead of directly declaring hltypes::Map<keyType, valueType>,
+  you have to create a typedef first.
+- hltypes::Map keys do not support bool due to the implementation of bool within std::map which does
+  not allow them to be modified in a simple way.
+- hltypes::Map keys and values do not support container types.
+- enum is not supported directly (see below for more information).
 
 ------------------------------------------------------------------------------------------------------
 
-Lite Serializer does not support following types:
+	5. Workaround for enum
 
-1. pointers to simple types
-2. c-type arrays (basically the same as 1.)
-3. pointers to objects that are allocated on the stack
-4. instances of classes that are not derived from liteser::Serializable
-5. classes without an empty default constructor
-6. hltypes::Map
+If you want to serialize an enum, there is an indirect way to do this without changing too much of
+your code. Instead of creating an enum, create a typedef for int (or unsigned int) and instead of
+declaring a possible list of enum values, declare all values as static const values of the new type.
+
+------------------------------------------------------------------------------------------------------
+
+	6. Object models with loops
+
+If you have classes that have pointers to classes which inherit the first class, you cannot use
+LS_VARS, because you would have to include the derived class' header which would result in an
+inclusion loop and your code won't compile. For this problem you are offered 2 additional macros.
+LS_VARS_DECLARE(...) is added in the header while LS_VARS_DEFINE(class, superclass, ...) is added in
+the source file.
+
+Example:
+
+	// in your header
+	LS_VARS_DECLARE
+	(
+		(int) var1,
+		(float) anotherVar
+	);
+	// in your source file
+	LS_VARS_DEFINE
+	(
+		mynamespace::MyClass,
+		liteser::Serializable,
+		(int) var1,
+		(float) anotherVar
+	);
+
+Note that this approach allows you to serialize variables that have different scopes (public,
+protected, private, etc.) and variables that are not actually included in LS_VARS_DEFINE which is not
+possible when using LS_VARS only.

@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+<?xml version="1.0" encoding="windows-1250"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
-	Name="libliteser"
-	ProjectGUID="{CAED2FEA-A7E4-4067-8EE5-51DF75651CED}"
-	RootNamespace="hltypes"
+	Version="9.00"
+	Name="demo_simple"
+	ProjectGUID="{8ED4EDB5-7C0E-411F-BCC6-E96882CC73F3}"
+	RootNamespace="demo_simple"
 	Keyword="Win32Proj"
-	TargetFrameworkVersion="131072"
+	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
 		<Platform
@@ -18,9 +18,9 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)bin\$(PlatformName)\"
-			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)\"
-			ConfigurationType="2"
+			OutputDirectory="$(SolutionDir)bin\$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\$(ConfigurationName)"
+			ConfigurationType="1"
 			CharacterSet="1"
 			>
 			<Tool
@@ -41,15 +41,15 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="src;include/liteser;../hltypes/include;../gtypes/include;../include"
-				PreprocessorDefinitions="_WIN32;LITESER_EXPORTS;_DEBUG;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="../../include;../../../hltypes/include;../../../gtypes/include;../../../include"
+				PreprocessorDefinitions="_WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4251;4068"
+				DisableSpecificWarnings="4251"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -63,9 +63,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="libhltypes.lib libgtypes.lib"
-				OutputFile="$(OutDir)$(ProjectName).dll"
+				OutputFile="$(OutDir)\$(ProjectName).exe"
+				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(SolutionDir)bin\$(PlatformName)"
 				GenerateDebugInformation="true"
+				SubSystem="1"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -87,14 +90,14 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
+				CommandLine="xcopy $(SolutionDir)..\lib\msvc90\*.dll $(SolutionDir)bin\$(PlatformName)\ /d /y&#x0D;&#x0A;xcopy $(SolutionDir)bin\$(PlatformName)\*.dll $(SolutionDir)bin\$(PlatformName)\$(ConfigurationName)\ /d /y&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)bin\$(PlatformName)\"
-			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\lib\$(ProjectName)\$(ConfigurationName)\"
-			ConfigurationType="2"
+			OutputDirectory="$(SolutionDir)bin\$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)bin\$(PlatformName)\$(ConfigurationName)"
+			ConfigurationType="1"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -117,14 +120,14 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="src;include/liteser;../hltypes/include;../gtypes/include;../include"
-				PreprocessorDefinitions="_WIN32;LITESER_EXPORTS;_CRT_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="../../include;../../../hltypes/include"
+				PreprocessorDefinitions="_WIN32;_CONSOLE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
-				WarningLevel="2"
+				WarningLevel="3"
 				DebugInformationFormat="3"
-				DisableSpecificWarnings="4251;4068"
+				DisableSpecificWarnings="4251"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -137,9 +140,15 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libhltypes.lib libgtypes.lib"
-				OutputFile="$(OutDir)$(ProjectName).dll"
+				AdditionalDependencies="libhltypes.lib libliteser.lib"
+				OutputFile="$(OutDir)\$(ProjectName).exe"
+				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(SolutionDir)bin\$(PlatformName)"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -161,7 +170,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
+				CommandLine="xcopy $(SolutionDir)..\lib\msvc90\*.dll $(SolutionDir)bin\$(PlatformName)\ /d /y&#x0D;&#x0A;xcopy $(SolutionDir)bin\$(PlatformName)\*.dll $(SolutionDir)bin\$(PlatformName)\$(ConfigurationName)\ /d /y&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -174,11 +183,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\src\liteser.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\src\Serializable.cpp"
+				RelativePath=".\demo_simple.cpp"
 				>
 			</File>
 		</Filter>
@@ -187,26 +192,12 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath=".\include\liteser\liteser.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\liteser\liteserExport.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\liteser\Serializable.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
-			<File
-				RelativePath=".\fileproperties.rc"
-				>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>
