@@ -38,6 +38,13 @@ namespace liteser
 		__loadVariableValue(variable, loadType);
 	}
 
+	bool __skipVariable()
+	{
+		Type::Value loadType = Type::NONE;
+		_load((unsigned char*)&loadType);
+		return __skipVariableValue(loadType);
+	}
+
 	void __loadVariableValue(Variable* variable, Type::Value loadType)
 	{
 		switch (loadType)
@@ -59,6 +66,28 @@ namespace liteser
 		case Type::HARRAY:	__loadContainer(variable, loadType);		break;
 		case Type::HMAP:	__loadContainer(variable, loadType);		break;
 		}
+	}
+
+	bool __skipVariableValue(Type::Value loadType)
+	{
+		switch (loadType)
+		{
+		case Type::INT8:	{ char var;				_load(&var);	return true; }
+		case Type::UINT8:	{ unsigned char var;	_load(&var);	return true; }
+		case Type::INT16:	{ int16_t var;			_load(&var);	return true; }
+		case Type::UINT16:	{ uint16_t var;			_load(&var);	return true; }
+		case Type::INT32:	{ int32_t var;			_load(&var);	return true; }
+		case Type::UINT32:	{ uint32_t var;			_load(&var);	return true; }
+		case Type::FLOAT:	{ float var;			_load(&var);	return true; }
+		case Type::DOUBLE:	{ double var;			_load(&var);	return true; }
+		case Type::BOOL:	{ bool var;				_load(&var);	return true; }
+		case Type::HSTR:	{ hstr var;				_load(&var);	return true; }
+		case Type::GVEC2:	{ gvec2 var;			_load(&var);	return true; }
+		case Type::GRECT:	{ grect var;			_load(&var);	return true; }
+		case Type::HARRAY:	return __skipContainer(loadType);
+		case Type::HMAP:	return __skipContainer(loadType);
+		}
+		return false;
 	}
 
 	void __loadContainer(Variable* variable, Type::Value type)
@@ -95,6 +124,38 @@ namespace liteser
 				variable->applyHmapSubVariables(type);
 			}
 		}
+	}
+
+	bool __skipContainer(Type::Value type)
+	{
+		bool result = true;
+		uint32_t containerSize;
+		_load(&containerSize);
+		if (containerSize > 0)
+		{
+			harray<Type::Value> subTypes;
+			int subTypesSize = (type == Type::HMAP ? 2 : 1);
+			Type::Value loadType = Type::NONE;
+			uint32_t typeSize = 0;
+			_load(&typeSize);
+			if (typeSize != subTypesSize)
+			{
+				throw hl_exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", subTypesSize, typeSize));
+			}
+			for_itert (unsigned int, i, 0, typeSize)
+			{
+				_load((unsigned char*)&loadType);
+				subTypes += loadType;
+			}
+			foreach (Type::Value, it, subTypes)
+			{
+				for_itert (unsigned int, i, 0, containerSize)
+				{
+					result &= __skipVariableValue(*it);
+				}
+			}
+		}
+		return result;
 	}
 
 	void _load(char* value)
@@ -221,12 +282,17 @@ namespace liteser
 				else
 				{
 					hlog::warn(liteser::logTag, "Could not find variable with name: " + variableName);
+					bool success = __skipVariable();
 				}
 				size--;
 			}
 			if (variables.size() > 0)
 			{
 				hlog::warn(liteser::logTag, "Not all variables were previously saved in class: " + className);
+				foreach (Variable*, it, variables)
+				{
+					delete (*it);
+				}
 			}
 		}
 		else if (id == 0)
