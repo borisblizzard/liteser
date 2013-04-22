@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.01
 /// 
 /// @section LICENSE
 /// 
@@ -30,20 +30,9 @@ namespace liteser
 	class Serializable;
 	class Variable;
 
-	void __dumpVariable(Variable* variable);
-	void __dumpVariableData(Variable* variable);
 
 	void __dumpContainer(Variable* variable);
 
-	void _dump(char* value);
-	void _dump(unsigned char* value);
-	void _dump(int16_t* value);
-	void _dump(uint16_t* value);
-	void _dump(int32_t* value);
-	void _dump(uint32_t* value);
-	void _dump(float* value);
-	void _dump(double* value);
-	void _dump(bool* value);
 	void _dump(hstr* value);
 	void _dump(gvec2* value);
 	void _dump(grect* value);
