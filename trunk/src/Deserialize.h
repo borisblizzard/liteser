@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.01
 /// 
 /// @section LICENSE
 /// 
@@ -30,23 +30,11 @@ namespace liteser
 	class Serializable;
 	class Variable;
 
-	void __loadVariable(Variable* variable);
-	void __loadVariableValue(Variable* variable, Type::Value loadType);
-	bool __skipVariable();
-	bool __skipVariableValue(Type::Value loadType);
+	void __loadVariable(Variable* variable, Type::Value loadType);
+	bool __skipVariable(Type::Value loadType);
+	void __loadContainer(Variable* variable, Type::Value type);
 	bool __skipContainer(Type::Value loadType);
 
-	void __loadContainer(Variable* variable, Type::Value type);
-
-	void _load(char* value);
-	void _load(unsigned char* value);
-	void _load(int16_t* value);
-	void _load(uint16_t* value);
-	void _load(int32_t* value);
-	void _load(uint32_t* value);
-	void _load(float* value);
-	void _load(double* value);
-	void _load(bool* value);
 	void _load(hstr* value);
 	void _load(gvec2* value);
 	void _load(grect* value);
