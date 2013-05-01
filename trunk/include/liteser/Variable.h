@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.02
 /// 
 /// @section LICENSE
 /// 
@@ -114,9 +114,9 @@ namespace liteser
 			this->name = name;
 			this->type = new Type((Ptr<harray<Serializable*> >*)NULL);
 			this->ptr = (void*)ptr;
-			this->containerSize = keys->size();
+			this->containerSize = ptr->value->size();
 			harray<K*> originalKeys = ptr->value->keys();
-			harray<Serializable*>* keys = new harray<Serializable*>(originalKeys.cast<Serializable*>());
+			harray<Serializable*>* keys = new harray<Serializable*>(originalKeys.template cast<Serializable*>());
 			harray<V>* values = new harray<V>();
 			for_iter (i, 0, originalKeys.size()) // cannot use foreach here because GCC can't compile it properly
 			{
