@@ -9,6 +9,7 @@
 
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hlog.h>
 
 #include "Factory.h"
 #include "Serializable.h"
@@ -16,7 +17,7 @@
 namespace liteser
 {
 	// this approach is used because there is a massive problem with static linking
-	hmap<hstr, Serializable* (*)()>* __lsConstructors;
+	static hmap<hstr, Serializable* (*)()>* __lsConstructors = NULL;
 
 	Factory::Factory()
 	{
@@ -42,6 +43,7 @@ namespace liteser
 		{
 			__lsConstructors = new hmap<hstr, Serializable* (*)()>();
 		}
+		hlog::debug(liteser::logTag, "Registering class: " + name);
 		__lsConstructors->operator[](name) = constructor;
 	}
 	
