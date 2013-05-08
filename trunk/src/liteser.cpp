@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.1
 /// 
 /// @section LICENSE
 /// 
@@ -93,6 +93,9 @@ namespace liteser
 	DECLARE_HARRAY_SERIALIZER(float);
 	DECLARE_HARRAY_SERIALIZER(double);
 	DECLARE_HARRAY_SERIALIZER(hstr);
+	DECLARE_HARRAY_SERIALIZER(grect);
+	DECLARE_HARRAY_SERIALIZER(gvec2);
+	DECLARE_HARRAY_SERIALIZER(gvec3);
 	
 	bool deserialize(hsbase* stream, Serializable** object)
 	{
@@ -130,6 +133,9 @@ namespace liteser
 	DECLARE_HARRAY_DESERIALIZER(float);
 	DECLARE_HARRAY_DESERIALIZER(double);
 	DECLARE_HARRAY_DESERIALIZER(hstr);
+	DECLARE_HARRAY_DESERIALIZER(grect);
+	DECLARE_HARRAY_DESERIALIZER(gvec2);
+	DECLARE_HARRAY_DESERIALIZER(gvec3);
 	
 	bool clone(Serializable* input, Serializable** output)
 	{

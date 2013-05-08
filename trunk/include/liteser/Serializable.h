@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.1
 /// 
 /// @section LICENSE
 /// 
@@ -36,6 +36,7 @@
 	harray<liteser::Variable*> _lsVars() \
 	{ \
 		harray<liteser::Variable*> variables = superclass::_lsVars(); \
+		static liteser::Variable* variable; \
 		__LS_FOREACH(__LS_REF, (__VA_ARGS__)) \
 		return variables; \
 	}
@@ -46,6 +47,7 @@
 	harray<liteser::Variable*> classe::_lsVars() \
 	{ \
 		harray<liteser::Variable*> variables = superclass::_lsVars(); \
+		static liteser::Variable* variable; \
 		__LS_FOREACH(__LS_REF, (__VA_ARGS__)) \
 		return variables; \
 	}

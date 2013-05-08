@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.1
 /// 
 /// @section LICENSE
 /// 
@@ -15,20 +15,34 @@
 
 namespace liteser
 {
-	hmap<hstr, Serializable* (*)()> Factory::constructors;
+	// this approach is used because there is a massive problem with static linking
+	hmap<hstr, Serializable* (*)()>* __lsConstructors;
 
 	Factory::Factory()
 	{
 	}
 
+	Factory::~Factory()
+	{
+	}
+
 	Serializable* Factory::create(chstr name)
 	{
-		Serializable* (*constructor)() = constructors.try_get_by_key(name, NULL);
+		Serializable* (*constructor)() = __lsConstructors->try_get_by_key(name, NULL);
 		if (constructor == NULL)
 		{
 			throw hl_exception("Detected class not registered as a Serializable: " + name);
 		}
 		return (*constructor)();
+	}
+
+	void Factory::_register(chstr name, Serializable* (*constructor)())
+	{
+		if (__lsConstructors == NULL)
+		{
+			__lsConstructors = new hmap<hstr, Serializable* (*)()>();
+		}
+		__lsConstructors->operator[](name) = constructor;
 	}
 	
 }
