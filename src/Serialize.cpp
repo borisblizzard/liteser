@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.01
+/// @version 2.1
 /// 
 /// @section LICENSE
 /// 
@@ -36,8 +36,9 @@
 	case Type::DOUBLE:	stream->dump(*(var)->value<double>());			break; \
 	case Type::BOOL:	stream->dump(*(var)->value<bool>());			break; \
 	case Type::HSTR:	_dump((var)->value<hstr>());					break; \
-	case Type::GVEC2:	_dump((var)->value<gvec2>());					break; \
 	case Type::GRECT:	_dump((var)->value<grect>());					break; \
+	case Type::GVEC2:	_dump((var)->value<gvec2>());					break; \
+	case Type::GVEC3:	_dump((var)->value<gvec3>());					break; \
 	case Type::OBJECT:	_dump((var)->value<Serializable>());			break; \
 	case Type::OBJPTR:	_dump((var)->value<Serializable*>());			break; \
 	case Type::HARRAY:	__dumpContainer(var);							break; \
@@ -77,18 +78,25 @@ namespace liteser
 		}
 	}
 
-	void _dump(gvec2* value)
-	{
-		stream->dump(value->x);
-		stream->dump(value->y);
-	}
-
 	void _dump(grect* value)
 	{
 		stream->dump(value->x);
 		stream->dump(value->y);
 		stream->dump(value->w);
 		stream->dump(value->h);
+	}
+
+	void _dump(gvec2* value)
+	{
+		stream->dump(value->x);
+		stream->dump(value->y);
+	}
+
+	void _dump(gvec3* value)
+	{
+		stream->dump(value->x);
+		stream->dump(value->y);
+		stream->dump(value->z);
 	}
 
 	void _dump(Serializable* value)
@@ -159,7 +167,8 @@ namespace liteser
 	DEFINE_DUMP_HARRAY(float);
 	DEFINE_DUMP_HARRAY(double);
 	DEFINE_DUMP_HARRAY_C(hstr);
-	DEFINE_DUMP_HARRAY_C(gvec2);
 	DEFINE_DUMP_HARRAY_C(grect);
+	DEFINE_DUMP_HARRAY_C(gvec2);
+	DEFINE_DUMP_HARRAY_C(gvec3);
 
 }

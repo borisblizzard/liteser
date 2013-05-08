@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.01
+/// @version 2.1
 /// 
 /// @section LICENSE
 /// 
@@ -18,6 +18,7 @@
 
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
+#include <gtypes/Vector3.h>
 #include <hltypes/harray.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
@@ -36,8 +37,9 @@ namespace liteser
 	bool __skipContainer(Type::Value loadType);
 
 	void _load(hstr* value);
-	void _load(gvec2* value);
 	void _load(grect* value);
+	void _load(gvec2* value);
+	void _load(gvec3* value);
 	void _load(Serializable* value);
 	void _load(Serializable** value);
 	void __loadObject(Serializable** value);
@@ -51,8 +53,9 @@ namespace liteser
 	void _loadHarray(harray<float>* value);
 	void _loadHarray(harray<double>* value);
 	void _loadHarray(harray<hstr>* value);
-	void _loadHarray(harray<gvec2>* value);
 	void _loadHarray(harray<grect>* value);
+	void _loadHarray(harray<gvec2>* value);
+	void _loadHarray(harray<gvec3>* value);
 	void _loadHarray(harray<Serializable*>* value);
 
 }

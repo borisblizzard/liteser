@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.1
 /// 
 /// @section LICENSE
 /// 
@@ -18,33 +18,29 @@
 #include "Type.h"
 #include "Variable.h"
 
-#define DEFINE_CONSTRUCTOR(typeName) \
-	Variable::Variable(chstr name, Ptr<typeName>* ptr) \
+#define DEFINE_ASSIGNER(typeName) \
+	Variable* Variable::assign(Ptr<typeName>* ptr) \
 	{ \
-		this->name = name; \
-		this->type = new Type(ptr); \
+		this->type->assign(ptr); \
 		this->ptr = (void*)ptr; \
-		this->containerSize = 0; \
-		this->ptrKeys = NULL; \
-		this->ptrValues = NULL; \
+		return this; \
 	}
-#define DEFINE_CONSTRUCTOR_HARRAY(typeName) \
-	Variable::Variable(chstr name, Ptr<harray<typeName> >* ptr) \
+#define DEFINE_ASSIGNER_HARRAY(typeName) \
+	Variable* Variable::assign(Ptr<harray<typeName> >* ptr) \
 	{ \
-		this->name = name; \
-		this->type = new Type(ptr); \
+		static Variable* variable; \
+		this->type->assign(ptr); \
 		this->ptr = (void*)ptr; \
 		this->containerSize = ptr->value->size(); \
-		this->ptrKeys = NULL; \
-		this->ptrValues = NULL; \
 		foreach (typeName, it, *ptr->value) \
 		{ \
-			this->subVariables += new Variable("", new Ptr<typeName>(&(*it))); \
+			this->subVariables += (new Variable())->assign(new Ptr<typeName>(&(*it))); \
 		} \
+		return this; \
 	}
-#define DEFINE_CONSTRUCTORS(typeName) \
-	DEFINE_CONSTRUCTOR(typeName); \
-	DEFINE_CONSTRUCTOR_HARRAY(typeName);
+#define DEFINE_ASSIGNERS(typeName) \
+	DEFINE_ASSIGNER(typeName); \
+	DEFINE_ASSIGNER_HARRAY(typeName);
 
 #define CHECK_HMAP_KEY_VALUE_TYPE(keyTypeValue, valueTypeValue) \
 	switch (keyTypeValue) \
@@ -72,8 +68,9 @@
 		case Type::FLOAT:	this->_addSubVariablesHmap<keyType, float>();			return; \
 		case Type::DOUBLE:	this->_addSubVariablesHmap<keyType, double>();			return; \
 		case Type::HSTR:	this->_addSubVariablesHmap<keyType, hstr>();			return; \
-		case Type::GVEC2:	this->_addSubVariablesHmap<keyType, gvec2>();			return; \
 		case Type::GRECT:	this->_addSubVariablesHmap<keyType, grect>();			return; \
+		case Type::GVEC2:	this->_addSubVariablesHmap<keyType, gvec2>();			return; \
+		case Type::GVEC3:	this->_addSubVariablesHmap<keyType, gvec3>();			return; \
 		case Type::OBJPTR:	this->_addSubVariablesHmap<keyType, Serializable*>();	return; \
 		} \
 	}
@@ -104,33 +101,38 @@
 		case Type::FLOAT:	this->_applyHmapSubVariables<keyType, float>();			return; \
 		case Type::DOUBLE:	this->_applyHmapSubVariables<keyType, double>();		return; \
 		case Type::HSTR:	this->_applyHmapSubVariables<keyType, hstr>();			return; \
-		case Type::GVEC2:	this->_applyHmapSubVariables<keyType, gvec2>();			return; \
 		case Type::GRECT:	this->_applyHmapSubVariables<keyType, grect>();			return; \
+		case Type::GVEC2:	this->_applyHmapSubVariables<keyType, gvec2>();			return; \
+		case Type::GVEC3:	this->_applyHmapSubVariables<keyType, gvec3>();			return; \
 		case Type::OBJPTR:	this->_applyHmapSubVariables<keyType, Serializable*>();	return; \
 		} \
 	}
 	
 namespace liteser
 {
-	DEFINE_CONSTRUCTORS(char);
-	DEFINE_CONSTRUCTORS(unsigned char);
-	DEFINE_CONSTRUCTORS(int16_t);
-	DEFINE_CONSTRUCTORS(uint16_t);
-	DEFINE_CONSTRUCTORS(int32_t);
-	DEFINE_CONSTRUCTORS(uint32_t);
-	DEFINE_CONSTRUCTORS(float);
-	DEFINE_CONSTRUCTORS(double);
-	DEFINE_CONSTRUCTORS(hstr);
-	DEFINE_CONSTRUCTORS(gvec2);
-	DEFINE_CONSTRUCTORS(grect);
-	DEFINE_CONSTRUCTOR(bool);
+	DEFINE_ASSIGNERS(char);
+	DEFINE_ASSIGNERS(unsigned char);
+	DEFINE_ASSIGNERS(int16_t);
+	DEFINE_ASSIGNERS(uint16_t);
+	DEFINE_ASSIGNERS(int32_t);
+	DEFINE_ASSIGNERS(uint32_t);
+	DEFINE_ASSIGNERS(float);
+	DEFINE_ASSIGNERS(double);
+	DEFINE_ASSIGNERS(hstr);
+	DEFINE_ASSIGNERS(grect);
+	DEFINE_ASSIGNERS(gvec2);
+	DEFINE_ASSIGNERS(gvec3);
+	DEFINE_ASSIGNER(bool);
+
+	Variable::Variable(chstr name) : ptr(NULL), ptrKeys(NULL), ptrValues(NULL), containerSize(0)
+	{
+		this->name = name;
+		this->type = new Type();
+	}
 
 	Variable::~Variable()
 	{
-		if (this->type != NULL)
-		{
-			delete this->type;
-		}
+		delete this->type;
 		if (this->ptr != NULL)
 		{
 			delete this->ptr;
@@ -169,8 +171,9 @@ namespace liteser
 			case Type::FLOAT:	this->_addSubVariablesHarray<float>();			return;
 			case Type::DOUBLE:	this->_addSubVariablesHarray<double>();			return;
 			case Type::HSTR:	this->_addSubVariablesHarray<hstr>();			return;
-			case Type::GVEC2:	this->_addSubVariablesHarray<gvec2>();			return;
 			case Type::GRECT:	this->_addSubVariablesHarray<grect>();			return;
+			case Type::GVEC2:	this->_addSubVariablesHarray<gvec2>();			return;
+			case Type::GVEC3:	this->_addSubVariablesHarray<gvec3>();			return;
 			case Type::OBJECT:	this->_addSubVariablesHarray<Serializable>();	return;
 			case Type::OBJPTR:	this->_addSubVariablesHarray<Serializable*>();	return;
 			}

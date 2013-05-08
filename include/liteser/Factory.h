@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.1
 /// 
 /// @section LICENSE
 /// 
@@ -14,7 +14,7 @@
 #ifndef LITESER_FACTORY_H
 #define LITESER_FACTORY_H
 
-#include <hltypes/hmap.h>
+#include <hltypes/harray.h>
 #include <hltypes/hstring.h>
 
 #include "liteserExport.h"
@@ -31,9 +31,14 @@ namespace liteser
 		{
 			Register(chstr name)
 			{
-				Factory::constructors[name] = &_create<T>;
+				Factory::_register(name, &_create<T>);
+			}
+			~Register()
+			{
 			}
 		};
+
+		~Factory();
 
 		template <class T>
 		static Serializable* _create() { return new T(); }
@@ -43,7 +48,7 @@ namespace liteser
 	protected:
 		Factory();
 
-		static hmap<hstr, Serializable* (*)()> constructors;
+		static void _register(chstr name, Serializable* (*constructor)());
 
 	};
 

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.01
+/// @version 2.1
 /// 
 /// @section LICENSE
 /// 
@@ -41,8 +41,9 @@ namespace liteser
 		case Type::DOUBLE:	*variable->value<double>()			= stream->load_double();	break;
 		case Type::BOOL:	*variable->value<bool>()			= stream->load_bool();		break;
 		case Type::HSTR:	_load(variable->value<hstr>());									break;
-		case Type::GVEC2:	_load(variable->value<gvec2>());								break;
 		case Type::GRECT:	_load(variable->value<grect>());								break;
+		case Type::GVEC2:	_load(variable->value<gvec2>());								break;
+		case Type::GVEC3:	_load(variable->value<gvec3>());								break;
 		case Type::OBJECT:	_load(variable->value<Serializable>());							break;
 		case Type::OBJPTR:	_load(variable->value<Serializable*>());						break;
 		case Type::HARRAY:	__loadContainer(variable, loadType);							break;
@@ -64,8 +65,9 @@ namespace liteser
 		case Type::DOUBLE:	stream->load_double();			return true;
 		case Type::BOOL:	stream->load_bool();			return true;
 		case Type::HSTR:	{ hstr var;		_load(&var);	return true; }
-		case Type::GVEC2:	{ gvec2 var;	_load(&var);	return true; }
 		case Type::GRECT:	{ grect var;	_load(&var);	return true; }
+		case Type::GVEC2:	{ gvec2 var;	_load(&var);	return true; }
+		case Type::GVEC3:	{ gvec3 var;	_load(&var);	return true; }
 		case Type::HARRAY:	return __skipContainer(loadType);
 		case Type::HMAP:	return __skipContainer(loadType);
 		}
@@ -145,18 +147,25 @@ namespace liteser
 		}
 	}
 
-	void _load(gvec2* value)
-	{
-		value->x = stream->load_float();
-		value->y = stream->load_float();
-	}
-
 	void _load(grect* value)
 	{
 		value->x = stream->load_float();
 		value->y = stream->load_float();
 		value->w = stream->load_float();
 		value->h = stream->load_float();
+	}
+
+	void _load(gvec2* value)
+	{
+		value->x = stream->load_float();
+		value->y = stream->load_float();
+	}
+
+	void _load(gvec3* value)
+	{
+		value->x = stream->load_float();
+		value->y = stream->load_float();
+		value->z = stream->load_float();
 	}
 
 	void _load(Serializable* value)
@@ -284,7 +293,8 @@ namespace liteser
 	DEFINE_LOAD_HARRAY(float, float);
 	DEFINE_LOAD_HARRAY(double, double);
 	DEFINE_LOAD_HARRAY_X(hstr);
-	DEFINE_LOAD_HARRAY_X(gvec2);
 	DEFINE_LOAD_HARRAY_X(grect);
+	DEFINE_LOAD_HARRAY_X(gvec2);
+	DEFINE_LOAD_HARRAY_X(gvec3);
 
 }

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.1
 /// 
 /// @section LICENSE
 /// 
@@ -18,6 +18,7 @@
 
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
+#include <gtypes/Vector3.h>
 #include <hltypes/harray.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
@@ -29,7 +30,7 @@
 #include "Serializable.h"
 
 #define _LS_VERSION_MAJOR 2
-#define _LS_VERSION_MINOR 0
+#define _LS_VERSION_MINOR 1
 
 namespace liteser
 {
@@ -46,8 +47,9 @@ namespace liteser
 	liteserFnExport bool serialize(hsbase* stream, harray<float> value);
 	liteserFnExport bool serialize(hsbase* stream, harray<double> value);
 	liteserFnExport bool serialize(hsbase* stream, harray<hstr> value);
-	liteserFnExport bool serialize(hsbase* stream, harray<gvec2> value);
 	liteserFnExport bool serialize(hsbase* stream, harray<grect> value);
+	liteserFnExport bool serialize(hsbase* stream, harray<gvec2> value);
+	liteserFnExport bool serialize(hsbase* stream, harray<gvec3> value);
 
 	liteserFnExport bool deserialize(hsbase* stream, Serializable** object);
 	liteserFnExport bool deserialize(hsbase* stream, harray<Serializable*>* object);
@@ -60,8 +62,9 @@ namespace liteser
 	liteserFnExport bool deserialize(hsbase* stream, harray<float>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<double>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<hstr>* value);
-	liteserFnExport bool deserialize(hsbase* stream, harray<gvec2>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<grect>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<gvec2>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<gvec3>* value);
 
 	/// @brief Creates a deep copy of an object.
 	/// @note The cloning only affects variables that were declared as serializable.

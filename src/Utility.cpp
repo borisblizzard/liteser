@@ -1,12 +1,13 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.0
+/// @version 2.1
 /// 
 /// @section LICENSE
 /// 
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
+#include <hltypes/hlog.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
 
@@ -107,10 +108,15 @@ namespace liteser
 
 	void _checkVersion(unsigned char major, unsigned char minor)
 	{
-		if (major != _LS_VERSION_MAJOR || minor > _LS_VERSION_MINOR)
+		if (major != _LS_VERSION_MAJOR)
 		{
 			throw hl_exception(hsprintf("Liteser Read Error! Version mismatch: expected %d.%d, got %d.%d",
 				_LS_VERSION_MAJOR, _LS_VERSION_MINOR, major, minor));
+		}
+		if (minor > _LS_VERSION_MINOR)
+		{
+			hlog::warnf(liteser::logTag, "Minor version mismatch while loading: expected %d.%d, got %d.%d",
+				_LS_VERSION_MAJOR, _LS_VERSION_MINOR, major, minor);
 		}
 	}
 
