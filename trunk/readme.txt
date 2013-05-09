@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------------------------------
-Lite Serializer 2.0 Readme
+Lite Serializer 2.1 Readme
 ------------------------------------------------------------------------------------------------------
 
 	1. About
@@ -16,7 +16,7 @@ that you wish to serialize.
 
 In order to make one of your classes serializable, it needs to fulfill 5 prerequisites. If your class
 is abstract (i.e. it has pure virtual methods), then it must fulfill 4 slightly different
-requirements.
+requirements. Include <liteser/Serializable.h> to have access to all macros that you need.
 
 1. Your class must inherit the class liteser::Serializable.
 2. Your class must possess a default constructor without parameters. This constructor will be used to
@@ -31,6 +31,21 @@ requirements.
 
 If you are using an abstract class, requirement 4 is not needed and in requirement 3 use
 LS_CLASS_DECLARE_ABSTRACT(CLASS_PATH) instead of LS_CLASS_DECLARE(CLASS_PATH).
+
+IMPORTANT:
+If you are compiling the classes in a static library or if you have the classes in an .exe, there is
+a possibility that the compiler will optimize the code and strip unused code if you aren't
+instantiating any objects during runtime (except loading from a file). This can be prevented in two
+different ways. This is not required for abstract classes.
+
+1. You can manually force a static instance LS_FORCE_REGISTER(CLASS_PATH, CLASS_NAME) where CLASS_PATH
+   is the full path identifier for your class with all prepending namespaces and CLASS_NAME is the
+   same without all the "::" between namespaces/class names or some other unique name. You can (and
+   should) put it in the same namespace where the class was declared. If you use this method, make
+   sure that creating and immediately destroying the object does not cause memory leaks.
+2. You can register the class manually with LS_REGISTER(CLASS_PATH) where CLASS_PATH is the full path
+   identifier for your class with all prepending namespaces. You should do this during the
+   initialization.
 
 ------------------------------------------------------------------------------------------------------
 

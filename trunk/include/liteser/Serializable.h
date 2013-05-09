@@ -51,6 +51,12 @@
 		__LS_FOREACH(__LS_REF, (__VA_ARGS__)) \
 		return variables; \
 	}
+#define LS_FORCE_REGISTER(classe, name) \
+	static classe __lsRegisterObject ## name;
+#define LS_REGISTER(classe) \
+	{ \
+		liteser::Factory::Register<classe> object(#classe); \
+	}
 
 namespace liteser
 {
