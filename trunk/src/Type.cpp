@@ -31,77 +31,77 @@ namespace liteser
 		}
 	}
 
-	void Type::assign(Ptr<char>* arg)
+	void Type::assign(VPtr<char>* arg)
 	{
 		this->value = INT8;
 	}
 
-	void Type::assign(Ptr<unsigned char>* arg)
+	void Type::assign(VPtr<unsigned char>* arg)
 	{
 		this->value = UINT8;
 	}
 
-	void Type::assign(Ptr<int16_t>* arg)
+	void Type::assign(VPtr<int16_t>* arg)
 	{
 		this->value = INT16;
 	}
 
-	void Type::assign(Ptr<uint16_t>* arg)
+	void Type::assign(VPtr<uint16_t>* arg)
 	{
 		this->value = UINT16;
 	}
 
-	void Type::assign(Ptr<int32_t>* arg)
+	void Type::assign(VPtr<int32_t>* arg)
 	{
 		this->value = INT32;
 	}
 
-	void Type::assign(Ptr<uint32_t>* arg)
+	void Type::assign(VPtr<uint32_t>* arg)
 	{
 		this->value = UINT32;
 	}
 
-	void Type::assign(Ptr<float>* arg)
+	void Type::assign(VPtr<float>* arg)
 	{
 		this->value = FLOAT;
 	}
 
-	void Type::assign(Ptr<double>* arg)
+	void Type::assign(VPtr<double>* arg)
 	{
 		this->value = DOUBLE;
 	}
 
-	void Type::assign(Ptr<bool>* arg)
+	void Type::assign(VPtr<bool>* arg)
 	{
 		this->value = BOOL;
 	}
 
-	void Type::assign(Ptr<hstr>* arg)
+	void Type::assign(VPtr<hstr>* arg)
 	{
 		this->value = HSTR;
 	}
 
-	void Type::assign(Ptr<grect>* arg)
+	void Type::assign(VPtr<grect>* arg)
 	{
 		this->value = GRECT;
 	}
 
-	void Type::assign(Ptr<gvec2>* arg)
+	void Type::assign(VPtr<gvec2>* arg)
 	{
 		this->value = GVEC2;
 	}
 
-	void Type::assign(Ptr<gvec3>* arg)
+	void Type::assign(VPtr<gvec3>* arg)
 	{
 		this->value = GVEC3;
 	}
 
-	void Type::assign(Ptr<Serializable>* arg)
+	void Type::assign(VPtr<Serializable>* arg)
 	{
 		this->value = OBJECT;
 	}
 
-	void Type::assign(Ptr<Serializable*>* arg)
+	void Type::assign(VPtr<Serializable*>* arg)
 	{
 		this->value = OBJPTR;
 	}

@@ -19,22 +19,22 @@
 #include "Variable.h"
 
 #define DEFINE_ASSIGNER(typeName) \
-	Variable* Variable::assign(Ptr<typeName>* ptr) \
+	Variable* Variable::assign(VPtr<typeName>* ptr) \
 	{ \
 		this->type->assign(ptr); \
-		this->ptr = (void*)ptr; \
+		this->ptr = ptr; \
 		return this; \
 	}
 #define DEFINE_ASSIGNER_HARRAY(typeName) \
-	Variable* Variable::assign(Ptr<harray<typeName> >* ptr) \
+	Variable* Variable::assign(VPtr<harray<typeName> >* ptr) \
 	{ \
 		static Variable* variable; \
 		this->type->assign(ptr); \
-		this->ptr = (void*)ptr; \
+		this->ptr = ptr; \
 		this->containerSize = ptr->value->size(); \
 		foreach (typeName, it, *ptr->value) \
 		{ \
-			this->subVariables += (new Variable())->assign(new Ptr<typeName>(&(*it))); \
+			this->subVariables += (new Variable())->assign(new VPtr<typeName>(&(*it))); \
 		} \
 		return this; \
 	}

@@ -22,13 +22,20 @@
 
 namespace liteser
 {
+	class Ptr
+	{
+	public:
+		Ptr() { }
+		virtual ~Ptr() { }
+	};
+
 	template<class T>
-	struct Ptr
+	class VPtr : public Ptr
 	{
 	public:
 		T* value;
-		Ptr(T* value) { this->value = value; }
-		~Ptr() { }
+		VPtr(T* value) { this->value = value; }
+		~VPtr() { }
 
 	};
 
