@@ -115,8 +115,8 @@ namespace liteser
 			{
 				values->add(ptr->value->operator[](originalKeys[i]));
 			}
-			this->ptrKeys = new DPtr(keys);
-			this->ptrValues = new DPtr(values);
+			this->ptrKeys = new DPtr<Serializable*>(keys);
+			this->ptrValues = new DPtr<V>(values);
 			this->subVariables += (new Variable())->assign(new VPtr<harray<Serializable*> >(keys)); // due to optimization with static, assign has to be called last as it might invalidate the pointer
 			this->subVariables += (new Variable())->assign(new VPtr<harray<V> >(values)); // due to optimization with static, assign has to be called last as it might invalidate the pointer
 			return this;
@@ -133,8 +133,8 @@ namespace liteser
 			{
 				values->add(ptr->value->operator[](keys->operator[](i)));
 			}
-			this->ptrKeys = new DPtr(keys);
-			this->ptrValues = new DPtr(values);
+			this->ptrKeys = new DPtr<K>(keys);
+			this->ptrValues = new DPtr<V>(values);
 			this->subVariables += (new Variable())->assign(new VPtr<harray<K> >(keys)); // due to optimization with static, assign has to be called last as it might invalidate the pointer
 			this->subVariables += (new Variable())->assign(new VPtr<harray<V> >(values)); // due to optimization with static, assign has to be called last as it might invalidate the pointer
 			return this;

@@ -132,6 +132,10 @@ namespace liteser
 
 	Variable::~Variable()
 	{
+		foreach (Variable*, it, this->subVariables)
+		{
+			delete (*it);
+		}
 		delete this->type;
 		if (this->ptr != NULL)
 		{
@@ -144,10 +148,6 @@ namespace liteser
 		if (this->ptrValues != NULL)
 		{
 			delete this->ptrValues;
-		}
-		foreach (Variable*, it, this->subVariables)
-		{
-			delete (*it);
 		}
 	}
 
