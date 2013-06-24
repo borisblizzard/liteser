@@ -7,26 +7,62 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C9C04D0F14BAE83A005BD333 /* liteser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04D0D14BAE83A005BD333 /* liteser.cpp */; };
-		C9C04D1014BAE83A005BD333 /* liteser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04D0D14BAE83A005BD333 /* liteser.cpp */; };
-		C9C04D1114BAE83A005BD333 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04D0E14BAE83A005BD333 /* Serializable.cpp */; };
-		C9C04D1214BAE83A005BD333 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04D0E14BAE83A005BD333 /* Serializable.cpp */; };
-		C9C04D1614BAE84B005BD333 /* liteser.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04D1314BAE84B005BD333 /* liteser.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C9C04D1814BAE84B005BD333 /* liteserExport.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04D1414BAE84B005BD333 /* liteserExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C9C04D1A14BAE84B005BD333 /* Serializable.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04D1514BAE84B005BD333 /* Serializable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9C04D3E14BAEA01005BD333 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9C04D3D14BAEA01005BD333 /* hltypes.framework */; };
+		D16D2E6B177864E7005DD948 /* gtypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16D2E6A177864E7005DD948 /* gtypes.framework */; };
+		D19C923E1778567000A4BDF4 /* Deserialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92331778567000A4BDF4 /* Deserialize.cpp */; };
+		D19C923F1778567000A4BDF4 /* Deserialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92331778567000A4BDF4 /* Deserialize.cpp */; };
+		D19C92401778567000A4BDF4 /* Deserialize.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C92341778567000A4BDF4 /* Deserialize.h */; };
+		D19C92411778567000A4BDF4 /* Factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92351778567000A4BDF4 /* Factory.cpp */; };
+		D19C92421778567000A4BDF4 /* Factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92351778567000A4BDF4 /* Factory.cpp */; };
+		D19C92431778567000A4BDF4 /* liteser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92361778567000A4BDF4 /* liteser.cpp */; };
+		D19C92441778567000A4BDF4 /* liteser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92361778567000A4BDF4 /* liteser.cpp */; };
+		D19C92451778567000A4BDF4 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92371778567000A4BDF4 /* Serializable.cpp */; };
+		D19C92461778567000A4BDF4 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92371778567000A4BDF4 /* Serializable.cpp */; };
+		D19C92471778567000A4BDF4 /* Serialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92381778567000A4BDF4 /* Serialize.cpp */; };
+		D19C92481778567000A4BDF4 /* Serialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92381778567000A4BDF4 /* Serialize.cpp */; };
+		D19C92491778567000A4BDF4 /* Serialize.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C92391778567000A4BDF4 /* Serialize.h */; };
+		D19C924A1778567000A4BDF4 /* Type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C923A1778567000A4BDF4 /* Type.cpp */; };
+		D19C924B1778567000A4BDF4 /* Type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C923A1778567000A4BDF4 /* Type.cpp */; };
+		D19C924C1778567000A4BDF4 /* Utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C923B1778567000A4BDF4 /* Utility.cpp */; };
+		D19C924D1778567000A4BDF4 /* Utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C923B1778567000A4BDF4 /* Utility.cpp */; };
+		D19C924E1778567000A4BDF4 /* Utility.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C923C1778567000A4BDF4 /* Utility.h */; };
+		D19C924F1778567000A4BDF4 /* Variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C923D1778567000A4BDF4 /* Variable.cpp */; };
+		D19C92501778567000A4BDF4 /* Variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C923D1778567000A4BDF4 /* Variable.cpp */; };
+		D19C92591778567E00A4BDF4 /* Factory.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C92511778567E00A4BDF4 /* Factory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D19C925A1778567E00A4BDF4 /* liteser.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C92521778567E00A4BDF4 /* liteser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D19C925B1778567E00A4BDF4 /* liteserExport.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C92531778567E00A4BDF4 /* liteserExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D19C925C1778567E00A4BDF4 /* macros.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C92541778567E00A4BDF4 /* macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D19C925D1778567E00A4BDF4 /* Ptr.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C92551778567E00A4BDF4 /* Ptr.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D19C925E1778567E00A4BDF4 /* Serializable.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C92561778567E00A4BDF4 /* Serializable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D19C925F1778567E00A4BDF4 /* Type.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C92571778567E00A4BDF4 /* Type.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D19C92601778567E00A4BDF4 /* Variable.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C92581778567E00A4BDF4 /* Variable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C9C04D0D14BAE83A005BD333 /* liteser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = liteser.cpp; path = src/liteser.cpp; sourceTree = "<group>"; };
-		C9C04D0E14BAE83A005BD333 /* Serializable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Serializable.cpp; path = src/Serializable.cpp; sourceTree = "<group>"; };
-		C9C04D1314BAE84B005BD333 /* liteser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = liteser.h; path = include/liteser/liteser.h; sourceTree = "<group>"; };
-		C9C04D1414BAE84B005BD333 /* liteserExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = liteserExport.h; path = include/liteser/liteserExport.h; sourceTree = "<group>"; };
-		C9C04D1514BAE84B005BD333 /* Serializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serializable.h; path = include/liteser/Serializable.h; sourceTree = "<group>"; };
 		C9C04D3D14BAEA01005BD333 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = "../../__build__/pharaoh/Build/Products/Debug-LLVM/hltypes.framework"; sourceTree = "<group>"; };
 		C9C04D7314BAEB2A005BD333 /* liteser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = liteser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9C04D7414BAEB2A005BD333 /* libliteser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libliteser.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D16D2E6A177864E7005DD948 /* gtypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtypes.framework; path = "../../__build__/products/Debug-LLVM/gtypes.framework"; sourceTree = "<group>"; };
+		D19C92331778567000A4BDF4 /* Deserialize.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Deserialize.cpp; path = src/Deserialize.cpp; sourceTree = "<group>"; };
+		D19C92341778567000A4BDF4 /* Deserialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Deserialize.h; path = src/Deserialize.h; sourceTree = "<group>"; };
+		D19C92351778567000A4BDF4 /* Factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Factory.cpp; path = src/Factory.cpp; sourceTree = "<group>"; };
+		D19C92361778567000A4BDF4 /* liteser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = liteser.cpp; path = src/liteser.cpp; sourceTree = "<group>"; };
+		D19C92371778567000A4BDF4 /* Serializable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Serializable.cpp; path = src/Serializable.cpp; sourceTree = "<group>"; };
+		D19C92381778567000A4BDF4 /* Serialize.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Serialize.cpp; path = src/Serialize.cpp; sourceTree = "<group>"; };
+		D19C92391778567000A4BDF4 /* Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serialize.h; path = src/Serialize.h; sourceTree = "<group>"; };
+		D19C923A1778567000A4BDF4 /* Type.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Type.cpp; path = src/Type.cpp; sourceTree = "<group>"; };
+		D19C923B1778567000A4BDF4 /* Utility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Utility.cpp; path = src/Utility.cpp; sourceTree = "<group>"; };
+		D19C923C1778567000A4BDF4 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utility.h; path = src/Utility.h; sourceTree = "<group>"; };
+		D19C923D1778567000A4BDF4 /* Variable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Variable.cpp; path = src/Variable.cpp; sourceTree = "<group>"; };
+		D19C92511778567E00A4BDF4 /* Factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Factory.h; path = include/liteser/Factory.h; sourceTree = "<group>"; };
+		D19C92521778567E00A4BDF4 /* liteser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = liteser.h; path = include/liteser/liteser.h; sourceTree = "<group>"; };
+		D19C92531778567E00A4BDF4 /* liteserExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = liteserExport.h; path = include/liteser/liteserExport.h; sourceTree = "<group>"; };
+		D19C92541778567E00A4BDF4 /* macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = macros.h; path = include/liteser/macros.h; sourceTree = "<group>"; };
+		D19C92551778567E00A4BDF4 /* Ptr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Ptr.h; path = include/liteser/Ptr.h; sourceTree = "<group>"; };
+		D19C92561778567E00A4BDF4 /* Serializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serializable.h; path = include/liteser/Serializable.h; sourceTree = "<group>"; };
+		D19C92571778567E00A4BDF4 /* Type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Type.h; path = include/liteser/Type.h; sourceTree = "<group>"; };
+		D19C92581778567E00A4BDF4 /* Variable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Variable.h; path = include/liteser/Variable.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D16D2E6B177864E7005DD948 /* gtypes.framework in Frameworks */,
 				C9C04D3E14BAEA01005BD333 /* hltypes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -56,8 +93,17 @@
 		7F42F6E711EB0E0200B1C1DF /* src */ = {
 			isa = PBXGroup;
 			children = (
-				C9C04D0D14BAE83A005BD333 /* liteser.cpp */,
-				C9C04D0E14BAE83A005BD333 /* Serializable.cpp */,
+				D19C92331778567000A4BDF4 /* Deserialize.cpp */,
+				D19C92341778567000A4BDF4 /* Deserialize.h */,
+				D19C92351778567000A4BDF4 /* Factory.cpp */,
+				D19C92361778567000A4BDF4 /* liteser.cpp */,
+				D19C92371778567000A4BDF4 /* Serializable.cpp */,
+				D19C92381778567000A4BDF4 /* Serialize.cpp */,
+				D19C92391778567000A4BDF4 /* Serialize.h */,
+				D19C923A1778567000A4BDF4 /* Type.cpp */,
+				D19C923B1778567000A4BDF4 /* Utility.cpp */,
+				D19C923C1778567000A4BDF4 /* Utility.h */,
+				D19C923D1778567000A4BDF4 /* Variable.cpp */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -65,9 +111,14 @@
 		7F42F6E811EB0E0600B1C1DF /* include */ = {
 			isa = PBXGroup;
 			children = (
-				C9C04D1314BAE84B005BD333 /* liteser.h */,
-				C9C04D1414BAE84B005BD333 /* liteserExport.h */,
-				C9C04D1514BAE84B005BD333 /* Serializable.h */,
+				D19C92511778567E00A4BDF4 /* Factory.h */,
+				D19C92521778567E00A4BDF4 /* liteser.h */,
+				D19C92531778567E00A4BDF4 /* liteserExport.h */,
+				D19C92541778567E00A4BDF4 /* macros.h */,
+				D19C92551778567E00A4BDF4 /* Ptr.h */,
+				D19C92561778567E00A4BDF4 /* Serializable.h */,
+				D19C92571778567E00A4BDF4 /* Type.h */,
+				D19C92581778567E00A4BDF4 /* Variable.h */,
 			);
 			name = include;
 			sourceTree = "<group>";
@@ -75,6 +126,7 @@
 		C9C04D3F14BAEA26005BD333 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D16D2E6A177864E7005DD948 /* gtypes.framework */,
 				C9C04D3D14BAEA01005BD333 /* hltypes.framework */,
 			);
 			name = Frameworks;
@@ -96,9 +148,17 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9C04D1614BAE84B005BD333 /* liteser.h in Headers */,
-				C9C04D1814BAE84B005BD333 /* liteserExport.h in Headers */,
-				C9C04D1A14BAE84B005BD333 /* Serializable.h in Headers */,
+				D19C92591778567E00A4BDF4 /* Factory.h in Headers */,
+				D19C925A1778567E00A4BDF4 /* liteser.h in Headers */,
+				D19C925B1778567E00A4BDF4 /* liteserExport.h in Headers */,
+				D19C925C1778567E00A4BDF4 /* macros.h in Headers */,
+				D19C925D1778567E00A4BDF4 /* Ptr.h in Headers */,
+				D19C925E1778567E00A4BDF4 /* Serializable.h in Headers */,
+				D19C925F1778567E00A4BDF4 /* Type.h in Headers */,
+				D19C92601778567E00A4BDF4 /* Variable.h in Headers */,
+				D19C92401778567000A4BDF4 /* Deserialize.h in Headers */,
+				D19C92491778567000A4BDF4 /* Serialize.h in Headers */,
+				D19C924E1778567000A4BDF4 /* Utility.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,7 +204,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0460;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "liteser" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -172,8 +232,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9C04D0F14BAE83A005BD333 /* liteser.cpp in Sources */,
-				C9C04D1114BAE83A005BD333 /* Serializable.cpp in Sources */,
+				D19C923E1778567000A4BDF4 /* Deserialize.cpp in Sources */,
+				D19C92411778567000A4BDF4 /* Factory.cpp in Sources */,
+				D19C92431778567000A4BDF4 /* liteser.cpp in Sources */,
+				D19C92451778567000A4BDF4 /* Serializable.cpp in Sources */,
+				D19C92471778567000A4BDF4 /* Serialize.cpp in Sources */,
+				D19C924A1778567000A4BDF4 /* Type.cpp in Sources */,
+				D19C924C1778567000A4BDF4 /* Utility.cpp in Sources */,
+				D19C924F1778567000A4BDF4 /* Variable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,8 +247,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9C04D1014BAE83A005BD333 /* liteser.cpp in Sources */,
-				C9C04D1214BAE83A005BD333 /* Serializable.cpp in Sources */,
+				D19C923F1778567000A4BDF4 /* Deserialize.cpp in Sources */,
+				D19C92421778567000A4BDF4 /* Factory.cpp in Sources */,
+				D19C92441778567000A4BDF4 /* liteser.cpp in Sources */,
+				D19C92461778567000A4BDF4 /* Serializable.cpp in Sources */,
+				D19C92481778567000A4BDF4 /* Serialize.cpp in Sources */,
+				D19C924B1778567000A4BDF4 /* Type.cpp in Sources */,
+				D19C924D1778567000A4BDF4 /* Utility.cpp in Sources */,
+				D19C92501778567000A4BDF4 /* Variable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,10 +268,13 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../__build__/products/Debug-LLVM\"",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
@@ -224,10 +299,13 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../__build__/products/Debug-LLVM\"",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
@@ -251,7 +329,9 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
 					"${SRCROOT}/include",
@@ -270,7 +350,9 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
 					"${SRCROOT}/include",
@@ -288,7 +370,9 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
 					"${SRCROOT}/include",
@@ -305,10 +389,13 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../__build__/products/Debug-LLVM\"",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
@@ -331,7 +418,9 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
 					"${SRCROOT}/include",
@@ -349,10 +438,13 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../__build__/products/Debug-LLVM\"",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
@@ -377,7 +469,9 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
 					"${SRCROOT}/include",
@@ -394,10 +488,13 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../__build__/products/Debug-LLVM\"",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				GCC_VERSION = "";
