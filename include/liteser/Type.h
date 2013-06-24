@@ -62,41 +62,41 @@ namespace liteser
 		Type();
 		~Type();
 
-		void assign(Ptr<char>* arg);
-		void assign(Ptr<unsigned char>* arg);
-		void assign(Ptr<int16_t>* arg);
-		void assign(Ptr<uint16_t>* arg);
-		void assign(Ptr<int32_t>* arg);
-		void assign(Ptr<uint32_t>* arg);
-		void assign(Ptr<float>* arg);
-		void assign(Ptr<double>* arg);
-		void assign(Ptr<bool>* arg);
-		void assign(Ptr<hstr>* arg);
-		void assign(Ptr<grect>* arg);
-		void assign(Ptr<gvec2>* arg);
-		void assign(Ptr<gvec3>* arg);
-		void assign(Ptr<Serializable>* arg);
-		void assign(Ptr<Serializable*>* arg);
+		void assign(VPtr<char>* arg);
+		void assign(VPtr<unsigned char>* arg);
+		void assign(VPtr<int16_t>* arg);
+		void assign(VPtr<uint16_t>* arg);
+		void assign(VPtr<int32_t>* arg);
+		void assign(VPtr<uint32_t>* arg);
+		void assign(VPtr<float>* arg);
+		void assign(VPtr<double>* arg);
+		void assign(VPtr<bool>* arg);
+		void assign(VPtr<hstr>* arg);
+		void assign(VPtr<grect>* arg);
+		void assign(VPtr<gvec2>* arg);
+		void assign(VPtr<gvec3>* arg);
+		void assign(VPtr<Serializable>* arg);
+		void assign(VPtr<Serializable*>* arg);
 		template <class T>
-		void assign(Ptr<harray<T> >* arg)
+		void assign(VPtr<harray<T> >* arg)
 		{
 			static Type* type;
 			this->value = HARRAY;
 			type = new Type();
 			this->subTypes += type;
-			type->assign((Ptr<T>*)NULL); // due to optimization with static, assign has to be called last as it might invalidate the pointer
+			type->assign((VPtr<T>*)NULL); // due to optimization with static, assign has to be called last as it might invalidate the pointer
 		}
 		template <class K, class V>
-		void assign(Ptr<hmap<K, V> >* arg)
+		void assign(VPtr<hmap<K, V> >* arg)
 		{
 			static Type* type;
 			this->value = HMAP;
 			type = new Type();
 			this->subTypes += type;
-			type->assign((Ptr<K>*)NULL); // due to optimization with static, assign has to be called last as it might invalidate the pointer
+			type->assign((VPtr<K>*)NULL); // due to optimization with static, assign has to be called last as it might invalidate the pointer
 			type = new Type();
 			this->subTypes += type;
-			type->assign((Ptr<V>*)NULL); // due to optimization with static, assign has to be called last as it might invalidate the pointer
+			type->assign((VPtr<V>*)NULL); // due to optimization with static, assign has to be called last as it might invalidate the pointer
 		}
 
 	};
