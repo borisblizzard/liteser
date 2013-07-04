@@ -7,6 +7,7 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://www.opensource.org/licenses/bsd-license.php
 
+#include <hltypes/hlist.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
@@ -17,8 +18,9 @@
 
 namespace liteser
 {
-	hmap<unsigned int, Serializable*> objects;
-	hmap<unsigned int, hstr> strings;
+	// hlist as container/implementation gave the best results in benchmarking
+	hlist<Serializable*> objects;
+	hlist<hstr> strings;
 	hsbase* stream = NULL;
 
 	bool __tryMapObject(unsigned int* id, Serializable* object)
@@ -28,14 +30,15 @@ namespace liteser
 			*id = 0;
 			return false;
 		}
-		if (!objects.has_value(object))
+		static int index;
+		index = objects.index_of(object);
+		if (index < 0)
 		{
-			// necessary to avoid incorrect size() since objects[*id] could be evaluated first
-			*id = objects.size() + 1;
-			objects[*id] = object;
+			objects += object;
+			*id = objects.size();
 			return true;
 		}
-		*id = objects(object);
+		*id = index + 1;
 		return false;
 	}
 
@@ -46,11 +49,11 @@ namespace liteser
 			*object = NULL;
 			return true;
 		}
-		if (!objects.has_key(id))
+		if ((int)id - 1 >= objects.size())
 		{
 			return false;
 		}
-		*object = objects[id];
+		*object = objects[id - 1];
 		return true;
 	}
 
@@ -61,14 +64,15 @@ namespace liteser
 			*id = 0;
 			return false;
 		}
-		if (!strings.has_value(string))
+		static int index;
+		index = strings.index_of(string);
+		if (index < 0)
 		{
-			// necessary to avoid incorrect size() since objects[*id] could be evaluated first
-			*id = strings.size() + 1;
-			strings[*id] = string;
+			strings += string;
+			*id = strings.size();
 			return true;
 		}
-		*id = strings(string);
+		*id = index + 1;
 		return false;
 	}
 
@@ -79,11 +83,11 @@ namespace liteser
 			*string = "";
 			return true;
 		}
-		if (!strings.has_key(id))
+		if ((int)id - 1 >= strings.size())
 		{
 			return false;
 		}
-		*string = strings[id];
+		*string = strings[id - 1];
 		return true;
 	}
 
