@@ -23,7 +23,7 @@ namespace liteser
 	class Serializable;
 
 	extern hsbase* stream;
-
+	
 	bool __tryMapObject(unsigned int* id, Serializable* object);
 	bool __tryGetObject(unsigned int id, Serializable** object);
 	bool __tryMapString(unsigned int* id, chstr string);
