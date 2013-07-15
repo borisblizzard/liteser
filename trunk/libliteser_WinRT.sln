@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libliteser", "libliteser_Wi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libhltypes", "..\hltypes\libhltypes_WinRT.vcxproj", "{E4D373BF-E227-48B9-99E6-84987E8674EC}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libgtypes", "..\gtypes\libgtypes_WinRT.vcxproj", "{9C043B29-DB40-48D5-97D8-1BC44128E3BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{E4D373BF-E227-48B9-99E6-84987E8674EC}.Debug|Win32.Build.0 = Debug|Win32
 		{E4D373BF-E227-48B9-99E6-84987E8674EC}.Release|Win32.ActiveCfg = Release|Win32
 		{E4D373BF-E227-48B9-99E6-84987E8674EC}.Release|Win32.Build.0 = Release|Win32
+		{9C043B29-DB40-48D5-97D8-1BC44128E3BA}.Debug|ARM.ActiveCfg = Debug|ARM
+		{9C043B29-DB40-48D5-97D8-1BC44128E3BA}.Debug|ARM.Build.0 = Debug|ARM
+		{9C043B29-DB40-48D5-97D8-1BC44128E3BA}.Release|ARM.ActiveCfg = Release|ARM
+		{9C043B29-DB40-48D5-97D8-1BC44128E3BA}.Release|ARM.Build.0 = Release|ARM
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
