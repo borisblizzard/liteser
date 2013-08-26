@@ -83,7 +83,7 @@
   <Import Condition="'$(WholeProgramOptimization)'!='true'" Project="..\hltypes\props\generic\v110-winrt.Debug.props" />
   <Import Condition="'$(WholeProgramOptimization)'=='true'" Project="..\hltypes\props\generic\v110-winrt.Release.props" />
   <Import Project="props\v110-winrt.configuration.props" />
-  <ImportGroupLabel="PropertySheets">
+  <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
