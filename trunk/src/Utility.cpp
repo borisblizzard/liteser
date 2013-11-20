@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.1
+/// @version 2.11
 /// 
 /// @section LICENSE
 /// 
@@ -30,8 +30,7 @@ namespace liteser
 			*id = 0;
 			return false;
 		}
-		static int index;
-		index = objects.index_of(object);
+		int index = objects.index_of(object);
 		if (index < 0)
 		{
 			objects += object;
@@ -64,7 +63,7 @@ namespace liteser
 			*id = 0;
 			return false;
 		}
-		static int index;
+		int index;
 		index = strings.index_of(string);
 		if (index < 0)
 		{

@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.1
+/// @version 2.11
 /// 
 /// @section LICENSE
 /// 
@@ -66,7 +66,7 @@ namespace liteser
 
 	void _dump(hstr* value)
 	{
-		static uint32_t id;
+		uint32_t id;
 		if (__tryMapString(&id, *value))
 		{
 			stream->dump(id);
@@ -101,12 +101,11 @@ namespace liteser
 
 	void _dump(Serializable* value)
 	{
-		static uint32_t id;
+		uint32_t id;
 		if (__tryMapObject(&id, value))
 		{
 			stream->dump(id);
-			static hstr name;
-			name = value->_lsName();
+			hstr name = value->_lsName();
 			_dump(&name);
 			harray<Variable*> variables = value->_lsVars();
 			stream->dump((uint32_t)variables.size());
