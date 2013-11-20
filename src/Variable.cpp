@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.1
+/// @version 2.11
 /// 
 /// @section LICENSE
 /// 
@@ -28,7 +28,6 @@
 #define DEFINE_ASSIGNER_HARRAY(typeName) \
 	Variable* Variable::assign(VPtr<harray<typeName> >* ptr) \
 	{ \
-		static Variable* variable; \
 		this->type->assign(ptr); \
 		this->ptr = ptr; \
 		this->containerSize = ptr->value->size(); \
