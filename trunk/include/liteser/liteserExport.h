@@ -32,7 +32,7 @@
 			#endif
 		#else
 			#define liteserExport __attribute__ ((visibility("default")))
-			#define liteserFnExport
+			#define liteserFnExport __attribute__ ((visibility("default")))
 		#endif
 	#endif
 	#ifndef DEPRECATED_ATTRIBUTE
