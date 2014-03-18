@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.1
+/// @version 2.12
 /// 
 /// @section LICENSE
 /// 
@@ -55,19 +55,21 @@ namespace liteser
 	{
 		switch (loadType)
 		{
-		case Type::INT8:	stream->load_char();			return true;
-		case Type::UINT8:	stream->load_uchar();			return true;
-		case Type::INT16:	stream->load_short();			return true;
-		case Type::UINT16:	stream->load_ushort();			return true;
-		case Type::INT32:	stream->load_int();				return true;
-		case Type::UINT32:	stream->load_uint();			return true;
-		case Type::FLOAT:	stream->load_float();			return true;
-		case Type::DOUBLE:	stream->load_double();			return true;
-		case Type::BOOL:	stream->load_bool();			return true;
-		case Type::HSTR:	{ hstr var;		_load(&var);	return true; }
-		case Type::GRECT:	{ grect var;	_load(&var);	return true; }
-		case Type::GVEC2:	{ gvec2 var;	_load(&var);	return true; }
-		case Type::GVEC3:	{ gvec3 var;	_load(&var);	return true; }
+		case Type::INT8:	stream->load_char();										return true;
+		case Type::UINT8:	stream->load_uchar();										return true;
+		case Type::INT16:	stream->load_short();										return true;
+		case Type::UINT16:	stream->load_ushort();										return true;
+		case Type::INT32:	stream->load_int();											return true;
+		case Type::UINT32:	stream->load_uint();										return true;
+		case Type::FLOAT:	stream->load_float();										return true;
+		case Type::DOUBLE:	stream->load_double();										return true;
+		case Type::BOOL:	stream->load_bool();										return true;
+		case Type::HSTR:	{ hstr var;		_load(&var);								return true; }
+		case Type::GRECT:	{ grect var;	_load(&var);								return true; }
+		case Type::GVEC2:	{ gvec2 var;	_load(&var);								return true; }
+		case Type::GVEC3:	{ gvec3 var;	_load(&var);								return true; }
+		case Type::OBJECT:	{ Serializable* var = NULL;	__loadObject(&var);	delete var;	return true; }
+		case Type::OBJPTR:	{ Serializable* var = NULL;	__loadObject(&var);	delete var;	return true; }
 		case Type::HARRAY:	return __skipContainer(loadType);
 		case Type::HMAP:	return __skipContainer(loadType);
 		}
