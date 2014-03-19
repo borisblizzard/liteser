@@ -55,21 +55,21 @@ namespace liteser
 	{
 		switch (loadType)
 		{
-		case Type::INT8:	stream->load_char();										return true;
-		case Type::UINT8:	stream->load_uchar();										return true;
-		case Type::INT16:	stream->load_short();										return true;
-		case Type::UINT16:	stream->load_ushort();										return true;
-		case Type::INT32:	stream->load_int();											return true;
-		case Type::UINT32:	stream->load_uint();										return true;
-		case Type::FLOAT:	stream->load_float();										return true;
-		case Type::DOUBLE:	stream->load_double();										return true;
-		case Type::BOOL:	stream->load_bool();										return true;
-		case Type::HSTR:	{ hstr var;		_load(&var);								return true; }
-		case Type::GRECT:	{ grect var;	_load(&var);								return true; }
-		case Type::GVEC2:	{ gvec2 var;	_load(&var);								return true; }
-		case Type::GVEC3:	{ gvec3 var;	_load(&var);								return true; }
-		case Type::OBJECT:	{ Serializable* var = NULL;	__loadObject(&var);	delete var;	return true; }
-		case Type::OBJPTR:	{ Serializable* var = NULL;	__loadObject(&var);	delete var;	return true; }
+		case Type::INT8:	stream->load_char();			return true;
+		case Type::UINT8:	stream->load_uchar();			return true;
+		case Type::INT16:	stream->load_short();			return true;
+		case Type::UINT16:	stream->load_ushort();			return true;
+		case Type::INT32:	stream->load_int();				return true;
+		case Type::UINT32:	stream->load_uint();			return true;
+		case Type::FLOAT:	stream->load_float();			return true;
+		case Type::DOUBLE:	stream->load_double();			return true;
+		case Type::BOOL:	stream->load_bool();			return true;
+		case Type::HSTR:	{ hstr var;		_load(&var);	return true; }
+		case Type::GRECT:	{ grect var;	_load(&var);	return true; }
+		case Type::GVEC2:	{ gvec2 var;	_load(&var);	return true; }
+		case Type::GVEC3:	{ gvec3 var;	_load(&var);	return true; }
+		case Type::OBJECT:	return __skipObject();
+		case Type::OBJPTR:	return __skipObject();
 		case Type::HARRAY:	return __skipContainer(loadType);
 		case Type::HMAP:	return __skipContainer(loadType);
 		}
@@ -201,6 +201,7 @@ namespace liteser
 			uint32_t size = stream->load_uint();
 			Variable* variable = NULL;
 			hstr variableName;
+			Type::Value loadType;
 			while (size > 0 && variables.size() > 0)
 			{
 				_load(&variableName);
@@ -213,7 +214,7 @@ namespace liteser
 						break;
 					}
 				}
-				Type::Value loadType = (Type::Value)stream->load_uchar();
+				loadType = (Type::Value)stream->load_uchar();
 				if (variable != NULL)
 				{
 					if (loadType != variable->type->value)
@@ -227,7 +228,7 @@ namespace liteser
 				else
 				{
 					hlog::warn(liteser::logTag, "Could not find variable with name: " + variableName);
-					bool success = __skipVariable(loadType);
+					__skipVariable(loadType);
 				}
 				size--;
 			}
@@ -244,6 +245,26 @@ namespace liteser
 		{
 			*value = NULL;
 		}
+	}
+
+	bool __skipObject()
+	{
+		Serializable* dummy = NULL;
+		uint32_t id = stream->load_uint();
+		if (!__tryGetObject(id, &dummy))
+		{
+			hstr className;
+			_load(&className);
+			__tryMapObject(&id, NULL); // required for proper indexing of later variables
+			uint32_t size = stream->load_uint();
+			hstr variableName;
+			for_itert (uint32_t, i, 0, size)
+			{
+				_load(&variableName);
+				__skipVariable((Type::Value)stream->load_uchar());
+			}
+		}
+		return true;
 	}
 
 	void _loadHarray(harray<Serializable*>* value)
