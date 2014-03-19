@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.1
+/// @version 2.12
 /// 
 /// @section LICENSE
 /// 
@@ -43,6 +43,7 @@ namespace liteser
 	void _load(Serializable* value);
 	void _load(Serializable** value);
 	void __loadObject(Serializable** value);
+	void __skipObject();
 
 	void _loadHarray(harray<char>* value);
 	void _loadHarray(harray<unsigned char>* value);
