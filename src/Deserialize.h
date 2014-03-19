@@ -43,7 +43,7 @@ namespace liteser
 	void _load(Serializable* value);
 	void _load(Serializable** value);
 	void __loadObject(Serializable** value);
-	void __skipObject();
+	bool __skipObject();
 
 	void _loadHarray(harray<char>* value);
 	void _loadHarray(harray<unsigned char>* value);
