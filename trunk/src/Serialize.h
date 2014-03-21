@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.1
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -31,6 +31,7 @@ namespace liteser
 	class Serializable;
 	class Variable;
 
+	inline void __dumpVariable(Variable* variable);
 	void __dumpContainer(Variable* variable);
 
 	void _dump(hstr* value);

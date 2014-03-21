@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.1
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -45,7 +45,7 @@ namespace liteser
 		~Variable();
 
 		Variable* assign(VPtr<char>* ptr); // char is always 8 bits
-		Variable* assign(VPtr<unsigned char>* ptr); // char is always 8 bits
+		Variable* assign(VPtr<unsigned char>* ptr); // unsigned char is always 8 bits
 		Variable* assign(VPtr<int16_t>* ptr);
 		Variable* assign(VPtr<uint16_t>* ptr);
 		Variable* assign(VPtr<int32_t>* ptr);
@@ -58,7 +58,7 @@ namespace liteser
 		Variable* assign(VPtr<gvec2>* ptr);
 		Variable* assign(VPtr<gvec3>* ptr);
 		Variable* assign(VPtr<harray<char> >* ptr); // char is always 8 bits
-		Variable* assign(VPtr<harray<unsigned char> >* ptr); // char is always 8 bits
+		Variable* assign(VPtr<harray<unsigned char> >* ptr); // unsigned char is always 8 bits
 		Variable* assign(VPtr<harray<int16_t> >* ptr);
 		Variable* assign(VPtr<harray<uint16_t> >* ptr);
 		Variable* assign(VPtr<harray<int32_t> >* ptr);
@@ -98,7 +98,7 @@ namespace liteser
 			harray<Serializable*>* obj = (harray<Serializable*>*)ptr->value;
 			foreach (Serializable*, it, *obj)
 			{
-				this->subVariables += (new Variable())->assign(new VPtr<Serializable*>(&(*it))); // due to optimization with static, assign has to be called last as it might invalidate the pointer
+				this->subVariables += (new Variable())->assign(new VPtr<Serializable*>(&(*it)));
 			}
 			return this;
 		}
@@ -117,8 +117,8 @@ namespace liteser
 			}
 			this->ptrKeys = new DPtr<Serializable*>(keys);
 			this->ptrValues = new DPtr<V>(values);
-			this->subVariables += (new Variable())->assign(new VPtr<harray<Serializable*> >(keys)); // due to optimization with static, assign has to be called last as it might invalidate the pointer
-			this->subVariables += (new Variable())->assign(new VPtr<harray<V> >(values)); // due to optimization with static, assign has to be called last as it might invalidate the pointer
+			this->subVariables += (new Variable())->assign(new VPtr<harray<Serializable*> >(keys));
+			this->subVariables += (new Variable())->assign(new VPtr<harray<V> >(values));
 			return this;
 		}
 		template <class K, class V>
@@ -135,8 +135,8 @@ namespace liteser
 			}
 			this->ptrKeys = new DPtr<K>(keys);
 			this->ptrValues = new DPtr<V>(values);
-			this->subVariables += (new Variable())->assign(new VPtr<harray<K> >(keys)); // due to optimization with static, assign has to be called last as it might invalidate the pointer
-			this->subVariables += (new Variable())->assign(new VPtr<harray<V> >(values)); // due to optimization with static, assign has to be called last as it might invalidate the pointer
+			this->subVariables += (new Variable())->assign(new VPtr<harray<K> >(keys));
+			this->subVariables += (new Variable())->assign(new VPtr<harray<V> >(values));
 			return this;
 		}
 
@@ -156,8 +156,7 @@ namespace liteser
 		template <class T>
 		void _addSubVariablesHarray()
 		{
-			static harray<T>* container;
-			container = ((VPtr<harray<T> >*)this->ptr)->value;
+			harray<T>* container = ((VPtr<harray<T> >*)this->ptr)->value;
 			if (container->size() > 0)
 			{
 				throw hl_exception("Harray in default constructor not empty initially: " + this->name);
@@ -168,6 +167,26 @@ namespace liteser
 				this->subVariables += (new Variable())->assign(new VPtr<T>(&container->operator[](i)));
 			}
 		}
+		template <class key>
+		void _addSubVariablesHmapKey(Type::Value value)
+		{
+			switch (value)
+			{
+			case Type::INT8:	this->_addSubVariablesHmap<key, char>();			break;
+			case Type::UINT8:	this->_addSubVariablesHmap<key, unsigned char>();	break;
+			case Type::INT16:	this->_addSubVariablesHmap<key, int16_t>();			break;
+			case Type::UINT16:	this->_addSubVariablesHmap<key, uint16_t>();		break;
+			case Type::INT32:	this->_addSubVariablesHmap<key, int32_t>();			break;
+			case Type::UINT32:	this->_addSubVariablesHmap<key, uint32_t>();		break;
+			case Type::FLOAT:	this->_addSubVariablesHmap<key, float>();			break;
+			case Type::DOUBLE:	this->_addSubVariablesHmap<key, double>();			break;
+			case Type::HSTR:	this->_addSubVariablesHmap<key, hstr>();			break;
+			case Type::GRECT:	this->_addSubVariablesHmap<key, grect>();			break;
+			case Type::GVEC2:	this->_addSubVariablesHmap<key, gvec2>();			break;
+			case Type::GVEC3:	this->_addSubVariablesHmap<key, gvec3>();			break;
+			case Type::OBJPTR:	this->_addSubVariablesHmap<key, Serializable*>();	break;
+			}
+		}
 		template <class K, class V>
 		void _addSubVariablesHmap()
 		{
@@ -176,15 +195,32 @@ namespace liteser
 				throw hl_exception("Hmap in default constructor not empty initially: " + this->name);
 			}
 		}
+		template <class keyType>
+		void _applyHmapSubVariablesKey(Type::Value value)
+		{
+			switch (value)
+			{
+			case Type::INT8:	this->_applyHmapSubVariables<keyType, char>();			break;
+			case Type::UINT8:	this->_applyHmapSubVariables<keyType, unsigned char>();	break;
+			case Type::INT16:	this->_applyHmapSubVariables<keyType, int16_t>();		break;
+			case Type::UINT16:	this->_applyHmapSubVariables<keyType, uint16_t>();		break;
+			case Type::INT32:	this->_applyHmapSubVariables<keyType, int32_t>();		break;
+			case Type::UINT32:	this->_applyHmapSubVariables<keyType, uint32_t>();		break;
+			case Type::FLOAT:	this->_applyHmapSubVariables<keyType, float>();			break;
+			case Type::DOUBLE:	this->_applyHmapSubVariables<keyType, double>();		break;
+			case Type::HSTR:	this->_applyHmapSubVariables<keyType, hstr>();			break;
+			case Type::GRECT:	this->_applyHmapSubVariables<keyType, grect>();			break;
+			case Type::GVEC2:	this->_applyHmapSubVariables<keyType, gvec2>();			break;
+			case Type::GVEC3:	this->_applyHmapSubVariables<keyType, gvec3>();			break;
+			case Type::OBJPTR:	this->_applyHmapSubVariables<keyType, Serializable*>();	break;
+			}
+		}
 		template <class K, class V>
 		void _applyHmapSubVariables()
 		{
-			static hmap<K, V>* container;
-			static harray<K>* keys;
-			static harray<V>* values;
-			container = ((VPtr<hmap<K, V> >*)this->ptr)->value;
-			keys = ((DPtr<K>*)this->ptrKeys)->data;
-			values = ((DPtr<V>*)this->ptrValues)->data;
+			hmap<K, V>* container = ((VPtr<hmap<K, V> >*)this->ptr)->value;
+			harray<K>* keys = ((DPtr<K>*)this->ptrKeys)->data;
+			harray<V>* values = ((DPtr<V>*)this->ptrValues)->data;
 			for_iter (i, 0, keys->size())
 			{
 				container->operator[](keys->operator[](i)) = values->operator[](i);

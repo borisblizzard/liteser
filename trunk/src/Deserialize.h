@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.12
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -31,8 +31,8 @@ namespace liteser
 	class Serializable;
 	class Variable;
 
-	void __loadVariable(Variable* variable, Type::Value loadType);
-	bool __skipVariable(Type::Value loadType);
+	inline void __loadVariable(Variable* variable, Type::Value loadType);
+	inline bool __skipVariable(Type::Value loadType);
 	void __loadContainer(Variable* variable, Type::Value type);
 	bool __skipContainer(Type::Value loadType);
 

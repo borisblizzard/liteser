@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.12
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -27,7 +27,7 @@
 
 namespace liteser
 {
-	void __loadVariable(Variable* variable, Type::Value loadType)
+	inline void __loadVariable(Variable* variable, Type::Value loadType)
 	{
 		switch (loadType)
 		{
@@ -51,7 +51,7 @@ namespace liteser
 		}
 	}
 
-	bool __skipVariable(Type::Value loadType)
+	inline bool __skipVariable(Type::Value loadType)
 	{
 		switch (loadType)
 		{
@@ -87,7 +87,7 @@ namespace liteser
 			{
 				throw hl_exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", variable->type->subTypes.size(), typeSize));
 			}
-			for_itert (unsigned int, i, 0, typeSize)
+			for_itert (uint32_t, i, 0, typeSize)
 			{
 				loadType = (Type::Value)stream->load_uchar();
 				if (loadType != variable->type->subTypes[i]->value)
@@ -124,13 +124,13 @@ namespace liteser
 			{
 				throw hl_exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", subTypesSize, typeSize));
 			}
-			for_itert (unsigned int, i, 0, typeSize)
+			for_itert (uint32_t, i, 0, typeSize)
 			{
 				subTypes += (Type::Value)stream->load_uchar();
 			}
 			foreach (Type::Value, it, subTypes)
 			{
-				for_itert (unsigned int, i, 0, containerSize)
+				for_itert (uint32_t, i, 0, containerSize)
 				{
 					result &= __skipVariable(*it);
 				}
@@ -230,7 +230,7 @@ namespace liteser
 					hlog::warn(liteser::logTag, "Could not find variable with name: " + variableName);
 					__skipVariable(loadType);
 				}
-				size--;
+				--size;
 			}
 			if (variables.size() > 0)
 			{
@@ -255,7 +255,7 @@ namespace liteser
 		{
 			hstr className;
 			_load(&className);
-			__tryMapObject(&id, NULL); // required for proper indexing of later variables
+			__forceMapEmptyObject(); // required for proper indexing of later variables
 			uint32_t size = stream->load_uint();
 			hstr variableName;
 			for_itert (uint32_t, i, 0, size)
@@ -273,7 +273,7 @@ namespace liteser
 		if (size > 0)
 		{
 			Serializable* object;
-			for_itert (unsigned int, i, 0, size)
+			for_itert (uint32_t, i, 0, size)
 			{
 				object = NULL;
 				__loadObject(&object);
@@ -286,7 +286,7 @@ namespace liteser
 	void _loadHarray(harray<type>* value) \
 	{ \
 		uint32_t size = stream->load_uint(); \
-		for_itert (unsigned int, i, 0, size) \
+		for_itert (uint32_t, i, 0, size) \
 		{ \
 			value->add(stream->load_ ## loadType()); \
 		} \
@@ -299,7 +299,7 @@ namespace liteser
 		if (size > 0) \
 		{ \
 			type object; \
-			for_itert (unsigned int, i, 0, size) \
+			for_itert (uint32_t, i, 0, size) \
 			{ \
 				_load(&object); \
 				value->add(object); \

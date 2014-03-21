@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.11
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -23,30 +23,32 @@
 #include "Utility.h"
 #include "Variable.h"
 
-#define DUMP_VARIABLE(var) \
-	switch ((var)->type->value) \
-	{ \
-	case Type::INT8:	stream->dump(*(var)->value<char>());			break; \
-	case Type::UINT8:	stream->dump(*(var)->value<unsigned char>());	break; \
-	case Type::INT16:	stream->dump(*(var)->value<int16_t>());			break; \
-	case Type::UINT16:	stream->dump(*(var)->value<uint16_t>());		break; \
-	case Type::INT32:	stream->dump(*(var)->value<int32_t>());			break; \
-	case Type::UINT32:	stream->dump(*(var)->value<uint32_t>());		break; \
-	case Type::FLOAT:	stream->dump(*(var)->value<float>());			break; \
-	case Type::DOUBLE:	stream->dump(*(var)->value<double>());			break; \
-	case Type::BOOL:	stream->dump(*(var)->value<bool>());			break; \
-	case Type::HSTR:	_dump((var)->value<hstr>());					break; \
-	case Type::GRECT:	_dump((var)->value<grect>());					break; \
-	case Type::GVEC2:	_dump((var)->value<gvec2>());					break; \
-	case Type::GVEC3:	_dump((var)->value<gvec3>());					break; \
-	case Type::OBJECT:	_dump((var)->value<Serializable>());			break; \
-	case Type::OBJPTR:	_dump((var)->value<Serializable*>());			break; \
-	case Type::HARRAY:	__dumpContainer(var);							break; \
-	case Type::HMAP:	__dumpContainer(var);							break; \
-	}
-
 namespace liteser
 {
+	inline void __dumpVariable(Variable* variable)
+	{
+		switch (variable->type->value)
+		{
+		case Type::INT8:	stream->dump(*variable->value<char>());				break;
+		case Type::UINT8:	stream->dump(*variable->value<unsigned char>());	break;
+		case Type::INT16:	stream->dump(*variable->value<int16_t>());			break;
+		case Type::UINT16:	stream->dump(*variable->value<uint16_t>());			break;
+		case Type::INT32:	stream->dump(*variable->value<int32_t>());			break;
+		case Type::UINT32:	stream->dump(*variable->value<uint32_t>());			break;
+		case Type::FLOAT:	stream->dump(*variable->value<float>());			break;
+		case Type::DOUBLE:	stream->dump(*variable->value<double>());			break;
+		case Type::BOOL:	stream->dump(*variable->value<bool>());				break;
+		case Type::HSTR:	_dump(variable->value<hstr>());						break;
+		case Type::GRECT:	_dump(variable->value<grect>());					break;
+		case Type::GVEC2:	_dump(variable->value<gvec2>());					break;
+		case Type::GVEC3:	_dump(variable->value<gvec3>());					break;
+		case Type::OBJECT:	_dump(variable->value<Serializable>());				break;
+		case Type::OBJPTR:	_dump(variable->value<Serializable*>());			break;
+		case Type::HARRAY:	__dumpContainer(variable);							break;
+		case Type::HMAP:	__dumpContainer(variable);							break;
+		}
+	}
+
 	void __dumpContainer(Variable* variable)
 	{
 		stream->dump(variable->containerSize);
@@ -59,7 +61,7 @@ namespace liteser
 			}
 			foreach (Variable*, it, variable->subVariables)
 			{
-				DUMP_VARIABLE(*it);
+				__dumpVariable(*it);
 			}
 		}
 	}
@@ -113,7 +115,7 @@ namespace liteser
 			{
 				_dump(&(*it)->name);
 				stream->dump((unsigned char)(*it)->type->value);
-				DUMP_VARIABLE(*it);
+				__dumpVariable(*it);
 				delete (*it);
 			}
 		}
