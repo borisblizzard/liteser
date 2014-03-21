@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.1
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -9,6 +9,7 @@
 
 #include <hltypes/exception.h>
 #include <hltypes/hmap.h>
+#include <hltypes/hlog.h>
 #include <hltypes/hsbase.h>
 #include <hltypes/hstream.h>
 #include <hltypes/hstring.h>
@@ -24,7 +25,7 @@
 #define _LS_HEADER_1 'S'
 
 #define DECLARE_HARRAY_SERIALIZER(type) \
-	bool serialize(hsbase* stream, harray<type> value) \
+	bool serialize(hsbase* stream, harray<type>& value) \
 	{ \
 		if (!stream->is_open()) \
 		{ \
@@ -113,7 +114,7 @@ namespace liteser
 		stream->read_raw(readHeader, 4);
 		if (readHeader[0] != _LS_HEADER_0 || readHeader[1] != _LS_HEADER_1)
 		{
-			throw hl_exception("Invalid header.");
+			throw hl_exception("Invalid header!");
 		}
 		unsigned char major = readHeader[2];
 		unsigned char minor = readHeader[3];
@@ -139,6 +140,10 @@ namespace liteser
 	
 	bool clone(Serializable* input, Serializable** output)
 	{
+		if (*output != NULL)
+		{
+			throw hl_exception("Output does not point to NULL!");
+		}
 		hstream stream;
 		_start(&stream);
 		_dump(&input);

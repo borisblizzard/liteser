@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.1
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -30,26 +30,26 @@
 #include "Serializable.h"
 
 #define _LS_VERSION_MAJOR 2
-#define _LS_VERSION_MINOR 1
+#define _LS_VERSION_MINOR 2
 
 namespace liteser
 {
 	extern hstr logTag;
 
 	liteserFnExport bool serialize(hsbase* stream, Serializable* object);
-	liteserFnExport bool serialize(hsbase* stream, harray<Serializable*> object);
-	liteserFnExport bool serialize(hsbase* stream, harray<char> value);
-	liteserFnExport bool serialize(hsbase* stream, harray<unsigned char> value);
-	liteserFnExport bool serialize(hsbase* stream, harray<int16_t> value);
-	liteserFnExport bool serialize(hsbase* stream, harray<uint16_t> value);
-	liteserFnExport bool serialize(hsbase* stream, harray<int32_t> value);
-	liteserFnExport bool serialize(hsbase* stream, harray<uint32_t> value);
-	liteserFnExport bool serialize(hsbase* stream, harray<float> value);
-	liteserFnExport bool serialize(hsbase* stream, harray<double> value);
-	liteserFnExport bool serialize(hsbase* stream, harray<hstr> value);
-	liteserFnExport bool serialize(hsbase* stream, harray<grect> value);
-	liteserFnExport bool serialize(hsbase* stream, harray<gvec2> value);
-	liteserFnExport bool serialize(hsbase* stream, harray<gvec3> value);
+	liteserFnExport bool serialize(hsbase* stream, harray<Serializable*>& object);
+	liteserFnExport bool serialize(hsbase* stream, harray<char>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<unsigned char>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<int16_t>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<uint16_t>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<int32_t>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<uint32_t>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<float>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<double>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<hstr>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<grect>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<gvec2>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<gvec3>& value);
 
 	liteserFnExport bool deserialize(hsbase* stream, Serializable** object);
 	liteserFnExport bool deserialize(hsbase* stream, harray<Serializable*>* object);

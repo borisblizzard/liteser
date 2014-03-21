@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.1
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -47,13 +47,13 @@
 	_50, _51, _52, _53, _54, _55, _56, _57, _58, _59, \
 	_60, _61, _62, _63, size, ...) size
 #define __LS_VA_ARGC(...) __LS_EXPAND(__LS_VA_ARGC_INDEX(__VA_ARGS__, \
-							64, 63, 62, 61, \
-	60, 59, 58, 57, 56, 55, 54, 53, 52, 51, \
-	50, 49, 48, 47, 46, 45, 44, 43, 42, 41, \
-	40, 39, 38, 37, 36, 35, 34, 33, 32, 31, \
-	30, 29, 28, 27, 26, 25, 24, 23, 22, 21, \
-	20, 19, 18, 17, 16, 15, 14, 13, 12, 11, \
-	10,  9,  8,  7,  6,  5,  4,  3,  2,  1,  0))
+						64, 63, 62, 61, 60, \
+	59, 58, 57, 56, 55, 54, 53, 52, 51, 50, \
+	49, 48, 47, 46, 45, 44, 43, 42, 41, 40, \
+	39, 38, 37, 36, 35, 34, 33, 32, 31, 30, \
+	29, 28, 27, 26, 25, 24, 23, 22, 21, 20, \
+	19, 18, 17, 16, 15, 14, 13, 12, 11, 10, \
+	 9,  8,  7,  6,  5,  4,  3,  2,  1,  0))
 
 // some recursive magic
 #define __LS_FOREACH(m, args) __LS_FOREACH_(m, __LS_VA_ARGC args, args)
@@ -128,7 +128,6 @@
 #define __LS_VAR(i, x) \
 	__LS_PAIR(x);
 #define __LS_REF(i, x) \
-	variables += (new liteser::Variable(hstr(__LS_STRINGIFY(__LS_STRIP x)).trim()))->assign( \
-		new liteser::VPtr<__LS_TYPEOF x>(&this->__LS_STRIP x));
+	variables += (new liteser::Variable(hstr(__LS_STRINGIFY(__LS_STRIP x)).trim()))->assign(new liteser::VPtr<__LS_TYPEOF x>(&this->__LS_STRIP x));
 
 #endif

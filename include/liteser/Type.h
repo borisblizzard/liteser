@@ -1,6 +1,6 @@
 /// @file
 /// @author  Boris Mikic
-/// @version 2.1
+/// @version 2.2
 /// 
 /// @section LICENSE
 /// 
@@ -80,23 +80,21 @@ namespace liteser
 		template <class T>
 		void assign(VPtr<harray<T> >* arg)
 		{
-			static Type* type;
 			this->value = HARRAY;
-			type = new Type();
+			Type* type = new Type();
+			type->assign((VPtr<T>*)NULL);
 			this->subTypes += type;
-			type->assign((VPtr<T>*)NULL); // due to optimization with static, assign has to be called last as it might invalidate the pointer
 		}
 		template <class K, class V>
 		void assign(VPtr<hmap<K, V> >* arg)
 		{
-			static Type* type;
 			this->value = HMAP;
-			type = new Type();
+			Type* type = new Type();
+			type->assign((VPtr<K>*)NULL);
 			this->subTypes += type;
-			type->assign((VPtr<K>*)NULL); // due to optimization with static, assign has to be called last as it might invalidate the pointer
 			type = new Type();
+			type->assign((VPtr<V>*)NULL);
 			this->subTypes += type;
-			type->assign((VPtr<V>*)NULL); // due to optimization with static, assign has to be called last as it might invalidate the pointer
 		}
 
 	};
