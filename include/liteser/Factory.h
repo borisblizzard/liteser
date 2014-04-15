@@ -29,11 +29,11 @@ namespace liteser
 		template <class T>
 		struct Register
 		{
-			Register(chstr name)
+			inline Register(chstr name)
 			{
 				Factory::_register(name, &_create<T>);
 			}
-			~Register()
+			inline ~Register()
 			{
 			}
 		};
@@ -41,7 +41,7 @@ namespace liteser
 		~Factory();
 
 		template <class T>
-		static Serializable* _create() { return new T(); }
+		inline static Serializable* _create() { return new T(); }
 
 		static Serializable* create(chstr name);
 

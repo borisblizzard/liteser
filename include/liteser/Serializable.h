@@ -30,10 +30,10 @@
 	liteser::Factory::Register<classe> classe::_lsRegister(#classe);
 /// @brief Use this instead of LS_CLASS_DECLARE if class contains pure virtual methods. In this case LS_CLASS_DEFINE is not needed.
 #define LS_CLASS_DECLARE_ABSTRACT(classe) \
-	hstr _lsName() { return #classe; }
+	inline hstr _lsName() { return #classe; }
 #define LS_VARS(superclass, ...) \
 	__LS_FOREACH(__LS_VAR, (__VA_ARGS__)) \
-	harray<liteser::Variable*> _lsVars() \
+	inline harray<liteser::Variable*> _lsVars() \
 	{ \
 		harray<liteser::Variable*> variables = superclass::_lsVars(); \
 		liteser::Variable* variable = NULL; \
@@ -44,7 +44,7 @@
 	__LS_FOREACH(__LS_VAR, (__VA_ARGS__)) \
 	harray<liteser::Variable*> _lsVars();
 #define LS_VARS_DEFINE(classe, superclass, ...) \
-	harray<liteser::Variable*> classe::_lsVars() \
+	inline harray<liteser::Variable*> classe::_lsVars() \
 	{ \
 		harray<liteser::Variable*> variables = superclass::_lsVars(); \
 		liteser::Variable* variable = NULL; \
@@ -66,8 +66,8 @@ namespace liteser
 		Serializable();
 		virtual ~Serializable();
 
-		virtual hstr _lsName() { return "liteser::Serializer"; }
-		virtual harray<Variable*> _lsVars() { return harray<Variable*>(); }
+		inline virtual hstr _lsName() { return "liteser::Serializer"; }
+		inline virtual harray<Variable*> _lsVars() { return harray<Variable*>(); }
 
 	};
 

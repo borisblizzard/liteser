@@ -70,7 +70,7 @@ namespace liteser
 		Variable* assign(VPtr<harray<gvec2> >* ptr);
 		Variable* assign(VPtr<harray<gvec3> >* ptr);
 		template <class T>
-		Variable* assign(VPtr<T*>* ptr)
+		inline Variable* assign(VPtr<T*>* ptr)
 		{
 			this->type->assign((VPtr<Serializable*>*)NULL);
 			this->ptr = ptr;
@@ -80,7 +80,7 @@ namespace liteser
 			return this;
 		}
 		template <class T>
-		Variable* assign(VPtr<T>* ptr)
+		inline Variable* assign(VPtr<T>* ptr)
 		{
 			this->type->assign((VPtr<Serializable>*)NULL);
 			this->ptr = ptr;
@@ -90,7 +90,7 @@ namespace liteser
 			return this;
 		}
 		template <class T>
-		Variable* assign(VPtr<harray<T*> >* ptr)
+		inline Variable* assign(VPtr<harray<T*> >* ptr)
 		{
 			this->type->assign((VPtr<harray<Serializable*> >*)NULL);
 			this->ptr = ptr;
@@ -103,7 +103,7 @@ namespace liteser
 			return this;
 		}
 		template <class K, class V>
-		Variable* assign(VPtr<hmap<K*, V> >* ptr)
+		inline Variable* assign(VPtr<hmap<K*, V> >* ptr)
 		{
 			this->type->assign((VPtr<harray<Serializable*> >*)NULL);
 			this->ptr = ptr;
@@ -122,7 +122,7 @@ namespace liteser
 			return this;
 		}
 		template <class K, class V>
-		Variable* assign(VPtr<hmap<K, V> >* ptr)
+		inline Variable* assign(VPtr<hmap<K, V> >* ptr)
 		{
 			this->type->assign(ptr);
 			this->ptr = ptr;
@@ -141,7 +141,7 @@ namespace liteser
 		}
 
 		template <class T>
-		T* value()
+		inline T* value()
 		{
 			return ((VPtr<T>*)this->ptr)->value;
 		}
@@ -154,7 +154,7 @@ namespace liteser
 		Ptr* ptrValues;
 
 		template <class T>
-		void _addSubVariablesHarray()
+		inline void _addSubVariablesHarray()
 		{
 			harray<T>* container = ((VPtr<harray<T> >*)this->ptr)->value;
 			if (container->size() > 0)
@@ -168,7 +168,7 @@ namespace liteser
 			}
 		}
 		template <class key>
-		void _addSubVariablesHmapKey(Type::Value value)
+		inline void _addSubVariablesHmapKey(Type::Value value)
 		{
 			switch (value)
 			{
@@ -188,7 +188,7 @@ namespace liteser
 			}
 		}
 		template <class K, class V>
-		void _addSubVariablesHmap()
+		inline void _addSubVariablesHmap()
 		{
 			if (((VPtr<hmap<K, V> >*)this->ptr)->value->size() > 0)
 			{
@@ -196,7 +196,7 @@ namespace liteser
 			}
 		}
 		template <class keyType>
-		void _applyHmapSubVariablesKey(Type::Value value)
+		inline void _applyHmapSubVariablesKey(Type::Value value)
 		{
 			switch (value)
 			{
@@ -216,7 +216,7 @@ namespace liteser
 			}
 		}
 		template <class K, class V>
-		void _applyHmapSubVariables()
+		inline void _applyHmapSubVariables()
 		{
 			hmap<K, V>* container = ((VPtr<hmap<K, V> >*)this->ptr)->value;
 			harray<K>* keys = ((DPtr<K>*)this->ptrKeys)->data;
