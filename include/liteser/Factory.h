@@ -41,7 +41,7 @@ namespace liteser
 		~Factory();
 
 		template <class T>
-		inline static Serializable* _create() { return new T(); }
+		static inline Serializable* _create() { return new T(); }
 
 		static Serializable* create(chstr name);
 
