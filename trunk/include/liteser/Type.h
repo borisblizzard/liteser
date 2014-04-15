@@ -78,7 +78,7 @@ namespace liteser
 		void assign(VPtr<Serializable>* arg);
 		void assign(VPtr<Serializable*>* arg);
 		template <class T>
-		void assign(VPtr<harray<T> >* arg)
+		inline void assign(VPtr<harray<T> >* arg)
 		{
 			this->value = HARRAY;
 			Type* type = new Type();
@@ -86,7 +86,7 @@ namespace liteser
 			this->subTypes += type;
 		}
 		template <class K, class V>
-		void assign(VPtr<hmap<K, V> >* arg)
+		inline void assign(VPtr<hmap<K, V> >* arg)
 		{
 			this->value = HMAP;
 			Type* type = new Type();
