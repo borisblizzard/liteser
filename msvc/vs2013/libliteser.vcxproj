@@ -85,6 +85,11 @@
     <ClCompile Include="..\..\src\Variable.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="..\..\fileproperties.rc">
+      <ExcludedFromBuild Condition="'$(Platform)'=='Android' or '$(Platform)'=='Android-x86' or '$(ConfigurationType)'=='StaticLibrary'">true</ExcludedFromBuild>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\..\gtypes\msvc\vs2013\libgtypes.vcxproj">
       <Project>{9c043b29-db40-48d5-97d8-1bc44128e3ba}</Project>
       <Private>false</Private>
