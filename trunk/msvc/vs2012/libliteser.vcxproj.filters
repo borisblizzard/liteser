@@ -14,69 +14,70 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\liteser\liteserExport.h">
+    <ClInclude Include="..\..\include\liteser\liteserExport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\liteser\Serializable.h">
+    <ClInclude Include="..\..\include\liteser\Serializable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\liteser\liteser.h">
+    <ClInclude Include="..\..\include\liteser\liteser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\liteser\macros.h">
+    <ClInclude Include="..\..\include\liteser\macros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\liteser\Variable.h">
+    <ClInclude Include="..\..\include\liteser\Variable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility.h">
+    <ClInclude Include="..\..\src\Utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\liteser\Factory.h">
+    <ClInclude Include="..\..\include\liteser\Factory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Deserialize.h">
+    <ClInclude Include="..\..\src\Deserialize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Serialize.h">
+    <ClInclude Include="..\..\src\Serialize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\liteser\Type.h">
+    <ClInclude Include="..\..\include\liteser\Type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\liteser\Ptr.h">
+    <ClInclude Include="..\..\include\liteser\Ptr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Serializable.cpp">
+    <ClCompile Include="..\..\src\Serializable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\liteser.cpp">
+    <ClCompile Include="..\..\src\liteser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Variable.cpp">
+    <ClCompile Include="..\..\src\Variable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utility.cpp">
+    <ClCompile Include="..\..\src\Utility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Factory.cpp">
+    <ClCompile Include="..\..\src\Factory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Deserialize.cpp">
+    <ClCompile Include="..\..\src\Deserialize.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Serialize.cpp">
+    <ClCompile Include="..\..\src\Serialize.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Type.cpp">
+    <ClCompile Include="..\..\src\Type.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="fileproperties.rc">
+    <ResourceCompile Include="..\..\fileproperties.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+    <ResourceCompile Include="..\..\fileproperties.rc" />
   </ItemGroup>
 </Project>
