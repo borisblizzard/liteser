@@ -83,9 +83,7 @@
 		0867D691FE84028FC02AAC07 /* libliteser */ = {
 			isa = PBXGroup;
 			children = (
-				A16AB33B18DCCB7700B78CD1 /* iOS.xcconfig */,
-				A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */,
-				8DC2EF5A0486A6940098B216 /* Info.plist */,
+				D14D3811195D49F700BF8935 /* config */,
 				7F42F6E811EB0E0600B1C1DF /* include */,
 				7F42F6E711EB0E0200B1C1DF /* src */,
 				C9C04DA114BAEB5F005BD333 /* Products */,
@@ -143,6 +141,16 @@
 				C9C04D7314BAEB2A005BD333 /* liteser.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D14D3811195D49F700BF8935 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				A16AB33B18DCCB7700B78CD1 /* iOS.xcconfig */,
+				A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */,
+				8DC2EF5A0486A6940098B216 /* Info.plist */,
+			);
+			name = config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -288,6 +296,7 @@
 		};
 		7F7A5615129D436D00E0ED12 /* App Store */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -333,6 +342,7 @@
 		};
 		C9160586132AE60400914FFC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -378,6 +388,7 @@
 		};
 		C9160588132AE61000914FFC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
