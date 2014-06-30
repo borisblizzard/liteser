@@ -36,6 +36,14 @@
 		D19C925E1778567E00A4BDF4 /* Serializable.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C92561778567E00A4BDF4 /* Serializable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D19C925F1778567E00A4BDF4 /* Type.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C92571778567E00A4BDF4 /* Type.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D19C92601778567E00A4BDF4 /* Variable.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C92581778567E00A4BDF4 /* Variable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1E1AD7D1961654600001F36 /* liteser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92361778567000A4BDF4 /* liteser.cpp */; };
+		D1E1AD7E1961654600001F36 /* Deserialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92331778567000A4BDF4 /* Deserialize.cpp */; };
+		D1E1AD7F1961654600001F36 /* Factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92351778567000A4BDF4 /* Factory.cpp */; };
+		D1E1AD801961654600001F36 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92371778567000A4BDF4 /* Serializable.cpp */; };
+		D1E1AD811961654600001F36 /* Serialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92381778567000A4BDF4 /* Serialize.cpp */; };
+		D1E1AD821961654600001F36 /* Type.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C923A1778567000A4BDF4 /* Type.cpp */; };
+		D1E1AD831961654600001F36 /* Utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C923B1778567000A4BDF4 /* Utility.cpp */; };
+		D1E1AD841961654600001F36 /* Variable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C923D1778567000A4BDF4 /* Variable.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +73,7 @@
 		D19C92561778567E00A4BDF4 /* Serializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serializable.h; path = include/liteser/Serializable.h; sourceTree = "<group>"; };
 		D19C92571778567E00A4BDF4 /* Type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Type.h; path = include/liteser/Type.h; sourceTree = "<group>"; };
 		D19C92581778567E00A4BDF4 /* Variable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Variable.h; path = include/liteser/Variable.h; sourceTree = "<group>"; };
+		D1E1AD891961654600001F36 /* libliteser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libliteser.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +97,7 @@
 				7F42F6E711EB0E0200B1C1DF /* src */,
 				C9C04DA114BAEB5F005BD333 /* Products */,
 				C9C04D3F14BAEA26005BD333 /* Frameworks */,
+				D1E1AD891961654600001F36 /* libliteser.a */,
 			);
 			name = libliteser;
 			sourceTree = "<group>";
@@ -210,6 +220,21 @@
 			productReference = C9C04D7414BAEB2A005BD333 /* libliteser.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		D1E1AD7B1961654600001F36 /* liteser (Mac) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D1E1AD851961654600001F36 /* Build configuration list for PBXNativeTarget "liteser (Mac)" */;
+			buildPhases = (
+				D1E1AD7C1961654600001F36 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "liteser (Mac)";
+			productName = "libliteser-ios";
+			productReference = D1E1AD891961654600001F36 /* libliteser.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -235,6 +260,7 @@
 			targets = (
 				8DC2EF4F0486A6940098B216 /* liteser */,
 				D1522F1B140F79500012F290 /* liteser (iOS) */,
+				D1E1AD7B1961654600001F36 /* liteser (Mac) */,
 			);
 		};
 /* End PBXProject section */
@@ -267,6 +293,21 @@
 				D19C924B1778567000A4BDF4 /* Type.cpp in Sources */,
 				D19C924D1778567000A4BDF4 /* Utility.cpp in Sources */,
 				D19C92501778567000A4BDF4 /* Variable.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1E1AD7C1961654600001F36 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1E1AD7D1961654600001F36 /* liteser.cpp in Sources */,
+				D1E1AD7E1961654600001F36 /* Deserialize.cpp in Sources */,
+				D1E1AD7F1961654600001F36 /* Factory.cpp in Sources */,
+				D1E1AD801961654600001F36 /* Serializable.cpp in Sources */,
+				D1E1AD811961654600001F36 /* Serialize.cpp in Sources */,
+				D1E1AD821961654600001F36 /* Type.cpp in Sources */,
+				D1E1AD831961654600001F36 /* Utility.cpp in Sources */,
+				D1E1AD841961654600001F36 /* Variable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,7 +462,6 @@
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -449,7 +489,6 @@
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -478,7 +517,6 @@
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -491,6 +529,72 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = liteser;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "App Store";
+		};
+		D1E1AD861961654600001F36 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/libliteser_ios.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					_LIB,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = liteser;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D1E1AD871961654600001F36 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libliteser_ios.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					_LIB,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = liteser;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D1E1AD881961654600001F36 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libliteser_ios.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					_LIB,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = liteser;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -525,6 +629,16 @@
 				D1522F27140F79500012F290 /* Debug */,
 				D1522F29140F79500012F290 /* Release */,
 				D1522F2A140F79500012F290 /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D1E1AD851961654600001F36 /* Build configuration list for PBXNativeTarget "liteser (Mac)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1E1AD861961654600001F36 /* Debug */,
+				D1E1AD871961654600001F36 /* Release */,
+				D1E1AD881961654600001F36 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
