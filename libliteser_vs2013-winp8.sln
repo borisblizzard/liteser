@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows
+# Visual Studio Express 2013 for Windows
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libliteser", "msvc\vs2012-winrt\libliteser.vcxproj", "{572A78A4-8516-407F-9DC3-2E3493663168}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libliteser", "msvc\vs2013-winp8\libliteser.vcxproj", "{572A78A4-8516-407F-9DC3-2E3493663168}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libhltypes", "..\hltypes\msvc\vs2012-winrt\libhltypes.vcxproj", "{E4D373BF-E227-48B9-99E6-84987E8674EC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libhltypes", "..\hltypes\msvc\vs2013-winp8\libhltypes.vcxproj", "{E4D373BF-E227-48B9-99E6-84987E8674EC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libgtypes", "..\gtypes\msvc\vs2012-winrt\libgtypes.vcxproj", "{9C043B29-DB40-48D5-97D8-1BC44128E3BA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libgtypes", "..\gtypes\msvc\vs2013-winp8\libgtypes.vcxproj", "{9C043B29-DB40-48D5-97D8-1BC44128E3BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
