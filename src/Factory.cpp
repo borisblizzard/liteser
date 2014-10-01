@@ -42,11 +42,8 @@ namespace liteser
 		{
 			__lsConstructors = new hmap<hstr, Serializable* (*)()>();
 		}
-#if !defined (_IOS) && !defined(_MAC) // because of the order of global var initializations on iOS, mutexes and logTag get messed up
-		hlog::debug(liteser::logTag, "Registering class: " + name);
-#else
+		// because of the order of global var initializations, mutexes get messed up
 		printf("[liteser] Registering class: %s\n", name.c_str());
-#endif
 		__lsConstructors->operator[](name) = constructor;
 	}
 	
