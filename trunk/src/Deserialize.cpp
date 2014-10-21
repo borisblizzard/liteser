@@ -143,7 +143,7 @@ namespace liteser
 		uint32_t id = stream->load_uint();
 		if (!__tryGetString(id, value))
 		{
-			*value = stream->load_hstr();
+			*value = stream->load_string();
 			__tryMapString(&id, *value);
 		}
 	}
