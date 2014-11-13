@@ -176,11 +176,6 @@ namespace liteser
 
 	void _load(Serializable** value)
 	{
-		if (*value != NULL)
-		{
-			delete (*value);
-			*value = NULL;
-		}
 		__loadObject(value);
 	}
 
