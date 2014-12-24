@@ -120,7 +120,7 @@ namespace liteser
 		return (stream != NULL);
 	}
 
-	void _checkVersion(unsigned char major, unsigned char minor)
+	void _checkVersion(uint8_t major, uint8_t minor)
 	{
 		if (major != _LS_VERSION_MAJOR)
 		{

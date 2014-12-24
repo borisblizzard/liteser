@@ -40,9 +40,11 @@ namespace liteser
 			UINT8	= 0x02,
 			INT16	= 0x03,
 			UINT16	= 0x04,
-			INT32	= 0x05,
-			UINT32	= 0x06,
-			FLOAT	= 0x21,
+			INT32   = 0x05,
+			UINT32  = 0x06,
+			INT64   = 0x07,
+			UINT64  = 0x08,
+			FLOAT   = 0x21,
 			DOUBLE	= 0x22,
 			BOOL	= 0x41,
 			OBJECT	= 0x61,
@@ -61,12 +63,14 @@ namespace liteser
 		Type();
 		~Type();
 
-		void assign(VPtr<char>* arg);
-		void assign(VPtr<unsigned char>* arg);
+		void assign(VPtr<int8_t>* arg);
+		void assign(VPtr<uint8_t>* arg);
 		void assign(VPtr<int16_t>* arg);
 		void assign(VPtr<uint16_t>* arg);
 		void assign(VPtr<int32_t>* arg);
 		void assign(VPtr<uint32_t>* arg);
+		void assign(VPtr<int64_t>* arg);
+		void assign(VPtr<uint64_t>* arg);
 		void assign(VPtr<float>* arg);
 		void assign(VPtr<double>* arg);
 		void assign(VPtr<bool>* arg);

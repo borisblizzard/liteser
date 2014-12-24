@@ -28,12 +28,14 @@ namespace liteser
 	{
 		switch (variable->type->value)
 		{
-		case Type::INT8:	stream->dump(*variable->value<char>());				break;
-		case Type::UINT8:	stream->dump(*variable->value<unsigned char>());	break;
+		case Type::INT8:	stream->dump(*variable->value<int8_t>());			break;
+		case Type::UINT8:	stream->dump(*variable->value<uint8_t>());			break;
 		case Type::INT16:	stream->dump(*variable->value<int16_t>());			break;
 		case Type::UINT16:	stream->dump(*variable->value<uint16_t>());			break;
 		case Type::INT32:	stream->dump(*variable->value<int32_t>());			break;
 		case Type::UINT32:	stream->dump(*variable->value<uint32_t>());			break;
+		case Type::INT64:	stream->dump(*variable->value<int64_t>());			break;
+		case Type::UINT64:	stream->dump(*variable->value<uint64_t>());			break;
 		case Type::FLOAT:	stream->dump(*variable->value<float>());			break;
 		case Type::DOUBLE:	stream->dump(*variable->value<double>());			break;
 		case Type::BOOL:	stream->dump(*variable->value<bool>());				break;
@@ -56,7 +58,7 @@ namespace liteser
 			stream->dump((uint32_t)variable->type->subTypes.size());
 			foreach (Type*, it, variable->type->subTypes)
 			{
-				stream->dump((unsigned char)(*it)->value);
+				stream->dump((uint8_t)(*it)->value);
 			}
 			foreach (Variable*, it, variable->subVariables)
 			{
@@ -113,7 +115,7 @@ namespace liteser
 			foreach (Variable*, it, variables)
 			{
 				_dump(&(*it)->name);
-				stream->dump((unsigned char)(*it)->type->value);
+				stream->dump((uint8_t)(*it)->type->value);
 				__dumpVariable(*it);
 				delete (*it);
 			}
@@ -158,12 +160,14 @@ namespace liteser
 		} \
 	}
 
-	DEFINE_DUMP_HARRAY(char);
-	DEFINE_DUMP_HARRAY(unsigned char);
+	DEFINE_DUMP_HARRAY(int8_t);
+	DEFINE_DUMP_HARRAY(uint8_t);
 	DEFINE_DUMP_HARRAY(int16_t);
 	DEFINE_DUMP_HARRAY(uint16_t);
 	DEFINE_DUMP_HARRAY(int32_t);
 	DEFINE_DUMP_HARRAY(uint32_t);
+	DEFINE_DUMP_HARRAY(int64_t);
+	DEFINE_DUMP_HARRAY(uint64_t);
 	DEFINE_DUMP_HARRAY(float);
 	DEFINE_DUMP_HARRAY(double);
 	DEFINE_DUMP_HARRAY_C(hstr);

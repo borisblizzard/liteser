@@ -44,12 +44,14 @@ namespace liteser
 	void __loadObject(Serializable** value);
 	bool __skipObject();
 
-	void _loadHarray(harray<char>* value);
-	void _loadHarray(harray<unsigned char>* value);
+	void _loadHarray(harray<int8_t>* value);
+	void _loadHarray(harray<uint8_t>* value);
 	void _loadHarray(harray<int16_t>* value);
 	void _loadHarray(harray<uint16_t>* value);
 	void _loadHarray(harray<int32_t>* value);
 	void _loadHarray(harray<uint32_t>* value);
+	void _loadHarray(harray<int64_t>* value);
+	void _loadHarray(harray<uint64_t>* value);
 	void _loadHarray(harray<float>* value);
 	void _loadHarray(harray<double>* value);
 	void _loadHarray(harray<hstr>* value);

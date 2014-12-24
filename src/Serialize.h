@@ -40,12 +40,14 @@ namespace liteser
 	void _dump(Serializable* value);
 	void _dump(Serializable** value);
 
-	void _dumpHarray(harray<char>* value);
-	void _dumpHarray(harray<unsigned char>* value);
+	void _dumpHarray(harray<int8_t>* value);
+	void _dumpHarray(harray<uint8_t>* value);
 	void _dumpHarray(harray<int16_t>* value);
 	void _dumpHarray(harray<uint16_t>* value);
 	void _dumpHarray(harray<int32_t>* value);
 	void _dumpHarray(harray<uint32_t>* value);
+	void _dumpHarray(harray<int64_t>* value);
+	void _dumpHarray(harray<uint64_t>* value);
 	void _dumpHarray(harray<float>* value);
 	void _dumpHarray(harray<double>* value);
 	void _dumpHarray(harray<hstr>* value);
