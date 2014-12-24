@@ -31,7 +31,7 @@ namespace liteser
 	void _start(hsbase* stream);
 	void _finish(hsbase* stream);
 	bool _isActive();
-	void _checkVersion(unsigned char major, unsigned char minor);
+	void _checkVersion(uint8_t major, uint8_t minor);
 
 }
 #endif

@@ -42,12 +42,14 @@
 
 namespace liteser
 {
-	DEFINE_ASSIGNERS(char);
-	DEFINE_ASSIGNERS(unsigned char);
+	DEFINE_ASSIGNERS(int8_t);
+	DEFINE_ASSIGNERS(uint8_t);
 	DEFINE_ASSIGNERS(int16_t);
 	DEFINE_ASSIGNERS(uint16_t);
 	DEFINE_ASSIGNERS(int32_t);
 	DEFINE_ASSIGNERS(uint32_t);
+	DEFINE_ASSIGNERS(int64_t);
+	DEFINE_ASSIGNERS(uint64_t);
 	DEFINE_ASSIGNERS(float);
 	DEFINE_ASSIGNERS(double);
 	DEFINE_ASSIGNERS(hstr);
@@ -94,12 +96,14 @@ namespace liteser
 		case Type::HARRAY:
 			switch (this->type->subTypes[0]->value)
 			{
-			case Type::INT8:	this->_addSubVariablesHarray<char>();			return;
-			case Type::UINT8:	this->_addSubVariablesHarray<unsigned char>();	return;
+			case Type::INT8:	this->_addSubVariablesHarray<int8_t>();			return;
+			case Type::UINT8:	this->_addSubVariablesHarray<uint8_t>();		return;
 			case Type::INT16:	this->_addSubVariablesHarray<int16_t>();		return;
 			case Type::UINT16:	this->_addSubVariablesHarray<uint16_t>();		return;
 			case Type::INT32:	this->_addSubVariablesHarray<int32_t>();		return;
 			case Type::UINT32:	this->_addSubVariablesHarray<uint32_t>();		return;
+			case Type::INT64:	this->_addSubVariablesHarray<int64_t>();		return;
+			case Type::UINT64:	this->_addSubVariablesHarray<uint64_t>();		return;
 			case Type::FLOAT:	this->_addSubVariablesHarray<float>();			return;
 			case Type::DOUBLE:	this->_addSubVariablesHarray<double>();			return;
 			case Type::HSTR:	this->_addSubVariablesHarray<hstr>();			return;
@@ -115,12 +119,14 @@ namespace liteser
 		case Type::HMAP:
 			switch (this->type->subTypes[0]->value)
 			{
-			case Type::INT8:	this->_addSubVariablesHmapKey<char>(this->type->subTypes[1]->value);			return;
-			case Type::UINT8:	this->_addSubVariablesHmapKey<unsigned char>(this->type->subTypes[1]->value);	return;
+			case Type::INT8:	this->_addSubVariablesHmapKey<int8_t>(this->type->subTypes[1]->value);			return;
+			case Type::UINT8:	this->_addSubVariablesHmapKey<uint8_t>(this->type->subTypes[1]->value);			return;
 			case Type::INT16:	this->_addSubVariablesHmapKey<int16_t>(this->type->subTypes[1]->value);			return;
 			case Type::UINT16:	this->_addSubVariablesHmapKey<uint16_t>(this->type->subTypes[1]->value);		return;
 			case Type::INT32:	this->_addSubVariablesHmapKey<int32_t>(this->type->subTypes[1]->value);			return;
 			case Type::UINT32:	this->_addSubVariablesHmapKey<uint32_t>(this->type->subTypes[1]->value);		return;
+			case Type::INT64:	this->_addSubVariablesHmapKey<int64_t>(this->type->subTypes[1]->value);			return;
+			case Type::UINT64:	this->_addSubVariablesHmapKey<uint64_t>(this->type->subTypes[1]->value);		return;
 			case Type::FLOAT:	this->_addSubVariablesHmapKey<float>(this->type->subTypes[1]->value);			return;
 			case Type::DOUBLE:	this->_addSubVariablesHmapKey<double>(this->type->subTypes[1]->value);			return;
 			case Type::HSTR:	this->_addSubVariablesHmapKey<hstr>(this->type->subTypes[1]->value);			return;
@@ -140,12 +146,14 @@ namespace liteser
 		}
 		switch (this->type->subTypes[0]->value)
 		{
-		case Type::INT8:	this->_applyHmapSubVariablesKey<char>(this->type->subTypes[1]->value);			return;
-		case Type::UINT8:	this->_applyHmapSubVariablesKey<unsigned char>(this->type->subTypes[1]->value);	return;
+		case Type::INT8:	this->_applyHmapSubVariablesKey<int8_t>(this->type->subTypes[1]->value);		return;
+		case Type::UINT8:	this->_applyHmapSubVariablesKey<uint8_t>(this->type->subTypes[1]->value);		return;
 		case Type::INT16:	this->_applyHmapSubVariablesKey<int16_t>(this->type->subTypes[1]->value);		return;
 		case Type::UINT16:	this->_applyHmapSubVariablesKey<uint16_t>(this->type->subTypes[1]->value);		return;
 		case Type::INT32:	this->_applyHmapSubVariablesKey<int32_t>(this->type->subTypes[1]->value);		return;
 		case Type::UINT32:	this->_applyHmapSubVariablesKey<uint32_t>(this->type->subTypes[1]->value);		return;
+		case Type::INT64:	this->_applyHmapSubVariablesKey<int64_t>(this->type->subTypes[1]->value);		return;
+		case Type::UINT64:	this->_applyHmapSubVariablesKey<uint64_t>(this->type->subTypes[1]->value);		return;
 		case Type::FLOAT:	this->_applyHmapSubVariablesKey<float>(this->type->subTypes[1]->value);			return;
 		case Type::DOUBLE:	this->_applyHmapSubVariablesKey<double>(this->type->subTypes[1]->value);		return;
 		case Type::HSTR:	this->_applyHmapSubVariablesKey<hstr>(this->type->subTypes[1]->value);			return;

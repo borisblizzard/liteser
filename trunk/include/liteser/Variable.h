@@ -43,12 +43,14 @@ namespace liteser
 		Variable(chstr name = "");
 		~Variable();
 
-		Variable* assign(VPtr<char>* ptr); // char is always 8 bits
-		Variable* assign(VPtr<unsigned char>* ptr); // unsigned char is always 8 bits
+		Variable* assign(VPtr<int8_t>* ptr); // char is always 8 bits
+		Variable* assign(VPtr<uint8_t>* ptr); // unsigned char is always 8 bits
 		Variable* assign(VPtr<int16_t>* ptr);
 		Variable* assign(VPtr<uint16_t>* ptr);
 		Variable* assign(VPtr<int32_t>* ptr);
 		Variable* assign(VPtr<uint32_t>* ptr);
+		Variable* assign(VPtr<int64_t>* ptr);
+		Variable* assign(VPtr<uint64_t>* ptr);
 		Variable* assign(VPtr<float>* ptr);
 		Variable* assign(VPtr<double>* ptr);
 		Variable* assign(VPtr<bool>* ptr);
@@ -56,12 +58,14 @@ namespace liteser
 		Variable* assign(VPtr<grect>* ptr);
 		Variable* assign(VPtr<gvec2>* ptr);
 		Variable* assign(VPtr<gvec3>* ptr);
-		Variable* assign(VPtr<harray<char> >* ptr); // char is always 8 bits
-		Variable* assign(VPtr<harray<unsigned char> >* ptr); // unsigned char is always 8 bits
+		Variable* assign(VPtr<harray<int8_t> >* ptr);
+		Variable* assign(VPtr<harray<uint8_t> >* ptr);
 		Variable* assign(VPtr<harray<int16_t> >* ptr);
 		Variable* assign(VPtr<harray<uint16_t> >* ptr);
 		Variable* assign(VPtr<harray<int32_t> >* ptr);
 		Variable* assign(VPtr<harray<uint32_t> >* ptr);
+		Variable* assign(VPtr<harray<int64_t> >* ptr);
+		Variable* assign(VPtr<harray<uint64_t> >* ptr);
 		Variable* assign(VPtr<harray<float> >* ptr);
 		Variable* assign(VPtr<harray<double> >* ptr);
 		Variable* assign(VPtr<harray<hstr> >* ptr);
@@ -171,12 +175,14 @@ namespace liteser
 		{
 			switch (value)
 			{
-			case Type::INT8:	this->_addSubVariablesHmap<key, char>();			break;
-			case Type::UINT8:	this->_addSubVariablesHmap<key, unsigned char>();	break;
+			case Type::INT8:	this->_addSubVariablesHmap<key, int8_t>();			break;
+			case Type::UINT8:	this->_addSubVariablesHmap<key, uint8_t>();			break;
 			case Type::INT16:	this->_addSubVariablesHmap<key, int16_t>();			break;
 			case Type::UINT16:	this->_addSubVariablesHmap<key, uint16_t>();		break;
 			case Type::INT32:	this->_addSubVariablesHmap<key, int32_t>();			break;
 			case Type::UINT32:	this->_addSubVariablesHmap<key, uint32_t>();		break;
+			case Type::INT64:	this->_addSubVariablesHmap<key, int64_t>();			break;
+			case Type::UINT64:	this->_addSubVariablesHmap<key, uint64_t>();		break;
 			case Type::FLOAT:	this->_addSubVariablesHmap<key, float>();			break;
 			case Type::DOUBLE:	this->_addSubVariablesHmap<key, double>();			break;
 			case Type::HSTR:	this->_addSubVariablesHmap<key, hstr>();			break;
@@ -199,12 +205,14 @@ namespace liteser
 		{
 			switch (value)
 			{
-			case Type::INT8:	this->_applyHmapSubVariables<keyType, char>();			break;
-			case Type::UINT8:	this->_applyHmapSubVariables<keyType, unsigned char>();	break;
+			case Type::INT8:	this->_applyHmapSubVariables<keyType, int8_t>();		break;
+			case Type::UINT8:	this->_applyHmapSubVariables<keyType, uint8_t>();		break;
 			case Type::INT16:	this->_applyHmapSubVariables<keyType, int16_t>();		break;
 			case Type::UINT16:	this->_applyHmapSubVariables<keyType, uint16_t>();		break;
 			case Type::INT32:	this->_applyHmapSubVariables<keyType, int32_t>();		break;
 			case Type::UINT32:	this->_applyHmapSubVariables<keyType, uint32_t>();		break;
+			case Type::INT64:	this->_applyHmapSubVariables<keyType, int64_t>();		break;
+			case Type::UINT64:	this->_applyHmapSubVariables<keyType, uint64_t>();		break;
 			case Type::FLOAT:	this->_applyHmapSubVariables<keyType, float>();			break;
 			case Type::DOUBLE:	this->_applyHmapSubVariables<keyType, double>();		break;
 			case Type::HSTR:	this->_applyHmapSubVariables<keyType, hstr>();			break;

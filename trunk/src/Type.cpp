@@ -30,12 +30,12 @@ namespace liteser
 		}
 	}
 
-	void Type::assign(VPtr<char>* arg)
+	void Type::assign(VPtr<int8_t>* arg)
 	{
 		this->value = INT8;
 	}
 
-	void Type::assign(VPtr<unsigned char>* arg)
+	void Type::assign(VPtr<uint8_t>* arg)
 	{
 		this->value = UINT8;
 	}
@@ -58,6 +58,16 @@ namespace liteser
 	void Type::assign(VPtr<uint32_t>* arg)
 	{
 		this->value = UINT32;
+	}
+
+	void Type::assign(VPtr<int64_t>* arg)
+	{
+		this->value = INT64;
+	}
+
+	void Type::assign(VPtr<uint64_t>* arg)
+	{
+		this->value = UINT64;
 	}
 
 	void Type::assign(VPtr<float>* arg)
