@@ -28,7 +28,7 @@
 	{ \
 		if (!stream->is_open()) \
 		{ \
-			throw file_not_open("Liteser Stream"); \
+			throw FileNotOpenException("Liteser Stream"); \
 		} \
 		_start(stream); \
 		stream->write_raw(header, 4); \
@@ -42,18 +42,18 @@
 	{ \
 		if (!stream->is_open()) \
 		{ \
-			throw file_not_open("Liteser Stream"); \
+			throw FileNotOpenException("Liteser Stream"); \
 		} \
 		if (value->size() > 0) \
 		{ \
-			throw hl_exception("Output harray is not empty!"); \
+			throw Exception("Output harray is not empty!"); \
 		} \
 		_start(stream); \
 		unsigned char readHeader[4]; \
 		stream->read_raw(readHeader, 4); \
 		if (readHeader[0] != _LS_HEADER_0 || readHeader[1] != _LS_HEADER_1) \
 		{ \
-			throw hl_exception("Invalid header!"); \
+			throw Exception("Invalid header!"); \
 		} \
 		unsigned char major = readHeader[2]; \
 		unsigned char minor = readHeader[3]; \
@@ -73,7 +73,7 @@ namespace liteser
 	{
 		if (!stream->is_open())
 		{
-			throw file_not_open("Liteser Stream");
+			throw FileNotOpenException("Liteser Stream");
 		}
 		// TODO - add exception handling
 		_start(stream);
@@ -103,11 +103,11 @@ namespace liteser
 	{
 		if (!stream->is_open())
 		{
-			throw file_not_open("Liteser Stream");
+			throw FileNotOpenException("Liteser Stream");
 		}
 		if (*object != NULL)
 		{
-			throw hl_exception("Given pointer to object for deserialization is not NULL.");
+			throw Exception("Given pointer to object for deserialization is not NULL.");
 		}
 		// TODO - add exception handling
 		_start(stream);
@@ -115,7 +115,7 @@ namespace liteser
 		stream->read_raw(readHeader, 4);
 		if (readHeader[0] != _LS_HEADER_0 || readHeader[1] != _LS_HEADER_1)
 		{
-			throw hl_exception("Invalid header!");
+			throw Exception("Invalid header!");
 		}
 		unsigned char major = readHeader[2];
 		unsigned char minor = readHeader[3];
@@ -145,7 +145,7 @@ namespace liteser
 	{
 		if (*output != NULL)
 		{
-			throw hl_exception("Output does not point to NULL!");
+			throw Exception("Output does not point to NULL!");
 		}
 		hstream stream;
 		_start(&stream);

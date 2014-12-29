@@ -162,7 +162,7 @@ namespace liteser
 			harray<T>* container = ((VPtr<harray<T> >*)this->ptr)->value;
 			if (container->size() > 0)
 			{
-				throw hl_exception("harray in default constructor not empty initially: " + this->name);
+				throw Exception("harray in default constructor not empty initially: " + this->name);
 			}
 			container->add(T(), this->containerSize); // requires adding first because of possible reallocation of memory to another block
 			for_itert (unsigned int, i, 0, this->containerSize)
@@ -197,7 +197,7 @@ namespace liteser
 		{
 			if (((VPtr<hmap<K, V> >*)this->ptr)->value->size() > 0)
 			{
-				throw hl_exception("hmap in default constructor not empty initially: " + this->name);
+				throw Exception("hmap in default constructor not empty initially: " + this->name);
 			}
 		}
 		template <class keyType>

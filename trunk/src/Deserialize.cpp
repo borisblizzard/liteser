@@ -88,18 +88,18 @@ namespace liteser
 			unsigned int typeSize = stream->load_uint32();
 			if (typeSize != variable->type->subTypes.size())
 			{
-				throw hl_exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", variable->type->subTypes.size(), typeSize));
+				throw Exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", variable->type->subTypes.size(), typeSize));
 			}
 			for_itert (unsigned int, i, 0, typeSize)
 			{
 				loadType = (Type::Value)stream->load_uint8();
 				if (loadType != variable->type->subTypes[i]->value)
 				{
-					throw hl_exception(hsprintf("Variable type has changed. Expected: %02X, Got: %02X", variable->type->value, loadType));
+					throw Exception(hsprintf("Variable type has changed. Expected: %02X, Got: %02X", variable->type->value, loadType));
 				}
 				if (loadType == Type::HARRAY || loadType == Type::HMAP)
 				{
-					throw hl_exception(hsprintf("Template container within a template container detected, not supported: %02X", loadType));
+					throw Exception(hsprintf("Template container within a template container detected, not supported: %02X", loadType));
 				}
 			}
 			variable->createSubVariables(type);
@@ -125,7 +125,7 @@ namespace liteser
 			unsigned int typeSize = stream->load_uint32();
 			if (typeSize != subTypesSize)
 			{
-				throw hl_exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", subTypesSize, typeSize));
+				throw Exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", subTypesSize, typeSize));
 			}
 			for_itert (unsigned int, i, 0, typeSize)
 			{
@@ -217,7 +217,7 @@ namespace liteser
 				{
 					if (loadType != variable->type->value)
 					{
-						throw hl_exception(hsprintf("Variable type has changed. Expected: %02X, Got: %02X", variable->type->value, loadType));
+						throw Exception(hsprintf("Variable type has changed. Expected: %02X, Got: %02X", variable->type->value, loadType));
 					}
 					__loadVariable(variable, loadType);
 					variables.remove(variable);
