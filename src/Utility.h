@@ -23,15 +23,15 @@ namespace liteser
 
 	extern hsbase* stream;
 	
-	bool __tryGetObject(uint32_t id, Serializable** object);
-	bool __tryMapObject(uint32_t* id, Serializable* object);
-	bool __tryGetString(uint32_t id, hstr* string);
-	bool __tryMapString(uint32_t* id, chstr string);
+	bool __tryGetObject(unsigned int id, Serializable** object);
+	bool __tryMapObject(unsigned int* id, Serializable* object);
+	bool __tryGetString(unsigned int id, hstr* string);
+	bool __tryMapString(unsigned int* id, chstr string);
 	void __forceMapEmptyObject();
 	void _start(hsbase* stream);
 	void _finish(hsbase* stream);
 	bool _isActive();
-	void _checkVersion(uint8_t major, uint8_t minor);
+	void _checkVersion(unsigned char major, unsigned char minor);
 
 }
 #endif

@@ -30,32 +30,32 @@ namespace liteser
 		}
 	}
 
-	void Type::assign(VPtr<int8_t>* arg)
+	void Type::assign(VPtr<char>* arg)
 	{
 		this->value = INT8;
 	}
 
-	void Type::assign(VPtr<uint8_t>* arg)
+	void Type::assign(VPtr<unsigned char>* arg)
 	{
 		this->value = UINT8;
 	}
 
-	void Type::assign(VPtr<int16_t>* arg)
+	void Type::assign(VPtr<short>* arg)
 	{
 		this->value = INT16;
 	}
 
-	void Type::assign(VPtr<uint16_t>* arg)
+	void Type::assign(VPtr<unsigned short>* arg)
 	{
 		this->value = UINT16;
 	}
 
-	void Type::assign(VPtr<int32_t>* arg)
+	void Type::assign(VPtr<int>* arg)
 	{
 		this->value = INT32;
 	}
 
-	void Type::assign(VPtr<uint32_t>* arg)
+	void Type::assign(VPtr<unsigned int>* arg)
 	{
 		this->value = UINT32;
 	}

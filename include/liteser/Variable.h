@@ -43,12 +43,12 @@ namespace liteser
 		Variable(chstr name = "");
 		~Variable();
 
-		Variable* assign(VPtr<int8_t>* ptr); // char is always 8 bits
-		Variable* assign(VPtr<uint8_t>* ptr); // unsigned char is always 8 bits
-		Variable* assign(VPtr<int16_t>* ptr);
-		Variable* assign(VPtr<uint16_t>* ptr);
-		Variable* assign(VPtr<int32_t>* ptr);
-		Variable* assign(VPtr<uint32_t>* ptr);
+		Variable* assign(VPtr<char>* ptr); // char is always 8 bits
+		Variable* assign(VPtr<unsigned char>* ptr); // unsigned char is always 8 bits
+		Variable* assign(VPtr<short>* ptr);
+		Variable* assign(VPtr<unsigned short>* ptr);
+		Variable* assign(VPtr<int>* ptr);
+		Variable* assign(VPtr<unsigned int>* ptr);
 		Variable* assign(VPtr<int64_t>* ptr);
 		Variable* assign(VPtr<uint64_t>* ptr);
 		Variable* assign(VPtr<float>* ptr);
@@ -58,12 +58,12 @@ namespace liteser
 		Variable* assign(VPtr<grect>* ptr);
 		Variable* assign(VPtr<gvec2>* ptr);
 		Variable* assign(VPtr<gvec3>* ptr);
-		Variable* assign(VPtr<harray<int8_t> >* ptr);
-		Variable* assign(VPtr<harray<uint8_t> >* ptr);
-		Variable* assign(VPtr<harray<int16_t> >* ptr);
-		Variable* assign(VPtr<harray<uint16_t> >* ptr);
-		Variable* assign(VPtr<harray<int32_t> >* ptr);
-		Variable* assign(VPtr<harray<uint32_t> >* ptr);
+		Variable* assign(VPtr<harray<char> >* ptr);
+		Variable* assign(VPtr<harray<unsigned char> >* ptr);
+		Variable* assign(VPtr<harray<short> >* ptr);
+		Variable* assign(VPtr<harray<unsigned short> >* ptr);
+		Variable* assign(VPtr<harray<int> >* ptr);
+		Variable* assign(VPtr<harray<unsigned int> >* ptr);
 		Variable* assign(VPtr<harray<int64_t> >* ptr);
 		Variable* assign(VPtr<harray<uint64_t> >* ptr);
 		Variable* assign(VPtr<harray<float> >* ptr);
@@ -162,7 +162,7 @@ namespace liteser
 			harray<T>* container = ((VPtr<harray<T> >*)this->ptr)->value;
 			if (container->size() > 0)
 			{
-				throw hl_exception("Harray in default constructor not empty initially: " + this->name);
+				throw hl_exception("harray in default constructor not empty initially: " + this->name);
 			}
 			container->add(T(), this->containerSize); // requires adding first because of possible reallocation of memory to another block
 			for_itert (unsigned int, i, 0, this->containerSize)
@@ -175,12 +175,12 @@ namespace liteser
 		{
 			switch (value)
 			{
-			case Type::INT8:	this->_addSubVariablesHmap<key, int8_t>();			break;
-			case Type::UINT8:	this->_addSubVariablesHmap<key, uint8_t>();			break;
-			case Type::INT16:	this->_addSubVariablesHmap<key, int16_t>();			break;
-			case Type::UINT16:	this->_addSubVariablesHmap<key, uint16_t>();		break;
-			case Type::INT32:	this->_addSubVariablesHmap<key, int32_t>();			break;
-			case Type::UINT32:	this->_addSubVariablesHmap<key, uint32_t>();		break;
+			case Type::INT8:	this->_addSubVariablesHmap<key, char>();			break;
+			case Type::UINT8:	this->_addSubVariablesHmap<key, unsigned char>();	break;
+			case Type::INT16:	this->_addSubVariablesHmap<key, short>();			break;
+			case Type::UINT16:	this->_addSubVariablesHmap<key, unsigned short>();	break;
+			case Type::INT32:	this->_addSubVariablesHmap<key, int>();				break;
+			case Type::UINT32:	this->_addSubVariablesHmap<key, unsigned int>();	break;
 			case Type::INT64:	this->_addSubVariablesHmap<key, int64_t>();			break;
 			case Type::UINT64:	this->_addSubVariablesHmap<key, uint64_t>();		break;
 			case Type::FLOAT:	this->_addSubVariablesHmap<key, float>();			break;
@@ -197,7 +197,7 @@ namespace liteser
 		{
 			if (((VPtr<hmap<K, V> >*)this->ptr)->value->size() > 0)
 			{
-				throw hl_exception("Hmap in default constructor not empty initially: " + this->name);
+				throw hl_exception("hmap in default constructor not empty initially: " + this->name);
 			}
 		}
 		template <class keyType>
@@ -205,21 +205,21 @@ namespace liteser
 		{
 			switch (value)
 			{
-			case Type::INT8:	this->_applyHmapSubVariables<keyType, int8_t>();		break;
-			case Type::UINT8:	this->_applyHmapSubVariables<keyType, uint8_t>();		break;
-			case Type::INT16:	this->_applyHmapSubVariables<keyType, int16_t>();		break;
-			case Type::UINT16:	this->_applyHmapSubVariables<keyType, uint16_t>();		break;
-			case Type::INT32:	this->_applyHmapSubVariables<keyType, int32_t>();		break;
-			case Type::UINT32:	this->_applyHmapSubVariables<keyType, uint32_t>();		break;
-			case Type::INT64:	this->_applyHmapSubVariables<keyType, int64_t>();		break;
-			case Type::UINT64:	this->_applyHmapSubVariables<keyType, uint64_t>();		break;
-			case Type::FLOAT:	this->_applyHmapSubVariables<keyType, float>();			break;
-			case Type::DOUBLE:	this->_applyHmapSubVariables<keyType, double>();		break;
-			case Type::HSTR:	this->_applyHmapSubVariables<keyType, hstr>();			break;
-			case Type::GRECT:	this->_applyHmapSubVariables<keyType, grect>();			break;
-			case Type::GVEC2:	this->_applyHmapSubVariables<keyType, gvec2>();			break;
-			case Type::GVEC3:	this->_applyHmapSubVariables<keyType, gvec3>();			break;
-			case Type::OBJPTR:	this->_applyHmapSubVariables<keyType, Serializable*>();	break;
+			case Type::INT8:	this->_applyHmapSubVariables<keyType, char>();				break;
+			case Type::UINT8:	this->_applyHmapSubVariables<keyType, unsigned char>();		break;
+			case Type::INT16:	this->_applyHmapSubVariables<keyType, short>();				break;
+			case Type::UINT16:	this->_applyHmapSubVariables<keyType, unsigned short>();	break;
+			case Type::INT32:	this->_applyHmapSubVariables<keyType, int>();				break;
+			case Type::UINT32:	this->_applyHmapSubVariables<keyType, unsigned int>();		break;
+			case Type::INT64:	this->_applyHmapSubVariables<keyType, int64_t>();			break;
+			case Type::UINT64:	this->_applyHmapSubVariables<keyType, uint64_t>();			break;
+			case Type::FLOAT:	this->_applyHmapSubVariables<keyType, float>();				break;
+			case Type::DOUBLE:	this->_applyHmapSubVariables<keyType, double>();			break;
+			case Type::HSTR:	this->_applyHmapSubVariables<keyType, hstr>();				break;
+			case Type::GRECT:	this->_applyHmapSubVariables<keyType, grect>();				break;
+			case Type::GVEC2:	this->_applyHmapSubVariables<keyType, gvec2>();				break;
+			case Type::GVEC3:	this->_applyHmapSubVariables<keyType, gvec3>();				break;
+			case Type::OBJPTR:	this->_applyHmapSubVariables<keyType, Serializable*>();		break;
 			}
 		}
 		template <class K, class V>

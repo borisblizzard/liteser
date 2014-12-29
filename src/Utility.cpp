@@ -20,11 +20,11 @@ namespace liteser
 	// this hybrid implementation for indexing gave the best results in benchmarking with larger files
 	harray<Serializable*> objects;
 	harray<hstr> strings;
-	hmap<Serializable*, uint32_t> objectIds;
-	hmap<hstr, uint32_t> stringIds;
+	hmap<Serializable*, unsigned int> objectIds;
+	hmap<hstr, unsigned int> stringIds;
 	hsbase* stream = NULL;
 
-	bool __tryGetObject(uint32_t id, Serializable** object)
+	bool __tryGetObject(unsigned int id, Serializable** object)
 	{
 		if (id == 0)
 		{
@@ -39,7 +39,7 @@ namespace liteser
 		return true;
 	}
 
-	bool __tryMapObject(uint32_t* id, Serializable* object)
+	bool __tryMapObject(unsigned int* id, Serializable* object)
 	{
 		if (object == NULL)
 		{
@@ -58,7 +58,7 @@ namespace liteser
 		return false;
 	}
 
-	bool __tryGetString(uint32_t id, hstr* string)
+	bool __tryGetString(unsigned int id, hstr* string)
 	{
 		if (id == 0)
 		{
@@ -73,7 +73,7 @@ namespace liteser
 		return true;
 	}
 	
-	bool __tryMapString(uint32_t* id, chstr string)
+	bool __tryMapString(unsigned int* id, chstr string)
 	{
 		if (string == "")
 		{
@@ -120,7 +120,7 @@ namespace liteser
 		return (stream != NULL);
 	}
 
-	void _checkVersion(uint8_t major, uint8_t minor)
+	void _checkVersion(unsigned char major, unsigned char minor)
 	{
 		if (major != _LS_VERSION_MAJOR)
 		{

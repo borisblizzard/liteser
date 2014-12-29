@@ -28,12 +28,12 @@ namespace liteser
 	{
 		switch (variable->type->value)
 		{
-		case Type::INT8:	stream->dump(*variable->value<int8_t>());			break;
-		case Type::UINT8:	stream->dump(*variable->value<uint8_t>());			break;
-		case Type::INT16:	stream->dump(*variable->value<int16_t>());			break;
-		case Type::UINT16:	stream->dump(*variable->value<uint16_t>());			break;
-		case Type::INT32:	stream->dump(*variable->value<int32_t>());			break;
-		case Type::UINT32:	stream->dump(*variable->value<uint32_t>());			break;
+		case Type::INT8:	stream->dump(*variable->value<char>());				break;
+		case Type::UINT8:	stream->dump(*variable->value<unsigned char>());	break;
+		case Type::INT16:	stream->dump(*variable->value<short>());			break;
+		case Type::UINT16:	stream->dump(*variable->value<unsigned short>());	break;
+		case Type::INT32:	stream->dump(*variable->value<int>());				break;
+		case Type::UINT32:	stream->dump(*variable->value<unsigned int>());		break;
 		case Type::INT64:	stream->dump(*variable->value<int64_t>());			break;
 		case Type::UINT64:	stream->dump(*variable->value<uint64_t>());			break;
 		case Type::FLOAT:	stream->dump(*variable->value<float>());			break;
@@ -55,10 +55,10 @@ namespace liteser
 		stream->dump(variable->containerSize);
 		if (variable->containerSize > 0)
 		{
-			stream->dump((uint32_t)variable->type->subTypes.size());
+			stream->dump((unsigned int)variable->type->subTypes.size());
 			foreach (Type*, it, variable->type->subTypes)
 			{
-				stream->dump((uint8_t)(*it)->value);
+				stream->dump((unsigned char)(*it)->value);
 			}
 			foreach (Variable*, it, variable->subVariables)
 			{
@@ -69,7 +69,7 @@ namespace liteser
 
 	void _dump(hstr* value)
 	{
-		uint32_t id;
+		unsigned int id;
 		if (__tryMapString(&id, *value))
 		{
 			stream->dump(id);
@@ -104,18 +104,18 @@ namespace liteser
 
 	void _dump(Serializable* value)
 	{
-		uint32_t id;
+		unsigned int id;
 		if (__tryMapObject(&id, value))
 		{
 			stream->dump(id);
 			hstr name = value->_lsName();
 			_dump(&name);
 			harray<Variable*> variables = value->_lsVars();
-			stream->dump((uint32_t)variables.size());
+			stream->dump((unsigned int)variables.size());
 			foreach (Variable*, it, variables)
 			{
 				_dump(&(*it)->name);
-				stream->dump((uint8_t)(*it)->type->value);
+				stream->dump((unsigned char)(*it)->type->value);
 				__dumpVariable(*it);
 				delete (*it);
 			}
@@ -133,7 +133,7 @@ namespace liteser
 
 	void _dumpHarray(harray<Serializable*>* value)
 	{
-		stream->dump((uint32_t)value->size());
+		stream->dump((unsigned int)value->size());
 		foreach (Serializable*, it, *value)
 		{
 			_dump(*it);
@@ -143,7 +143,7 @@ namespace liteser
 #define DEFINE_DUMP_HARRAY(type) \
 	void _dumpHarray(harray<type>* value) \
 	{ \
-		stream->dump((uint32_t)value->size()); \
+		stream->dump((unsigned int)value->size()); \
 		foreach (type, it, *value) \
 		{ \
 			stream->dump(*it); \
@@ -153,19 +153,19 @@ namespace liteser
 #define DEFINE_DUMP_HARRAY_C(type) \
 	void _dumpHarray(harray<type>* value) \
 	{ \
-		stream->dump((uint32_t)value->size()); \
+		stream->dump((unsigned int)value->size()); \
 		foreach (type, it, *value) \
 		{ \
 			_dump(&(*it)); \
 		} \
 	}
 
-	DEFINE_DUMP_HARRAY(int8_t);
-	DEFINE_DUMP_HARRAY(uint8_t);
-	DEFINE_DUMP_HARRAY(int16_t);
-	DEFINE_DUMP_HARRAY(uint16_t);
-	DEFINE_DUMP_HARRAY(int32_t);
-	DEFINE_DUMP_HARRAY(uint32_t);
+	DEFINE_DUMP_HARRAY(char);
+	DEFINE_DUMP_HARRAY(unsigned char);
+	DEFINE_DUMP_HARRAY(short);
+	DEFINE_DUMP_HARRAY(unsigned short);
+	DEFINE_DUMP_HARRAY(int);
+	DEFINE_DUMP_HARRAY(unsigned int);
 	DEFINE_DUMP_HARRAY(int64_t);
 	DEFINE_DUMP_HARRAY(uint64_t);
 	DEFINE_DUMP_HARRAY(float);

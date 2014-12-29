@@ -63,12 +63,12 @@ namespace liteser
 		Type();
 		~Type();
 
-		void assign(VPtr<int8_t>* arg);
-		void assign(VPtr<uint8_t>* arg);
-		void assign(VPtr<int16_t>* arg);
-		void assign(VPtr<uint16_t>* arg);
-		void assign(VPtr<int32_t>* arg);
-		void assign(VPtr<uint32_t>* arg);
+		void assign(VPtr<char>* arg);
+		void assign(VPtr<unsigned char>* arg);
+		void assign(VPtr<short>* arg);
+		void assign(VPtr<unsigned short>* arg);
+		void assign(VPtr<int>* arg);
+		void assign(VPtr<unsigned int>* arg);
 		void assign(VPtr<int64_t>* arg);
 		void assign(VPtr<uint64_t>* arg);
 		void assign(VPtr<float>* arg);
