@@ -89,7 +89,7 @@ namespace liteser
 	{
 		if (this->type->subTypes.size() == 0)
 		{
-			throw hl_exception("Variable type does not contain subtypes: " + this->name);
+			throw Exception("Variable type does not contain subtypes: " + this->name);
 		}
 		switch (type)
 		{
@@ -113,7 +113,7 @@ namespace liteser
 			case Type::OBJECT:	this->_addSubVariablesHarray<Serializable>();	return;
 			case Type::OBJPTR:	this->_addSubVariablesHarray<Serializable*>();	return;
 			}
-			throw hl_exception(hsprintf("Subtype is not supported within harray: %s; type: %02X",
+			throw Exception(hsprintf("Subtype is not supported within harray: %s; type: %02X",
 				this->name.c_str(), this->type->subTypes[0]->value));
 			break;
 		case Type::HMAP:
@@ -131,18 +131,18 @@ namespace liteser
 			case Type::DOUBLE:	this->_addSubVariablesHmapKey<double>(this->type->subTypes[1]->value);			return;
 			case Type::HSTR:	this->_addSubVariablesHmapKey<hstr>(this->type->subTypes[1]->value);			return;
 			}
-			throw hl_exception(hsprintf("Subtype is not supported within hmap: %s; types: %02X %02X",
+			throw Exception(hsprintf("Subtype is not supported within hmap: %s; types: %02X %02X",
 				this->name.c_str(), this->type->subTypes[0]->value, this->type->subTypes[1]->value));
 			break;
 		}
-		throw hl_exception(hsprintf("Type is not supported for: %s; type: %02X", this->name.c_str(), type));
+		throw Exception(hsprintf("Type is not supported for: %s; type: %02X", this->name.c_str(), type));
 	}
 
 	void Variable::applyHmapSubVariables(Type::Value type)
 	{
 		if (type != Type::HMAP)
 		{
-			throw hl_exception("Variable type is not hmap!");
+			throw Exception("Variable type is not hmap!");
 		}
 		switch (this->type->subTypes[0]->value)
 		{
@@ -158,7 +158,7 @@ namespace liteser
 		case Type::DOUBLE:	this->_applyHmapSubVariablesKey<double>(this->type->subTypes[1]->value);			return;
 		case Type::HSTR:	this->_applyHmapSubVariablesKey<hstr>(this->type->subTypes[1]->value);				return;
 		}
-		throw hl_exception(hsprintf("Subtype is not supported within hmap: %s; types: %02X %02X",
+		throw Exception(hsprintf("Subtype is not supported within hmap: %s; types: %02X %02X",
 			this->name.c_str(), this->type->subTypes[0]->value, this->type->subTypes[1]->value));
 	}
 

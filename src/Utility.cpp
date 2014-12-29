@@ -124,7 +124,7 @@ namespace liteser
 	{
 		if (major != _LS_VERSION_MAJOR)
 		{
-			throw hl_exception(hsprintf("Liteser Read Error! Version mismatch: expected %d.%d, got %d.%d",
+			throw Exception(hsprintf("Liteser Read Error! Version mismatch: expected %d.%d, got %d.%d",
 				_LS_VERSION_MAJOR, _LS_VERSION_MINOR, major, minor));
 		}
 		if (minor < _LS_VERSION_MINOR)
