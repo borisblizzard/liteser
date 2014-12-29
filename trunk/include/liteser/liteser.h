@@ -37,12 +37,12 @@ namespace liteser
 
 	liteserFnExport bool serialize(hsbase* stream, Serializable* object);
 	liteserFnExport bool serialize(hsbase* stream, harray<Serializable*>& object);
-	liteserFnExport bool serialize(hsbase* stream, harray<int8_t>& value);
-	liteserFnExport bool serialize(hsbase* stream, harray<uint8_t>& value);
-	liteserFnExport bool serialize(hsbase* stream, harray<int16_t>& value);
-	liteserFnExport bool serialize(hsbase* stream, harray<uint16_t>& value);
-	liteserFnExport bool serialize(hsbase* stream, harray<int32_t>& value);
-	liteserFnExport bool serialize(hsbase* stream, harray<uint32_t>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<char>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<unsigned char>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<short>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<unsigned short>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<int>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<unsigned int>& value);
 	liteserFnExport bool serialize(hsbase* stream, harray<int64_t>& value);
 	liteserFnExport bool serialize(hsbase* stream, harray<uint64_t>& value);
 	liteserFnExport bool serialize(hsbase* stream, harray<float>& value);
@@ -54,12 +54,12 @@ namespace liteser
 
 	liteserFnExport bool deserialize(hsbase* stream, Serializable** object);
 	liteserFnExport bool deserialize(hsbase* stream, harray<Serializable*>* object);
-	liteserFnExport bool deserialize(hsbase* stream, harray<int8_t>* value);
-	liteserFnExport bool deserialize(hsbase* stream, harray<uint8_t>* value);
-	liteserFnExport bool deserialize(hsbase* stream, harray<int16_t>* value);
-	liteserFnExport bool deserialize(hsbase* stream, harray<uint16_t>* value);
-	liteserFnExport bool deserialize(hsbase* stream, harray<int32_t>* value);
-	liteserFnExport bool deserialize(hsbase* stream, harray<uint32_t>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<char>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<unsigned char>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<short>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<unsigned short>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<int>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<unsigned int>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<int64_t>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<uint64_t>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<float>* value);
