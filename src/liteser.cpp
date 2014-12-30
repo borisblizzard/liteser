@@ -29,10 +29,10 @@ namespace liteser
 	void deserialize(hsbase* stream, Serializable* object)
 	{
 		_lsIds.clear();
-		unsigned char major = stream->load_uint8();
-		unsigned char minor = stream->load_uint8();
+		unsigned char major = stream->loadUint8();
+		unsigned char minor = stream->loadUint8();
 		checkVersion(major, minor);
-		int _lsId = stream->load_uint32();
+		int _lsId = stream->loadUint32();
 		_lsIds[_lsId] = object;
 		object->deserialize(stream);
 	}
