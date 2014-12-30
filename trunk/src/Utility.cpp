@@ -46,7 +46,7 @@ namespace liteser
 			*id = 0;
 			return false;
 		}
-		int index = objectIds.try_get_by_key(object, -1);
+		int index = objectIds.tryGet(object, -1);
 		if (index < 0)
 		{
 			objects += object;
@@ -80,7 +80,7 @@ namespace liteser
 			*id = 0;
 			return false;
 		}
-		int index = stringIds.try_get_by_key(string, -1);
+		int index = stringIds.tryGet(string, -1);
 		if (index < 0)
 		{
 			strings += string;
