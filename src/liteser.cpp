@@ -26,12 +26,12 @@
 #define DECLARE_HARRAY_SERIALIZER(type) \
 	bool serialize(hsbase* stream, harray<type>& value) \
 	{ \
-		if (!stream->is_open()) \
+		if (!stream->isOpen()) \
 		{ \
 			throw FileNotOpenException("Liteser Stream"); \
 		} \
 		_start(stream); \
-		stream->write_raw(header, 4); \
+		stream->writeRaw(header, 4); \
 		_dumpHarray(&value); \
 		_finish(stream); \
 		return true; \
@@ -40,7 +40,7 @@
 #define DECLARE_HARRAY_DESERIALIZER(type) \
 	bool deserialize(hsbase* stream, harray<type>* value) \
 	{ \
-		if (!stream->is_open()) \
+		if (!stream->isOpen()) \
 		{ \
 			throw FileNotOpenException("Liteser Stream"); \
 		} \
@@ -50,7 +50,7 @@
 		} \
 		_start(stream); \
 		unsigned char readHeader[4]; \
-		stream->read_raw(readHeader, 4); \
+		stream->readRaw(readHeader, 4); \
 		if (readHeader[0] != _LS_HEADER_0 || readHeader[1] != _LS_HEADER_1) \
 		{ \
 			throw Exception("Invalid header!"); \
@@ -71,13 +71,13 @@ namespace liteser
 
 	bool serialize(hsbase* stream, Serializable* object)
 	{
-		if (!stream->is_open())
+		if (!stream->isOpen())
 		{
 			throw FileNotOpenException("Liteser Stream");
 		}
 		// TODO - add exception handling
 		_start(stream);
-		stream->write_raw(header, 4);
+		stream->writeRaw(header, 4);
 		_dump(&object);
 		_finish(stream);
 		return true;
@@ -101,7 +101,7 @@ namespace liteser
 	
 	bool deserialize(hsbase* stream, Serializable** object)
 	{
-		if (!stream->is_open())
+		if (!stream->isOpen())
 		{
 			throw FileNotOpenException("Liteser Stream");
 		}
@@ -112,7 +112,7 @@ namespace liteser
 		// TODO - add exception handling
 		_start(stream);
 		unsigned char readHeader[4];
-		stream->read_raw(readHeader, 4);
+		stream->readRaw(readHeader, 4);
 		if (readHeader[0] != _LS_HEADER_0 || readHeader[1] != _LS_HEADER_1)
 		{
 			throw Exception("Invalid header!");

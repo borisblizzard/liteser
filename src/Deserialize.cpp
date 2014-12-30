@@ -30,17 +30,17 @@ namespace liteser
 	{
 		switch (loadType)
 		{
-		case Type::INT8:	*variable->value<char>()			= stream->load_int8();		break;
-		case Type::UINT8:	*variable->value<unsigned char>()	= stream->load_uint8();		break;
-		case Type::INT16:	*variable->value<short>()			= stream->load_int16();		break;
-		case Type::UINT16:	*variable->value<unsigned short>()	= stream->load_uint16();	break;
-		case Type::INT32:	*variable->value<int>()				= stream->load_int32();		break;
-		case Type::UINT32:	*variable->value<unsigned int>()	= stream->load_uint32();	break;
-		case Type::INT64:	*variable->value<int64_t>()			= stream->load_int64();		break;
-		case Type::UINT64:	*variable->value<uint64_t>()		= stream->load_uint64();	break;
-		case Type::FLOAT:	*variable->value<float>()			= stream->load_float();		break;
-		case Type::DOUBLE:	*variable->value<double>()			= stream->load_double();	break;
-		case Type::BOOL:	*variable->value<bool>()			= stream->load_bool();		break;
+		case Type::INT8:	*variable->value<char>()			= stream->loadInt8();		break;
+		case Type::UINT8:	*variable->value<unsigned char>()	= stream->loadUint8();		break;
+		case Type::INT16:	*variable->value<short>()			= stream->loadInt16();		break;
+		case Type::UINT16:	*variable->value<unsigned short>()	= stream->loadUint16();		break;
+		case Type::INT32:	*variable->value<int>()				= stream->loadInt32();		break;
+		case Type::UINT32:	*variable->value<unsigned int>()	= stream->loadUint32();		break;
+		case Type::INT64:	*variable->value<int64_t>()			= stream->loadInt64();		break;
+		case Type::UINT64:	*variable->value<uint64_t>()		= stream->loadUint64();		break;
+		case Type::FLOAT:	*variable->value<float>()			= stream->loadFloat();		break;
+		case Type::DOUBLE:	*variable->value<double>()			= stream->loadDouble();		break;
+		case Type::BOOL:	*variable->value<bool>()			= stream->loadBool();		break;
 		case Type::HSTR:	_load(variable->value<hstr>());									break;
 		case Type::GRECT:	_load(variable->value<grect>());								break;
 		case Type::GVEC2:	_load(variable->value<gvec2>());								break;
@@ -56,17 +56,17 @@ namespace liteser
 	{
 		switch (loadType)
 		{
-		case Type::INT8:	stream->load_int8();			return true;
-		case Type::UINT8:	stream->load_uint8();			return true;
-		case Type::INT16:	stream->load_int16();			return true;
-		case Type::UINT16:	stream->load_uint16();			return true;
-		case Type::INT32:	stream->load_int32();			return true;
-		case Type::UINT32:	stream->load_uint32();			return true;
-		case Type::INT64:	stream->load_int64();			return true;
-		case Type::UINT64:	stream->load_uint64();			return true;
-		case Type::FLOAT:	stream->load_float();			return true;
-		case Type::DOUBLE:	stream->load_double();			return true;
-		case Type::BOOL:	stream->load_bool();			return true;
+		case Type::INT8:	stream->loadInt8();				return true;
+		case Type::UINT8:	stream->loadUint8();			return true;
+		case Type::INT16:	stream->loadInt16();			return true;
+		case Type::UINT16:	stream->loadUint16();			return true;
+		case Type::INT32:	stream->loadInt32();			return true;
+		case Type::UINT32:	stream->loadUint32();			return true;
+		case Type::INT64:	stream->loadInt64();			return true;
+		case Type::UINT64:	stream->loadUint64();			return true;
+		case Type::FLOAT:	stream->loadFloat();			return true;
+		case Type::DOUBLE:	stream->loadDouble();			return true;
+		case Type::BOOL:	stream->loadBool();				return true;
 		case Type::HSTR:	{ hstr var;		_load(&var);	return true; }
 		case Type::GRECT:	{ grect var;	_load(&var);	return true; }
 		case Type::GVEC2:	{ gvec2 var;	_load(&var);	return true; }
@@ -81,18 +81,18 @@ namespace liteser
 
 	void __loadContainer(Variable* variable, Type::Value type)
 	{
-		variable->containerSize = stream->load_uint32();
+		variable->containerSize = stream->loadUint32();
 		if (variable->containerSize > 0)
 		{
 			Type::Value loadType = Type::NONE;
-			unsigned int typeSize = stream->load_uint32();
+			unsigned int typeSize = stream->loadUint32();
 			if (typeSize != variable->type->subTypes.size())
 			{
 				throw Exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", variable->type->subTypes.size(), typeSize));
 			}
 			for_itert (unsigned int, i, 0, typeSize)
 			{
-				loadType = (Type::Value)stream->load_uint8();
+				loadType = (Type::Value)stream->loadUint8();
 				if (loadType != variable->type->subTypes[i]->value)
 				{
 					throw Exception(hsprintf("Variable type has changed. Expected: %02X, Got: %02X", variable->type->value, loadType));
@@ -117,19 +117,19 @@ namespace liteser
 	bool __skipContainer(Type::Value type)
 	{
 		bool result = true;
-		unsigned int containerSize = stream->load_uint32();
+		unsigned int containerSize = stream->loadUint32();
 		if (containerSize > 0)
 		{
 			harray<Type::Value> subTypes;
 			int subTypesSize = (type == Type::HMAP ? 2 : 1);
-			unsigned int typeSize = stream->load_uint32();
+			unsigned int typeSize = stream->loadUint32();
 			if (typeSize != subTypesSize)
 			{
 				throw Exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", subTypesSize, typeSize));
 			}
 			for_itert (unsigned int, i, 0, typeSize)
 			{
-				subTypes += (Type::Value)stream->load_uint8();
+				subTypes += (Type::Value)stream->loadUint8();
 			}
 			foreach (Type::Value, it, subTypes)
 			{
@@ -144,33 +144,33 @@ namespace liteser
 
 	void _load(hstr* value)
 	{
-		unsigned int id = stream->load_uint32();
+		unsigned int id = stream->loadUint32();
 		if (!__tryGetString(id, value))
 		{
-			*value = stream->load_string();
+			*value = stream->loadString();
 			__tryMapString(&id, *value);
 		}
 	}
 
 	void _load(grect* value)
 	{
-		value->x = stream->load_float();
-		value->y = stream->load_float();
-		value->w = stream->load_float();
-		value->h = stream->load_float();
+		value->x = stream->loadFloat();
+		value->y = stream->loadFloat();
+		value->w = stream->loadFloat();
+		value->h = stream->loadFloat();
 	}
 
 	void _load(gvec2* value)
 	{
-		value->x = stream->load_float();
-		value->y = stream->load_float();
+		value->x = stream->loadFloat();
+		value->y = stream->loadFloat();
 	}
 
 	void _load(gvec3* value)
 	{
-		value->x = stream->load_float();
-		value->y = stream->load_float();
-		value->z = stream->load_float();
+		value->x = stream->loadFloat();
+		value->y = stream->loadFloat();
+		value->z = stream->loadFloat();
 	}
 
 	void _load(Serializable* value)
@@ -185,7 +185,7 @@ namespace liteser
 
 	void __loadObject(Serializable** value)
 	{
-		unsigned int id = stream->load_uint32();
+		unsigned int id = stream->loadUint32();
 		if (!__tryGetObject(id, value))
 		{
 			hstr className;
@@ -196,7 +196,7 @@ namespace liteser
 			}
 			__tryMapObject(&id, *value);
 			harray<Variable*> variables = (*value)->_lsVars();
-			unsigned int size = stream->load_uint32();
+			unsigned int size = stream->loadUint32();
 			Variable* variable = NULL;
 			hstr variableName;
 			Type::Value loadType;
@@ -212,7 +212,7 @@ namespace liteser
 						break;
 					}
 				}
-				loadType = (Type::Value)stream->load_uint8();
+				loadType = (Type::Value)stream->loadUint8();
 				if (variable != NULL)
 				{
 					if (loadType != variable->type->value)
@@ -248,18 +248,18 @@ namespace liteser
 	bool __skipObject()
 	{
 		Serializable* dummy = NULL;
-		unsigned int id = stream->load_uint32();
+		unsigned int id = stream->loadUint32();
 		if (!__tryGetObject(id, &dummy))
 		{
 			hstr className;
 			_load(&className);
 			__forceMapEmptyObject(); // required for proper indexing of later variables
-			unsigned int size = stream->load_uint32();
+			unsigned int size = stream->loadUint32();
 			hstr variableName;
 			for_itert (unsigned int, i, 0, size)
 			{
 				_load(&variableName);
-				__skipVariable((Type::Value)stream->load_uint8());
+				__skipVariable((Type::Value)stream->loadUint8());
 			}
 		}
 		return true;
@@ -267,7 +267,7 @@ namespace liteser
 
 	void _loadHarray(harray<Serializable*>* value)
 	{
-		unsigned int size = stream->load_uint32();
+		unsigned int size = stream->loadUint32();
 		if (size > 0)
 		{
 			Serializable* object;
@@ -283,17 +283,17 @@ namespace liteser
 #define DEFINE_LOAD_HARRAY(type, loadType) \
 	void _loadHarray(harray<type>* value) \
 	{ \
-		unsigned int size = stream->load_uint32(); \
+		unsigned int size = stream->loadUint32(); \
 		for_itert (unsigned int, i, 0, size) \
 		{ \
-			value->add(stream->load_ ## loadType()); \
+			value->add(stream->load ## loadType()); \
 		} \
 	}
 
 #define DEFINE_LOAD_HARRAY_F(type) \
 	void _loadHarray(harray<type>* value) \
 	{ \
-		unsigned int size = stream->load_uint32(); \
+		unsigned int size = stream->loadUint32(); \
 		if (size > 0) \
 		{ \
 			type object; \
@@ -305,16 +305,16 @@ namespace liteser
 		} \
 	}
 
-	DEFINE_LOAD_HARRAY(char, int8);
-	DEFINE_LOAD_HARRAY(unsigned char, uint8);
-	DEFINE_LOAD_HARRAY(short, int16);
-	DEFINE_LOAD_HARRAY(unsigned short, uint16);
-	DEFINE_LOAD_HARRAY(int, int32);
-	DEFINE_LOAD_HARRAY(unsigned int, uint32);
-	DEFINE_LOAD_HARRAY(int64_t, int64);
-	DEFINE_LOAD_HARRAY(uint64_t, uint64);
-	DEFINE_LOAD_HARRAY(float, float);
-	DEFINE_LOAD_HARRAY(double, double);
+	DEFINE_LOAD_HARRAY(char, Int8);
+	DEFINE_LOAD_HARRAY(unsigned char, Uint8);
+	DEFINE_LOAD_HARRAY(short, Int16);
+	DEFINE_LOAD_HARRAY(unsigned short, Uint16);
+	DEFINE_LOAD_HARRAY(int, Int32);
+	DEFINE_LOAD_HARRAY(unsigned int, Uint32);
+	DEFINE_LOAD_HARRAY(int64_t, Int64);
+	DEFINE_LOAD_HARRAY(uint64_t, Uint64);
+	DEFINE_LOAD_HARRAY(float, Float);
+	DEFINE_LOAD_HARRAY(double, Double);
 	DEFINE_LOAD_HARRAY_F(hstr);
 	DEFINE_LOAD_HARRAY_F(grect);
 	DEFINE_LOAD_HARRAY_F(gvec2);
