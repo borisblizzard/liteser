@@ -32,8 +32,8 @@
 	stream->dump((unsigned char)_LS_VERSION_MINOR);
 #define _LS_INIT_MANUAL_DESERIALIZATION \
 	liteser::_lsIds.clear(); \
-	unsigned char major = stream->load_uint8(); \
-	unsigned char minor = stream->load_uint8(); \
+	unsigned char major = stream->loadUint8(); \
+	unsigned char minor = stream->loadUint8(); \
 	liteser::checkVersion(major, minor);
 #define _LS_ASSIGN_HMAP_KEYS_VALUES(name) \
 	for_iter (_lsI ## name, 0, _lsKeys ## name.size()) \
@@ -72,12 +72,12 @@
 #define LS_SER(name) stream->dump(name);
 #define LS_SER_ENUM(name) stream->dump((int)name);
 /// @note "loadType" can be int8, uint8, int16, uint16, int32, uint32, int64, uint64, bool, float, double or hstr
-#define LS_DES(name, loadType) name = stream->load_ ## loadType();
-#define LS_DES_ENUM(name, type) name = (type)stream->load_int32();
+#define LS_DES(name, loadType) name = stream->load ## loadType();
+#define LS_DES_ENUM(name, type) name = (type)stream->loadInt32();
 
 #define LS_SER_OBJ(name) name.serialize(stream);
 #define LS_DES_OBJ(name) \
-	int _lsId ## name = stream->load_uint32(); \
+	int _lsId ## name = stream->loadUint32(); \
 	liteser::_lsIds[_lsId ## name] = &name; \
 	name.deserialize(stream);
 
@@ -91,7 +91,7 @@
 		stream->dump(0); \
 	}
 #define LS_DES_OBJ_PTR(name, classe) \
-	int _lsId ## name = stream->load_uint32(); \
+	int _lsId ## name = stream->loadUint32(); \
 	if (_lsId ## name != 0) \
 	{ \
 		if (liteser::_lsIds.has_key(_lsId ## name)) \
@@ -131,7 +131,7 @@
 /// @note "type" can be char, unsigned char, short, unsigned short, int, unsigned uint, int64_t, uint64_t, bool, float, double or hstr
 /// @note "loadType" can be int8, uint8, int16, uint16, int32, uint32, int64, uint64, bool, float, double or hstr and has to correspond with "type"
 #define LS_DES_ARRAY(name, type, loadType) \
-	int _lsCount ## name = stream->load_int32(); \
+	int _lsCount ## name = stream->loadInt32(); \
 	if (name != NULL) \
 	{ \
 		delete [] name; \
@@ -139,10 +139,10 @@
 	} \
 	for_iter (_lsI ## name, 0, _lsCount ## name) \
 	{ \
-		name[_lsI ## name] = stream->load_ ## loadType(); \
+		name[_lsI ## name] = stream->load ## loadType(); \
 	}
 #define LS_DES_ARRAY_ENUM(name, type, loadType) \
-	int _lsCount ## name = stream->load_int32(); \
+	int _lsCount ## name = stream->loadInt32(); \
 	if (name != NULL) \
 	{ \
 		delete [] name; \
@@ -150,7 +150,7 @@
 	} \
 	for_iter (_lsI ## name, 0, _lsCount ## name) \
 	{ \
-		name[_lsI ## name] = (type)stream->load_int32(); \
+		name[_lsI ## name] = (type)stream->loadInt32(); \
 	}
 
 #define LS_SER_ARRAY_OBJ(name, size) \
@@ -160,7 +160,7 @@
 		LS_SER_OBJ(name[_lsI ## name]); \
 	}
 #define LS_DES_ARRAY_OBJ(name, classe) \
-	int _lsCount ## name = stream->load_int32(); \
+	int _lsCount ## name = stream->loadInt32(); \
 	if (name != NULL) \
 	{ \
 		delete [] name; \
@@ -180,7 +180,7 @@
 		LS_SER_OBJ_PTR(name[_lsI ## name]); \
 	}
 #define LS_DES_ARRAY_OBJ_PTR(name, classe) \
-	int _lsCount ## name = stream->load_int32(); \
+	int _lsCount ## name = stream->loadInt32(); \
 	for_iter (_lsI ## name, 0, _lsCount) \
 	{ \
 		classe* _lsInstance = NULL; \
@@ -205,17 +205,17 @@
 /// @note "type" can be int8, uint8, int16, uint16, int32, uint32, int64, uint64, bool, float, double or hstr
 #define LS_DES_HARRAY(name, type) \
 	name.clear(); \
-	int _lsCount ## name = stream->load_int32(); \
+	int _lsCount ## name = stream->loadInt32(); \
 	for_iter (_lsI ## name, 0, _lsCount ## name) \
 	{ \
-		name += stream->load_ ## type(); \
+		name += stream->load ## type(); \
 	}
 #define LS_DES_HARRAY_ENUM(name, type) \
 	name.clear(); \
-	int _lsCount ## name = stream->load_int32(); \
+	int _lsCount ## name = stream->loadInt32(); \
 	for_iter (_lsI ## name, 0, _lsCount ## name) \
 	{ \
-		name += (type)stream->load_int32(); \
+		name += (type)stream->loadInt32(); \
 	}
 
 #define LS_SER_HARRAY_OBJ(name) \
@@ -225,7 +225,7 @@
 		LS_SER_OBJ(name[_lsI ## name]); \
 	}
 #define LS_DES_HARRAY_OBJ(name, classe) \
-	int _lsCount ## name = stream->load_int32(); \
+	int _lsCount ## name = stream->loadInt32(); \
 	for_iter (_lsI ## name, 0, _lsCount ## name) \
 	{ \
 		classe _lsInstance; \
@@ -240,7 +240,7 @@
 		LS_SER_OBJ_PTR(name[_lsI ## name]); \
 	}
 #define LS_DES_HARRAY_OBJ_PTR(name, classe) \
-	int _lsCount ## name = stream->load_int32(); \
+	int _lsCount ## name = stream->loadInt32(); \
 	for_iter (_lsI ## name, 0, _lsCount ## name) \
 	{ \
 		classe* _lsInstance = NULL; \
