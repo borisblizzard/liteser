@@ -28,7 +28,7 @@ namespace liteser
 
 	Serializable* Factory::create(chstr name)
 	{
-		Serializable* (*constructor)() = __lsConstructors->try_get_by_key(name, NULL);
+		Serializable* (*constructor)() = __lsConstructors->tryGet(name, NULL);
 		if (constructor == NULL)
 		{
 			throw Exception("Detected class not registered as a Serializable: " + name);
