@@ -27,7 +27,7 @@ namespace liteser
 	{
 		bool result = false;
 		unsigned int id = liteser::_lsIds.size() + 1; // necessary to avoid incorrect size() since ids[this] could be evaluated first
-		if (!liteser::_lsIds.has_value(this))
+		if (!liteser::_lsIds.hasValue(this))
 		{
 			liteser::_lsIds[id] = this;
 			result = true;

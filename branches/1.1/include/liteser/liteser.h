@@ -94,7 +94,7 @@
 	int _lsId ## name = stream->loadUint32(); \
 	if (_lsId ## name != 0) \
 	{ \
-		if (liteser::_lsIds.has_key(_lsId ## name)) \
+		if (liteser::_lsIds.hasKey(_lsId ## name)) \
 		{ \
 			name = (classe*)liteser::_lsIds[_lsId ## name]; \
 		} \
