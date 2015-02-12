@@ -114,7 +114,7 @@ namespace liteser
 			case Type::OBJPTR:	this->_addSubVariablesHarray<Serializable*>();	return;
 			}
 			throw Exception(hsprintf("Subtype is not supported within harray: %s; type: %02X",
-				this->name.c_str(), this->type->subTypes[0]->value));
+				this->name.cStr(), this->type->subTypes[0]->value));
 			break;
 		case Type::HMAP:
 			switch (this->type->subTypes[0]->value)
@@ -132,10 +132,10 @@ namespace liteser
 			case Type::HSTR:	this->_addSubVariablesHmapKey<hstr>(this->type->subTypes[1]->value);			return;
 			}
 			throw Exception(hsprintf("Subtype is not supported within hmap: %s; types: %02X %02X",
-				this->name.c_str(), this->type->subTypes[0]->value, this->type->subTypes[1]->value));
+				this->name.cStr(), this->type->subTypes[0]->value, this->type->subTypes[1]->value));
 			break;
 		}
-		throw Exception(hsprintf("Type is not supported for: %s; type: %02X", this->name.c_str(), type));
+		throw Exception(hsprintf("Type is not supported for: %s; type: %02X", this->name.cStr(), type));
 	}
 
 	void Variable::applyHmapSubVariables(Type::Value type)
@@ -159,7 +159,7 @@ namespace liteser
 		case Type::HSTR:	this->_applyHmapSubVariablesKey<hstr>(this->type->subTypes[1]->value);				return;
 		}
 		throw Exception(hsprintf("Subtype is not supported within hmap: %s; types: %02X %02X",
-			this->name.c_str(), this->type->subTypes[0]->value, this->type->subTypes[1]->value));
+			this->name.cStr(), this->type->subTypes[0]->value, this->type->subTypes[1]->value));
 	}
 
 }

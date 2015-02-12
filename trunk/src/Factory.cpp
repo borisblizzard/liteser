@@ -43,7 +43,7 @@ namespace liteser
 			__lsConstructors = new hmap<hstr, Serializable* (*)()>();
 		}
 		// because of the order of global var initializations, mutexes get messed up
-		printf("[liteser] Registering class: %s\n", name.c_str());
+		printf("[liteser] Registering class: %s\n", name.cStr());
 		__lsConstructors->operator[](name) = constructor;
 	}
 	
