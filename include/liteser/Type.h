@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.2
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -21,6 +21,7 @@
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hversion.h>
 
 #include "liteserExport.h"
 #include "Ptr.h"
@@ -35,26 +36,27 @@ namespace liteser
 	public:
 		enum Value
 		{
-			NONE    = 0x00,
-			INT8	= 0x01,
-			UINT8	= 0x02,
-			INT16	= 0x03,
-			UINT16	= 0x04,
-			INT32   = 0x05,
-			UINT32  = 0x06,
-			INT64   = 0x07,
-			UINT64  = 0x08,
-			FLOAT   = 0x21,
-			DOUBLE	= 0x22,
-			BOOL	= 0x41,
-			OBJECT	= 0x61,
-			OBJPTR	= 0x62,
-			HSTR	= 0x81,
-			GRECT	= 0x91,
-			GVEC2	= 0x92,
-			GVEC3	= 0x93,
-			HARRAY	= 0xA1,
-			HMAP	= 0xC1
+			NONE     = 0x00,
+			INT8	 = 0x01,
+			UINT8	 = 0x02,
+			INT16	 = 0x03,
+			UINT16	 = 0x04,
+			INT32    = 0x05,
+			UINT32   = 0x06,
+			INT64    = 0x07,
+			UINT64   = 0x08,
+			FLOAT    = 0x21,
+			DOUBLE	 = 0x22,
+			BOOL	 = 0x41,
+			OBJECT	 = 0x61,
+			OBJPTR	 = 0x62,
+			HSTR	 = 0x81,
+			HVERSION = 0x82,
+			GRECT    = 0x91,
+			GVEC2	 = 0x92,
+			GVEC3	 = 0x93,
+			HARRAY	 = 0xA1,
+			HMAP	 = 0xC1
 		};
 
 		Value value;
@@ -75,6 +77,7 @@ namespace liteser
 		void assign(VPtr<double>* arg);
 		void assign(VPtr<bool>* arg);
 		void assign(VPtr<hstr>* arg);
+		void assign(VPtr<hversion>* arg);
 		void assign(VPtr<grect>* arg);
 		void assign(VPtr<gvec2>* arg);
 		void assign(VPtr<gvec3>* arg);
