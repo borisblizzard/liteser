@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.2
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -15,6 +15,7 @@
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hversion.h>
 
 #include "Deserialize.h"
 #include "Factory.h"
@@ -30,25 +31,26 @@ namespace liteser
 	{
 		switch (loadType)
 		{
-		case Type::INT8:	*variable->value<char>()			= stream->loadInt8();		break;
-		case Type::UINT8:	*variable->value<unsigned char>()	= stream->loadUint8();		break;
-		case Type::INT16:	*variable->value<short>()			= stream->loadInt16();		break;
-		case Type::UINT16:	*variable->value<unsigned short>()	= stream->loadUint16();		break;
-		case Type::INT32:	*variable->value<int>()				= stream->loadInt32();		break;
-		case Type::UINT32:	*variable->value<unsigned int>()	= stream->loadUint32();		break;
-		case Type::INT64:	*variable->value<int64_t>()			= stream->loadInt64();		break;
-		case Type::UINT64:	*variable->value<uint64_t>()		= stream->loadUint64();		break;
-		case Type::FLOAT:	*variable->value<float>()			= stream->loadFloat();		break;
-		case Type::DOUBLE:	*variable->value<double>()			= stream->loadDouble();		break;
-		case Type::BOOL:	*variable->value<bool>()			= stream->loadBool();		break;
-		case Type::HSTR:	_load(variable->value<hstr>());									break;
-		case Type::GRECT:	_load(variable->value<grect>());								break;
-		case Type::GVEC2:	_load(variable->value<gvec2>());								break;
-		case Type::GVEC3:	_load(variable->value<gvec3>());								break;
-		case Type::OBJECT:	_load(variable->value<Serializable>());							break;
-		case Type::OBJPTR:	_load(variable->value<Serializable*>());						break;
-		case Type::HARRAY:	__loadContainer(variable, loadType);							break;
-		case Type::HMAP:	__loadContainer(variable, loadType);							break;
+		case Type::INT8:		*variable->value<char>()			= stream->loadInt8();		break;
+		case Type::UINT8:		*variable->value<unsigned char>()	= stream->loadUint8();		break;
+		case Type::INT16:		*variable->value<short>()			= stream->loadInt16();		break;
+		case Type::UINT16:		*variable->value<unsigned short>()	= stream->loadUint16();		break;
+		case Type::INT32:		*variable->value<int>()				= stream->loadInt32();		break;
+		case Type::UINT32:		*variable->value<unsigned int>()	= stream->loadUint32();		break;
+		case Type::INT64:		*variable->value<int64_t>()			= stream->loadInt64();		break;
+		case Type::UINT64:		*variable->value<uint64_t>()		= stream->loadUint64();		break;
+		case Type::FLOAT:		*variable->value<float>()			= stream->loadFloat();		break;
+		case Type::DOUBLE:		*variable->value<double>()			= stream->loadDouble();		break;
+		case Type::BOOL:		*variable->value<bool>()			= stream->loadBool();		break;
+		case Type::HSTR:		_load(variable->value<hstr>());									break;
+		case Type::HVERSION:	_load(variable->value<hversion>());								break;
+		case Type::GRECT:		_load(variable->value<grect>());								break;
+		case Type::GVEC2:		_load(variable->value<gvec2>());								break;
+		case Type::GVEC3:		_load(variable->value<gvec3>());								break;
+		case Type::OBJECT:		_load(variable->value<Serializable>());							break;
+		case Type::OBJPTR:		_load(variable->value<Serializable*>());						break;
+		case Type::HARRAY:		__loadContainer(variable, loadType);							break;
+		case Type::HMAP:		__loadContainer(variable, loadType);							break;
 		}
 	}
 
@@ -56,25 +58,26 @@ namespace liteser
 	{
 		switch (loadType)
 		{
-		case Type::INT8:	stream->loadInt8();				return true;
-		case Type::UINT8:	stream->loadUint8();			return true;
-		case Type::INT16:	stream->loadInt16();			return true;
-		case Type::UINT16:	stream->loadUint16();			return true;
-		case Type::INT32:	stream->loadInt32();			return true;
-		case Type::UINT32:	stream->loadUint32();			return true;
-		case Type::INT64:	stream->loadInt64();			return true;
-		case Type::UINT64:	stream->loadUint64();			return true;
-		case Type::FLOAT:	stream->loadFloat();			return true;
-		case Type::DOUBLE:	stream->loadDouble();			return true;
-		case Type::BOOL:	stream->loadBool();				return true;
-		case Type::HSTR:	{ hstr var;		_load(&var);	return true; }
-		case Type::GRECT:	{ grect var;	_load(&var);	return true; }
-		case Type::GVEC2:	{ gvec2 var;	_load(&var);	return true; }
-		case Type::GVEC3:	{ gvec3 var;	_load(&var);	return true; }
-		case Type::OBJECT:	return __skipObject();
-		case Type::OBJPTR:	return __skipObject();
-		case Type::HARRAY:	return __skipContainer(loadType);
-		case Type::HMAP:	return __skipContainer(loadType);
+		case Type::INT8:		stream->loadInt8();				return true;
+		case Type::UINT8:		stream->loadUint8();			return true;
+		case Type::INT16:		stream->loadInt16();			return true;
+		case Type::UINT16:		stream->loadUint16();			return true;
+		case Type::INT32:		stream->loadInt32();			return true;
+		case Type::UINT32:		stream->loadUint32();			return true;
+		case Type::INT64:		stream->loadInt64();			return true;
+		case Type::UINT64:		stream->loadUint64();			return true;
+		case Type::FLOAT:		stream->loadFloat();			return true;
+		case Type::DOUBLE:		stream->loadDouble();			return true;
+		case Type::BOOL:		stream->loadBool();				return true;
+		case Type::HSTR:		{ hstr var;		_load(&var);	return true; }
+		case Type::HVERSION:	{ hversion var;	_load(&var);	return true; }
+		case Type::GRECT:		{ grect var;	_load(&var);	return true; }
+		case Type::GVEC2:		{ gvec2 var;	_load(&var);	return true; }
+		case Type::GVEC3:		{ gvec3 var;	_load(&var);	return true; }
+		case Type::OBJECT:		return __skipObject();
+		case Type::OBJPTR:		return __skipObject();
+		case Type::HARRAY:		return __skipContainer(loadType);
+		case Type::HMAP:		return __skipContainer(loadType);
 		}
 		return false;
 	}
@@ -150,6 +153,14 @@ namespace liteser
 			*value = stream->loadString();
 			__tryMapString(&id, *value);
 		}
+	}
+
+	void _load(hversion* value)
+	{
+		value->Major = stream->loadUint32();
+		value->Minor = stream->loadUint32();
+		value->Revision = stream->loadUint32();
+		value->Build = stream->loadUint32();
 	}
 
 	void _load(grect* value)
@@ -316,6 +327,7 @@ namespace liteser
 	DEFINE_LOAD_HARRAY(float, Float);
 	DEFINE_LOAD_HARRAY(double, Double);
 	DEFINE_LOAD_HARRAY_F(hstr);
+	DEFINE_LOAD_HARRAY_F(hversion);
 	DEFINE_LOAD_HARRAY_F(grect);
 	DEFINE_LOAD_HARRAY_F(gvec2);
 	DEFINE_LOAD_HARRAY_F(gvec3);

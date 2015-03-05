@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.2
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -22,6 +22,7 @@
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hversion.h>
 
 #include "Type.h"
 
@@ -34,6 +35,7 @@ namespace liteser
 	void __dumpContainer(Variable* variable);
 
 	void _dump(hstr* value);
+	void _dump(hversion* value);
 	void _dump(grect* value);
 	void _dump(gvec2* value);
 	void _dump(gvec3* value);
@@ -51,6 +53,7 @@ namespace liteser
 	void _dumpHarray(harray<float>* value);
 	void _dumpHarray(harray<double>* value);
 	void _dumpHarray(harray<hstr>* value);
+	void _dumpHarray(harray<hversion>* value);
 	void _dumpHarray(harray<grect>* value);
 	void _dumpHarray(harray<gvec2>* value);
 	void _dumpHarray(harray<gvec3>* value);

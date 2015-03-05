@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.2
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -21,6 +21,7 @@
 #include <hltypes/hexception.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hversion.h>
 
 #include "liteser.h"
 #include "liteserExport.h"
@@ -55,6 +56,7 @@ namespace liteser
 		Variable* assign(VPtr<double>* ptr);
 		Variable* assign(VPtr<bool>* ptr);
 		Variable* assign(VPtr<hstr>* ptr);
+		Variable* assign(VPtr<hversion>* ptr);
 		Variable* assign(VPtr<grect>* ptr);
 		Variable* assign(VPtr<gvec2>* ptr);
 		Variable* assign(VPtr<gvec3>* ptr);
@@ -69,6 +71,7 @@ namespace liteser
 		Variable* assign(VPtr<harray<float> >* ptr);
 		Variable* assign(VPtr<harray<double> >* ptr);
 		Variable* assign(VPtr<harray<hstr> >* ptr);
+		Variable* assign(VPtr<harray<hversion> >* ptr);
 		Variable* assign(VPtr<harray<grect> >* ptr);
 		Variable* assign(VPtr<harray<gvec2> >* ptr);
 		Variable* assign(VPtr<harray<gvec3> >* ptr);
@@ -175,21 +178,22 @@ namespace liteser
 		{
 			switch (value)
 			{
-			case Type::INT8:	this->_addSubVariablesHmap<key, char>();			break;
-			case Type::UINT8:	this->_addSubVariablesHmap<key, unsigned char>();	break;
-			case Type::INT16:	this->_addSubVariablesHmap<key, short>();			break;
-			case Type::UINT16:	this->_addSubVariablesHmap<key, unsigned short>();	break;
-			case Type::INT32:	this->_addSubVariablesHmap<key, int>();				break;
-			case Type::UINT32:	this->_addSubVariablesHmap<key, unsigned int>();	break;
-			case Type::INT64:	this->_addSubVariablesHmap<key, int64_t>();			break;
-			case Type::UINT64:	this->_addSubVariablesHmap<key, uint64_t>();		break;
-			case Type::FLOAT:	this->_addSubVariablesHmap<key, float>();			break;
-			case Type::DOUBLE:	this->_addSubVariablesHmap<key, double>();			break;
-			case Type::HSTR:	this->_addSubVariablesHmap<key, hstr>();			break;
-			case Type::GRECT:	this->_addSubVariablesHmap<key, grect>();			break;
-			case Type::GVEC2:	this->_addSubVariablesHmap<key, gvec2>();			break;
-			case Type::GVEC3:	this->_addSubVariablesHmap<key, gvec3>();			break;
-			case Type::OBJPTR:	this->_addSubVariablesHmap<key, Serializable*>();	break;
+			case Type::INT8:		this->_addSubVariablesHmap<key, char>();			break;
+			case Type::UINT8:		this->_addSubVariablesHmap<key, unsigned char>();	break;
+			case Type::INT16:		this->_addSubVariablesHmap<key, short>();			break;
+			case Type::UINT16:		this->_addSubVariablesHmap<key, unsigned short>();	break;
+			case Type::INT32:		this->_addSubVariablesHmap<key, int>();				break;
+			case Type::UINT32:		this->_addSubVariablesHmap<key, unsigned int>();	break;
+			case Type::INT64:		this->_addSubVariablesHmap<key, int64_t>();			break;
+			case Type::UINT64:		this->_addSubVariablesHmap<key, uint64_t>();		break;
+			case Type::FLOAT:		this->_addSubVariablesHmap<key, float>();			break;
+			case Type::DOUBLE:		this->_addSubVariablesHmap<key, double>();			break;
+			case Type::HSTR:		this->_addSubVariablesHmap<key, hstr>();			break;
+			case Type::HVERSION:	this->_addSubVariablesHmap<key, hversion>();		break;
+			case Type::GRECT:		this->_addSubVariablesHmap<key, grect>();			break;
+			case Type::GVEC2:		this->_addSubVariablesHmap<key, gvec2>();			break;
+			case Type::GVEC3:		this->_addSubVariablesHmap<key, gvec3>();			break;
+			case Type::OBJPTR:		this->_addSubVariablesHmap<key, Serializable*>();	break;
 			}
 		}
 		template <class K, class V>
@@ -205,21 +209,22 @@ namespace liteser
 		{
 			switch (value)
 			{
-			case Type::INT8:	this->_applyHmapSubVariables<keyType, char>();				break;
-			case Type::UINT8:	this->_applyHmapSubVariables<keyType, unsigned char>();		break;
-			case Type::INT16:	this->_applyHmapSubVariables<keyType, short>();				break;
-			case Type::UINT16:	this->_applyHmapSubVariables<keyType, unsigned short>();	break;
-			case Type::INT32:	this->_applyHmapSubVariables<keyType, int>();				break;
-			case Type::UINT32:	this->_applyHmapSubVariables<keyType, unsigned int>();		break;
-			case Type::INT64:	this->_applyHmapSubVariables<keyType, int64_t>();			break;
-			case Type::UINT64:	this->_applyHmapSubVariables<keyType, uint64_t>();			break;
-			case Type::FLOAT:	this->_applyHmapSubVariables<keyType, float>();				break;
-			case Type::DOUBLE:	this->_applyHmapSubVariables<keyType, double>();			break;
-			case Type::HSTR:	this->_applyHmapSubVariables<keyType, hstr>();				break;
-			case Type::GRECT:	this->_applyHmapSubVariables<keyType, grect>();				break;
-			case Type::GVEC2:	this->_applyHmapSubVariables<keyType, gvec2>();				break;
-			case Type::GVEC3:	this->_applyHmapSubVariables<keyType, gvec3>();				break;
-			case Type::OBJPTR:	this->_applyHmapSubVariables<keyType, Serializable*>();		break;
+			case Type::INT8:		this->_applyHmapSubVariables<keyType, char>();				break;
+			case Type::UINT8:		this->_applyHmapSubVariables<keyType, unsigned char>();		break;
+			case Type::INT16:		this->_applyHmapSubVariables<keyType, short>();				break;
+			case Type::UINT16:		this->_applyHmapSubVariables<keyType, unsigned short>();	break;
+			case Type::INT32:		this->_applyHmapSubVariables<keyType, int>();				break;
+			case Type::UINT32:		this->_applyHmapSubVariables<keyType, unsigned int>();		break;
+			case Type::INT64:		this->_applyHmapSubVariables<keyType, int64_t>();			break;
+			case Type::UINT64:		this->_applyHmapSubVariables<keyType, uint64_t>();			break;
+			case Type::FLOAT:		this->_applyHmapSubVariables<keyType, float>();				break;
+			case Type::DOUBLE:		this->_applyHmapSubVariables<keyType, double>();			break;
+			case Type::HSTR:		this->_applyHmapSubVariables<keyType, hstr>();				break;
+			case Type::HVERSION:	this->_applyHmapSubVariables<keyType, hversion>();			break;
+			case Type::GRECT:		this->_applyHmapSubVariables<keyType, grect>();				break;
+			case Type::GVEC2:		this->_applyHmapSubVariables<keyType, gvec2>();				break;
+			case Type::GVEC3:		this->_applyHmapSubVariables<keyType, gvec3>();				break;
+			case Type::OBJPTR:		this->_applyHmapSubVariables<keyType, Serializable*>();		break;
 			}
 		}
 		template <class K, class V>

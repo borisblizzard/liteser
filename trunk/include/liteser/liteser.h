@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.2
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -23,13 +23,14 @@
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hversion.h>
 
 #include "liteserExport.h"
 #include "macros.h"
 #include "Serializable.h"
 
 #define _LS_VERSION_MAJOR 2
-#define _LS_VERSION_MINOR 3
+#define _LS_VERSION_MINOR 4
 
 namespace liteser
 {
@@ -48,6 +49,7 @@ namespace liteser
 	liteserFnExport bool serialize(hsbase* stream, harray<float>& value);
 	liteserFnExport bool serialize(hsbase* stream, harray<double>& value);
 	liteserFnExport bool serialize(hsbase* stream, harray<hstr>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<hversion>& value);
 	liteserFnExport bool serialize(hsbase* stream, harray<grect>& value);
 	liteserFnExport bool serialize(hsbase* stream, harray<gvec2>& value);
 	liteserFnExport bool serialize(hsbase* stream, harray<gvec3>& value);
@@ -65,6 +67,7 @@ namespace liteser
 	liteserFnExport bool deserialize(hsbase* stream, harray<float>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<double>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<hstr>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<hversion>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<grect>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<gvec2>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<gvec3>* value);

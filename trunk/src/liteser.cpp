@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.2
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -12,6 +12,7 @@
 #include <hltypes/hsbase.h>
 #include <hltypes/hstream.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hversion.h>
 
 #include "Deserialize.h"
 #include "liteser.h"
@@ -95,6 +96,7 @@ namespace liteser
 	DECLARE_HARRAY_SERIALIZER(float);
 	DECLARE_HARRAY_SERIALIZER(double);
 	DECLARE_HARRAY_SERIALIZER(hstr);
+	DECLARE_HARRAY_SERIALIZER(hversion);
 	DECLARE_HARRAY_SERIALIZER(grect);
 	DECLARE_HARRAY_SERIALIZER(gvec2);
 	DECLARE_HARRAY_SERIALIZER(gvec3);
@@ -137,6 +139,7 @@ namespace liteser
 	DECLARE_HARRAY_DESERIALIZER(float);
 	DECLARE_HARRAY_DESERIALIZER(double);
 	DECLARE_HARRAY_DESERIALIZER(hstr);
+	DECLARE_HARRAY_DESERIALIZER(hversion);
 	DECLARE_HARRAY_DESERIALIZER(grect);
 	DECLARE_HARRAY_DESERIALIZER(gvec2);
 	DECLARE_HARRAY_DESERIALIZER(gvec3);

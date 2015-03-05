@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.2
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -22,6 +22,7 @@
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hversion.h>
 
 #include "Type.h"
 
@@ -36,6 +37,7 @@ namespace liteser
 	bool __skipContainer(Type::Value loadType);
 
 	void _load(hstr* value);
+	void _load(hversion* value);
 	void _load(grect* value);
 	void _load(gvec2* value);
 	void _load(gvec3* value);
@@ -55,6 +57,7 @@ namespace liteser
 	void _loadHarray(harray<float>* value);
 	void _loadHarray(harray<double>* value);
 	void _loadHarray(harray<hstr>* value);
+	void _loadHarray(harray<hversion>* value);
 	void _loadHarray(harray<grect>* value);
 	void _loadHarray(harray<gvec2>* value);
 	void _loadHarray(harray<gvec3>* value);

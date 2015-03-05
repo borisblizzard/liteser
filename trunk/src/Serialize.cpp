@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.2
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -14,6 +14,7 @@
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hversion.h>
 
 #include "liteser.h"
 #include "Serializable.h"
@@ -28,25 +29,26 @@ namespace liteser
 	{
 		switch (variable->type->value)
 		{
-		case Type::INT8:	stream->dump(*variable->value<char>());				break;
-		case Type::UINT8:	stream->dump(*variable->value<unsigned char>());	break;
-		case Type::INT16:	stream->dump(*variable->value<short>());			break;
-		case Type::UINT16:	stream->dump(*variable->value<unsigned short>());	break;
-		case Type::INT32:	stream->dump(*variable->value<int>());				break;
-		case Type::UINT32:	stream->dump(*variable->value<unsigned int>());		break;
-		case Type::INT64:	stream->dump(*variable->value<int64_t>());			break;
-		case Type::UINT64:	stream->dump(*variable->value<uint64_t>());			break;
-		case Type::FLOAT:	stream->dump(*variable->value<float>());			break;
-		case Type::DOUBLE:	stream->dump(*variable->value<double>());			break;
-		case Type::BOOL:	stream->dump(*variable->value<bool>());				break;
-		case Type::HSTR:	_dump(variable->value<hstr>());						break;
-		case Type::GRECT:	_dump(variable->value<grect>());					break;
-		case Type::GVEC2:	_dump(variable->value<gvec2>());					break;
-		case Type::GVEC3:	_dump(variable->value<gvec3>());					break;
-		case Type::OBJECT:	_dump(variable->value<Serializable>());				break;
-		case Type::OBJPTR:	_dump(variable->value<Serializable*>());			break;
-		case Type::HARRAY:	__dumpContainer(variable);							break;
-		case Type::HMAP:	__dumpContainer(variable);							break;
+		case Type::INT8:		stream->dump(*variable->value<char>());				break;
+		case Type::UINT8:		stream->dump(*variable->value<unsigned char>());	break;
+		case Type::INT16:		stream->dump(*variable->value<short>());			break;
+		case Type::UINT16:		stream->dump(*variable->value<unsigned short>());	break;
+		case Type::INT32:		stream->dump(*variable->value<int>());				break;
+		case Type::UINT32:		stream->dump(*variable->value<unsigned int>());		break;
+		case Type::INT64:		stream->dump(*variable->value<int64_t>());			break;
+		case Type::UINT64:		stream->dump(*variable->value<uint64_t>());			break;
+		case Type::FLOAT:		stream->dump(*variable->value<float>());			break;
+		case Type::DOUBLE:		stream->dump(*variable->value<double>());			break;
+		case Type::BOOL:		stream->dump(*variable->value<bool>());				break;
+		case Type::HSTR:		_dump(variable->value<hstr>());						break;
+		case Type::HVERSION:	_dump(variable->value<hversion>());					break;
+		case Type::GRECT:		_dump(variable->value<grect>());					break;
+		case Type::GVEC2:		_dump(variable->value<gvec2>());					break;
+		case Type::GVEC3:		_dump(variable->value<gvec3>());					break;
+		case Type::OBJECT:		_dump(variable->value<Serializable>());				break;
+		case Type::OBJPTR:		_dump(variable->value<Serializable*>());			break;
+		case Type::HARRAY:		__dumpContainer(variable);							break;
+		case Type::HMAP:		__dumpContainer(variable);							break;
 		}
 	}
 
@@ -79,6 +81,14 @@ namespace liteser
 		{
 			stream->dump(id);
 		}
+	}
+
+	void _dump(hversion* value)
+	{
+		stream->dump(value->Major);
+		stream->dump(value->Minor);
+		stream->dump(value->Revision);
+		stream->dump(value->Build);
 	}
 
 	void _dump(grect* value)
@@ -171,6 +181,7 @@ namespace liteser
 	DEFINE_DUMP_HARRAY(float);
 	DEFINE_DUMP_HARRAY(double);
 	DEFINE_DUMP_HARRAY_C(hstr);
+	DEFINE_DUMP_HARRAY_C(hversion);
 	DEFINE_DUMP_HARRAY_C(grect);
 	DEFINE_DUMP_HARRAY_C(gvec2);
 	DEFINE_DUMP_HARRAY_C(gvec3);

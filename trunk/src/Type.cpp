@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.2
+/// @version 2.4
 /// 
 /// @section LICENSE
 /// 
@@ -11,6 +11,7 @@
 #include <hltypes/harray.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
+#include <hltypes/hversion.h>
 
 #include "liteser.h"
 #include "Type.h"
@@ -88,6 +89,11 @@ namespace liteser
 	void Type::assign(VPtr<hstr>* arg)
 	{
 		this->value = HSTR;
+	}
+
+	void Type::assign(VPtr<hversion>* arg)
+	{
+		this->value = HVERSION;
 	}
 
 	void Type::assign(VPtr<grect>* arg)
