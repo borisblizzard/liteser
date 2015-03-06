@@ -194,6 +194,11 @@ namespace liteser
 			case Type::GVEC2:		this->_addSubVariablesHmap<key, gvec2>();			break;
 			case Type::GVEC3:		this->_addSubVariablesHmap<key, gvec3>();			break;
 			case Type::OBJPTR:		this->_addSubVariablesHmap<key, Serializable*>();	break;
+			case Type::NONE:		throw Exception("hmap value cannot be NONE!");		break;
+			case Type::BOOL:		throw Exception("hmap value cannot be BOOL!");		break;
+			case Type::OBJECT:		throw Exception("hmap value cannot be OBJECT!");	break;
+			case Type::HARRAY:		throw Exception("hmap value cannot be HARRAY!");	break;
+			case Type::HMAP:		throw Exception("hmap value cannot be HMAP!");		break;
 			}
 		}
 		template <class K, class V>
@@ -225,6 +230,11 @@ namespace liteser
 			case Type::GVEC2:		this->_applyHmapSubVariables<keyType, gvec2>();				break;
 			case Type::GVEC3:		this->_applyHmapSubVariables<keyType, gvec3>();				break;
 			case Type::OBJPTR:		this->_applyHmapSubVariables<keyType, Serializable*>();		break;
+			case Type::NONE:		throw Exception("hmap value cannot be NONE!");				break;
+			case Type::BOOL:		throw Exception("hmap value cannot be BOOL!");				break;
+			case Type::OBJECT:		throw Exception("hmap value cannot be OBJECT!");			break;
+			case Type::HARRAY:		throw Exception("hmap value cannot be HARRAY!");			break;
+			case Type::HMAP:		throw Exception("hmap value cannot be HMAP!");				break;
 			}
 		}
 		template <class K, class V>
