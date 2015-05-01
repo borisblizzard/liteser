@@ -85,10 +85,10 @@ namespace liteser
 
 	void _dump(hversion* value)
 	{
-		stream->dump(value->Major);
-		stream->dump(value->Minor);
-		stream->dump(value->Revision);
-		stream->dump(value->Build);
+		stream->dump(value->major);
+		stream->dump(value->minor);
+		stream->dump(value->revision);
+		stream->dump(value->build);
 	}
 
 	void _dump(grect* value)
