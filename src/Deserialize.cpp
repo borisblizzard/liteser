@@ -157,10 +157,10 @@ namespace liteser
 
 	void _load(hversion* value)
 	{
-		value->Major = stream->loadUint32();
-		value->Minor = stream->loadUint32();
-		value->Revision = stream->loadUint32();
-		value->Build = stream->loadUint32();
+		value->major = stream->loadUint32();
+		value->minor = stream->loadUint32();
+		value->revision = stream->loadUint32();
+		value->build = stream->loadUint32();
 	}
 
 	void _load(grect* value)
