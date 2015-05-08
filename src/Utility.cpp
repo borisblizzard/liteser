@@ -129,7 +129,7 @@ namespace liteser
 		}
 		if (minor < _LS_VERSION_MINOR)
 		{
-			hlog::warnf(liteser::logTag, "Minor version mismatch while loading: expected %d.%d, got %d.%d",
+			hlog::warnf(logTag, "Minor version mismatch while loading: expected %d.%d, got %d.%d",
 				_LS_VERSION_MAJOR, _LS_VERSION_MINOR, major, minor);
 		}
 	}
