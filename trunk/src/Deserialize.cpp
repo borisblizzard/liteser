@@ -236,14 +236,14 @@ namespace liteser
 				}
 				else
 				{
-					hlog::warn(liteser::logTag, "Could not find variable with name: " + variableName);
+					hlog::warn(logTag, "Could not find variable with name: " + variableName);
 					__skipVariable(loadType);
 				}
 				--size;
 			}
 			if (variables.size() > 0)
 			{
-				hlog::warn(liteser::logTag, "Not all variables were previously saved in class: " + className);
+				hlog::warn(logTag, "Not all variables were previously saved in class: " + className);
 				foreach (Variable*, it, variables)
 				{
 					delete (*it);
