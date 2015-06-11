@@ -49,6 +49,7 @@ namespace liteser
 		case Type::OBJPTR:		_dump(variable->value<Serializable*>());			break;
 		case Type::HARRAY:		__dumpContainer(variable);							break;
 		case Type::HMAP:		__dumpContainer(variable);							break;
+		default:																	break;
 		}
 	}
 

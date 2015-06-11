@@ -60,7 +60,7 @@ namespace liteser
 	DEFINE_ASSIGNERS(gvec3);
 	DEFINE_ASSIGNER(bool);
 
-	Variable::Variable(chstr name) : ptr(NULL), ptrKeys(NULL), ptrValues(NULL), containerSize(0)
+	Variable::Variable(chstr name) : ptr(NULL), containerSize(0), ptrKeys(NULL), ptrValues(NULL)
 	{
 		this->name = name;
 		this->type = new Type();
@@ -115,6 +115,7 @@ namespace liteser
 			case Type::GVEC3:		this->_addSubVariablesHarray<gvec3>();			return;
 			case Type::OBJECT:		this->_addSubVariablesHarray<Serializable>();	return;
 			case Type::OBJPTR:		this->_addSubVariablesHarray<Serializable*>();	return;
+			default:																break;
 			}
 			throw Exception(hsprintf("Subtype is not supported within harray: %s; type: %02X",
 				this->name.cStr(), this->type->subTypes[0]->value));
@@ -134,9 +135,12 @@ namespace liteser
 			case Type::DOUBLE:		this->_addSubVariablesHmapKey<double>(this->type->subTypes[1]->value);			return;
 			case Type::HSTR:		this->_addSubVariablesHmapKey<hstr>(this->type->subTypes[1]->value);			return;
 			case Type::HVERSION:	this->_addSubVariablesHmapKey<hversion>(this->type->subTypes[1]->value);		return;
+			default:																								break;
 			}
 			throw Exception(hsprintf("Subtype is not supported within hmap: %s; types: %02X %02X",
 				this->name.cStr(), this->type->subTypes[0]->value, this->type->subTypes[1]->value));
+			break;
+		default:
 			break;
 		}
 		throw Exception(hsprintf("Type is not supported for: %s; type: %02X", this->name.cStr(), type));
@@ -162,6 +166,7 @@ namespace liteser
 		case Type::DOUBLE:		this->_applyHmapSubVariablesKey<double>(this->type->subTypes[1]->value);			return;
 		case Type::HSTR:		this->_applyHmapSubVariablesKey<hstr>(this->type->subTypes[1]->value);				return;
 		case Type::HVERSION:	this->_applyHmapSubVariablesKey<hversion>(this->type->subTypes[1]->value);			return;
+		default:																									break;
 		}
 		throw Exception(hsprintf("Subtype is not supported within hmap: %s; types: %02X %02X",
 			this->name.cStr(), this->type->subTypes[0]->value, this->type->subTypes[1]->value));
