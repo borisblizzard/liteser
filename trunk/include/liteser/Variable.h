@@ -199,6 +199,7 @@ namespace liteser
 			case Type::OBJECT:		throw Exception("hmap value cannot be OBJECT!");	break;
 			case Type::HARRAY:		throw Exception("hmap value cannot be HARRAY!");	break;
 			case Type::HMAP:		throw Exception("hmap value cannot be HMAP!");		break;
+			default:																	break;
 			}
 		}
 		template <class K, class V>
@@ -235,6 +236,7 @@ namespace liteser
 			case Type::OBJECT:		throw Exception("hmap value cannot be OBJECT!");			break;
 			case Type::HARRAY:		throw Exception("hmap value cannot be HARRAY!");			break;
 			case Type::HMAP:		throw Exception("hmap value cannot be HMAP!");				break;
+			default:																			break;
 			}
 		}
 		template <class K, class V>

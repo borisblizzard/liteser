@@ -51,6 +51,7 @@ namespace liteser
 		case Type::OBJPTR:		_load(variable->value<Serializable*>());						break;
 		case Type::HARRAY:		__loadContainer(variable, loadType);							break;
 		case Type::HMAP:		__loadContainer(variable, loadType);							break;
+		default:																				break;
 		}
 	}
 
@@ -78,6 +79,7 @@ namespace liteser
 		case Type::OBJPTR:		return __skipObject();
 		case Type::HARRAY:		return __skipContainer(loadType);
 		case Type::HMAP:		return __skipContainer(loadType);
+		default:				break;
 		}
 		return false;
 	}
@@ -88,12 +90,12 @@ namespace liteser
 		if (variable->containerSize > 0)
 		{
 			Type::Value loadType = Type::NONE;
-			unsigned int typeSize = stream->loadUint32();
+			int typeSize = (int)stream->loadUint32();
 			if (typeSize != variable->type->subTypes.size())
 			{
 				throw Exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", variable->type->subTypes.size(), typeSize));
 			}
-			for_itert (unsigned int, i, 0, typeSize)
+			for_iter (i, 0, typeSize)
 			{
 				loadType = (Type::Value)stream->loadUint8();
 				if (loadType != variable->type->subTypes[i]->value)
@@ -125,12 +127,12 @@ namespace liteser
 		{
 			harray<Type::Value> subTypes;
 			int subTypesSize = (type == Type::HMAP ? 2 : 1);
-			unsigned int typeSize = stream->loadUint32();
+			int typeSize = (int)stream->loadUint32();
 			if (typeSize != subTypesSize)
 			{
 				throw Exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", subTypesSize, typeSize));
 			}
-			for_itert (unsigned int, i, 0, typeSize)
+			for_iter (i, 0, typeSize)
 			{
 				subTypes += (Type::Value)stream->loadUint8();
 			}
