@@ -35,7 +35,6 @@
 	inline harray<liteser::Variable*> _lsVars() \
 	{ \
 		harray<liteser::Variable*> variables = superclass::_lsVars(); \
-		liteser::Variable* variable = NULL; \
 		__LS_FOREACH(__LS_REF, (__VA_ARGS__)) \
 		return variables; \
 	}
@@ -46,7 +45,6 @@
 	inline harray<liteser::Variable*> classe::_lsVars() \
 	{ \
 		harray<liteser::Variable*> variables = superclass::_lsVars(); \
-		liteser::Variable* variable = NULL; \
 		__LS_FOREACH(__LS_REF, (__VA_ARGS__)) \
 		return variables; \
 	}
