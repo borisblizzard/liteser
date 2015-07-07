@@ -26,16 +26,15 @@
 		return this; \
 	}
 #define DEFINE_ASSIGNER_HARRAY(typeName) \
-	static Variable* _map_subVariables(typeName var) \
-	{ \
-		return (new Variable())->assign(new VPtr<typeName>(&var)); \
-	} \
 	Variable* Variable::assign(VPtr<harray<typeName> >* ptr) \
 	{ \
 		this->type->assign(ptr); \
 		this->ptr = ptr; \
 		this->containerSize = ptr->value->size(); \
-		this->subVariables += ptr->value->mapped(&_map_subVariables); \
+		foreach (typeName, it, *ptr->value) \
+		{ \
+			this->subVariables += (new Variable())->assign(new VPtr<typeName>(&(*it))); \
+		} \
 		return this; \
 	}
 #define DEFINE_ASSIGNERS(typeName) \
