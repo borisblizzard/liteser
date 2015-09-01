@@ -28,7 +28,7 @@ namespace liteser
 		inline virtual ~Ptr() { }
 	};
 
-	template<class T>
+	template <typename T>
 	class VPtr : public Ptr
 	{
 	public:
@@ -38,7 +38,7 @@ namespace liteser
 
 	};
 
-	template<class T>
+	template <typename T>
 	class DPtr : public Ptr
 	{
 	public:

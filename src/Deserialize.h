@@ -19,6 +19,7 @@
 #include <gtypes/Vector2.h>
 #include <gtypes/Vector3.h>
 #include <hltypes/harray.h>
+#include <hltypes/henum.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
 #include <hltypes/hstring.h>
@@ -38,6 +39,7 @@ namespace liteser
 
 	void _load(hstr* value);
 	void _load(hversion* value);
+	void _load(henum* value);
 	void _load(grect* value);
 	void _load(gvec2* value);
 	void _load(gvec3* value);
@@ -58,6 +60,7 @@ namespace liteser
 	void _loadHarray(harray<double>* value);
 	void _loadHarray(harray<hstr>* value);
 	void _loadHarray(harray<hversion>* value);
+	void _loadHarray(harray<henum>* value);
 	void _loadHarray(harray<grect>* value);
 	void _loadHarray(harray<gvec2>* value);
 	void _loadHarray(harray<gvec3>* value);

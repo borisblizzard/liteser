@@ -95,6 +95,16 @@ protected:
 };
 LS_CLASS_DEFINE(Type3);
 
+HL_ENUM_DEFINE_CLASS(TypeEnum,
+(
+	static const TypeEnum Value0;
+	static const TypeEnum Value1;
+	static const TypeEnum Value2;
+));
+const TypeEnum TypeEnum::Value0(hstr("0"));
+const TypeEnum TypeEnum::Value1(1);
+const TypeEnum TypeEnum::Value2(2);
+
 class Type1 : public liteser::Serializable
 {
 public:
@@ -112,6 +122,7 @@ public:
 		this->v_double = 2.0f;
 		this->v_bool = true;
 		this->v_type3 = new Type3();
+		this->v_enum = TypeEnum::Value0;
 	}
 	Type1(harray<int> arg1, harray<Type3*> arg2, hmap<hstr, int> arg3) : liteser::Serializable()
 	{
@@ -128,6 +139,7 @@ public:
 		this->v_harray_int = arg1;
 		this->v_harray_type3 = arg2;
 		this->v_hmap_hstr_int2 = arg3;
+		this->v_enum = TypeEnum::Value1;
 	}
 	~Type1()
 	{
@@ -155,6 +167,7 @@ public:
 		CHECK_VALUE_HARRAY_OBJECTS(v_harray_type3);
 		CHECK_VALUE(v_hmap_hstr_int);
 		CHECK_VALUE(v_hmap_hstr_int2);
+		CHECK_VALUE(v_enum);
 	}
 
 protected:
@@ -176,7 +189,8 @@ protected:
 		(harray<int>) v_harray_int,
 		(harray<Type3*>) v_harray_type3,
 		(hmap_hstr_int) v_hmap_hstr_int,
-		(hmap_hstr_int) v_hmap_hstr_int2
+		(hmap_hstr_int) v_hmap_hstr_int2,
+		(henum) v_enum
 	)
 
 };

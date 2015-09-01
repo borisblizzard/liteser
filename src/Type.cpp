@@ -96,6 +96,11 @@ namespace liteser
 		this->value = HVERSION;
 	}
 
+	void Type::assign(VPtr<henum>* arg)
+	{
+		this->value = HENUM;
+	}
+
 	void Type::assign(VPtr<grect>* arg)
 	{
 		this->value = GRECT;

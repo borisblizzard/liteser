@@ -57,6 +57,7 @@ namespace liteser
 		Variable* assign(VPtr<bool>* ptr);
 		Variable* assign(VPtr<hstr>* ptr);
 		Variable* assign(VPtr<hversion>* ptr);
+		Variable* assign(VPtr<henum>* ptr);
 		Variable* assign(VPtr<grect>* ptr);
 		Variable* assign(VPtr<gvec2>* ptr);
 		Variable* assign(VPtr<gvec3>* ptr);
@@ -72,10 +73,11 @@ namespace liteser
 		Variable* assign(VPtr<harray<double> >* ptr);
 		Variable* assign(VPtr<harray<hstr> >* ptr);
 		Variable* assign(VPtr<harray<hversion> >* ptr);
+		Variable* assign(VPtr<harray<henum> >* ptr);
 		Variable* assign(VPtr<harray<grect> >* ptr);
 		Variable* assign(VPtr<harray<gvec2> >* ptr);
 		Variable* assign(VPtr<harray<gvec3> >* ptr);
-		template <class T>
+		template <typename T>
 		inline Variable* assign(VPtr<T*>* ptr)
 		{
 			this->type->assign((VPtr<Serializable*>*)NULL);
@@ -85,7 +87,7 @@ namespace liteser
 			VPtr<Serializable>(*ptr->value);
 			return this;
 		}
-		template <class T>
+		template <typename T>
 		inline Variable* assign(VPtr<T>* ptr)
 		{
 			this->type->assign((VPtr<Serializable>*)NULL);
@@ -95,7 +97,7 @@ namespace liteser
 			VPtr<Serializable>(ptr->value);
 			return this;
 		}
-		template <class T>
+		template <typename T>
 		inline Variable* assign(VPtr<harray<T*> >* ptr)
 		{
 			this->type->assign((VPtr<harray<Serializable*> >*)NULL);
@@ -108,7 +110,7 @@ namespace liteser
 			}
 			return this;
 		}
-		template <class K, class V>
+		template <typename K, typename V>
 		inline Variable* assign(VPtr<hmap<K*, V> >* ptr)
 		{
 			this->type->assign((VPtr<harray<Serializable*> >*)NULL);
@@ -127,7 +129,7 @@ namespace liteser
 			this->subVariables += (new Variable())->assign(new VPtr<harray<V> >(values));
 			return this;
 		}
-		template <class K, class V>
+		template <typename K, typename V>
 		inline Variable* assign(VPtr<hmap<K, V> >* ptr)
 		{
 			this->type->assign(ptr);
@@ -146,7 +148,7 @@ namespace liteser
 			return this;
 		}
 
-		template <class T>
+		template <typename T>
 		inline T* value()
 		{
 			return ((VPtr<T>*)this->ptr)->value;
@@ -159,7 +161,7 @@ namespace liteser
 		Ptr* ptrKeys;
 		Ptr* ptrValues;
 
-		template <class T>
+		template <typename T>
 		inline void _addSubVariablesHarray()
 		{
 			harray<T>* container = ((VPtr<harray<T> >*)this->ptr)->value;
@@ -173,7 +175,7 @@ namespace liteser
 				this->subVariables += (new Variable())->assign(new VPtr<T>(&container->operator[](i)));
 			}
 		}
-		template <class key>
+		template <typename key>
 		inline void _addSubVariablesHmapKey(Type::Value value)
 		{
 			switch (value)
@@ -190,6 +192,7 @@ namespace liteser
 			case Type::DOUBLE:		this->_addSubVariablesHmap<key, double>();			break;
 			case Type::HSTR:		this->_addSubVariablesHmap<key, hstr>();			break;
 			case Type::HVERSION:	this->_addSubVariablesHmap<key, hversion>();		break;
+			case Type::HENUM:		this->_addSubVariablesHmap<key, henum>();			break;
 			case Type::GRECT:		this->_addSubVariablesHmap<key, grect>();			break;
 			case Type::GVEC2:		this->_addSubVariablesHmap<key, gvec2>();			break;
 			case Type::GVEC3:		this->_addSubVariablesHmap<key, gvec3>();			break;
@@ -202,7 +205,7 @@ namespace liteser
 			default:																	break;
 			}
 		}
-		template <class K, class V>
+		template <typename K, typename V>
 		inline void _addSubVariablesHmap()
 		{
 			if (((VPtr<hmap<K, V> >*)this->ptr)->value->size() > 0)
@@ -210,7 +213,7 @@ namespace liteser
 				throw Exception("hmap in default constructor not empty initially: " + this->name);
 			}
 		}
-		template <class keyType>
+		template <typename keyType>
 		inline void _applyHmapSubVariablesKey(Type::Value value)
 		{
 			switch (value)
@@ -227,6 +230,7 @@ namespace liteser
 			case Type::DOUBLE:		this->_applyHmapSubVariables<keyType, double>();			break;
 			case Type::HSTR:		this->_applyHmapSubVariables<keyType, hstr>();				break;
 			case Type::HVERSION:	this->_applyHmapSubVariables<keyType, hversion>();			break;
+			case Type::HENUM:		this->_applyHmapSubVariables<keyType, henum>();				break;
 			case Type::GRECT:		this->_applyHmapSubVariables<keyType, grect>();				break;
 			case Type::GVEC2:		this->_applyHmapSubVariables<keyType, gvec2>();				break;
 			case Type::GVEC3:		this->_applyHmapSubVariables<keyType, gvec3>();				break;
@@ -239,7 +243,7 @@ namespace liteser
 			default:																			break;
 			}
 		}
-		template <class K, class V>
+		template <typename K, typename V>
 		inline void _applyHmapSubVariables()
 		{
 			hmap<K, V>* container = ((VPtr<hmap<K, V> >*)this->ptr)->value;
