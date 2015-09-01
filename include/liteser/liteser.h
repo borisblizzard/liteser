@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.4
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
@@ -30,7 +30,7 @@
 #include "Serializable.h"
 
 #define _LS_VERSION_MAJOR 2
-#define _LS_VERSION_MINOR 4
+#define _LS_VERSION_MINOR 5
 
 namespace liteser
 {
