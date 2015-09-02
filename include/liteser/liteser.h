@@ -19,6 +19,7 @@
 #include <gtypes/Vector2.h>
 #include <gtypes/Vector3.h>
 #include <hltypes/harray.h>
+#include <hltypes/henum.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
@@ -50,6 +51,7 @@ namespace liteser
 	liteserFnExport bool serialize(hsbase* stream, harray<double>& value);
 	liteserFnExport bool serialize(hsbase* stream, harray<hstr>& value);
 	liteserFnExport bool serialize(hsbase* stream, harray<hversion>& value);
+	liteserFnExport bool serialize(hsbase* stream, harray<henum>& value);
 	liteserFnExport bool serialize(hsbase* stream, harray<grect>& value);
 	liteserFnExport bool serialize(hsbase* stream, harray<gvec2>& value);
 	liteserFnExport bool serialize(hsbase* stream, harray<gvec3>& value);
@@ -68,6 +70,7 @@ namespace liteser
 	liteserFnExport bool deserialize(hsbase* stream, harray<double>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<hstr>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<hversion>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<henum>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<grect>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<gvec2>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<gvec3>* value);
