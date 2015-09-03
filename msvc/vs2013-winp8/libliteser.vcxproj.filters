@@ -47,6 +47,9 @@
     <ClInclude Include="..\..\include\liteser\Ptr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\liteser\templates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Serializable.cpp">

@@ -26,6 +26,7 @@
 #include "liteser.h"
 #include "liteserExport.h"
 #include "Ptr.h"
+#include "templates.h"
 #include "Type.h"
 
 namespace liteser
@@ -57,7 +58,6 @@ namespace liteser
 		Variable* assign(VPtr<bool>* ptr);
 		Variable* assign(VPtr<hstr>* ptr);
 		Variable* assign(VPtr<hversion>* ptr);
-		Variable* assign(VPtr<henum>* ptr);
 		Variable* assign(VPtr<grect>* ptr);
 		Variable* assign(VPtr<gvec2>* ptr);
 		Variable* assign(VPtr<gvec3>* ptr);
@@ -73,32 +73,32 @@ namespace liteser
 		Variable* assign(VPtr<harray<double> >* ptr);
 		Variable* assign(VPtr<harray<hstr> >* ptr);
 		Variable* assign(VPtr<harray<hversion> >* ptr);
-		Variable* assign(VPtr<harray<henum> >* ptr);
 		Variable* assign(VPtr<harray<grect> >* ptr);
 		Variable* assign(VPtr<harray<gvec2> >* ptr);
 		Variable* assign(VPtr<harray<gvec3> >* ptr);
 		template <typename T>
-		inline Variable* assign(VPtr<T*>* ptr)
+		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<T, henum>::value, Variable*>::type assign(VPtr<T>* ptr)
 		{
-			this->type->assign((VPtr<Serializable*>*)NULL);
+			this->type->assign((VPtr<henum>*)NULL);
 			this->ptr = ptr;
-			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable
-			// or there is a forward declaration of the class instead of including the actual header.
-			VPtr<Serializable>(*ptr->value);
 			return this;
 		}
-		template <typename T>
-		inline Variable* assign(VPtr<T>* ptr)
+		template <class T>
+		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<T, Serializable>::value, Variable*>::type assign(VPtr<T>* ptr)
 		{
 			this->type->assign((VPtr<Serializable>*)NULL);
 			this->ptr = ptr;
-			// IMPORTANT NOTE: If you get C2440 on the line below, it means that the class does not inherit liteser::Serializable
-			// or there is a forward declaration of the class instead of including the actual header.
-			VPtr<Serializable>(ptr->value);
 			return this;
 		}
 		template <typename T>
-		inline Variable* assign(VPtr<harray<T*> >* ptr)
+		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<T, Serializable>::value, Variable*>::type assign(VPtr<T*>* ptr)
+		{
+			this->type->assign((VPtr<Serializable*>*)NULL);
+			this->ptr = ptr;
+			return this;
+		}
+		template <typename T>
+		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<T, Serializable>::value, Variable*>::type assign(VPtr<harray<T*> >* ptr)
 		{
 			this->type->assign((VPtr<harray<Serializable*> >*)NULL);
 			this->ptr = ptr;
@@ -111,7 +111,7 @@ namespace liteser
 			return this;
 		}
 		template <typename K, typename V>
-		inline Variable* assign(VPtr<hmap<K*, V> >* ptr)
+		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<K, Serializable>::value, Variable*>::type assign(VPtr<hmap<K*, V> >* ptr)
 		{
 			this->type->assign((VPtr<harray<Serializable*> >*)NULL);
 			this->ptr = ptr;
@@ -123,8 +123,8 @@ namespace liteser
 			{
 				values->add(ptr->value->operator[](originalKeys[i]));
 			}
-			this->ptrKeys = new DPtr<Serializable*>(keys);
-			this->ptrValues = new DPtr<V>(values);
+			this->ptrKeys = new CPtr<Serializable*>(keys);
+			this->ptrValues = new CPtr<V>(values);
 			this->subVariables += (new Variable())->assign(new VPtr<harray<Serializable*> >(keys));
 			this->subVariables += (new Variable())->assign(new VPtr<harray<V> >(values));
 			return this;
@@ -141,8 +141,8 @@ namespace liteser
 			{
 				values->add(ptr->value->operator[](keys->operator[](i)));
 			}
-			this->ptrKeys = new DPtr<K>(keys);
-			this->ptrValues = new DPtr<V>(values);
+			this->ptrKeys = new CPtr<K>(keys);
+			this->ptrValues = new CPtr<V>(values);
 			this->subVariables += (new Variable())->assign(new VPtr<harray<K> >(keys));
 			this->subVariables += (new Variable())->assign(new VPtr<harray<V> >(values));
 			return this;
@@ -161,18 +161,18 @@ namespace liteser
 		Ptr* ptrKeys;
 		Ptr* ptrValues;
 
-		template <typename T>
+		template <typename S>
 		inline void _addSubVariablesHarray()
 		{
-			harray<T>* container = ((VPtr<harray<T> >*)this->ptr)->value;
+			harray<S>* container = ((VPtr<harray<S> >*)this->ptr)->value;
 			if (container->size() > 0)
 			{
 				throw Exception("harray in default constructor not empty initially: " + this->name);
 			}
-			container->add(T(), this->containerSize); // requires adding first because of possible reallocation of memory to another block
+			container->add(S(), this->containerSize); // requires adding first because of possible reallocation of memory to another block
 			for_itert (unsigned int, i, 0, this->containerSize)
 			{
-				this->subVariables += (new Variable())->assign(new VPtr<T>(&container->operator[](i)));
+				this->subVariables += (new Variable())->assign(new VPtr<S>(&container->operator[](i)));
 			}
 		}
 		template <typename key>
@@ -247,8 +247,8 @@ namespace liteser
 		inline void _applyHmapSubVariables()
 		{
 			hmap<K, V>* container = ((VPtr<hmap<K, V> >*)this->ptr)->value;
-			harray<K>* keys = ((DPtr<K>*)this->ptrKeys)->data;
-			harray<V>* values = ((DPtr<V>*)this->ptrValues)->data;
+			harray<K>* keys = ((CPtr<K>*)this->ptrKeys)->data;
+			harray<V>* values = ((CPtr<V>*)this->ptrValues)->data;
 			for_iter (i, 0, keys->size())
 			{
 				container->operator[](keys->operator[](i)) = values->operator[](i);

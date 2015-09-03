@@ -68,6 +68,7 @@
     <ClInclude Include="..\..\include\liteser\macros.h" />
     <ClInclude Include="..\..\include\liteser\Ptr.h" />
     <ClInclude Include="..\..\include\liteser\Serializable.h" />
+    <ClInclude Include="..\..\include\liteser\templates.h" />
     <ClInclude Include="..\..\include\liteser\Type.h" />
     <ClInclude Include="..\..\include\liteser\Variable.h" />
     <ClInclude Include="..\..\src\Deserialize.h" />

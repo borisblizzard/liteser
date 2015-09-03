@@ -115,17 +115,18 @@ Following types can be declared as serializable variables.
 	- allocated on the heap only (e.g. Serializable*)
 
 Limitations:
-- Stack-allocated objects are not supported due to differences in memory allocation and the
-  impossibility of dynamic casting of objects that are not pointers to objects.
+- enum is not supported directly. Use henum instead.
+- Stack-allocated objects are only supported in plain format and never in containers.
 - hltypes::Array does not support bool due to the implementation of bool within std::vector which
   does not allow them to be modified in a simple way.
 - hltypes::Array cannot contain another container type.
+- hltypes::Array cannot contain a henum-derived types.
 - hltypes::Map requires a workaround. Instead of directly declaring hltypes::Map<keyType, valueType>,
   you have to create a typedef first.
 - hltypes::Map keys do not support bool due to the implementation of bool within std::map which does
   not allow them to be modified in a simple way.
 - hltypes::Map keys and values do not support container types.
-- enum is not supported directly. Use henum instead.
+- hltypes::Map keys and values do not support henum-derived types.
 
 ------------------------------------------------------------------------------------------------------
 

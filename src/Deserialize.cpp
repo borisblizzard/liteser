@@ -290,7 +290,7 @@ namespace liteser
 		unsigned int size = stream->loadUint32();
 		if (size > 0)
 		{
-			Serializable* object;
+			Serializable* object = NULL;
 			for_itert (unsigned int, i, 0, size)
 			{
 				object = NULL;

@@ -39,12 +39,12 @@ namespace liteser
 	};
 
 	template <typename T>
-	class DPtr : public Ptr
+	class CPtr : public Ptr
 	{
 	public:
 		harray<T>* data;
-		inline DPtr(harray<T>* data) { this->data = data; }
-		inline ~DPtr() { delete this->data; }
+		inline CPtr(harray<T>* data) { this->data = data; }
+		inline ~CPtr() { delete this->data; }
 
 	};
 

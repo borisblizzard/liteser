@@ -56,7 +56,6 @@ namespace liteser
 	DEFINE_ASSIGNERS(double);
 	DEFINE_ASSIGNERS(hstr);
 	DEFINE_ASSIGNERS(hversion);
-	DEFINE_ASSIGNERS(henum);
 	DEFINE_ASSIGNERS(grect);
 	DEFINE_ASSIGNERS(gvec2);
 	DEFINE_ASSIGNERS(gvec3);
