@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.4
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
@@ -94,6 +94,11 @@ namespace liteser
 	void Type::assign(VPtr<hversion>* arg)
 	{
 		this->value = HVERSION;
+	}
+
+	void Type::assign(VPtr<henum>* arg)
+	{
+		this->value = HENUM;
 	}
 
 	void Type::assign(VPtr<grect>* arg)

@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.4
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
@@ -42,6 +42,7 @@ namespace liteser
 		case Type::BOOL:		stream->dump(*variable->value<bool>());				break;
 		case Type::HSTR:		_dump(variable->value<hstr>());						break;
 		case Type::HVERSION:	_dump(variable->value<hversion>());					break;
+		case Type::HENUM:		_dump(variable->value<henum>());					break;
 		case Type::GRECT:		_dump(variable->value<grect>());					break;
 		case Type::GVEC2:		_dump(variable->value<gvec2>());					break;
 		case Type::GVEC3:		_dump(variable->value<gvec3>());					break;
@@ -90,6 +91,11 @@ namespace liteser
 		stream->dump(value->minor);
 		stream->dump(value->revision);
 		stream->dump(value->build);
+	}
+
+	void _dump(henum* value)
+	{
+		stream->dump(value->value);
 	}
 
 	void _dump(grect* value)
@@ -183,6 +189,7 @@ namespace liteser
 	DEFINE_DUMP_HARRAY(double);
 	DEFINE_DUMP_HARRAY_C(hstr);
 	DEFINE_DUMP_HARRAY_C(hversion);
+	DEFINE_DUMP_HARRAY_C(henum);
 	DEFINE_DUMP_HARRAY_C(grect);
 	DEFINE_DUMP_HARRAY_C(gvec2);
 	DEFINE_DUMP_HARRAY_C(gvec3);

@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.4
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #include <hltypes/harray.h>
+#include <hltypes/henum.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
 #include <hltypes/hversion.h>
@@ -55,6 +56,7 @@ namespace liteser
 	DEFINE_ASSIGNERS(double);
 	DEFINE_ASSIGNERS(hstr);
 	DEFINE_ASSIGNERS(hversion);
+	DEFINE_ASSIGNERS(henum);
 	DEFINE_ASSIGNERS(grect);
 	DEFINE_ASSIGNERS(gvec2);
 	DEFINE_ASSIGNERS(gvec3);
@@ -110,6 +112,7 @@ namespace liteser
 			case Type::DOUBLE:		this->_addSubVariablesHarray<double>();			return;
 			case Type::HSTR:		this->_addSubVariablesHarray<hstr>();			return;
 			case Type::HVERSION:	this->_addSubVariablesHarray<hversion>();		return;
+			case Type::HENUM:		this->_addSubVariablesHarray<henum>();			return;
 			case Type::GRECT:		this->_addSubVariablesHarray<grect>();			return;
 			case Type::GVEC2:		this->_addSubVariablesHarray<gvec2>();			return;
 			case Type::GVEC3:		this->_addSubVariablesHarray<gvec3>();			return;
@@ -135,6 +138,7 @@ namespace liteser
 			case Type::DOUBLE:		this->_addSubVariablesHmapKey<double>(this->type->subTypes[1]->value);			return;
 			case Type::HSTR:		this->_addSubVariablesHmapKey<hstr>(this->type->subTypes[1]->value);			return;
 			case Type::HVERSION:	this->_addSubVariablesHmapKey<hversion>(this->type->subTypes[1]->value);		return;
+			case Type::HENUM:		this->_addSubVariablesHmapKey<henum>(this->type->subTypes[1]->value);			return;
 			default:																								break;
 			}
 			throw Exception(hsprintf("Subtype is not supported within hmap: %s; types: %02X %02X",
@@ -166,6 +170,7 @@ namespace liteser
 		case Type::DOUBLE:		this->_applyHmapSubVariablesKey<double>(this->type->subTypes[1]->value);			return;
 		case Type::HSTR:		this->_applyHmapSubVariablesKey<hstr>(this->type->subTypes[1]->value);				return;
 		case Type::HVERSION:	this->_applyHmapSubVariablesKey<hversion>(this->type->subTypes[1]->value);			return;
+		case Type::HENUM:		this->_applyHmapSubVariablesKey<henum>(this->type->subTypes[1]->value);				return;
 		default:																									break;
 		}
 		throw Exception(hsprintf("Subtype is not supported within hmap: %s; types: %02X %02X",

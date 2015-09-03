@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.4
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
@@ -19,6 +19,7 @@
 #include <gtypes/Vector2.h>
 #include <gtypes/Vector3.h>
 #include <hltypes/harray.h>
+#include <hltypes/henum.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
 #include <hltypes/hstring.h>
@@ -36,6 +37,7 @@ namespace liteser
 
 	void _dump(hstr* value);
 	void _dump(hversion* value);
+	void _dump(henum* value);
 	void _dump(grect* value);
 	void _dump(gvec2* value);
 	void _dump(gvec3* value);
@@ -54,6 +56,7 @@ namespace liteser
 	void _dumpHarray(harray<double>* value);
 	void _dumpHarray(harray<hstr>* value);
 	void _dumpHarray(harray<hversion>* value);
+	void _dumpHarray(harray<henum>* value);
 	void _dumpHarray(harray<grect>* value);
 	void _dumpHarray(harray<gvec2>* value);
 	void _dumpHarray(harray<gvec3>* value);

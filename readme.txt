@@ -105,6 +105,7 @@ Following types can be declared as serializable variables.
 	- gtypes::Vector2
 	- gtypes::Rectangle
 	- hltypes::String
+	- hltypes::Enum
 	
 3. container types:
 	- hltypes::Array (see "Limitations" for more information)
@@ -124,19 +125,11 @@ Limitations:
 - hltypes::Map keys do not support bool due to the implementation of bool within std::map which does
   not allow them to be modified in a simple way.
 - hltypes::Map keys and values do not support container types.
-- enum is not supported directly (see below for more information).
+- enum is not supported directly. Use henum instead.
 
 ------------------------------------------------------------------------------------------------------
 
-	5. Workaround for enum
-
-If you want to serialize an enum, there is an indirect way to do this without changing too much of
-your code. Instead of creating an enum, create a typedef for int (or unsigned int) and instead of
-declaring a possible list of enum values, declare all values as static const values of the new type.
-
-------------------------------------------------------------------------------------------------------
-
-	6. Object models with loops
+	5. Object models with loops
 
 If you have classes that have pointers to classes which inherit the first class, you cannot use
 LS_VARS, because you would have to include the derived class' header which would result in an

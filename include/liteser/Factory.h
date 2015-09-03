@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.4
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
@@ -25,7 +25,7 @@ namespace liteser
 	class liteserExport Factory
 	{
 	public:
-		template <class T>
+		template <typename T>
 		struct Register
 		{
 			inline Register(chstr name)
@@ -39,7 +39,7 @@ namespace liteser
 
 		~Factory();
 
-		template <class T>
+		template <typename T>
 		static inline Serializable* _create() { return new T(); }
 
 		static Serializable* create(chstr name);

@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.4
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
@@ -18,6 +18,7 @@
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
 #include <hltypes/harray.h>
+#include <hltypes/henum.h>
 #include <hltypes/hltypesUtil.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hstring.h>
@@ -52,11 +53,12 @@ namespace liteser
 			OBJPTR	 = 0x62,
 			HSTR	 = 0x81,
 			HVERSION = 0x82,
+			HENUM    = 0x83,
 			GRECT    = 0x91,
 			GVEC2	 = 0x92,
 			GVEC3	 = 0x93,
 			HARRAY	 = 0xA1,
-			HMAP	 = 0xC1
+			HMAP	 = 0xC1,
 		};
 
 		Value value;
@@ -78,12 +80,13 @@ namespace liteser
 		void assign(VPtr<bool>* arg);
 		void assign(VPtr<hstr>* arg);
 		void assign(VPtr<hversion>* arg);
+		void assign(VPtr<henum>* arg);
 		void assign(VPtr<grect>* arg);
 		void assign(VPtr<gvec2>* arg);
 		void assign(VPtr<gvec3>* arg);
 		void assign(VPtr<Serializable>* arg);
 		void assign(VPtr<Serializable*>* arg);
-		template <class T>
+		template <typename T>
 		inline void assign(VPtr<harray<T> >* arg)
 		{
 			this->value = HARRAY;
@@ -91,7 +94,7 @@ namespace liteser
 			type->assign((VPtr<T>*)NULL);
 			this->subTypes += type;
 		}
-		template <class K, class V>
+		template <typename K, typename V>
 		inline void assign(VPtr<hmap<K, V> >* arg)
 		{
 			this->value = HMAP;

@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.4
+/// @version 2.5
 /// 
 /// @section LICENSE
 /// 
@@ -44,6 +44,7 @@ namespace liteser
 		case Type::BOOL:		*variable->value<bool>()			= stream->loadBool();		break;
 		case Type::HSTR:		_load(variable->value<hstr>());									break;
 		case Type::HVERSION:	_load(variable->value<hversion>());								break;
+		case Type::HENUM:		_load(variable->value<henum>());								break;
 		case Type::GRECT:		_load(variable->value<grect>());								break;
 		case Type::GVEC2:		_load(variable->value<gvec2>());								break;
 		case Type::GVEC3:		_load(variable->value<gvec3>());								break;
@@ -72,6 +73,7 @@ namespace liteser
 		case Type::BOOL:		stream->loadBool();				return true;
 		case Type::HSTR:		{ hstr var;		_load(&var);	return true; }
 		case Type::HVERSION:	{ hversion var;	_load(&var);	return true; }
+		case Type::HENUM:		{ henum var;	_load(&var);	return true; }
 		case Type::GRECT:		{ grect var;	_load(&var);	return true; }
 		case Type::GVEC2:		{ gvec2 var;	_load(&var);	return true; }
 		case Type::GVEC3:		{ gvec3 var;	_load(&var);	return true; }
@@ -163,6 +165,11 @@ namespace liteser
 		value->minor = stream->loadUint32();
 		value->revision = stream->loadUint32();
 		value->build = stream->loadUint32();
+	}
+
+	void _load(henum* value)
+	{
+		value->value = stream->loadUint32();
 	}
 
 	void _load(grect* value)
@@ -330,6 +337,7 @@ namespace liteser
 	DEFINE_LOAD_HARRAY(double, Double);
 	DEFINE_LOAD_HARRAY_F(hstr);
 	DEFINE_LOAD_HARRAY_F(hversion);
+	DEFINE_LOAD_HARRAY_F(henum);
 	DEFINE_LOAD_HARRAY_F(grect);
 	DEFINE_LOAD_HARRAY_F(gvec2);
 	DEFINE_LOAD_HARRAY_F(gvec3);
