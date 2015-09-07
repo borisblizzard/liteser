@@ -18,4 +18,11 @@ namespace liteser
 	{
 	}
 	
+	Serializable* Serializable::clone()
+	{
+		Serializable* object = NULL;
+		liteser::clone(this, &object);
+		return object;
+	}
+
 }

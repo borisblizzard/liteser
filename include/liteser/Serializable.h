@@ -30,6 +30,14 @@
 /// @brief Use this instead of LS_CLASS_DECLARE if class contains pure virtual methods. In this case LS_CLASS_DEFINE is not needed.
 #define LS_CLASS_DECLARE_ABSTRACT(classe) \
 	inline hstr _lsName() { return #classe; }
+
+#define LS_CLASS_DECLARE_CLONEABLE(classe) \
+	LS_CLASS_DECLARE(classe); \
+	virtual classe* clone();
+#define LS_CLASS_DEFINE_CLONEABLE(classe, superclass) \
+	LS_CLASS_DEFINE(classe); \
+	classe* classe::clone() { return (classe*)superclass::clone(); }
+
 #define LS_VARS(superclass, ...) \
 	__LS_FOREACH(__LS_VAR, (__VA_ARGS__)) \
 	inline harray<liteser::Variable*> _lsVars() \
@@ -65,6 +73,9 @@ namespace liteser
 
 		inline virtual hstr _lsName() { return "liteser::Serializer"; }
 		inline virtual harray<Variable*> _lsVars() { return harray<Variable*>(); }
+
+	protected:
+		virtual Serializable* clone();
 
 	};
 
