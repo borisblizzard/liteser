@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B4EB9BE31B9EEF0C002454DC /* templates.h in Headers */ = {isa = PBXBuildFile; fileRef = B4EB9BE21B9EEF0C002454DC /* templates.h */; settings = {ASSET_TAGS = (); }; };
 		C9C04D3E14BAEA01005BD333 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9C04D3D14BAEA01005BD333 /* hltypes.framework */; };
 		D16D2E6B177864E7005DD948 /* gtypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16D2E6A177864E7005DD948 /* gtypes.framework */; };
 		D19C923E1778567000A4BDF4 /* Deserialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92331778567000A4BDF4 /* Deserialize.cpp */; };
@@ -50,6 +51,7 @@
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A16AB33B18DCCB7700B78CD1 /* iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = iOS.xcconfig; path = xcconfig/iOS.xcconfig; sourceTree = "<group>"; };
 		A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Mac.xcconfig; path = xcconfig/Mac.xcconfig; sourceTree = "<group>"; };
+		B4EB9BE21B9EEF0C002454DC /* templates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = templates.h; path = include/liteser/templates.h; sourceTree = "<group>"; };
 		C9C04D3D14BAEA01005BD333 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = "../../__build__/pharaoh/Build/Products/Debug-LLVM/hltypes.framework"; sourceTree = "<group>"; };
 		C9C04D7314BAEB2A005BD333 /* liteser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = liteser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9C04D7414BAEB2A005BD333 /* libliteser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libliteser.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,7 +75,7 @@
 		D19C92561778567E00A4BDF4 /* Serializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serializable.h; path = include/liteser/Serializable.h; sourceTree = "<group>"; };
 		D19C92571778567E00A4BDF4 /* Type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Type.h; path = include/liteser/Type.h; sourceTree = "<group>"; };
 		D19C92581778567E00A4BDF4 /* Variable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Variable.h; path = include/liteser/Variable.h; sourceTree = "<group>"; };
-		D1E1AD891961654600001F36 /* libliteser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libliteser.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1E1AD891961654600001F36 /* libliteser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libliteser.a; path = /Users/dominik/projects/mary/lib/liteser/build/Debug/libliteser.a; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +99,6 @@
 				7F42F6E711EB0E0200B1C1DF /* src */,
 				C9C04DA114BAEB5F005BD333 /* Products */,
 				C9C04D3F14BAEA26005BD333 /* Frameworks */,
-				D1E1AD891961654600001F36 /* libliteser.a */,
 			);
 			name = libliteser;
 			sourceTree = "<group>";
@@ -123,6 +124,7 @@
 		7F42F6E811EB0E0600B1C1DF /* include */ = {
 			isa = PBXGroup;
 			children = (
+				B4EB9BE21B9EEF0C002454DC /* templates.h */,
 				D19C92511778567E00A4BDF4 /* Factory.h */,
 				D19C92521778567E00A4BDF4 /* liteser.h */,
 				D19C92531778567E00A4BDF4 /* liteserExport.h */,
@@ -174,6 +176,7 @@
 				D19C925A1778567E00A4BDF4 /* liteser.h in Headers */,
 				D19C925B1778567E00A4BDF4 /* liteserExport.h in Headers */,
 				D19C925C1778567E00A4BDF4 /* macros.h in Headers */,
+				B4EB9BE31B9EEF0C002454DC /* templates.h in Headers */,
 				D19C925D1778567E00A4BDF4 /* Ptr.h in Headers */,
 				D19C925E1778567E00A4BDF4 /* Serializable.h in Headers */,
 				D19C925F1778567E00A4BDF4 /* Type.h in Headers */,
