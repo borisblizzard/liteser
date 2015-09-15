@@ -98,6 +98,19 @@ namespace liteser
 			return this;
 		}
 		template <typename T>
+		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<T, henum>::value, Variable*>::type assign(VPtr<harray<T> >* ptr)
+		{
+			this->type->assign((VPtr<harray<henum> >*)NULL);
+			this->ptr = ptr;
+			this->containerSize = ptr->value->size();
+			harray<henum>* obj = (harray<henum>*)ptr->value;
+			foreach (henum, it, *obj)
+			{
+				this->subVariables += (new Variable())->assign(new VPtr<henum>(&(*it)));
+			}
+			return this;
+		}
+		template <typename T>
 		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<T, Serializable>::value, Variable*>::type assign(VPtr<harray<T*> >* ptr)
 		{
 			this->type->assign((VPtr<harray<Serializable*> >*)NULL);
