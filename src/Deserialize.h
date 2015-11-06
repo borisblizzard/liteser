@@ -32,8 +32,6 @@ namespace liteser
 	class Serializable;
 	class Variable;
 
-	inline void __loadVariable(Variable* variable, Type::Value loadType);
-	inline bool __skipVariable(Type::Value loadType);
 	void __loadContainer(Variable* variable, Type::Value type);
 	bool __skipContainer(Type::Value loadType);
 

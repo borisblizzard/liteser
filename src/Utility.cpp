@@ -23,6 +23,7 @@ namespace liteser
 	hmap<Serializable*, unsigned int> objectIds;
 	hmap<hstr, unsigned int> stringIds;
 	hsbase* stream = NULL;
+	hstr _indent = "\t";
 
 	bool __tryGetObject(unsigned int id, Serializable** object)
 	{
@@ -104,6 +105,7 @@ namespace liteser
 		objectIds.clear();
 		stringIds.clear();
 		liteser::stream = stream;
+		_indent = "\t";
 	}
 
 	void _finish(hsbase* stream)
@@ -113,6 +115,7 @@ namespace liteser
 		objectIds.clear();
 		stringIds.clear();
 		liteser::stream = NULL;
+		_indent = "\t";
 	}
 
 	bool _isActive()

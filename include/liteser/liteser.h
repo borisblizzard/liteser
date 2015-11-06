@@ -31,7 +31,7 @@
 #include "Serializable.h"
 
 #define _LS_VERSION_MAJOR 2
-#define _LS_VERSION_MINOR 5
+#define _LS_VERSION_MINOR 6
 
 namespace liteser
 {
@@ -74,6 +74,47 @@ namespace liteser
 	liteserFnExport bool deserialize(hsbase* stream, harray<grect>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<gvec2>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<gvec3>* value);
+
+	namespace xml
+	{
+		liteserFnExport bool serialize(hsbase* stream, Serializable* object);
+		liteserFnExport bool serialize(hsbase* stream, harray<Serializable*>& object);
+		liteserFnExport bool serialize(hsbase* stream, harray<char>& value);
+		liteserFnExport bool serialize(hsbase* stream, harray<unsigned char>& value);
+		liteserFnExport bool serialize(hsbase* stream, harray<short>& value);
+		liteserFnExport bool serialize(hsbase* stream, harray<unsigned short>& value);
+		liteserFnExport bool serialize(hsbase* stream, harray<int>& value);
+		liteserFnExport bool serialize(hsbase* stream, harray<unsigned int>& value);
+		liteserFnExport bool serialize(hsbase* stream, harray<int64_t>& value);
+		liteserFnExport bool serialize(hsbase* stream, harray<uint64_t>& value);
+		liteserFnExport bool serialize(hsbase* stream, harray<float>& value);
+		liteserFnExport bool serialize(hsbase* stream, harray<double>& value);
+		liteserFnExport bool serialize(hsbase* stream, harray<hstr>& value);
+		liteserFnExport bool serialize(hsbase* stream, harray<hversion>& value);
+		liteserFnExport bool serialize(hsbase* stream, harray<henum>& value);
+		liteserFnExport bool serialize(hsbase* stream, harray<grect>& value);
+		liteserFnExport bool serialize(hsbase* stream, harray<gvec2>& value);
+		liteserFnExport bool serialize(hsbase* stream, harray<gvec3>& value);
+
+		liteserFnExport bool deserialize(hsbase* stream, Serializable** object);
+		liteserFnExport bool deserialize(hsbase* stream, harray<Serializable*>* object);
+		liteserFnExport bool deserialize(hsbase* stream, harray<char>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<unsigned char>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<short>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<unsigned short>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<int>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<unsigned int>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<int64_t>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<uint64_t>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<float>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<double>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<hstr>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<hversion>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<henum>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<grect>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<gvec2>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<gvec3>* value);
+	}
 
 	/// @brief Creates a deep copy of an object.
 	/// @note The cloning only affects variables that were declared as serializable.

@@ -8,12 +8,21 @@
 
 #define LOG_TAG "demo_simple"
 
+#include <hltypes/henum.h>
 #include <hltypes/hfile.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hstring.h>
 
 #include <liteser/liteser.h>
 #include <liteser/Serializable.h>
+
+#if defined(_WIN32) && !defined(_WINRT)
+#define TEST_FILENAME "../../bin/demo_simple.ls2"
+#define XML_FILENAME "../../bin/demo_simple.lsx"
+#else
+#define TEST_FILENAME "demo_simple.ls2"
+#define XML_FILENAME "demo_simple.lsx"
+#endif
 
 static int __test_count = 0;
 
@@ -50,19 +59,33 @@ public:
 	Type2() : liteser::Serializable()
 	{
 		this->string = "HELLO WORLD";
+		this->version.set(1, 2, 3, 4);
+		this->rect.set(0.0f, 5.0f, 10.0f, 20.0f);
+		this->vec2.set(100.0f, 200.0f);
+		this->vec3.set(-50.0f, -50.0f, -200.0f);
 	}
 	~Type2() { }
 
 	void check(const Type2& other)
 	{
 		CHECK_VALUE(string);
+		CHECK_VALUE(version);
+		CHECK_VALUE(rect);
+		CHECK_VALUE(vec2);
+		CHECK_VALUE(vec3);
+		CHECK_VALUE(moreStrings);
 	}
 
 protected:
 	LS_VARS
 	(
 		liteser::Serializable,
-		(hstr) string
+		(hstr) string,
+		(hversion) version,
+		(grect) rect,
+		(gvec2) vec2,
+		(gvec3) vec3,
+		(harray<hstr>) moreStrings
 	);
 
 };
@@ -95,15 +118,18 @@ protected:
 };
 LS_CLASS_DEFINE(Type3);
 
-HL_ENUM_DEFINE_CLASS(TypeEnum,
+HL_ENUM_CLASS_DECLARE(TypeEnum,
 (
-	static const TypeEnum Value0;
-	static const TypeEnum Value1;
-	static const TypeEnum Value2;
+	HL_ENUM_DECLARE(TypeEnum, Value0);
+	HL_ENUM_DECLARE(TypeEnum, Value1);
+	HL_ENUM_DECLARE(TypeEnum, Value2);
 ));
-const TypeEnum TypeEnum::Value0(hstr("0"));
-const TypeEnum TypeEnum::Value1(1);
-const TypeEnum TypeEnum::Value2(2);
+HL_ENUM_CLASS_DEFINE(TypeEnum,
+(
+	HL_ENUM_DEFINE_NAME(TypeEnum, Value0, "0");
+	HL_ENUM_DEFINE_VALUE(TypeEnum, Value1, 1);
+	HL_ENUM_DEFINE_VALUE(TypeEnum, Value2, 2);
+));
 
 class Type1 : public liteser::Serializable
 {
@@ -122,6 +148,7 @@ public:
 		this->v_double = 2.0f;
 		this->v_bool = true;
 		this->v_type3 = new Type3();
+		this->v_type4 = this->v_type3;
 		this->v_enum = TypeEnum::Value0;
 	}
 	Type1(harray<int> arg1, harray<Type3*> arg2, hmap<hstr, int> arg3) : liteser::Serializable()
@@ -136,6 +163,7 @@ public:
 		this->v_double = 2.0f;
 		this->v_bool = true;
 		this->v_type3 = new Type3();
+		this->v_type4 = this->v_type3;
 		this->v_harray_int = arg1;
 		this->v_harray_type3 = arg2;
 		this->v_hmap_hstr_int2 = arg3;
@@ -164,6 +192,7 @@ public:
 		CHECK_VALUE(v_harray_int);
 		this->v_type2.check(other.v_type2);
 		this->v_type3->check(*other.v_type3);
+		this->v_type4->check(*other.v_type4);
 		CHECK_VALUE_HARRAY_OBJECTS(v_harray_type3);
 		CHECK_VALUE(v_hmap_hstr_int);
 		CHECK_VALUE(v_hmap_hstr_int2);
@@ -186,6 +215,7 @@ protected:
 		(bool) v_bool,
 		(Type2) v_type2,
 		(Type3*) v_type3,
+		(Type3*) v_type4,
 		(harray<int>) v_harray_int,
 		(harray<Type3*>) v_harray_type3,
 		(hmap_hstr_int) v_hmap_hstr_int,
@@ -195,12 +225,6 @@ protected:
 
 };
 LS_CLASS_DEFINE(Type1);
-
-#if defined(_WIN32) && !defined(_WINRT)
-#define TEST_FILENAME "../../bin/demo_simple.ls2"
-#else
-#define TEST_FILENAME "demo_simple.ls2"
-#endif
 
 int main(int argc, char **argv)
 {
@@ -215,31 +239,48 @@ int main(int argc, char **argv)
 	arg3["first"] = 10;
 	arg3["second"] = 20;
 	Type1 type1(arg1, arg2, arg3);
-	
+	Type1* loaded = NULL;
+	// binary test
 	file.open(TEST_FILENAME, hfile::WRITE);
 	liteser::serialize(&file, &type1);
 	file.close();
-	
-	Type1* loaded = NULL;
 	file.open(TEST_FILENAME);
 	liteser::deserialize(&file, (liteser::Serializable**)&loaded);
 	file.close();
-	
+	__test_count = 0;
 	type1.check(*loaded);
 	if (__test_count == 0)
 	{
 		hlog::write(LOG_TAG, "Serialization test was successful.");
 	}
-
-	Type1* cloned = NULL;
-	liteser::clone(&type1, (liteser::Serializable**)&cloned);
+	delete loaded;
+	loaded = NULL;
+	// XML test
+	file.open(XML_FILENAME, hfile::WRITE);
+	liteser::xml::serialize(&file, &type1);
+	file.close();
+	file.open(XML_FILENAME);
+	liteser::xml::deserialize(&file, (liteser::Serializable**)&loaded);
+	file.close();
 	__test_count = 0;
 	type1.check(*loaded);
 	if (__test_count == 0)
 	{
+		hlog::write(LOG_TAG, "Serialization XML test was successful.");
+	}
+	delete loaded;
+	loaded = NULL;
+	// clone test
+	Type1* cloned = NULL;
+	liteser::clone(&type1, (liteser::Serializable**)&cloned);
+	__test_count = 0;
+	type1.check(*cloned);
+	if (__test_count == 0)
+	{
 		hlog::write(LOG_TAG, "Cloning test was successful.");
 	}
-
+	delete cloned;
+	// finished
 	system("pause");
 	return 0;
 }

@@ -13,26 +13,37 @@
 #include <hltypes/hstream.h>
 #include <hltypes/hstring.h>
 #include <hltypes/hversion.h>
+#include <hlxml/Document.h>
+#include <hlxml/Node.h>
+#include <hlxml/Property.h>
 
 #include "Deserialize.h"
+#include "DeserializeXml.h"
 #include "liteser.h"
 #include "Serializable.h"
 #include "Serialize.h"
+#include "SerializeXml.h"
 #include "Utility.h"
 #include "Variable.h"
 
 #define _LS_HEADER_0 'L'
 #define _LS_HEADER_1 'S'
 
+#define HEADER_SIZE 4
+
+#define XML_HEADER "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+#define LITESER_XML_ROOT_BEGIN hsprintf("<Liteser version=\"%d.%d\">\n\t", _LS_VERSION_MAJOR, _LS_VERSION_MINOR)
+#define LITESER_XML_ROOT_END "\t\n</Liteser>"
+
 #define DECLARE_HARRAY_SERIALIZER(type) \
-	bool serialize(hsbase* stream, harray<type>& value) \
+	bool serialize ## suffix(hsbase* stream, harray<type>& value) \
 	{ \
 		if (!stream->isOpen()) \
 		{ \
 			throw FileNotOpenException("Liteser Stream"); \
 		} \
 		_start(stream); \
-		stream->writeRaw(header, 4); \
+		stream->writeRaw(header, HEADER_SIZE); \
 		_dumpHarray(&value); \
 		_finish(stream); \
 		return true; \
@@ -50,8 +61,8 @@
 			throw Exception("Output harray is not empty!"); \
 		} \
 		_start(stream); \
-		unsigned char readHeader[4]; \
-		stream->readRaw(readHeader, 4); \
+		unsigned char readHeader[HEADER_SIZE]; \
+		stream->readRaw(readHeader, HEADER_SIZE); \
 		if (readHeader[0] != _LS_HEADER_0 || readHeader[1] != _LS_HEADER_1) \
 		{ \
 			throw Exception("Invalid header!"); \
@@ -60,6 +71,57 @@
 		unsigned char minor = readHeader[3]; \
 		_checkVersion(major, minor); \
 		_loadHarray(value); \
+		_finish(stream); \
+		return true; \
+	}
+
+#define DECLARE_HARRAY_SERIALIZER_XML(type) \
+	bool serialize(hsbase* stream, harray<type>& value) \
+	{ \
+		if (!stream->isOpen()) \
+		{ \
+			throw FileNotOpenException("Liteser XML Stream"); \
+		} \
+		_start(stream); \
+		stream->writeLine(XML_HEADER); \
+		stream->writeLine(LITESER_XML_ROOT_BEGIN); \
+		xml::_dumpHarray(&value); \
+		stream->writeLine(LITESER_XML_ROOT_END); \
+		_finish(stream); \
+		return true; \
+	}
+	
+#define DECLARE_HARRAY_DESERIALIZER_XML(type) \
+	bool deserialize(hsbase* stream, harray<type>* value) \
+	{ \
+		if (!stream->isOpen()) \
+		{ \
+			throw FileNotOpenException("Liteser Stream"); \
+		} \
+		if (value->size() > 0) \
+		{ \
+			throw Exception("Output harray is not empty!"); \
+		} \
+		_start(stream); \
+		hlxml::Document doc(*stream); \
+		hlxml::Node* root = doc.root(); \
+		if (*root != "Liteser") \
+		{ \
+			throw Exception("Invalid header!"); \
+		} \
+		hstr versionString = root->pstr("version", ""); \
+		if (versionString.count(".") != 1) \
+		{ \
+			throw Exception("Invalid header!"); \
+		} \
+		hstr major; \
+		hstr minor; \
+		if (!versionString.split('.', major, minor)) \
+		{ \
+			throw Exception("Invalid header!"); \
+		} \
+		_checkVersion((unsigned char)(int)major, (unsigned char)(int)minor); \
+		xml::_loadHarray(root, value); \
 		_finish(stream); \
 		return true; \
 	}
@@ -78,7 +140,7 @@ namespace liteser
 		}
 		// TODO - add exception handling
 		_start(stream);
-		stream->writeRaw(header, 4);
+		stream->writeRaw(header, HEADER_SIZE);
 		_dump(&object);
 		_finish(stream);
 		return true;
@@ -114,8 +176,8 @@ namespace liteser
 		}
 		// TODO - add exception handling
 		_start(stream);
-		unsigned char readHeader[4];
-		stream->readRaw(readHeader, 4);
+		unsigned char readHeader[HEADER_SIZE];
+		stream->readRaw(readHeader, HEADER_SIZE);
 		if (readHeader[0] != _LS_HEADER_0 || readHeader[1] != _LS_HEADER_1)
 		{
 			throw Exception("Invalid header!");
@@ -145,7 +207,98 @@ namespace liteser
 	DECLARE_HARRAY_DESERIALIZER(grect);
 	DECLARE_HARRAY_DESERIALIZER(gvec2);
 	DECLARE_HARRAY_DESERIALIZER(gvec3);
-	
+
+	namespace xml
+	{
+		bool serialize(hsbase* stream, Serializable* object)
+		{
+			if (!stream->isOpen())
+			{
+				throw FileNotOpenException("Liteser Stream");
+			}
+			// TODO - add exception handling
+			_start(stream);
+			stream->writeLine(XML_HEADER);
+			stream->writeLine(LITESER_XML_ROOT_BEGIN);
+			xml::_dump(&object);
+			stream->writeLine(LITESER_XML_ROOT_END);
+			_finish(stream);
+			return true;
+		}
+
+		DECLARE_HARRAY_SERIALIZER_XML(Serializable*);
+		DECLARE_HARRAY_SERIALIZER_XML(char);
+		DECLARE_HARRAY_SERIALIZER_XML(unsigned char);
+		DECLARE_HARRAY_SERIALIZER_XML(short);
+		DECLARE_HARRAY_SERIALIZER_XML(unsigned short);
+		DECLARE_HARRAY_SERIALIZER_XML(int);
+		DECLARE_HARRAY_SERIALIZER_XML(unsigned int);
+		DECLARE_HARRAY_SERIALIZER_XML(int64_t);
+		DECLARE_HARRAY_SERIALIZER_XML(uint64_t);
+		DECLARE_HARRAY_SERIALIZER_XML(float);
+		DECLARE_HARRAY_SERIALIZER_XML(double);
+		DECLARE_HARRAY_SERIALIZER_XML(hstr);
+		DECLARE_HARRAY_SERIALIZER_XML(hversion);
+		DECLARE_HARRAY_SERIALIZER_XML(henum);
+		DECLARE_HARRAY_SERIALIZER_XML(grect);
+		DECLARE_HARRAY_SERIALIZER_XML(gvec2);
+		DECLARE_HARRAY_SERIALIZER_XML(gvec3);
+
+		bool deserialize(hsbase* stream, Serializable** object)
+		{
+			if (!stream->isOpen())
+			{
+				throw FileNotOpenException("Liteser Stream");
+			}
+			if (*object != NULL)
+			{
+				throw Exception("Given pointer to object for deserialization is not NULL.");
+			}
+			// TODO - add exception handling
+			_start(stream);
+			hlxml::Document doc(*stream);
+			hlxml::Node* root = doc.root();
+			if (*root != "Liteser")
+			{
+				throw Exception("Invalid header!");
+			}
+			hstr versionString = root->pstr("version", "");
+			if (versionString.count(".") != 1)
+			{
+				throw Exception("Invalid header!");
+			}
+			hstr major;
+			hstr minor;
+			if (!versionString.split('.', major, minor))
+			{
+				throw Exception("Invalid header!");
+			}
+			_checkVersion((unsigned char)(int)major, (unsigned char)(int)minor);
+			xml::_load(root->iterChildren(), object);
+			_finish(stream);
+			return true;
+		}
+
+		DECLARE_HARRAY_DESERIALIZER_XML(Serializable*);
+		DECLARE_HARRAY_DESERIALIZER_XML(char);
+		DECLARE_HARRAY_DESERIALIZER_XML(unsigned char);
+		DECLARE_HARRAY_DESERIALIZER_XML(short);
+		DECLARE_HARRAY_DESERIALIZER_XML(unsigned short);
+		DECLARE_HARRAY_DESERIALIZER_XML(int);
+		DECLARE_HARRAY_DESERIALIZER_XML(unsigned int);
+		DECLARE_HARRAY_DESERIALIZER_XML(int64_t);
+		DECLARE_HARRAY_DESERIALIZER_XML(uint64_t);
+		DECLARE_HARRAY_DESERIALIZER_XML(float);
+		DECLARE_HARRAY_DESERIALIZER_XML(double);
+		DECLARE_HARRAY_DESERIALIZER_XML(hstr);
+		DECLARE_HARRAY_DESERIALIZER_XML(hversion);
+		DECLARE_HARRAY_DESERIALIZER_XML(henum);
+		DECLARE_HARRAY_DESERIALIZER_XML(grect);
+		DECLARE_HARRAY_DESERIALIZER_XML(gvec2);
+		DECLARE_HARRAY_DESERIALIZER_XML(gvec3);
+
+	}
+
 	bool clone(Serializable* input, Serializable** output)
 	{
 		if (*output != NULL)

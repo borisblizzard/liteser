@@ -72,15 +72,19 @@
     <ClInclude Include="..\..\include\liteser\Type.h" />
     <ClInclude Include="..\..\include\liteser\Variable.h" />
     <ClInclude Include="..\..\src\Deserialize.h" />
+    <ClInclude Include="..\..\src\DeserializeXml.h" />
     <ClInclude Include="..\..\src\Serialize.h" />
+    <ClInclude Include="..\..\src\SerializeXml.h" />
     <ClInclude Include="..\..\src\Utility.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Deserialize.cpp" />
+    <ClCompile Include="..\..\src\DeserializeXml.cpp" />
     <ClCompile Include="..\..\src\Factory.cpp" />
     <ClCompile Include="..\..\src\liteser.cpp" />
     <ClCompile Include="..\..\src\Serializable.cpp" />
     <ClCompile Include="..\..\src\Serialize.cpp" />
+    <ClCompile Include="..\..\src\SerializeXml.cpp" />
     <ClCompile Include="..\..\src\Type.cpp" />
     <ClCompile Include="..\..\src\Utility.cpp" />
     <ClCompile Include="..\..\src\Variable.cpp" />
@@ -93,6 +97,14 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\gtypes\msvc\vs2015\libgtypes.vcxproj">
       <Project>{9c043b29-db40-48d5-97d8-1bc44128e3ba}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\hltypes\hlxml\msvc\vs2015\libhlxml.vcxproj">
+      <Project>{601bcb9e-aaf2-412e-8aeb-9fc77d0505d8}</Project>
       <Private>false</Private>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
