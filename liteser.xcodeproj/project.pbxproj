@@ -489,6 +489,12 @@
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/include",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = liteser;
 				SDKROOT = iphoneos;
@@ -514,6 +520,12 @@
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/include",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = liteser;
 				SDKROOT = iphoneos;
@@ -540,6 +552,12 @@
 				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/include",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = liteser;
 				SDKROOT = iphoneos;
