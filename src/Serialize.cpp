@@ -25,6 +25,11 @@
 
 namespace liteser
 {
+	void _dumpType(Type::Value typeValue)
+	{
+		stream->dump((unsigned char)typeValue);
+	}
+
 	inline void __dumpVariable(Variable* variable)
 	{
 		switch (variable->type->value)
@@ -62,7 +67,7 @@ namespace liteser
 			stream->dump((unsigned int)variable->type->subTypes.size());
 			foreach (Type*, it, variable->type->subTypes)
 			{
-				stream->dump((unsigned char)(*it)->value);
+				_dumpType((*it)->value);
 			}
 			foreach (Variable*, it, variable->subVariables)
 			{
@@ -132,7 +137,7 @@ namespace liteser
 			foreach (Variable*, it, variables)
 			{
 				_dump(&(*it)->name);
-				stream->dump((unsigned char)(*it)->type->value);
+				_dumpType((*it)->type->value);
 				__dumpVariable(*it);
 				delete (*it);
 			}

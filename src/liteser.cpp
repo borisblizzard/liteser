@@ -44,6 +44,11 @@
 		} \
 		_start(stream); \
 		stream->writeRaw(header, HEADER_SIZE); \
+		Type dumpType; \
+		dumpType.assign((VPtr<type>*)NULL); \
+		_dumpType(Type::HARRAY); \
+		stream->dump(1u); \
+		_dumpType(dumpType.value); \
 		_dumpHarray(&value); \
 		_finish(stream); \
 		return true; \
@@ -70,6 +75,26 @@
 		unsigned char major = readHeader[2]; \
 		unsigned char minor = readHeader[3]; \
 		_checkVersion(major, minor); \
+		if (major > 2 || major == 2 && minor >= 7) \
+		{ \
+			if (_loadType() != Type::HARRAY) \
+			{ \
+				_finish(stream); \
+				throw Exception("Cannot load object from file that does not contain a harray<" #type ">!"); \
+			} \
+			if (stream->loadUint32() != 1) \
+			{ \
+				_finish(stream); \
+				throw Exception("Cannot load object from file that does not contain a harray<" #type ">!"); \
+			} \
+			Type subType; \
+			subType.assign((VPtr<type>*)NULL); \
+			if (_loadType() != subType.value) \
+			{ \
+				_finish(stream); \
+				throw Exception("Cannot load object from file that does not contain a harray<" #type ">!"); \
+			} \
+		} \
 		_loadHarray(value); \
 		_finish(stream); \
 		return true; \
@@ -85,7 +110,13 @@
 		_start(stream); \
 		stream->writeLine(XML_HEADER); \
 		stream->writeLine(LITESER_XML_ROOT_BEGIN); \
+		Type subType; \
+		subType.assign((VPtr<type>*)NULL); \
+		stream->writeLine("\t<Container type=\"" + hstr(Type::HARRAY) + "\" sub_types=\"" + hstr(subType.value) + "\">"); \
+		_indent += "\t"; \
 		xml::_dumpHarray(&value); \
+		_indent = _indent(0, _indent.size() - 1); \
+		stream->writeLine("\t</Container>"); \
 		stream->writeLine(LITESER_XML_ROOT_END); \
 		_finish(stream); \
 		return true; \
@@ -114,14 +145,34 @@
 		{ \
 			throw Exception("Invalid header!"); \
 		} \
-		hstr major; \
-		hstr minor; \
-		if (!versionString.split('.', major, minor)) \
+		hstr majorString; \
+		hstr minorString; \
+		if (!versionString.split('.', majorString, minorString)) \
 		{ \
 			throw Exception("Invalid header!"); \
 		} \
-		_checkVersion((unsigned char)(int)major, (unsigned char)(int)minor); \
-		xml::_loadHarray(root, value); \
+		unsigned char major = (unsigned char)(int)majorString; \
+		unsigned char minor = (unsigned char)(int)minorString; \
+		_checkVersion(major, minor); \
+		hlxml::Node* node = root; \
+		if (major > 2 || major == 2 && minor >= 7) \
+		{ \
+			node = root->iterChildren(); \
+			if (node->next() != NULL || *node != "Container" || node->pstr("type", "00").unhex() != Type::HARRAY) \
+			{ \
+				_finish(stream); \
+				throw Exception("Cannot load object from file that does not contain a harray<\"" #type "\">!"); \
+			} \
+			Type subType; \
+			subType.assign((VPtr<type>*)NULL); \
+			harray<hstr> subTypes = node->pstr("sub_types", "00").split(',', -1, true); \
+			if (subTypes.size() != 1 || subTypes.first().unhex() != subType.value) \
+			{ \
+				_finish(stream); \
+				throw Exception("Cannot load object from file that does not contain a harray<" #type ">!"); \
+			} \
+		} \
+		xml::_loadHarray(node, value); \
 		_finish(stream); \
 		return true; \
 	}
@@ -141,6 +192,7 @@ namespace liteser
 		// TODO - add exception handling
 		_start(stream);
 		stream->writeRaw(header, HEADER_SIZE);
+		_dumpType(Type::OBJPTR);
 		_dump(&object);
 		_finish(stream);
 		return true;
@@ -185,6 +237,15 @@ namespace liteser
 		unsigned char major = readHeader[2];
 		unsigned char minor = readHeader[3];
 		_checkVersion(major, minor);
+		if (major > 2 || major == 2 && minor >= 7)
+		{
+			Type::Value type = _loadType();
+			if (type != Type::OBJPTR)
+			{
+				_finish(stream);
+				throw Exception("Cannot load object from file that does not contain an object!");
+			}
+		}
 		_load(object);
 		_finish(stream);
 		return true;
@@ -267,14 +328,25 @@ namespace liteser
 			{
 				throw Exception("Invalid header!");
 			}
-			hstr major;
-			hstr minor;
-			if (!versionString.split('.', major, minor))
+			hstr majorString;
+			hstr minorString;
+			if (!versionString.split('.', majorString, minorString))
 			{
 				throw Exception("Invalid header!");
 			}
-			_checkVersion((unsigned char)(int)major, (unsigned char)(int)minor);
-			xml::_load(root->iterChildren(), object);
+			unsigned char major = (unsigned char)(int)majorString;
+			unsigned char minor = (unsigned char)(int)minorString;
+			_checkVersion(major, minor);
+			hlxml::Node* node = root->iterChildren();
+			if (major > 2 || major == 2 && minor >= 7)
+			{
+				if (node->next() != NULL || *node != "Object")
+				{
+					_finish(stream);
+					throw Exception("Cannot load object from file that does not contain an object!");
+				}
+			}
+			xml::_load(node, object);
 			_finish(stream);
 			return true;
 		}
