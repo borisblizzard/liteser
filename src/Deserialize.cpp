@@ -27,6 +27,11 @@
 
 namespace liteser
 {
+	Type::Value _loadType()
+	{
+		return (Type::Value)stream->loadUint8();
+	}
+
 	inline void __loadVariable(Variable* variable, Type::Value loadType)
 	{
 		switch (loadType)
@@ -99,7 +104,7 @@ namespace liteser
 			}
 			for_iter (i, 0, typeSize)
 			{
-				loadType = (Type::Value)stream->loadUint8();
+				loadType = _loadType();
 				if (loadType != variable->type->subTypes[i]->value)
 				{
 					throw Exception(hsprintf("Variable type has changed. Expected: %02X, Got: %02X", variable->type->value, loadType));
@@ -136,7 +141,7 @@ namespace liteser
 			}
 			for_iter (i, 0, typeSize)
 			{
-				subTypes += (Type::Value)stream->loadUint8();
+				subTypes += _loadType();
 			}
 			foreach (Type::Value, it, subTypes)
 			{
@@ -232,7 +237,7 @@ namespace liteser
 						break;
 					}
 				}
-				loadType = (Type::Value)stream->loadUint8();
+				loadType = _loadType();
 				if (variable != NULL)
 				{
 					if (loadType != variable->type->value)
@@ -279,7 +284,7 @@ namespace liteser
 			for_itert (unsigned int, i, 0, size)
 			{
 				_load(&variableName);
-				__skipVariable((Type::Value)stream->loadUint8());
+				__skipVariable(_loadType());
 			}
 		}
 		return true;

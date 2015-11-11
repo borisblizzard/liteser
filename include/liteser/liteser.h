@@ -31,7 +31,7 @@
 #include "Serializable.h"
 
 #define _LS_VERSION_MAJOR 2
-#define _LS_VERSION_MINOR 6
+#define _LS_VERSION_MINOR 7
 
 namespace liteser
 {

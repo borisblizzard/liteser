@@ -32,6 +32,8 @@ namespace liteser
 	class Serializable;
 	class Variable;
 
+	void _dumpType(Type::Value typeValue);
+
 	void __dumpContainer(Variable* variable);
 
 	void _dump(hstr* value);
