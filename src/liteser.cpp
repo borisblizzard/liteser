@@ -36,7 +36,7 @@
 #define LITESER_XML_ROOT_END "\t\n</Liteser>"
 
 #define DECLARE_HARRAY_SERIALIZER(type) \
-	bool serialize ## suffix(hsbase* stream, harray<type>& value) \
+	bool serialize(hsbase* stream, harray<type>& value) \
 	{ \
 		if (!stream->isOpen()) \
 		{ \
@@ -237,7 +237,7 @@ namespace liteser
 		unsigned char major = readHeader[2];
 		unsigned char minor = readHeader[3];
 		_checkVersion(major, minor);
-		if (major > 2 || major == 2 && minor >= 7)
+		if (major > 2 || (major == 2 && minor >= 7))
 		{
 			Type::Value type = _loadType();
 			if (type != Type::OBJPTR)
@@ -338,7 +338,7 @@ namespace liteser
 			unsigned char minor = (unsigned char)(int)minorString;
 			_checkVersion(major, minor);
 			hlxml::Node* node = root->iterChildren();
-			if (major > 2 || major == 2 && minor >= 7)
+			if (major > 2 || (major == 2 && minor >= 7))
 			{
 				if (node->next() != NULL || *node != "Object")
 				{
