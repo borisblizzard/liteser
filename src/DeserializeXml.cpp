@@ -75,10 +75,7 @@ namespace liteser
 
 		void __loadContainer(hlxml::Node* node, Variable* variable, Type::Value type)
 		{
-			foreach_xmlnode (child, node)
-			{
-				++variable->containerSize;
-			}
+			variable->containerSize = node->getChildCount();
 			if (variable->containerSize > 0)
 			{
 				harray<Type::Value> loadTypes;
@@ -119,11 +116,7 @@ namespace liteser
 		bool __skipContainer(hlxml::Node* node, Type::Value type)
 		{
 			bool result = true;
-			int containerSize = 0;
-			foreach_xmlnode (child, node)
-			{
-				++containerSize;
-			}
+			int containerSize = node->getChildCount();
 			if (containerSize > 0)
 			{
 				int subTypesSize = (type == Type::HMAP ? 2 : 1);
@@ -310,7 +303,7 @@ namespace liteser
 
 		void _loadHarray(hlxml::Node* node, harray<unsigned char>* value)
 		{
-			foreach_xmlnode(child, node)
+			foreach_xmlnode (child, node)
 			{
 				value->add((unsigned char)child->pint("value"));
 			}

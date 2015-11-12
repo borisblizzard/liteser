@@ -1,6 +1,10 @@
 import struct
+import xml.dom.minidom
+
+from xml.dom.minidom import parse
 
 from Ls2 import *
+from Lsx import *
 from Util import *
 
 class Model:
@@ -68,6 +72,50 @@ class Model:
 			if file != None:
 				Util.finish(file)
 				file.close()
+		
+	@staticmethod
+	def readLsx(filename):
+		file = None
+		data = None
+		try:
+			file = xml.dom.minidom.parse(filename)
+			Util.start(file)
+			root = file.documentElement
+			if root.nodeName != "Liteser":
+				raise Exception("Invalid header!")
+			versionString = root.getAttribute("version")
+			versions = versionString.split(".")
+			if len(versions) != 2:
+				raise Exception("Invalid header!")
+			major = int(versions[0])
+			minor = int(versions[1])
+			Model._checkVersion(major, minor)
+			children = Util._getChildNodes(root)
+			if len(children) != 1:
+				raise Exception("Cannot load object from file that does not contain any data!")
+			data = Lsx.load(children[0])
+		finally:
+			if file != None:
+				Util.finish(file)
+		return data
+		
+	@staticmethod
+	def writeLsx(filename, data):
+		file = None
+		"""
+		try:
+			file = open(filename, "wb")
+			Util.start(file)
+			Util.dumpUint8(Model.Header0)
+			Util.dumpUint8(Model.Header1)
+			Util.dumpUint8(Model.VersionMajor)
+			Util.dumpUint8(Model.VersionMinor)
+			Lsx.dump(data)
+		finally:
+			if file != None:
+				Util.finish(file)
+				file.close()
+		"""
 		
 	@staticmethod
 	def _checkVersion(major, minor):

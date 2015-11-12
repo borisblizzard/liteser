@@ -1,5 +1,8 @@
 import os
 import struct
+import xml.dom.minidom
+
+from xml.dom.minidom import parse
 
 class Util:
 	
@@ -84,6 +87,14 @@ class Util:
 			Util.stringIds[string] = id - 1
 			return True, id
 		return False, Util.stringIds[string] + 1
+		
+	@staticmethod
+	def _getChildNodes(node):
+		result = []
+		for child in node.childNodes:
+			if child.nodeType == node.ELEMENT_NODE:
+				result.append(child)
+		return result
 
 	# binary data loading
 	@staticmethod

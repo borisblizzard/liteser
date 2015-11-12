@@ -116,7 +116,7 @@
 		stream->writeLine(LITESER_XML_ROOT_BEGIN); \
 		Type subType; \
 		subType.assign((VPtr<type>*)NULL); \
-		stream->writeLine("\t<Container type=\"" + hstr(Type::HARRAY) + "\" sub_types=\"" + hstr(subType.value) + "\">"); \
+		stream->writeLine("\t<Container type=\"" + hsprintf("%02X", Type::HARRAY) + "\" sub_types=\"" + hsprintf("%02X", subType.value) + "\">"); \
 		_indent += "\t"; \
 		xml::_dumpHarray(&value); \
 		_indent = _indent(0, _indent.size() - 1); \
