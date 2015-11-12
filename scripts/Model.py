@@ -38,7 +38,7 @@ class Model:
 			header1 = Util.loadUint8()
 			major = Util.loadUint8()
 			minor = Util.loadUint8()
-			if header0 != Model.Header0 or header1 != Model.Header1:
+			if header0 != Util.Header0 or header1 != Util.Header1:
 				raise Exception("Invalid header!")
 			Model._checkVersion(major, minor)
 			data = Ls2.load()
