@@ -8,14 +8,9 @@ class Ls2:
 	@staticmethod
 	def load():
 		type = Ls2._loadType()
-		data = None
-		if type == Type.OBJPTR:
-			data = Ls2._loadObject()
-		elif type == Type.HARRAY:
-			data = Ls2._loadHarray(type)
-		if data == None:
-			raise Exception("Cannot load object from stream that does not contain properly serialized Liteser data!")
-		return data
+		variable = Variable("", type)
+		Ls2.__loadVariable(variable, type)
+		return variable
 
 	@staticmethod
 	def _loadType():
@@ -130,22 +125,9 @@ class Ls2:
 		return object
 		
 	@staticmethod
-	def _loadHarray(loadType):
-		variable = Variable("", loadType)
-		Ls2.__loadContainer(variable, loadType)
-		result = []
-		for subVariable in variable.subVariables:
-			result.append(subVariable.value)
-		return result
-
-	@staticmethod
-	def dump(data):
-		if not isinstance(type, list):
-			Ls2._dumpType(Type.OBJPTR)
-			Ls2._dumpObject(data)
-		else:
-			Ls2._dumpType(Type.HARRAY)
-			Ls2._dumpHarray(data)
+	def dump(variable):
+		Ls2._dumpType(variable.type.value)
+		Ls2.__dumpVariable(variable)
 
 	@staticmethod
 	def _dumpType(type):
@@ -249,22 +231,3 @@ class Ls2:
 				Ls2._dumpType(variable.type.value)
 				Ls2.__dumpVariable(variable)
 
-	@staticmethod
-	def _dumpHarray(value):
-		variable = Variable("", Type.HARRAY)
-		variable.value = value
-		Ls2.__dumpContainer(variable)
-		"""
-		#Util.dumpUint32(len(value))
-		if len(value) > 0:
-			Util.dumpUint32(1)
-			Ls2._dumpType(value.type.subTypes[0].value)
-			for object in value:
-					variable = Variable("", value.type.subTypes[0].value)
-					Ls2.__dumpContainer(variable, loadType)
-					result = []
-					for subVariable in variable.subVariables:
-						result.append(subVariable.value)
-					return result
-				_dumpObject(*it)
-		"""

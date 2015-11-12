@@ -15,6 +15,4 @@ class Variable:
 				self.subVariables.append(Variable("", self.type.subTypes[0].value))
 		if self.type.value == Type.HMAP:
 			for i in xrange(2):
-				subVariable = Variable("", Type.HARRAY)
-				subVariable.type.subTypes.append(Type(self.type.subTypes[i].value))
-				self.subVariables.append(subVariable)
+				self.subVariables.append(Variable("", Type.HARRAY))

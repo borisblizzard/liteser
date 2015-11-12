@@ -49,6 +49,9 @@ def process():
 	else:
 		inputFiles = [inputPath]
 		outputFiles = [outputPath]
+	if len(inputFiles) != len(outputFiles):
+		print "ERROR: inputFiles size and outputFiles size don't match: %d and %d" % (len(inputFiles), len(outputFiles))
+		return
 		
 	print ""
 	print "-- Reading files..."
@@ -57,7 +60,6 @@ def process():
 	for file in inputFiles:
 		print "  reading: " + file
 		data.append(Model.readFile(inputFormat, file))
-	
 	if len(data) != len(outputFiles):
 		print "ERROR: Data size and outputFiles size don't match: %d and %d" % (len(data), len(outputFiles))
 		return
@@ -74,6 +76,9 @@ def process():
 		Model.writeFile(outputFormat, outputFiles[i], data[i])
 	
 	if deleteOriginals:
+		print ""
+		print "-- Deleting originals..."
+		print ""
 		for file in inputFiles:
 			print "  deleting: " + file
 			os.remove(file)

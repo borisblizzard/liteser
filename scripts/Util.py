@@ -64,7 +64,7 @@ class Util:
 			id = len(Util.objects)
 			Util.objectIds[object] = id - 1
 			return True, id
-		return False, Util.objectIds[object]
+		return False, Util.objectIds[object] + 1
 
 	@staticmethod
 	def _tryGetString(id):
@@ -83,7 +83,7 @@ class Util:
 			id = len(Util.strings)
 			Util.stringIds[string] = id - 1
 			return True, id
-		return False, Util.stringIds[string]
+		return False, Util.stringIds[string] + 1
 
 	# binary data loading
 	@staticmethod
