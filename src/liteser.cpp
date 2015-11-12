@@ -44,11 +44,6 @@
 		} \
 		_start(stream); \
 		stream->writeRaw(header, HEADER_SIZE); \
-		Type dumpType; \
-		dumpType.assign((VPtr<type>*)NULL); \
-		_dumpType(Type::HARRAY); \
-		stream->dump(1u); \
-		_dumpType(dumpType.value); \
 		_dumpHarray(&value); \
 		_finish(stream); \
 		return true; \
@@ -75,6 +70,7 @@
 		unsigned char major = readHeader[2]; \
 		unsigned char minor = readHeader[3]; \
 		_checkVersion(major, minor); \
+		unsigned int size = 0; \
 		if (major > 2 || major == 2 && minor >= 7) \
 		{ \
 			if (_loadType() != Type::HARRAY) \
@@ -82,20 +78,28 @@
 				_finish(stream); \
 				throw Exception("Cannot load object from file that does not contain a harray<" #type ">!"); \
 			} \
-			if (stream->loadUint32() != 1) \
+			size = stream->loadUint32(); \
+			if (size > 0) \
 			{ \
-				_finish(stream); \
-				throw Exception("Cannot load object from file that does not contain a harray<" #type ">!"); \
-			} \
-			Type subType; \
-			subType.assign((VPtr<type>*)NULL); \
-			if (_loadType() != subType.value) \
-			{ \
-				_finish(stream); \
-				throw Exception("Cannot load object from file that does not contain a harray<" #type ">!"); \
+				if (stream->loadUint32() != 1) \
+				{ \
+					_finish(stream); \
+					throw Exception("Cannot load object from file that does not contain a harray<" #type ">!"); \
+				} \
+				Type subType; \
+				subType.assign((VPtr<type>*)NULL); \
+				if (_loadType() != subType.value) \
+				{ \
+					_finish(stream); \
+					throw Exception("Cannot load object from file that does not contain a harray<" #type ">!"); \
+				} \
 			} \
 		} \
-		_loadHarray(value); \
+		else \
+		{ \
+			size = stream->loadUint32(); \
+		} \
+		_loadHarray(value, size); \
 		_finish(stream); \
 		return true; \
 	}

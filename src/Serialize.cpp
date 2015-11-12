@@ -155,30 +155,56 @@ namespace liteser
 
 	void _dumpHarray(harray<Serializable*>* value)
 	{
-		stream->dump((unsigned int)value->size());
-		foreach (Serializable*, it, *value)
+		_dumpType(Type::HARRAY);
+		int size = value->size();
+		stream->dump((unsigned int)size);
+		if (size > 0)
 		{
-			_dump(*it);
+			stream->dump(1u);
+			_dumpType(Type::OBJPTR);
+			foreach (Serializable*, it, *value)
+			{
+				_dump(*it);
+			}
 		}
 	}
 
 #define DEFINE_DUMP_HARRAY(type) \
 	void _dumpHarray(harray<type>* value) \
 	{ \
-		stream->dump((unsigned int)value->size()); \
-		foreach (type, it, *value) \
+		_dumpType(Type::HARRAY); \
+		int size = value->size(); \
+		stream->dump((unsigned int)size); \
+		if (size > 0) \
 		{ \
-			stream->dump(*it); \
+			stream->dump(1u); \
+			Type dumpType; \
+			dumpType.assign((VPtr<type>*)NULL); \
+			_dumpType(dumpType.value); \
+			foreach (type, it, *value) \
+			{ \
+				stream->dump(*it); \
+			} \
 		} \
 	}
 
 #define DEFINE_DUMP_HARRAY_C(type) \
 	void _dumpHarray(harray<type>* value) \
 	{ \
-		stream->dump((unsigned int)value->size()); \
-		foreach (type, it, *value) \
+		_dumpType(Type::HARRAY); \
+		int size = value->size(); \
+		stream->dump((unsigned int)size); \
+		if (size > 0) \
 		{ \
-			_dump(&(*it)); \
+			stream->dump(1u); \
+			Type dumpType; \
+			dumpType.assign((VPtr<type>*)NULL); \
+			_dumpType(dumpType.value); \
+			stream->dump((unsigned int)value->size()); \
+			foreach (type, it, *value) \
+			{ \
+				_dump(&(*it)); \
+			} \
 		} \
 	}
 

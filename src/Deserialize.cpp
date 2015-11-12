@@ -290,25 +290,20 @@ namespace liteser
 		return true;
 	}
 
-	void _loadHarray(harray<Serializable*>* value)
+	void _loadHarray(harray<Serializable*>* value, unsigned int size)
 	{
-		unsigned int size = stream->loadUint32();
-		if (size > 0)
+		Serializable* object = NULL;
+		for_itert (unsigned int, i, 0, size)
 		{
-			Serializable* object = NULL;
-			for_itert (unsigned int, i, 0, size)
-			{
-				object = NULL;
-				__loadObject(&object);
-				value->add(object);
-			}
+			object = NULL;
+			__loadObject(&object);
+			value->add(object);
 		}
 	}
 
 #define DEFINE_LOAD_HARRAY(type, loadType) \
-	void _loadHarray(harray<type>* value) \
+	void _loadHarray(harray<type>* value, unsigned int size) \
 	{ \
-		unsigned int size = stream->loadUint32(); \
 		for_itert (unsigned int, i, 0, size) \
 		{ \
 			value->add(stream->load ## loadType()); \
@@ -316,17 +311,13 @@ namespace liteser
 	}
 
 #define DEFINE_LOAD_HARRAY_F(type) \
-	void _loadHarray(harray<type>* value) \
+	void _loadHarray(harray<type>* value, unsigned int size) \
 	{ \
-		unsigned int size = stream->loadUint32(); \
-		if (size > 0) \
+		type object; \
+		for_itert (unsigned int, i, 0, size) \
 		{ \
-			type object; \
-			for_itert (unsigned int, i, 0, size) \
-			{ \
-				_load(&object); \
-				value->add(object); \
-			} \
+			_load(&object); \
+			value->add(object); \
 		} \
 	}
 
