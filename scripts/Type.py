@@ -25,6 +25,6 @@ class Type:
 	
 	def __init__(self, value):
 		self.value = value
-		self.subType = []
+		self.subTypes = []
 
 	
