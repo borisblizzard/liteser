@@ -5,6 +5,10 @@ from Variable import *
 
 class Lsx:
 
+	XML_HEADER = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+	LITESER_XML_ROOT_BEGIN = "<Liteser version=\"%d.%d\">\n\t\n" % (Util.VersionMajor, Util.VersionMinor)
+	LITESER_XML_ROOT_END = "\t\n</Liteser>\n"
+	
 	@staticmethod
 	def load(node):
 		if node.tagName != "Container":
@@ -70,13 +74,13 @@ class Lsx:
 	def __loadContainer(node, variable, type):
 		children = Util._getChildNodes(node)
 		variable.containerSize = len(children)
+		subTypes = node.getAttribute("sub_types").split(",")
+		for subType in subTypes:
+			loadType = int(subType, 16)
+			if loadType == Type.HARRAY or loadType == Type.HMAP:
+				raise Exception("Template container within a template container detected, not supported: %02X" % loadType)
+			variable.type.subTypes.append(Type(loadType))
 		if variable.containerSize > 0:
-			subTypes = node.getAttribute("sub_types").split(",")
-			for subType in subTypes:
-				loadType = int(subType, 16)
-				if loadType == Type.HARRAY or loadType == Type.HMAP:
-					raise Exception("Template container within a template container detected, not supported: %02X" % loadType)
-				variable.type.subTypes.append(Type(loadType))
 			variable.createSubVariables()
 			for i in xrange(len(variable.subVariables)):
 				Lsx.__loadVariable(children[i], variable.subVariables[i], variable.subVariables[i].type.value)
@@ -129,8 +133,6 @@ class Lsx:
 				object = Object(className)
 			Util._tryMapObject(object)
 			children = Util._getChildNodes(node)
-			#size = Util.loadUint32()
-			#for i in xrange(size):
 			for child in children:
 				variableName = child.getAttribute("name")
 				loadType = Lsx._loadType(child)
@@ -141,37 +143,72 @@ class Lsx:
 		
 	@staticmethod
 	def dump(variable):
-		Lsx._dumpType(variable.type.value)
-		Lsx.__dumpVariable(variable)
+		if variable.type.value == Type.OBJPTR:
+			Lsx.__dumpVariable(variable)
+		else:
+			Util._openNode("Container type=\"%02X\" sub_types=\"%02X\"" % (variable.type.value, variable.type.subTypes[0].value))
+			if variable.type.subTypes[0].value == Type.OBJPTR:
+				for subVariable in variable.subVariables:
+					Lsx.__dumpVariable(subVariable)
+			else:
+				for subVariable in variable.subVariables:
+					Util._startLine("Element value=\"")
+					Lsx.__dumpVariable(subVariable)
+					Util._finishLine("\"")
+			Util._closeNode("Container")
 
 	@staticmethod
-	def _dumpType(type):
-		return Util.dumpUint8(type)
+	def __dumpVariableStart(variable):
+		if variable.type.value == Type.HARRAY or variable.type.value == Type.HMAP:
+			types = []
+			for type in variable.type.subTypes:
+				types.append("%02X" % type.value)
+			if variable.containerSize > 0:
+				Util._openNode("Variable name=\"%s\" type=\"%02X\" sub_types=\"%s\"" % (variable.name, variable.type.value, ",".join(types)))
+			else:
+				Util._writeNode("Variable name=\"%s\" type=\"%02X\" sub_types=\"%s\"" % (variable.name, variable.type.value, ",".join(types)))
+		elif variable.type.value == Type.OBJECT or variable.type.value == Type.OBJPTR:
+			Util._openNode("Variable name=\"%s\" type=\"%02X\"" % (variable.name, variable.type.value))
+		else:
+			Util._startLine("Variable name=\"%s\" type=\"%02X\" value=\"" % (variable.name, variable.type.value))
+
+	@staticmethod
+	def __dumpVariableFinish(variable):
+		if variable.type.value == Type.HARRAY or variable.type.value == Type.HMAP:
+			if variable.containerSize > 0:
+				Util._closeNode("Variable");
+		elif variable.type.value == Type.OBJECT or variable.type.value == Type.OBJPTR:
+			Util._closeNode("Variable")
+		else:
+			Util._finishLine("\"")
 	
 	@staticmethod
 	def __dumpVariable(variable):
 		if variable.type.value == Type.INT8:
-			Util.dumpInt8(variable.value)
+			Util.stream.write(str(variable.value))
 		elif variable.type.value == Type.UINT8:
-			Util.dumpUint8(variable.value)
+			Util.stream.write(str(variable.value))
 		elif variable.type.value == Type.INT16:
-			Util.dumpInt16(variable.value)
+			Util.stream.write(str(variable.value))
 		elif variable.type.value == Type.UINT16:
-			Util.dumpUint16(variable.value)
+			Util.stream.write(str(variable.value))
 		elif variable.type.value == Type.INT32:
-			Util.dumpInt32(variable.value)
+			Util.stream.write(str(variable.value))
 		elif variable.type.value == Type.UINT32:
-			Util.dumpUint32(variable.value)
+			Util.stream.write(str(variable.value))
 		elif variable.type.value == Type.INT64:
-			Util.dumpInt64(variable.value)
+			Util.stream.write(str(variable.value))
 		elif variable.type.value == Type.UINT64:
-			Util.dumpUint64(variable.value)
+			Util.stream.write(str(variable.value))
 		elif variable.type.value == Type.FLOAT:
-			Util.dumpFloat(variable.value)
+			Util.stream.write("%g" % variable.value)
 		elif variable.type.value == Type.DOUBLE:
-			Util.dumpDouble(variable.value)
+			Util.stream.write("%g" % variable.value)
 		elif variable.type.value == Type.BOOL:
-			Util.dumpBool(variable.value)
+			value = 0
+			if variable.value:
+				value = 1
+			Util.stream.write(str(value))
 		elif variable.type.value == Type.HSTR:
 			Lsx._dumpString(variable.value)
 		elif variable.type.value == Type.HVERSION:
@@ -194,55 +231,83 @@ class Lsx:
 			Lsx.__dumpContainer(variable)
 
 	@staticmethod
-	def __dumpContainer(variable):
-		Util.dumpUint32(variable.containerSize)
-		if variable.containerSize > 0:
-			Util.dumpUint32(len(variable.type.subTypes))
+	def __dumpContainerVariableStart(variable):
+		if variable.type.value == Type.HARRAY or variable.type.value == Type.HMAP:
+			types = []
 			for type in variable.type.subTypes:
-				Lsx._dumpType(type.value)
-			for variable in variable.subVariables:
-				Lsx.__dumpVariable(variable)
+				types.append("%02X" % type.value)
+			if variable.containerSize > 0:
+				Util._openNode("Container sub_types=\"%s\"" % ",".join(types))
+			else:
+				Util._writeNode("Container sub_types=\"%s\"" % ",".join(types))
+		elif variable.type.value != Type.OBJECT and variable.type.value != Type.OBJPTR:
+			Util._startLine("Element value=\"")
+
+	@staticmethod
+	def __dumpContainerVariableFinish(variable):
+		if variable.type.value == Type.HARRAY or variable.type.value == Type.HMAP:
+			if variable.containerSize > 0:
+				Util._closeNode("Container")
+		elif variable.type.value != Type.OBJECT and variable.type.value != Type.OBJPTR:
+			Util._finishLine("\"")
+
+	@staticmethod
+	def __dumpContainer(variable):
+		if variable.containerSize > 0:
+			for subVariable in variable.subVariables:
+				Lsx.__dumpContainerVariableStart(subVariable)
+				Lsx.__dumpVariable(subVariable)
+				Lsx.__dumpContainerVariableFinish(subVariable)
 
 	@staticmethod
 	def _dumpString(value):
-		result, id = Util._tryMapString(value)
-		Util.dumpUint32(id)
-		if result:
-			Util.dumpHstr(value)
+		Util.stream.write(value)
 
 	@staticmethod
 	def _dumpVersion(value):
+		values = []
 		for i in value:
-			Util.dumpUint32(i)
+			values.append(str(i))
+		Util.stream.write(".".join(values))
 
 	@staticmethod
 	def _dumpEnum(value):
-		Util.dumpUint32(value)
+		Util.stream.write(str(value))
 
 	@staticmethod
 	def _dumpGrect(value):
+		values = []
 		for i in value:
-			Util.dumpFloat(i)
+			values.append("%g" % i)
+		Util.stream.write(",".join(values))
 
 	@staticmethod
 	def _dumpGvec2(value):
+		values = []
 		for i in value:
-			Util.dumpFloat(i)
+			values.append("%g" % i)
+		Util.stream.write(",".join(values))
 
 	@staticmethod
 	def _dumpGvec3(value):
+		values = []
 		for i in value:
-			Util.dumpFloat(i)
+			values.append("%g" % i)
+		Util.stream.write(",".join(values))
 
 	@staticmethod
 	def _dumpObject(value):
 		result, id = Util._tryMapObject(value)
-		Util.dumpUint32(id)
 		if result:
-			Lsx._dumpString(value.className)
-			Util.dumpUint32(len(value.variables))
-			for variable in value.variables:
-				Lsx._dumpString(variable.name)
-				Lsx._dumpType(variable.type.value)
-				Lsx.__dumpVariable(variable)
+			if len(value.variables) > 0:
+				Util._openNode("Object name=\"%s\" id=\"%d\"" % (value.className, id))
+				for variable in value.variables:
+					Lsx.__dumpVariableStart(variable)
+					Lsx.__dumpVariable(variable)
+					Lsx.__dumpVariableFinish(variable)
+				Util._closeNode("Object");
+			else:
+				Util._writeNode("Object name=\"%s\" id=\"%d\"" % (value.className, id))
+		else:
+			Util._writeNode("Object id=\"%d\"" % id)
 

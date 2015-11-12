@@ -1,4 +1,3 @@
-import struct
 import xml.dom.minidom
 
 from xml.dom.minidom import parse
@@ -10,14 +9,6 @@ from Util import *
 class Model:
 
 	Formats = ["ls2", "lsx"]
-	Header0 = struct.unpack("<b", "L")[0]
-	Header1 = struct.unpack("<b", "S")[0]
-	VersionMajor = 2
-	VersionMinor = 7
-	
-	SEEK_CUR = 0
-	SEEK_SET = 1
-	SEEK_END = 2
 	
 	@staticmethod
 	def readFile(format, filename):
@@ -63,10 +54,10 @@ class Model:
 		try:
 			file = open(filename, "wb")
 			Util.start(file)
-			Util.dumpUint8(Model.Header0)
-			Util.dumpUint8(Model.Header1)
-			Util.dumpUint8(Model.VersionMajor)
-			Util.dumpUint8(Model.VersionMinor)
+			Util.dumpUint8(Util.Header0)
+			Util.dumpUint8(Util.Header1)
+			Util.dumpUint8(Util.VersionMajor)
+			Util.dumpUint8(Util.VersionMinor)
 			Ls2.dump(data)
 		finally:
 			if file != None:
@@ -102,24 +93,21 @@ class Model:
 	@staticmethod
 	def writeLsx(filename, data):
 		file = None
-		"""
 		try:
 			file = open(filename, "wb")
 			Util.start(file)
-			Util.dumpUint8(Model.Header0)
-			Util.dumpUint8(Model.Header1)
-			Util.dumpUint8(Model.VersionMajor)
-			Util.dumpUint8(Model.VersionMinor)
+			Util.stream.write(Lsx.XML_HEADER)
+			Util.stream.write(Lsx.LITESER_XML_ROOT_BEGIN)
 			Lsx.dump(data)
+			Util.stream.write(Lsx.LITESER_XML_ROOT_END)
 		finally:
 			if file != None:
 				Util.finish(file)
 				file.close()
-		"""
 		
 	@staticmethod
 	def _checkVersion(major, minor):
-		if major != Model.VersionMajor:
-			raise Exception("Liteser Read Error! Version mismatch: expected %d.%d, got %d.%d" % (Model.VersionMajor, Model.VersionMinor, major, minor))
-		if minor < Model.VersionMinor:
-			raise Exception("Minor version mismatch while loading: expected %d.%d, got %d.%d" % (Model.VersionMajor, Model.VersionMinor, major, minor))
+		if major != Util.VersionMajor:
+			raise Exception("Liteser Read Error! Version mismatch: expected %d.%d, got %d.%d" % (Util.VersionMajor, Util.VersionMinor, major, minor))
+		if minor < Util.VersionMinor:
+			raise Exception("Minor version mismatch while loading: expected %d.%d, got %d.%d" % (Util.VersionMajor, Util.VersionMinor, major, minor))

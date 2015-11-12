@@ -35,9 +35,6 @@
 	stream->write(_indent + "<" + hstr(string));
 #define FINISH_LINE(string) \
 	stream->writeLine(hstr(string) + "/>");
-#define FINISH_NODE(string) \
-	stream->writeLine(hstr(string) + ">"); \
-	_indent += "\t";
 
 namespace liteser
 {
@@ -139,7 +136,7 @@ namespace liteser
 			}
 			else if (variable->type->value != Type::OBJECT && variable->type->value != Type::OBJPTR)
 			{
-				START_LINE(hsprintf("Element value=\"", variable->name.cStr(), variable->type->value));
+				START_LINE("Element value=\"");
 			}
 		}
 

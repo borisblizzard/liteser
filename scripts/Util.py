@@ -6,6 +6,11 @@ from xml.dom.minidom import parse
 
 class Util:
 	
+	Header0 = struct.unpack("<b", "L")[0]
+	Header1 = struct.unpack("<b", "S")[0]
+	VersionMajor = 2
+	VersionMinor = 7
+	
 	@staticmethod
 	def getFileList(path):
 		print "  checking %s" % path
@@ -88,6 +93,7 @@ class Util:
 			return True, id
 		return False, Util.stringIds[string] + 1
 		
+	# XML utility
 	@staticmethod
 	def _getChildNodes(node):
 		result = []
@@ -95,6 +101,36 @@ class Util:
 			if child.nodeType == node.ELEMENT_NODE:
 				result.append(child)
 		return result
+		
+	@staticmethod
+	def _indentIncrease():
+		Util._indent += "\t"
+
+	@staticmethod
+	def _indentDecrease():
+		Util._indent = Util._indent[0:len(Util._indent) - 1]
+		
+	@staticmethod
+	def _writeNode(string):
+		Util.stream.write(Util._indent + "<" + string + "/>\n")
+
+	@staticmethod
+	def _openNode(string):
+		Util.stream.write(Util._indent + "<" + string + ">\n")
+		Util._indentIncrease()
+		
+	@staticmethod
+	def _closeNode(string):
+		Util._indentDecrease()
+		Util.stream.write(Util._indent + "</" + string + ">\n")
+
+	@staticmethod
+	def _startLine(string):
+		Util.stream.write(Util._indent + "<" + string)
+
+	@staticmethod
+	def _finishLine(string):
+		Util.stream.write(string + "/>\n")
 
 	# binary data loading
 	@staticmethod
