@@ -74,13 +74,13 @@ class Lsx:
 	def __loadContainer(node, variable, type):
 		children = Util._getChildNodes(node)
 		variable.containerSize = len(children)
-		subTypes = node.getAttribute("sub_types").split(",")
-		for subType in subTypes:
-			loadType = int(subType, 16)
-			if loadType == Type.HARRAY or loadType == Type.HMAP:
-				raise Exception("Template container within a template container detected, not supported: %02X" % loadType)
-			variable.type.subTypes.append(Type(loadType))
 		if variable.containerSize > 0:
+			subTypes = node.getAttribute("sub_types").split(",")
+			for subType in subTypes:
+				loadType = int(subType, 16)
+				if loadType == Type.HARRAY or loadType == Type.HMAP:
+					raise Exception("Template container within a template container detected, not supported: %02X" % loadType)
+				variable.type.subTypes.append(Type(loadType))
 			variable.createSubVariables()
 			for i in xrange(len(variable.subVariables)):
 				Lsx.__loadVariable(children[i], variable.subVariables[i], variable.subVariables[i].type.value)
