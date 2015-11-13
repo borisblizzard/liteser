@@ -185,8 +185,8 @@ class Ls2:
 			Util.dumpUint32(len(variable.type.subTypes))
 			for type in variable.type.subTypes:
 				Ls2._dumpType(type.value)
-			for variable in variable.subVariables:
-				Ls2.__dumpVariable(variable)
+			for subVariable in variable.subVariables:
+				Ls2.__dumpVariable(subVariable)
 
 	@staticmethod
 	def _dumpString(value):

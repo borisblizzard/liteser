@@ -46,7 +46,7 @@ class Lsx:
 		elif loadType == Type.DOUBLE:
 			variable.value = float(node.getAttribute("value"))
 		elif loadType == Type.BOOL:
-			variable.value = (node.getAttribute("value") != 0)
+			variable.value = (node.getAttribute("value") != "0")
 		elif loadType == Type.HSTR:
 			variable.value = Lsx._loadString(node)
 		elif loadType == Type.HVERSION:
@@ -84,6 +84,8 @@ class Lsx:
 			variable.createSubVariables()
 			for i in xrange(len(variable.subVariables)):
 				Lsx.__loadVariable(children[i], variable.subVariables[i], variable.subVariables[i].type.value)
+			if len(variable.type.subTypes) > 1: # requires this correction due to HMAP having subcontainers
+				variable.containerSize = variable.subVariables[0].containerSize
 
 	@staticmethod
 	def _loadString(node):
