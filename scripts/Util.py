@@ -57,7 +57,7 @@ class Util:
 
 	@staticmethod
 	def _tryGetObject(id, idExists = True):
-		if id == 0 or idExists:
+		if id == 0 or not idExists:
 			return idExists, None
 		if id - 1 >= len(Util.objects):
 			return False, None
