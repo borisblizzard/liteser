@@ -56,9 +56,9 @@ class Util:
 		Util._indent = "\t"
 
 	@staticmethod
-	def _tryGetObject(id):
-		if id == 0:
-			return True, None
+	def _tryGetObject(id, idExists = True):
+		if id == 0 or idExists:
+			return idExists, None
 		if id - 1 >= len(Util.objects):
 			return False, None
 		return True, Util.objects[id - 1]

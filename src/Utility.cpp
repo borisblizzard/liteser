@@ -25,12 +25,12 @@ namespace liteser
 	hsbase* stream = NULL;
 	hstr _indent = "\t";
 
-	bool __tryGetObject(unsigned int id, Serializable** object)
+	bool __tryGetObject(unsigned int id, Serializable** object, bool idExists)
 	{
-		if (id == 0)
+		if (id == 0 || !idExists)
 		{
 			*object = NULL;
-			return true;
+			return idExists;
 		}
 		if ((int)id - 1 >= objects.size())
 		{

@@ -127,8 +127,11 @@ class Lsx:
 	def _loadObject(node):
 		if node.tagName != "Object":
 			node = Util._getChildNodes(node)[0]
-		id = int(node.getAttribute("id"))
-		result, object = Util._tryGetObject(id)
+		id = 0
+		idExists = node.hasAttribute("id")
+		if idExists:
+			id = int(node.getAttribute("id"))
+		result, object = Util._tryGetObject(id, idExists)
 		if not result:
 			className = node.getAttribute("name")
 			if object == None:

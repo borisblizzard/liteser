@@ -24,7 +24,7 @@ namespace liteser
 	extern hsbase* stream;
 	extern hstr _indent;
 	
-	bool __tryGetObject(unsigned int id, Serializable** object);
+	bool __tryGetObject(unsigned int id, Serializable** object, bool idExists = true);
 	bool __tryMapObject(unsigned int* id, Serializable* object);
 	bool __tryGetString(unsigned int id, hstr* string);
 	bool __tryMapString(unsigned int* id, chstr string);

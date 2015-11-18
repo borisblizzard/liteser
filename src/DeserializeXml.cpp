@@ -208,8 +208,13 @@ namespace liteser
 			{
 				node = node->iterChildren();
 			}
-			unsigned int id = (unsigned int)node->pint("id");
-			if (!__tryGetObject(id, value))
+			unsigned int id = 0;
+			bool idExists = node->pexists("id");
+			if (idExists)
+			{
+				id = (unsigned int)node->pint("id");
+			}
+			if (!__tryGetObject(id, value, idExists))
 			{
 				hstr className = node->pstr("name");
 				if (*value == NULL)
@@ -270,8 +275,13 @@ namespace liteser
 		bool __skipObject(hlxml::Node* node)
 		{
 			Serializable* dummy = NULL;
-			unsigned int id = (unsigned int)node->pint("id");
-			if (!__tryGetObject(id, &dummy))
+			unsigned int id = 0;
+			bool idExists = node->pexists("id");
+			if (idExists)
+			{
+				id = (unsigned int)node->pint("id");
+			}
+			if (!__tryGetObject(id, &dummy, idExists))
 			{
 				__forceMapEmptyObject(); // required for proper indexing of later variables
 				foreach_xmlnode (child, node)
