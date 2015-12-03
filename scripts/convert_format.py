@@ -26,10 +26,10 @@ def process():
 	if len(sys.argv) > 5:
 		deleteOriginals = (sys.argv[5] == "1")
 	if not inputFormat in Model.Formats:
-		print "ERROR: Format not support: " + inputFormat
+		print "ERROR: Format not supported: " + inputFormat
 		return
 	if not outputFormat in Model.Formats:
-		print "ERROR: Format not support: " + outputFormat
+		print "ERROR: Format not supported: " + outputFormat
 		return
 	
 	if os.path.isdir(inputPath):
