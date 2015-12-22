@@ -274,6 +274,10 @@ namespace liteser
 
 		bool __skipObject(hlxml::Node* node)
 		{
+			if (*node != "Object")
+			{
+				node = node->iterChildren();
+			}
 			Serializable* dummy = NULL;
 			unsigned int id = 0;
 			bool idExists = node->pexists("id");
