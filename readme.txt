@@ -128,6 +128,7 @@ Limitations:
   you have to create a typedef first.
 - hltypes::Map keys do not support bool due to the implementation of bool within std::map which does
   not allow them to be modified in a simple way.
+- hltypes::Map keys do not support classes that inherit liteser::Serializable.
 - hltypes::Map keys and values do not support container types.
 - hltypes::Map keys and values do not support henum-derived types.
 
