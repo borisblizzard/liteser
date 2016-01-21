@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------------------------------
-Lite Serializer 2.1 Readme
+Lite Serializer 2.7 Readme
 ------------------------------------------------------------------------------------------------------
 
 	1. About
@@ -79,8 +79,11 @@ This macro call will declare all variables within the class as well as their ser
 deserialization procedures.
 
 Limitations:
-Keep in mind that you are limited to defining serializable variables only within one of the scopes
-(public, protected, private, etc.).
+- Keep in mind that you are limited to defining serializable variables only within one of the scopes
+  (public, protected, private, etc.).
+- Make sure that there is a white space between the type and the variable name. Something like
+  "(float)anotherVar" will not work while "(float) anotherVar" will. This is necessary due to how C++
+  processes macros.
 
 ------------------------------------------------------------------------------------------------------
 
