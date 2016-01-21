@@ -121,7 +121,7 @@ namespace liteser
 			if (variable->type->value == Type::HARRAY || variable->type->value == Type::HMAP)
 			{
 				harray<hstr> types;
-				foreach(Type*, it, variable->type->subTypes)
+				foreach (Type*, it, variable->type->subTypes)
 				{
 					types += hsprintf("%02X", (*it)->value);
 				}
