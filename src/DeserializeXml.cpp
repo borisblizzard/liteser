@@ -214,7 +214,7 @@ namespace liteser
 			{
 				id = (unsigned int)node->pint("id");
 			}
-			if (!__tryGetObject(id, value, idExists))
+			if (!idExists || !__tryGetObject(id, value))
 			{
 				hstr className = node->pstr("name");
 				if (*value == NULL)
@@ -285,7 +285,7 @@ namespace liteser
 			{
 				id = (unsigned int)node->pint("id");
 			}
-			if (!__tryGetObject(id, &dummy, idExists))
+			if (!idExists || !__tryGetObject(id, &dummy))
 			{
 				__forceMapEmptyObject(); // required for proper indexing of later variables
 				foreach_xmlnode (child, node)
