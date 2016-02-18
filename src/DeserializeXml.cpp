@@ -17,7 +17,6 @@
 #include <hltypes/hstring.h>
 #include <hltypes/hversion.h>
 #include <hlxml/Node.h>
-#include <hlxml/Property.h>
 
 #include "DeserializeXml.h"
 #include "Factory.h"
@@ -204,7 +203,7 @@ namespace liteser
 
 		void __loadObject(hlxml::Node* node, Serializable** value)
 		{
-			if (*node != "Object")
+			if (node->value != "Object")
 			{
 				node = node->iterChildren();
 			}
@@ -274,7 +273,7 @@ namespace liteser
 
 		bool __skipObject(hlxml::Node* node)
 		{
-			if (*node != "Object")
+			if (node->value != "Object")
 			{
 				node = node->iterChildren();
 			}
