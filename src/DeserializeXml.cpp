@@ -91,7 +91,7 @@ namespace liteser
 				{
 					if (loadTypes[i] != variable->type->subTypes[i]->value)
 					{
-						throw Exception(hsprintf("Variable type has changed. Expected: %02X, Got: %02X", variable->type->value, loadTypes[i]));
+						throw Exception(hsprintf("Variable type of '%s' has changed. Expected: %02X, Got: %02X", variable->name.cStr(), variable->type->value, loadTypes[i]));
 					}
 					if (loadTypes[i] == Type::HARRAY || loadTypes[i] == Type::HMAP)
 					{
@@ -243,7 +243,7 @@ namespace liteser
 					{
 						if (loadType != variable->type->value)
 						{
-							throw Exception(hsprintf("Variable type has changed. Expected: %02X, Got: %02X", variable->type->value, loadType));
+							throw Exception(hsprintf("Variable type of '%s' has changed. Expected: %02X, Got: %02X", variable->name.cStr(), variable->type->value, loadType));
 						}
 						__loadVariable(child, variable, loadType);
 						variables.remove(variable);
