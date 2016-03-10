@@ -17,6 +17,7 @@
 
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
+#include <gtypes/Vector3.h>
 #include <hltypes/harray.h>
 #include <hltypes/henum.h>
 #include <hltypes/hltypesUtil.h>

@@ -268,6 +268,10 @@ namespace liteser
 			}
 		}
 
+	private:
+		bool _createSubVariablesHarray();
+		bool _createSubVariablesHmap();
+
 	};
 
 }
