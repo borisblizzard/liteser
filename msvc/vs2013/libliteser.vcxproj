@@ -87,10 +87,9 @@
     <ClCompile Include="..\..\src\SerializeXml.cpp" />
     <ClCompile Include="..\..\src\Type.cpp" />
     <ClCompile Include="..\..\src\Utility.cpp" />
-    <ClCompile Include="..\..\src\Variable_0.cpp" />
-    <ClCompile Include="..\..\src\Variable_1.cpp" />
-    <ClCompile Include="..\..\src\Variable_2.cpp" />
-    <ClCompile Include="..\..\src\Variable_3.cpp" />
+    <ClCompile Include="..\..\src\Variable.cpp">
+		<AdditionalOptions Condition="'$(Platform)'=='Win32'">/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\fileproperties.rc">
