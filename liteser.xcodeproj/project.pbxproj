@@ -263,7 +263,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0730;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "liteser" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -387,6 +387,7 @@
 		C9160585132AE60400914FFC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
@@ -570,6 +571,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/libliteser_ios.dst;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -595,6 +597,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/libliteser_ios.dst;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -621,6 +624,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DSTROOT = /tmp/libliteser_ios.dst;
 				GCC_PREPROCESSOR_DEFINITIONS = (
