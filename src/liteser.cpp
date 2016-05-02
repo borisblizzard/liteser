@@ -139,7 +139,7 @@
 		_start(stream); \
 		hlxml::Document doc(*stream); \
 		hlxml::Node* root = doc.root(); \
-		if (root->value != "Liteser") \
+		if (root->name != "Liteser") \
 		{ \
 			throw Exception("Invalid header!"); \
 		} \
@@ -161,7 +161,7 @@
 		if (major > 2 || major == 2 && minor >= 7) \
 		{ \
 			node = root->iterChildren(); \
-			if (node->next() != NULL || node->value != "Container" || node->pstr("type", "00").unhex() != Type::HARRAY) \
+			if (node->next() != NULL || node->name != "Container" || node->pstr("type", "00").unhex() != Type::HARRAY) \
 			{ \
 				_finish(stream); \
 				throw Exception("Cannot load object from file that does not contain a harray<\"" #type "\">!"); \
@@ -322,7 +322,7 @@ namespace liteser
 			_start(stream);
 			hlxml::Document doc(*stream);
 			hlxml::Node* root = doc.root();
-			if (root->value != "Liteser")
+			if (root->name != "Liteser")
 			{
 				throw Exception("Invalid header!");
 			}
@@ -343,7 +343,7 @@ namespace liteser
 			hlxml::Node* node = root->iterChildren();
 			if (major > 2 || (major == 2 && minor >= 7))
 			{
-				if (node->next() != NULL || node->value != "Object")
+				if (node->next() != NULL || node->name != "Object")
 				{
 					_finish(stream);
 					throw Exception("Cannot load object from file that does not contain an object!");

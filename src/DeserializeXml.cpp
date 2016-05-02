@@ -203,7 +203,7 @@ namespace liteser
 
 		void __loadObject(hlxml::Node* node, Serializable** value)
 		{
-			if (node->value != "Object")
+			if (node->name != "Object")
 			{
 				node = node->iterChildren();
 			}
@@ -273,7 +273,7 @@ namespace liteser
 
 		bool __skipObject(hlxml::Node* node)
 		{
-			if (node->value != "Object")
+			if (node->name != "Object")
 			{
 				node = node->iterChildren();
 			}
