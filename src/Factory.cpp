@@ -31,7 +31,7 @@ namespace liteser
 		Serializable* (*constructor)() = __lsConstructors->tryGet(name, NULL);
 		if (constructor == NULL)
 		{
-			throw Exception("Detected class not registered as a Serializable: " + name);
+			throw Exception("Detected class not registered as a Serializable: '" + name + "'");
 		}
 		return (*constructor)();
 	}
