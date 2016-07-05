@@ -24,6 +24,7 @@ namespace liteser
 	hmap<hstr, unsigned int> stringIds;
 	hsbase* stream = NULL;
 	hstr _indent = "\t";
+	harray<harray<Type::Value> > compatibleTypes;
 
 	bool __tryGetObject(unsigned int id, Serializable** object)
 	{
@@ -121,6 +122,40 @@ namespace liteser
 	bool _isActive()
 	{
 		return (stream != NULL);
+	}
+
+	inline void __setupCompatibleTypes()
+	{
+		harray<Type::Value> values;
+		values += Type::INT8;
+		values += Type::UINT8;
+		values += Type::INT16;
+		values += Type::UINT16;
+		values += Type::INT32;
+		values += Type::UINT32;
+		values += Type::INT64;
+		values += Type::UINT64;
+		compatibleTypes += values;
+		values.clear();
+		values += Type::FLOAT;
+		values += Type::DOUBLE;
+		compatibleTypes += values;
+	}
+
+	bool _isCompatibleType(const Type::Value& variableType, const Type::Value& loadedType)
+	{
+		if (compatibleTypes.size() == 0)
+		{
+			__setupCompatibleTypes();
+		}
+		foreach (harray<Type::Value>, it, compatibleTypes)
+		{
+			if ((*it).has(variableType) && (*it).has(loadedType))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	void _checkVersion(unsigned char major, unsigned char minor)

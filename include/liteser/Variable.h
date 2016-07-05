@@ -167,6 +167,26 @@ namespace liteser
 			return ((VPtr<T>*)this->ptr)->value;
 		}
 
+		template <typename T>
+		inline void setValue(const T& value)
+		{
+			// this is from an internal list of possible compatible types
+			switch (this->type->value)
+			{
+			case Type::INT8:	*((VPtr<char>*)this->ptr)->value			= (char)value;				break;
+			case Type::UINT8:	*((VPtr<unsigned char>*)this->ptr)->value	= (unsigned char)value;		break;
+			case Type::INT16:	*((VPtr<short>*)this->ptr)->value			= (short)value;				break;
+			case Type::UINT16:	*((VPtr<unsigned short>*)this->ptr)->value	= (unsigned short)value;	break;
+			case Type::INT32:	*((VPtr<int>*)this->ptr)->value				= (int)value;				break;
+			case Type::UINT32:	*((VPtr<unsigned int>*)this->ptr)->value	= (unsigned int)value;		break;
+			case Type::INT64:	*((VPtr<int64_t>*)this->ptr)->value			= (int64_t)value;			break;
+			case Type::UINT64:	*((VPtr<uint64_t>*)this->ptr)->value		= (uint64_t)value;			break;
+			case Type::FLOAT:	*((VPtr<float>*)this->ptr)->value			= (float)value;				break;
+			case Type::DOUBLE:	*((VPtr<double>*)this->ptr)->value			= (double)value;			break;
+			default:																					break;
+			}
+		}
+
 		void createSubVariables(Type::Value type);
 		void applyHmapSubVariables(Type::Value type);
 

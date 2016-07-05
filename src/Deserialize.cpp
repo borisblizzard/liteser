@@ -32,6 +32,25 @@ namespace liteser
 		return (Type::Value)stream->loadUint8();
 	}
 
+	inline void __loadVariableCompatible(Variable* variable, Type::Value loadType)
+	{
+		// these are predefined compatible types only
+		switch (loadType)
+		{
+		case Type::INT8:	variable->setValue(stream->loadInt8());		break;
+		case Type::UINT8:	variable->setValue(stream->loadUint8());	break;
+		case Type::INT16:	variable->setValue(stream->loadInt16());	break;
+		case Type::UINT16:	variable->setValue(stream->loadUint16());	break;
+		case Type::INT32:	variable->setValue(stream->loadInt32());	break;
+		case Type::UINT32:	variable->setValue(stream->loadUint32());	break;
+		case Type::INT64:	variable->setValue(stream->loadInt64());	break;
+		case Type::UINT64:	variable->setValue(stream->loadUint64());	break;
+		case Type::FLOAT:	variable->setValue(stream->loadFloat());	break;
+		case Type::DOUBLE:	variable->setValue(stream->loadDouble());	break;
+		default:														break;
+		}
+	}
+
 	inline void __loadVariable(Variable* variable, Type::Value loadType)
 	{
 		switch (loadType)
@@ -96,28 +115,49 @@ namespace liteser
 		variable->containerSize = stream->loadUint32();
 		if (variable->containerSize > 0)
 		{
-			Type::Value loadType = Type::NONE;
 			int typeSize = (int)stream->loadUint32();
 			if (typeSize != variable->type->subTypes.size())
 			{
 				throw Exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", variable->type->subTypes.size(), typeSize));
 			}
+			harray<Type::Value> loadTypes;
 			for_iter (i, 0, typeSize)
 			{
-				loadType = _loadType();
-				if (loadType != variable->type->subTypes[i]->value)
+				loadTypes += _loadType();
+				if (loadTypes[i] == Type::HARRAY || loadTypes[i] == Type::HMAP)
 				{
-					throw Exception(hsprintf("Variable type of '%s' has changed. Expected: %02X, Got: %02X", variable->name.cStr(), variable->type->value, loadType));
-				}
-				if (loadType == Type::HARRAY || loadType == Type::HMAP)
-				{
-					throw Exception(hsprintf("Template container within a template container detected, not supported: %02X", loadType));
+					throw Exception(hsprintf("Template container within a template container detected, not supported: %02X", loadTypes[i]));
 				}
 			}
 			variable->createSubVariables(type);
-			foreach (Variable*, it, variable->subVariables)
+			if (loadTypes.size() > 1) // if more than one load-type, the sub-variables contain the actual data
 			{
-				__loadVariable((*it), (*it)->type->value);
+				for_iter (i, 0, variable->subVariables.size())
+				{
+					__loadVariable(variable->subVariables[i], variable->subVariables[i]->type->value);
+				}
+			}
+			else if (variable->subVariables.size() > 0)
+			{
+				if (variable->type->subTypes[0]->value == loadTypes[0])
+				{
+					for_iter (i, 0, variable->subVariables.size())
+					{
+						__loadVariable(variable->subVariables[i], loadTypes[0]);
+					}
+				}
+				else
+				{
+					if (!_isCompatibleType(variable->type->subTypes[0]->value, loadTypes[0]))
+					{
+						throw Exception(hsprintf("Variable subtype of '%s' has changed. Expected: %02X, Got: %02X", variable->name.cStr(), variable->type->subTypes[0]->value, loadTypes[0]));
+					}
+					hlog::warn(logTag, "Using compatible subtype for: " + variable->subVariables[0]->name);
+					for_iter (i, 0, variable->subVariables.size())
+					{
+						__loadVariableCompatible(variable->subVariables[i], loadTypes[0]);
+					}
+				}
 			}
 			if (type == Type::HMAP)
 			{
@@ -225,28 +265,38 @@ namespace liteser
 			Variable* variable = NULL;
 			hstr variableName;
 			Type::Value loadType;
+			int variableIndex = -1;
 			while (size > 0 && variables.size() > 0)
 			{
 				_load(&variableName);
 				variable = NULL;
-				foreach (Variable*, it, variables)
+				variableIndex = -1;
+				for_iter (i, 0, variables.size())
 				{
-					if ((*it)->name == variableName)
+					if (variables[i]->name == variableName)
 					{
-						variable = (*it);
+						variable = variables[i];
+						variableIndex = i;
 						break;
 					}
 				}
 				loadType = _loadType();
 				if (variable != NULL)
 				{
-					if (loadType != variable->type->value)
+					if (variable->type->value == loadType)
 					{
-						throw Exception(hsprintf("Variable type of '%s' has changed. Expected: %02X, Got: %02X", variable->name.cStr(), variable->type->value, loadType));
+						__loadVariable(variable, loadType);
 					}
-					__loadVariable(variable, loadType);
-					variables.remove(variable);
-					delete variable;
+					else
+					{
+						if (!_isCompatibleType(variable->type->value, loadType))
+						{
+							throw Exception(hsprintf("Variable type of '%s' has changed. Expected: %02X, Got: %02X", variable->name.cStr(), variable->type->value, loadType));
+						}
+						hlog::warn(logTag, "Using compatible type for: " + variable->name);
+						__loadVariableCompatible(variable, loadType);
+					}
+					delete variables.removeAt(variableIndex);
 				}
 				else
 				{

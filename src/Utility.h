@@ -16,6 +16,7 @@
 #include <hltypes/hsbase.h>
 
 #include "Variable.h"
+#include "Type.h"
 
 namespace liteser
 {
@@ -32,6 +33,7 @@ namespace liteser
 	void _start(hsbase* stream);
 	void _finish(hsbase* stream);
 	bool _isActive();
+	bool _isCompatibleType(const Type::Value& variableType, const Type::Value& loadedType);
 	void _checkVersion(unsigned char major, unsigned char minor);
 
 }
