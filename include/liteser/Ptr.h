@@ -26,6 +26,7 @@ namespace liteser
 	public:
 		inline Ptr() { }
 		inline virtual ~Ptr() { }
+
 	};
 
 	template <typename T>
@@ -33,6 +34,7 @@ namespace liteser
 	{
 	public:
 		T* value;
+
 		inline VPtr(T* value) { this->value = value; }
 		inline ~VPtr() { }
 
@@ -43,6 +45,7 @@ namespace liteser
 	{
 	public:
 		harray<T>* data;
+
 		inline CPtr(harray<T>* data) { this->data = data; }
 		inline ~CPtr() { delete this->data; }
 

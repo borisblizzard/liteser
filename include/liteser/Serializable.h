@@ -29,7 +29,7 @@
 	liteser::Factory::Register<classe> classe::_lsRegister(#classe);
 /// @brief Use this instead of LS_CLASS_DECLARE if class contains pure virtual methods. In this case LS_CLASS_DEFINE is not needed.
 #define LS_CLASS_DECLARE_ABSTRACT(classe) \
-	inline hstr _lsName() { return #classe; }
+	inline hstr _lsName() const { return #classe; }
 
 #define LS_CLASS_DECLARE_CLONEABLE(classe) \
 	LS_CLASS_DECLARE(classe); \
@@ -71,7 +71,7 @@ namespace liteser
 		Serializable();
 		virtual ~Serializable();
 
-		inline virtual hstr _lsName() { return "liteser::Serializer"; }
+		inline virtual hstr _lsName() const { return "liteser::Serializer"; }
 		inline virtual harray<Variable*> _lsVars() { return harray<Variable*>(); }
 
 	protected:

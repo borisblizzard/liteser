@@ -32,9 +32,11 @@ namespace liteser
 			{
 				Factory::_register(name, &_create<T>);
 			}
+
 			inline ~Register()
 			{
 			}
+
 		};
 
 		~Factory();
