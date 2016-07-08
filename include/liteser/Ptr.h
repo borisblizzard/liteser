@@ -25,7 +25,7 @@ namespace liteser
 	{
 	public:
 		inline Ptr() { }
-		inline virtual ~Ptr() { }
+		virtual inline ~Ptr() { }
 
 	};
 

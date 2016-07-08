@@ -71,8 +71,8 @@ namespace liteser
 		Serializable();
 		virtual ~Serializable();
 
-		inline virtual hstr _lsName() const { return "liteser::Serializer"; }
-		inline virtual harray<Variable*> _lsVars() { return harray<Variable*>(); }
+		virtual inline hstr _lsName() const { return "liteser::Serializer"; }
+		virtual inline harray<Variable*> _lsVars() { return harray<Variable*>(); }
 
 	protected:
 		virtual Serializable* clone();
