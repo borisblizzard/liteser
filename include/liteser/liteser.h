@@ -35,7 +35,7 @@
 
 namespace liteser
 {
-	extern hstr logTag;
+	liteserExport extern hstr logTag;
 
 	liteserFnExport bool serialize(hsbase* stream, Serializable* object);
 	liteserFnExport bool serialize(hsbase* stream, harray<Serializable*>& object);
