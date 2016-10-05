@@ -98,7 +98,7 @@ namespace liteser
 
 		void __loadContainer(hlxml::Node* node, Variable* variable, Type::Value type)
 		{
-			variable->containerSize = node->getChildCount();
+			variable->containerSize = node->children.size();
 			if (variable->containerSize > 0)
 			{
 				harray<Type::Value> loadTypes;
@@ -118,14 +118,12 @@ namespace liteser
 						throw Exception(hsprintf("Template container within a template container detected, not supported: %02X", loadTypes[i]));
 					}
 				}
-				hlxml::Node* child = node->iterChildren();
 				variable->createSubVariables(type);
 				if (loadTypes.size() > 1) // if more than one load-type, the sub-variables contain the actual data
 				{
 					for_iter (i, 0, variable->subVariables.size())
 					{
-						__loadVariable(child, variable->subVariables[i], variable->subVariables[i]->type->value);
-						child = child->next();
+						__loadVariable(node->children[i], variable->subVariables[i], variable->subVariables[i]->type->value);
 					}
 				}
 				else if (variable->subVariables.size() > 0)
@@ -134,8 +132,7 @@ namespace liteser
 					{
 						for_iter (i, 0, variable->subVariables.size())
 						{
-							__loadVariable(child, variable->subVariables[i], loadTypes[0]);
-							child = child->next();
+							__loadVariable(node->children[i], variable->subVariables[i], loadTypes[0]);
 						}
 					}
 					else
@@ -147,8 +144,7 @@ namespace liteser
 						hlog::warn(logTag, "Using compatible subtype for: " + variable->subVariables[0]->name);
 						for_iter (i, 0, variable->subVariables.size())
 						{
-							__loadVariableCompatible(child, variable->subVariables[i], loadTypes[0]);
-							child = child->next();
+							__loadVariableCompatible(node->children[i], variable->subVariables[i], loadTypes[0]);
 						}
 					}
 				}
@@ -162,8 +158,7 @@ namespace liteser
 		bool __skipContainer(hlxml::Node* node, Type::Value type)
 		{
 			bool result = true;
-			int containerSize = node->getChildCount();
-			if (containerSize > 0)
+			if (node->children.size() > 0)
 			{
 				int subTypesSize = (type == Type::HMAP ? 2 : 1);
 				harray<Type::Value> subTypes;
@@ -180,19 +175,20 @@ namespace liteser
 				{
 					foreach_xmlnode (child, node)
 					{
-						result &= __skipVariable(child, subTypes.first());
+						result &= __skipVariable((*child), subTypes.first());
 					}
 				}
 				else
 				{
-					hlxml::Node* container = node->iterChildren();
-					foreach (Type::Value, it, subTypes)
+					foreach_xmlnode (container, node)
 					{
-						foreach_xmlnode (child, container)
+						foreach(Type::Value, it, subTypes)
 						{
-							result &= __skipVariable(child, (*it));
+							foreach_xmlnode(child, (*container))
+							{
+								result &= __skipVariable((*child), (*it));
+							}
 						}
-						container = container->next();
 					}
 				}
 			}
@@ -252,7 +248,7 @@ namespace liteser
 		{
 			if (node->name != "Object")
 			{
-				node = node->iterChildren();
+				node = node->children.first();
 			}
 			unsigned int id = 0;
 			bool idExists = node->pexists(OBJECT_ID);
@@ -273,10 +269,10 @@ namespace liteser
 				int variableIndex = -1;
 				hstr variableName;
 				Type::Value loadType;
-				hlxml::Node* child = node->iterChildren();
-				while (child != NULL && variables.size() > 0)
+				int j = 0;
+				while (j < node->children.size() && variables.size() > 0)
 				{
-					variableName = child->pstr("name");
+					variableName = node->children[j]->pstr("name");
 					variable = NULL;
 					variableIndex = -1;
 					for_iter (i, 0, variables.size())
@@ -288,12 +284,12 @@ namespace liteser
 							break;
 						}
 					}
-					loadType = (Type::Value)child->pstr("type").unhex();
+					loadType = (Type::Value)node->children[j]->pstr("type").unhex();
 					if (variable != NULL)
 					{
 						if (variable->type->value == loadType)
 						{
-							__loadVariable(child, variable, loadType);
+							__loadVariable(node->children[j], variable, loadType);
 						}
 						else
 						{
@@ -302,16 +298,16 @@ namespace liteser
 								throw Exception(hsprintf("Variable type of '%s' has changed. Expected: %02X, Got: %02X", variable->name.cStr(), variable->type->value, loadType));
 							}
 							hlog::warn(logTag, "Using compatible type for: " + variable->name);
-							__loadVariableCompatible(child, variable, loadType);
+							__loadVariableCompatible(node->children[j], variable, loadType);
 						}
 						delete variables.removeAt(variableIndex);
 					}
 					else
 					{
 						hlog::warn(logTag, "Could not find variable with name: " + variableName);
-						__skipVariable(child, loadType);
+						__skipVariable(node->children[j], loadType);
 					}
-					child = child->next();
+					++j;
 				}
 				if (variables.size() > 0)
 				{
@@ -332,7 +328,7 @@ namespace liteser
 		{
 			if (node->name != "Object")
 			{
-				node = node->iterChildren();
+				node = node->children.first();
 			}
 			Serializable* dummy = NULL;
 			unsigned int id = 0;
@@ -346,7 +342,7 @@ namespace liteser
 				__forceMapEmptyObject(); // required for proper indexing of later variables
 				foreach_xmlnode (child, node)
 				{
-					__skipVariable(child, (Type::Value)child->pstr("type").unhex());
+					__skipVariable((*child), (Type::Value)(*child)->pstr("type").unhex());
 				}
 			}
 			return true;
@@ -358,7 +354,7 @@ namespace liteser
 			foreach_xmlnode (child, node)
 			{
 				object = NULL;
-				__loadObject(child, &object);
+				__loadObject((*child), &object);
 				value->add(object);
 			}
 		}
@@ -368,7 +364,7 @@ namespace liteser
 		{ \
 			foreach_xmlnode (child, node) \
 			{ \
-				value->add(child->p ## loadType(VALUE)); \
+				value->add((*child)->p ## loadType(VALUE)); \
 			} \
 		}
 
@@ -378,7 +374,7 @@ namespace liteser
 			type object; \
 			foreach_xmlnode (child, node) \
 			{ \
-				_load(child, &object); \
+				_load((*child), &object); \
 				value->add(object); \
 			} \
 		}

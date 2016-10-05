@@ -160,12 +160,12 @@
 		hlxml::Node* node = root; \
 		if (major > 2 || major == 2 && minor >= 7) \
 		{ \
-			node = root->iterChildren(); \
-			if (node->next() != NULL || node->name != "Container" || node->pstr("type", "00").unhex() != Type::HARRAY) \
+			if (root->children.size() != 1 || root->children.first()->name != "Container" || root->children.first()->pstr("type", "00").unhex() != Type::HARRAY) \
 			{ \
 				_finish(stream); \
 				throw Exception("Cannot load object from file that does not contain a harray<\"" #type "\">!"); \
 			} \
+			node = root->children.first(); \
 			Type subType; \
 			subType.assign((VPtr<type>*)NULL); \
 			harray<hstr> subTypes = node->pstr("sub_types", "00").split(',', -1, true); \
@@ -340,14 +340,15 @@ namespace liteser
 			unsigned char major = (unsigned char)(int)majorString;
 			unsigned char minor = (unsigned char)(int)minorString;
 			_checkVersion(major, minor);
-			hlxml::Node* node = root->iterChildren();
+			hlxml::Node* node = root;
 			if (major > 2 || (major == 2 && minor >= 7))
 			{
-				if (node->next() != NULL || node->name != "Object")
+				if (root->children.size() != 1 || root->children.first()->name != "Object")
 				{
 					_finish(stream);
-					throw Exception("Cannot load object from file that does not contain an object!");
+					throw Exception("Cannot load object from file that does not contain one object!");
 				}
+				node = root->children.first();
 			}
 			xml::_load(node, object);
 			_finish(stream);
