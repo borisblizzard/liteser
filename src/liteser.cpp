@@ -31,8 +31,8 @@
 #define HEADER_SIZE 4
 
 #define XML_HEADER "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
-#define LITESER_XML_ROOT_BEGIN hsprintf("<Liteser version=\"%d.%d\">\n\t", _LS_VERSION_MAJOR, _LS_VERSION_MINOR)
-#define LITESER_XML_ROOT_END "\t\n</Liteser>"
+#define LITESER_XML_ROOT_BEGIN hsprintf("<Liteser version=\"%d.%d\">\n", _LS_VERSION_MAJOR, _LS_VERSION_MINOR)
+#define LITESER_XML_ROOT_END "\n</Liteser>"
 
 #define DEFINE_HARRAY_SERIALIZER(type) \
 	bool serialize(hsbase* stream, harray<type>& value) \
