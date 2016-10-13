@@ -50,7 +50,7 @@
 	__LS_FOREACH(__LS_VAR, (__VA_ARGS__)) \
 	harray<liteser::Variable*> _lsVars();
 #define LS_VARS_DEFINE(classe, superclass, ...) \
-	inline harray<liteser::Variable*> classe::_lsVars() \
+	harray<liteser::Variable*> classe::_lsVars() \
 	{ \
 		harray<liteser::Variable*> variables = superclass::_lsVars(); \
 		__LS_FOREACH(__LS_REF, (__VA_ARGS__)) \
