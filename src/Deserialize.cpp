@@ -13,6 +13,7 @@
 #include <hltypes/harray.h>
 #include <hltypes/hlog.h>
 #include <hltypes/hmap.h>
+#include <hltypes/hresource.h>
 #include <hltypes/hsbase.h>
 #include <hltypes/hstring.h>
 #include <hltypes/hversion.h>
@@ -261,6 +262,7 @@ namespace liteser
 			}
 			__tryMapObject(&id, *value);
 			harray<Variable*> variables = (*value)->_lsVars();
+			harray<hstr> missingVariableNames;
 			unsigned int size = stream->loadUint32();
 			Variable* variable = NULL;
 			hstr variableName;
@@ -300,18 +302,32 @@ namespace liteser
 				}
 				else
 				{
-					hlog::warn(logTag, "Could not find variable with name: " + variableName);
+					missingVariableNames += variableName;
 					__skipVariable(loadType);
 				}
 				--size;
 			}
+			while (size > 0)
+			{
+				_load(&variableName);
+				loadType = _loadType();
+				missingVariableNames += variableName;
+				__skipVariable(loadType);
+				--size;
+			}
+			if (missingVariableNames.size() > 0)
+			{
+				hlog::warn(logTag, className + " - Variables not part of class definition: " + missingVariableNames.joined(','));
+			}
 			if (variables.size() > 0)
 			{
-				hlog::warn(logTag, "Not all variables were previously saved in class: " + className);
+				harray<hstr> names;
 				foreach (Variable*, it, variables)
 				{
+					names += (*it)->name;
 					delete (*it);
 				}
+				hlog::warn(logTag, className + " - Not all variables were previously saved: " + names.joined(',').cStr());
 			}
 		}
 		else if (id == 0)
