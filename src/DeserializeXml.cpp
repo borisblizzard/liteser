@@ -121,9 +121,15 @@ namespace liteser
 				variable->createSubVariables(type);
 				if (loadTypes.size() > 1) // if more than one load-type, the sub-variables contain the actual data
 				{
+					harray<int> sizes;
 					for_iter (i, 0, variable->subVariables.size())
 					{
 						__loadVariable(node->children[i], variable->subVariables[i], variable->subVariables[i]->type->value);
+						sizes += variable->subVariables[i]->containerSize;
+					}
+					if (sizes.size() > 1 && sizes.removedDuplicates().size() > 1)
+					{
+						throw Exception(hsprintf("Variable '%s' has container sub-variables that have different sizes: %s", variable->name.cStr(), sizes.cast<hstr>().joined(',').cStr()));
 					}
 				}
 				else if (variable->subVariables.size() > 0)
