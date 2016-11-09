@@ -319,6 +319,7 @@ namespace liteser
 				while (j < node->children.size())
 				{
 					variableName = node->children[j]->pstr("name");
+					loadType = (Type::Value)node->children[j]->pstr("type").unhex();
 					missingVariableNames += variableName;
 					__skipVariable(node->children[j], loadType);
 					++j;
