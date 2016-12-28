@@ -51,6 +51,7 @@
   <Import Project="props\configuration.props" />
   <ItemGroup>
     <ClInclude Include="..\..\include\liteser\Factory.h" />
+    <ClInclude Include="..\..\include\liteser\Header.h" />
     <ClInclude Include="..\..\include\liteser\liteser.h" />
     <ClInclude Include="..\..\include\liteser\liteserExport.h" />
     <ClInclude Include="..\..\include\liteser\macros.h" />
@@ -69,6 +70,7 @@
     <ClCompile Include="..\..\src\Deserialize.cpp" />
     <ClCompile Include="..\..\src\DeserializeXml.cpp" />
     <ClCompile Include="..\..\src\Factory.cpp" />
+    <ClCompile Include="..\..\src\Header.cpp" />
     <ClCompile Include="..\..\src\liteser.cpp" />
     <ClCompile Include="..\..\src\Serializable.cpp" />
     <ClCompile Include="..\..\src\Serialize.cpp" />
@@ -76,7 +78,7 @@
     <ClCompile Include="..\..\src\Type.cpp" />
     <ClCompile Include="..\..\src\Utility.cpp" />
     <ClCompile Include="..\..\src\Variable.cpp">
-		<AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

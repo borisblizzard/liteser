@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.7
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -18,6 +18,7 @@
 
 #include "Deserialize.h"
 #include "DeserializeXml.h"
+#include "Header.h"
 #include "liteser.h"
 #include "Serializable.h"
 #include "Serialize.h"
@@ -25,24 +26,20 @@
 #include "Utility.h"
 #include "Variable.h"
 
-#define _LS_HEADER_0 'L'
-#define _LS_HEADER_1 'S'
-
-#define HEADER_SIZE 4
-
 #define XML_HEADER "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
-#define LITESER_XML_ROOT_BEGIN hsprintf("<Liteser version=\"%d.%d\">\n", _LS_VERSION_MAJOR, _LS_VERSION_MINOR)
+#define LITESER_XML_ROOT_BEGIN hsprintf("<Liteser version=\"%s\">\n", version.toString(2).cStr())
 #define LITESER_XML_ROOT_END "\n</Liteser>"
 
 #define DEFINE_HARRAY_SERIALIZER(type) \
-	bool serialize(hsbase* stream, harray<type>& value) \
+	bool serialize(hsbase* stream, harray<type>& value, bool allowCircularReferences) \
 	{ \
 		if (!stream->isOpen()) \
 		{ \
 			throw FileNotOpenException("Liteser Stream"); \
 		} \
 		_start(stream); \
-		stream->writeRaw(header, HEADER_SIZE); \
+		Header header(allowCircularReferences); \
+		_writeHeader(stream, header); \
 		_dumpHarray(&value); \
 		_finish(stream); \
 		return true; \
@@ -60,17 +57,12 @@
 			throw Exception("Output harray is not empty!"); \
 		} \
 		_start(stream); \
-		unsigned char readHeader[HEADER_SIZE]; \
-		stream->readRaw(readHeader, HEADER_SIZE); \
-		if (readHeader[0] != _LS_HEADER_0 || readHeader[1] != _LS_HEADER_1) \
-		{ \
-			throw Exception("Invalid header!"); \
-		} \
-		unsigned char major = readHeader[2]; \
-		unsigned char minor = readHeader[3]; \
-		_checkVersion(major, minor); \
 		unsigned int size = 0; \
-		if (major > 2 || major == 2 && minor >= 7) \
+		Header header; \
+		_readHeader(stream, header); \
+		_setup(stream, header); \
+		_checkVersion(); \
+		if (header.version.major > 2 || (header.version.major == 2 && header.version.minor >= 7)) \
 		{ \
 			if (_loadType() != Type::HARRAY) \
 			{ \
@@ -104,13 +96,15 @@
 	}
 
 #define DEFINE_HARRAY_SERIALIZER_XML(type) \
-	bool serialize(hsbase* stream, harray<type>& value) \
+	bool serialize(hsbase* stream, harray<type>& value, bool allowCircularReferences) \
 	{ \
 		if (!stream->isOpen()) \
 		{ \
 			throw FileNotOpenException("Liteser XML Stream"); \
 		} \
 		_start(stream); \
+		Header header(allowCircularReferences); \
+		_setup(stream, header); \
 		stream->writeLine(XML_HEADER); \
 		stream->writeLine(LITESER_XML_ROOT_BEGIN); \
 		Type subType; \
@@ -154,11 +148,12 @@
 		{ \
 			throw Exception("Invalid header!"); \
 		} \
-		unsigned char major = (unsigned char)(int)majorString; \
-		unsigned char minor = (unsigned char)(int)minorString; \
-		_checkVersion(major, minor); \
+		Header header; \
+		header.version.set((unsigned char)(int)majorString, (unsigned char)(int)minorString); \
+		_setup(stream, header); \
+		_checkVersion(); \
 		hlxml::Node* node = root; \
-		if (major > 2 || major == 2 && minor >= 7) \
+		if (header.version.major > 2 || (header.version.major == 2 && header.version.minor >= 7)) \
 		{ \
 			if (root->children.size() != 1 || root->children.first()->name != "Container" || root->children.first()->pstr("type", "00").unhex() != Type::HARRAY) \
 			{ \
@@ -182,11 +177,10 @@
 
 namespace liteser
 {
-	char header[4] = {_LS_HEADER_0, _LS_HEADER_1, (char)_LS_VERSION_MAJOR, (char)_LS_VERSION_MINOR};
-
 	hstr logTag = "liteser";
+	hversion version(3, 0);
 
-	bool serialize(hsbase* stream, Serializable* object)
+	bool serialize(hsbase* stream, Serializable* object, bool allowCircularReferences)
 	{
 		if (!stream->isOpen())
 		{
@@ -194,7 +188,9 @@ namespace liteser
 		}
 		// TODO - add exception handling
 		_start(stream);
-		stream->writeRaw(header, HEADER_SIZE);
+		Header header(allowCircularReferences);
+		_setup(stream, header);
+		_writeHeader(stream, header);
 		_dumpType(Type::OBJPTR);
 		_dump(&object);
 		_finish(stream);
@@ -231,16 +227,11 @@ namespace liteser
 		}
 		// TODO - add exception handling
 		_start(stream);
-		unsigned char readHeader[HEADER_SIZE];
-		stream->readRaw(readHeader, HEADER_SIZE);
-		if (readHeader[0] != _LS_HEADER_0 || readHeader[1] != _LS_HEADER_1)
-		{
-			throw Exception("Invalid header!");
-		}
-		unsigned char major = readHeader[2];
-		unsigned char minor = readHeader[3];
-		_checkVersion(major, minor);
-		if (major > 2 || (major == 2 && minor >= 7))
+		Header header;
+		_readHeader(stream, header);
+		_setup(stream, header);
+		_checkVersion();
+		if (header.version.major > 2 || (header.version.major == 2 && header.version.minor >= 7)) // this compatibility could be limited to only 2.7 at some point
 		{
 			Type::Value type = _loadType();
 			if (type != Type::OBJPTR)
@@ -274,7 +265,7 @@ namespace liteser
 
 	namespace xml
 	{
-		bool serialize(hsbase* stream, Serializable* object)
+		bool serialize(hsbase* stream, Serializable* object, bool allowCircularReferences)
 		{
 			if (!stream->isOpen())
 			{
@@ -282,6 +273,8 @@ namespace liteser
 			}
 			// TODO - add exception handling
 			_start(stream);
+			Header header(allowCircularReferences);
+			_setup(stream, header);
 			stream->writeLine(XML_HEADER);
 			stream->writeLine(LITESER_XML_ROOT_BEGIN);
 			xml::_dump(&object);
@@ -337,11 +330,12 @@ namespace liteser
 			{
 				throw Exception("Invalid header!");
 			}
-			unsigned char major = (unsigned char)(int)majorString;
-			unsigned char minor = (unsigned char)(int)minorString;
-			_checkVersion(major, minor);
+			Header header;
+			header.version.set((unsigned char)(int)majorString, (unsigned char)(int)minorString);
+			_setup(stream, header);
+			_checkVersion();
 			hlxml::Node* node = root;
-			if (major > 2 || (major == 2 && minor >= 7))
+			if (header.version.major > 2 || (header.version.major == 2 && header.version.minor >= 7))
 			{
 				if (root->children.size() != 1 || root->children.first()->name != "Object")
 				{

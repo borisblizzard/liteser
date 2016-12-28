@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.7
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -17,26 +17,43 @@
 
 namespace liteser
 {
+	unsigned char fileDescriptor[4] = { 'L', 'S', 'B', 'D' }; // Lite Serializer Binary Data
+	harray<harray<Type::Value> > compatibleTypes;
+	hsbase* stream = NULL;
+	Header _currentHeader;
+
 	// this hybrid implementation for indexing gave the best results in benchmarking with larger files
 	harray<Serializable*> objects;
 	harray<hstr> strings;
 	hmap<Serializable*, unsigned int> objectIds;
 	hmap<hstr, unsigned int> stringIds;
-	hsbase* stream = NULL;
 	hstr _indent = "\t";
-	harray<harray<Type::Value> > compatibleTypes;
 
-	void _checkVersion(unsigned char major, unsigned char minor)
+	void _checkVersion()
 	{
-		if (major != _LS_VERSION_MAJOR)
+		if (_currentHeader.version.major >= 3)
 		{
-			throw Exception(hsprintf("Liteser Read Error! Version mismatch: expected %d.%d, got %d.%d",
-				_LS_VERSION_MAJOR, _LS_VERSION_MINOR, major, minor));
+			if (_currentHeader.version.major != liteser::version.major)
+			{
+				throw Exception(hsprintf("Liteser Read Error! Version mismatch: expected %d.%d, got %d.%d",
+					liteser::version.major, liteser::version.minor, _currentHeader.version.major, _currentHeader.version.minor));
+			}
+			if (_currentHeader.version.minor < liteser::version.minor)
+			{
+				hlog::warnf(logTag, "Minor version mismatch while loading: expected %d.%d, got %d.%d",
+					liteser::version.major, liteser::version.minor, _currentHeader.version.major, _currentHeader.version.minor);
+			}
 		}
-		if (minor < _LS_VERSION_MINOR)
+		else
 		{
-			hlog::warnf(logTag, "Minor version mismatch while loading: expected %d.%d, got %d.%d",
-				_LS_VERSION_MAJOR, _LS_VERSION_MINOR, major, minor);
+			if (_currentHeader.version.major != 2)
+			{
+				throw Exception(hsprintf("Liteser Read Error! Version mismatch: expected 2.7, got %d.%d", _currentHeader.version.major, _currentHeader.version.minor));
+			}
+			if (_currentHeader.version.minor < 7)
+			{
+				hlog::warnf(logTag, "Minor version mismatch while loading: expected 2.7, got %d.%d", _currentHeader.version.major, _currentHeader.version.minor);
+			}
 		}
 	}
 

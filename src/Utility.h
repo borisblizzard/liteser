@@ -1,5 +1,5 @@
 /// @file
-/// @version 2.7
+/// @version 3.0
 /// 
 /// @section LICENSE
 /// 
@@ -18,22 +18,25 @@
 #include <hltypes/hsbase.h>
 #include <hltypes/hstring.h>
 
-#include "Variable.h"
+#include "Header.h"
 #include "Type.h"
+#include "Variable.h"
 
 namespace liteser
 {
 	class Serializable;
 
+	extern unsigned char fileDescriptor[4]; // Lite Serializer Binary Data
+	extern harray<harray<Type::Value> > compatibleTypes;
+	extern hsbase* stream;
+	extern Header _currentHeader;
 	extern harray<Serializable*> objects;
 	extern harray<hstr> strings;
 	extern hmap<Serializable*, unsigned int> objectIds;
 	extern hmap<hstr, unsigned int> stringIds;
-	extern hsbase* stream;
 	extern hstr _indent;
-	extern harray<harray<Type::Value> > compatibleTypes;
 
-	void _checkVersion(unsigned char major, unsigned char minor);
+	void _checkVersion();
 
 	inline bool __tryGetObject(unsigned int id, Serializable** object)
 	{
@@ -126,6 +129,49 @@ namespace liteser
 		stringIds.clear();
 		liteser::stream = NULL;
 		_indent = "\t";
+	}
+
+	inline void _setup(hsbase* stream, const Header& header)
+	{
+		_currentHeader = header;
+	}
+
+	inline void _readHeader(hsbase* stream, Header& header)
+	{
+		unsigned char readFileDescriptor[sizeof(fileDescriptor)];
+		stream->readRaw(readFileDescriptor, sizeof(fileDescriptor));
+		if (readFileDescriptor[0] != fileDescriptor[0] || readFileDescriptor[1] != fileDescriptor[1])
+		{
+			throw Exception("Invalid file descriptor!");
+		}
+		unsigned char compatibilityVersionMajor = readFileDescriptor[2];
+		unsigned char compatibilityVersionMinor = readFileDescriptor[3];
+		if (compatibilityVersionMajor == fileDescriptor[2] && compatibilityVersionMinor == fileDescriptor[3])
+		{
+			unsigned int headerSize = stream->loadUint32();
+			// this is for version 3.0, header size should be 4 * 4 + 1 (no checks currently performed)
+			header.version.major = stream->loadUint32();
+			header.version.minor = stream->loadUint32();
+			header.version.revision = stream->loadUint32();
+			header.version.build = stream->loadUint32();
+			header.allowCircularReferences = stream->loadBool();
+		}
+		else // backwards compatibility with 2.x versions
+		{
+			header.version.set(compatibilityVersionMajor, compatibilityVersionMinor);
+			header.allowCircularReferences = true;
+		}
+	}
+
+	inline void _writeHeader(hsbase* stream, Header& header)
+	{
+		stream->writeRaw(fileDescriptor, sizeof(fileDescriptor));
+		stream->dump(sizeof(unsigned int) * 4 + 1); // sizeof(unsigned int) * 4 + 1 bool
+		stream->dump(header.version.major);
+		stream->dump(header.version.minor);
+		stream->dump(header.version.revision);
+		stream->dump(header.version.build);
+		stream->dump(header.allowCircularReferences);
 	}
 
 	inline bool _isActive()

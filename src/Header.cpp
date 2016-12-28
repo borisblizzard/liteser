@@ -6,23 +6,19 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
-#include "Serializable.h"
+#include "liteser.h"
+#include "Header.h"
 
 namespace liteser
 {
-	Serializable::Serializable()
+	Header::Header(bool allowCircularReferences)
 	{
+		this->version = liteser::version;
+		this->allowCircularReferences = allowCircularReferences;
 	}
 
-	Serializable::~Serializable()
+	Header::~Header()
 	{
 	}
 	
-	Serializable* Serializable::clone()
-	{
-		Serializable* object = NULL;
-		liteser::clone(this, &object);
-		return object;
-	}
-
 }

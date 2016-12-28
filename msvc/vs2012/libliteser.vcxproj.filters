@@ -56,6 +56,9 @@
     <ClInclude Include="..\..\src\SerializeXml.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\liteser\Header.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Serializable.cpp">
@@ -86,6 +89,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\SerializeXml.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Header.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
