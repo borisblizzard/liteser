@@ -7,7 +7,7 @@ import sys
 from Model import *
 from Util import *
 
-VERSION = "1.0"
+VERSION = "1.1"
 
 def process():
 	print ""
@@ -101,11 +101,11 @@ def help():
 	print "  DELETE_ORIGINALS - 0 or 1, deletes originals after successful conversion."
 	print ""
 	print "Supported formats:"
-	print "  ls2 - Liteser 2 Binary"
+	print "  ls3 - Liteser 2 Binary"
 	print "  lsx - Liteser XML"
 	print ""
-	print "example: convert_format.py ../data data/ls ls2 lsx"
-	print "example: convert_format.py characters.lsx \"data files/characters.ls2\" lsx ls2"
+	print "example: convert_format.py ../data data/ls ls3 lsx"
+	print "example: convert_format.py characters.lsx \"data files/characters.ls3\" lsx ls3"
 	print ""
 	os.system("pause")
 

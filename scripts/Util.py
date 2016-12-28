@@ -8,8 +8,10 @@ class Util:
 	
 	Header0 = struct.unpack("<b", "L")[0]
 	Header1 = struct.unpack("<b", "S")[0]
-	VersionMajor = 2
-	VersionMinor = 7
+	Header2 = struct.unpack("<b", "B")[0]
+	Header3 = struct.unpack("<b", "D")[0]
+	VersionMajor = 3
+	VersionMinor = 0
 	
 	@staticmethod
 	def getFileList(path):
@@ -36,6 +38,8 @@ class Util:
 	stringIds = {}
 	stream = None
 	_indent = "\t"
+	_allowMultiReferencing = True
+	_stringPooling = True
 	
 	@staticmethod
 	def start(_stream):
@@ -45,6 +49,8 @@ class Util:
 		Util.stringIds = {}
 		Util.stream = _stream
 		Util._indent = "\t"
+		Util._allowMultiReferencing = True
+		Util._stringPooling = True
 	
 	@staticmethod
 	def finish(_stream):

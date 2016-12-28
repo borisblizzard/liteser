@@ -200,15 +200,22 @@ namespace liteser
 
 		void _dump(Serializable* value)
 		{
-			unsigned int id;
-			if (__tryMapObject(&id, value))
+			unsigned int id = 0;
+			if (!_currentHeader.allowMultiReferencing || __tryMapObject(&id, value))
 			{
 				hstr name = value->_lsName();
 				harray<Variable*> variables = value->_lsVars();
 				int variablesSize = variables.size();
 				if (variablesSize > 0)
 				{
-					OPEN_NODE(hsprintf("Object name=\"%s\" id=\"%d\"", name.cStr(), id));
+					if (_currentHeader.allowMultiReferencing)
+					{
+						OPEN_NODE(hsprintf("Object name=\"%s\" id=\"%d\"", name.cStr(), id));
+					}
+					else
+					{
+						OPEN_NODE(hsprintf("Object name=\"%s\"", name.cStr()));
+					}
 					foreach (Variable*, it, variables)
 					{
 						__dumpVariableStart(*it);
@@ -218,9 +225,13 @@ namespace liteser
 					}
 					CLOSE_NODE("Object");
 				}
-				else
+				else if (_currentHeader.allowMultiReferencing)
 				{
 					WRITE_NODE(hsprintf("Object name=\"%s\" id=\"%d\"", name.cStr(), id));
+				}
+				else
+				{
+					WRITE_NODE(hsprintf("Object name=\"%s\"", name.cStr()));
 				}
 			}
 			else

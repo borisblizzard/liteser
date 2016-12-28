@@ -11,10 +11,18 @@
 
 namespace liteser
 {
-	Header::Header(bool allowCircularReferences)
+	Header::Header()
 	{
 		this->version = liteser::version;
-		this->allowCircularReferences = allowCircularReferences;
+		this->allowMultiReferencing = true;
+		this->stringPooling = true;
+	}
+
+	Header::Header(bool allowMultiReferencing, bool stringPooling)
+	{
+		this->version = liteser::version;
+		this->allowMultiReferencing = allowMultiReferencing;
+		this->stringPooling = stringPooling;
 	}
 
 	Header::~Header()

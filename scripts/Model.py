@@ -2,18 +2,18 @@ import xml.dom.minidom
 
 from xml.dom.minidom import parse
 
-from Ls2 import *
+from Ls3 import *
 from Lsx import *
 from Util import *
 
 class Model:
 
-	Formats = ["ls2", "lsx"]
+	Formats = ["ls3", "lsx"]
 	
 	@staticmethod
 	def readFile(format, filename):
 		if format == Model.Formats[0]:
-			return Model.readLs2(filename)
+			return Model.readLs3(filename)
 		if format == Model.Formats[1]:
 			return Model.readLsx(filename)
 		raise Exception("Format not supported")
@@ -21,14 +21,14 @@ class Model:
 	@staticmethod
 	def writeFile(format, filename, data):
 		if format == Model.Formats[0]:
-			Model.writeLs2(filename, data)
+			Model.writeLs3(filename, data)
 		elif format == Model.Formats[1]:
 			Model.writeLsx(filename, data)
 		else:
 			raise Exception("Format not supported")
 
 	@staticmethod
-	def readLs2(filename):
+	def readLs3(filename):
 		file = None
 		data = None
 		try:
@@ -36,12 +36,17 @@ class Model:
 			Util.start(file)
 			header0 = Util.loadUint8()
 			header1 = Util.loadUint8()
-			major = Util.loadUint8()
-			minor = Util.loadUint8()
-			if header0 != Util.Header0 or header1 != Util.Header1:
+			header2 = Util.loadUint8()
+			header3 = Util.loadUint8()
+			if header0 != Util.Header0 or header1 != Util.Header1 or header2 != Util.Header2 or header3 != Util.Header3:
 				raise Exception("Invalid header!")
+			headerSize = Util.loadUint32()
+			major = Util.loadUint32()
+			minor = Util.loadUint32()
+			Util._allowMultiReferencing = Util.loadBool()
+			Util._stringPooling = Util.loadBool()
 			Model._checkVersion(major, minor)
-			data = Ls2.load()
+			data = Ls3.load()
 		finally:
 			if file != None:
 				Util.finish(file)
@@ -49,16 +54,20 @@ class Model:
 		return data
 		
 	@staticmethod
-	def writeLs2(filename, data):
+	def writeLs3(filename, data):
 		file = None
 		try:
 			file = open(filename, "wb")
 			Util.start(file)
 			Util.dumpUint8(Util.Header0)
 			Util.dumpUint8(Util.Header1)
-			Util.dumpUint8(Util.VersionMajor)
-			Util.dumpUint8(Util.VersionMinor)
-			Ls2.dump(data)
+			Util.dumpUint8(Util.Header2)
+			Util.dumpUint8(Util.Header3)
+			Util.dumpUint32(Util.VersionMajor)
+			Util.dumpUint32(Util.VersionMinor)
+			Util.dumpBool(Util._allowMultiReferencing)
+			Util.dumpBool(Util._stringPooling)
+			Ls3.dump(data)
 		finally:
 			if file != None:
 				Util.finish(file)
@@ -96,6 +105,8 @@ class Model:
 		try:
 			file = open(filename, "wb")
 			Util.start(file)
+			Util._allowMultiReferencing = True
+			Util._stringPooling = True
 			Util.stream.write(Lsx.XML_HEADER)
 			Util.stream.write(Lsx.LITESER_XML_ROOT_BEGIN)
 			Lsx.dump(data)

@@ -31,14 +31,14 @@
 #define LITESER_XML_ROOT_END "\n</Liteser>"
 
 #define DEFINE_HARRAY_SERIALIZER(type) \
-	bool serialize(hsbase* stream, harray<type>& value, bool allowCircularReferences) \
+	bool serialize(hsbase* stream, harray<type>& value, bool allowMultiReferencing, bool stringPooling) \
 	{ \
 		if (!stream->isOpen()) \
 		{ \
 			throw FileNotOpenException("Liteser Stream"); \
 		} \
 		_start(stream); \
-		Header header(allowCircularReferences); \
+		Header header(allowMultiReferencing, stringPooling); \
 		_writeHeader(stream, header); \
 		_dumpHarray(&value); \
 		_finish(stream); \
@@ -96,14 +96,14 @@
 	}
 
 #define DEFINE_HARRAY_SERIALIZER_XML(type) \
-	bool serialize(hsbase* stream, harray<type>& value, bool allowCircularReferences) \
+	bool serialize(hsbase* stream, harray<type>& value, bool allowMultiReferencing) \
 	{ \
 		if (!stream->isOpen()) \
 		{ \
 			throw FileNotOpenException("Liteser XML Stream"); \
 		} \
 		_start(stream); \
-		Header header(allowCircularReferences); \
+		Header header(allowMultiReferencing, false); \
 		_setup(stream, header); \
 		stream->writeLine(XML_HEADER); \
 		stream->writeLine(LITESER_XML_ROOT_BEGIN); \
@@ -133,23 +133,8 @@
 		_start(stream); \
 		hlxml::Document doc(*stream); \
 		hlxml::Node* root = doc.root(); \
-		if (root->name != "Liteser") \
-		{ \
-			throw Exception("Invalid header!"); \
-		} \
-		hstr versionString = root->pstr("version", ""); \
-		if (versionString.count(".") != 1) \
-		{ \
-			throw Exception("Invalid header!"); \
-		} \
-		hstr majorString; \
-		hstr minorString; \
-		if (!versionString.split('.', majorString, minorString)) \
-		{ \
-			throw Exception("Invalid header!"); \
-		} \
 		Header header; \
-		header.version.set((unsigned char)(int)majorString, (unsigned char)(int)minorString); \
+		_readXmlHeader(root, header); \
 		_setup(stream, header); \
 		_checkVersion(); \
 		hlxml::Node* node = root; \
@@ -180,7 +165,7 @@ namespace liteser
 	hstr logTag = "liteser";
 	hversion version(3, 0);
 
-	bool serialize(hsbase* stream, Serializable* object, bool allowCircularReferences)
+	bool serialize(hsbase* stream, Serializable* object, bool allowMultiReferencing, bool stringPooling)
 	{
 		if (!stream->isOpen())
 		{
@@ -188,7 +173,7 @@ namespace liteser
 		}
 		// TODO - add exception handling
 		_start(stream);
-		Header header(allowCircularReferences);
+		Header header(allowMultiReferencing, stringPooling);
 		_setup(stream, header);
 		_writeHeader(stream, header);
 		_dumpType(Type::OBJPTR);
@@ -214,7 +199,7 @@ namespace liteser
 	DEFINE_HARRAY_SERIALIZER(grect);
 	DEFINE_HARRAY_SERIALIZER(gvec2);
 	DEFINE_HARRAY_SERIALIZER(gvec3);
-	
+
 	bool deserialize(hsbase* stream, Serializable** object)
 	{
 		if (!stream->isOpen())
@@ -265,7 +250,7 @@ namespace liteser
 
 	namespace xml
 	{
-		bool serialize(hsbase* stream, Serializable* object, bool allowCircularReferences)
+		bool serialize(hsbase* stream, Serializable* object, bool allowMultiReferencing)
 		{
 			if (!stream->isOpen())
 			{
@@ -273,7 +258,7 @@ namespace liteser
 			}
 			// TODO - add exception handling
 			_start(stream);
-			Header header(allowCircularReferences);
+			Header header(allowMultiReferencing, false);
 			_setup(stream, header);
 			stream->writeLine(XML_HEADER);
 			stream->writeLine(LITESER_XML_ROOT_BEGIN);
@@ -315,23 +300,8 @@ namespace liteser
 			_start(stream);
 			hlxml::Document doc(*stream);
 			hlxml::Node* root = doc.root();
-			if (root->name != "Liteser")
-			{
-				throw Exception("Invalid header!");
-			}
-			hstr versionString = root->pstr("version", "");
-			if (versionString.count(".") != 1)
-			{
-				throw Exception("Invalid header!");
-			}
-			hstr majorString;
-			hstr minorString;
-			if (!versionString.split('.', majorString, minorString))
-			{
-				throw Exception("Invalid header!");
-			}
 			Header header;
-			header.version.set((unsigned char)(int)majorString, (unsigned char)(int)minorString);
+			_readXmlHeader(root, header);
 			_setup(stream, header);
 			_checkVersion();
 			hlxml::Node* node = root;
@@ -377,10 +347,13 @@ namespace liteser
 		}
 		hstream stream;
 		_start(&stream);
+		Header header(true, true);
+		_setup(&stream, header);
 		_dump(&input);
 		_finish(&stream);
 		stream.rewind();
 		_start(&stream);
+		_setup(&stream, header);
 		_load(output);
 		_finish(&stream);
 		return true;

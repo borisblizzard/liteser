@@ -305,14 +305,19 @@ class Lsx:
 		result, id = Util._tryMapObject(value)
 		if result:
 			if len(value.variables) > 0:
-				Util._openNode("Object name=\"%s\" id=\"%d\"" % (value.className, id))
+				if Util._allowMultiReferencing:
+					Util._openNode("Object name=\"%s\" id=\"%d\"" % (value.className, id))
+				else:
+					Util._openNode("Object name=\"%s\"" % value.className)
 				for variable in value.variables:
 					Lsx.__dumpVariableStart(variable)
 					Lsx.__dumpVariable(variable)
 					Lsx.__dumpVariableFinish(variable)
 				Util._closeNode("Object");
-			else:
+			elif Util._allowMultiReferencing:
 				Util._writeNode("Object name=\"%s\" id=\"%d\"" % (value.className, id))
+			else:
+				Util._writeNode("Object name=\"%s\"" % value.className)
 		else:
 			Util._writeNode("Object id=\"%d\"" % id)
 

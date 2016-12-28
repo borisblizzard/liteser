@@ -78,8 +78,12 @@ namespace liteser
 
 	void _dump(hstr* value)
 	{
-		unsigned int id;
-		if (__tryMapString(&id, *value))
+		unsigned int id = 0;
+		if (!_currentHeader.stringPooling)
+		{
+			stream->dump(*value);
+		}
+		else if (__tryMapString(&id, *value))
 		{
 			stream->dump(id);
 			stream->dump(*value);
@@ -126,10 +130,13 @@ namespace liteser
 
 	void _dump(Serializable* value)
 	{
-		unsigned int id;
-		if (__tryMapObject(&id, value))
+		unsigned int id = 0;
+		if (!_currentHeader.allowMultiReferencing || __tryMapObject(&id, value))
 		{
-			stream->dump(id);
+			if (_currentHeader.allowMultiReferencing)
+			{
+				stream->dump(id);
+			}
 			hstr name = value->_lsName();
 			_dump(&name);
 			harray<Variable*> variables = value->_lsVars();

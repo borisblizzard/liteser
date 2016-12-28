@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------------------------------
-Lite Serializer 2.7 Readme
+Lite Serializer Readme
 ------------------------------------------------------------------------------------------------------
 
 	1. About
@@ -80,7 +80,7 @@ deserialization procedures.
 
 Limitations:
 - Keep in mind that you are limited to defining serializable variables only within one of the scopes
-  (public, protected, private, etc.).
+  (public, protected, private, etc.). For alternatives, see the chapter further below.
 - Make sure that there is a white space between the type and the variable name. Something like
   "(float)anotherVar" will not work while "(float) anotherVar" will. This is necessary due to how C++
   processes macros.
@@ -94,21 +94,23 @@ Following types can be declared as serializable variables.
 1. simple types:
 	- char
 	- unsigned char
-	- int
-	- unsigned int
-	- long
-	- unsigned long
 	- short
 	- unsigned short
+	- int
+	- unsigned int
+	- int64_t
+	- uint64_t
 	- bool
 	- float
 	- double
 
 2. extended types:
-	- gtypes::Vector2
-	- gtypes::Rectangle
 	- hltypes::String
 	- hltypes::Enum
+	- hltypes::Version
+	- gtypes::Vector2
+	- gtypes::Vector3
+	- gtypes::Rectangle
 	
 3. container types:
 	- hltypes::Array (see "Limitations" for more information)
@@ -124,6 +126,7 @@ Limitations:
   does not allow them to be modified in a simple way.
 - hltypes::Array cannot contain another container type.
 - hltypes::Array cannot contain henum-derived types.
+- hltypes::Array cannot contain hversion objects.
 - hltypes::Map requires a workaround. Instead of directly declaring hltypes::Map<keyType, valueType>,
   you have to create a typedef first.
 - hltypes::Map keys do not support bool due to the implementation of bool within std::map which does
@@ -131,10 +134,11 @@ Limitations:
 - hltypes::Map keys do not support classes that inherit liteser::Serializable.
 - hltypes::Map keys and values do not support container types.
 - hltypes::Map keys and values do not support henum-derived types.
+- hltypes::Map keys and values do not support hversion objects.
 
 ------------------------------------------------------------------------------------------------------
 
-	5. Object models with loops
+	5. Object models with loops and member variables with different scopes
 
 If you have classes that have pointers to classes which inherit the first class, you cannot use
 LS_VARS, because you would have to include the derived class' header which would result in an

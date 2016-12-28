@@ -3,13 +3,13 @@ from Type import *
 from Util import *
 from Variable import *
 
-class Ls2:
+class Ls3:
 
 	@staticmethod
 	def load():
-		type = Ls2._loadType()
+		type = Ls3._loadType()
 		variable = Variable("", type)
-		Ls2.__loadVariable(variable, type)
+		Ls3.__loadVariable(variable, type)
 		return variable
 
 	@staticmethod
@@ -41,25 +41,25 @@ class Ls2:
 		elif loadType == Type.BOOL:
 			variable.value = Util.loadBool()
 		elif loadType == Type.HSTR:
-			variable.value = Ls2._loadString()
+			variable.value = Ls3._loadString()
 		elif loadType == Type.HVERSION:
-			variable.value = Ls2._loadVersion()
+			variable.value = Ls3._loadVersion()
 		elif loadType == Type.HENUM:
-			variable.value = Ls2._loadEnum()
+			variable.value = Ls3._loadEnum()
 		elif loadType == Type.GRECT:
-			variable.value = Ls2._loadGrect()
+			variable.value = Ls3._loadGrect()
 		elif loadType == Type.GVEC2:
-			variable.value = Ls2._loadGvec2()
+			variable.value = Ls3._loadGvec2()
 		elif loadType == Type.GVEC3:
-			variable.value = Ls2._loadGvec3()
+			variable.value = Ls3._loadGvec3()
 		elif loadType == Type.OBJECT:
-			variable.value = Ls2._loadObject()
+			variable.value = Ls3._loadObject()
 		elif loadType == Type.OBJPTR:
-			variable.value = Ls2._loadObject()
+			variable.value = Ls3._loadObject()
 		elif loadType == Type.HARRAY:
-			Ls2.__loadContainer(variable, loadType)
+			Ls3.__loadContainer(variable, loadType)
 		elif loadType == Type.HMAP:
-			Ls2.__loadContainer(variable, loadType)
+			Ls3.__loadContainer(variable, loadType)
 		else:
 			print "ERROR: Load type not recognized!"
 
@@ -69,16 +69,18 @@ class Ls2:
 		if variable.containerSize > 0:
 			typeSize = Util.loadUint32()
 			for i in xrange(typeSize):
-				loadType = Ls2._loadType()
+				loadType = Ls3._loadType()
 				if loadType == Type.HARRAY or loadType == Type.HMAP:
 					raise Exception("Template container within a template container detected, not supported: %02X" % loadType)
 				variable.type.subTypes.append(Type(loadType))
 			variable.createSubVariables()
 			for subVariable in variable.subVariables:
-				Ls2.__loadVariable(subVariable, subVariable.type.value)
+				Ls3.__loadVariable(subVariable, subVariable.type.value)
 
 	@staticmethod
 	def _loadString():
+		if not Util._stringPooling:
+			return Util.loadHstr()
 		id = Util.loadUint32()
 		result, value = Util._tryGetString(id)
 		if not result:
@@ -108,26 +110,31 @@ class Ls2:
 
 	@staticmethod
 	def _loadObject():
-		id = Util.loadUint32()
-		result, object = Util._tryGetObject(id)
+		id = 0
+		result = False
+		object = None
+		if Util._allowMultiReferencing:
+			id = Util.loadUint32()
+			result, object = Util._tryGetObject(id)
 		if not result:
-			className = Ls2._loadString()
+			className = Ls3._loadString()
 			if object == None:
 				object = Object(className)
-			Util._tryMapObject(object)
+			if Util._allowMultiReferencing:
+				Util._tryMapObject(object)
 			size = Util.loadUint32()
 			for i in xrange(size):
-				variableName = Ls2._loadString()
-				loadType = Ls2._loadType()
+				variableName = Ls3._loadString()
+				loadType = Ls3._loadType()
 				variable = Variable(variableName, loadType)
 				object.variables.append(variable)
-				Ls2.__loadVariable(variable, loadType)
+				Ls3.__loadVariable(variable, loadType)
 		return object
 		
 	@staticmethod
 	def dump(variable):
-		Ls2._dumpType(variable.type.value)
-		Ls2.__dumpVariable(variable)
+		Ls3._dumpType(variable.type.value)
+		Ls3.__dumpVariable(variable)
 
 	@staticmethod
 	def _dumpType(type):
@@ -158,25 +165,25 @@ class Ls2:
 		elif variable.type.value == Type.BOOL:
 			Util.dumpBool(variable.value)
 		elif variable.type.value == Type.HSTR:
-			Ls2._dumpString(variable.value)
+			Ls3._dumpString(variable.value)
 		elif variable.type.value == Type.HVERSION:
-			Ls2._dumpVersion(variable.value)
+			Ls3._dumpVersion(variable.value)
 		elif variable.type.value == Type.HENUM:
-			Ls2._dumpEnum(variable.value)
+			Ls3._dumpEnum(variable.value)
 		elif variable.type.value == Type.GRECT:
-			Ls2._dumpGrect(variable.value)
+			Ls3._dumpGrect(variable.value)
 		elif variable.type.value == Type.GVEC2:
-			Ls2._dumpGvec2(variable.value)
+			Ls3._dumpGvec2(variable.value)
 		elif variable.type.value == Type.GVEC3:
-			Ls2._dumpGvec3(variable.value)
+			Ls3._dumpGvec3(variable.value)
 		elif variable.type.value == Type.OBJECT:
-			Ls2._dumpObject(variable.value)
+			Ls3._dumpObject(variable.value)
 		elif variable.type.value == Type.OBJPTR:
-			Ls2._dumpObject(variable.value)
+			Ls3._dumpObject(variable.value)
 		elif variable.type.value == Type.HARRAY:
-			Ls2.__dumpContainer(variable)
+			Ls3.__dumpContainer(variable)
 		elif variable.type.value == Type.HMAP:
-			Ls2.__dumpContainer(variable)
+			Ls3.__dumpContainer(variable)
 
 	@staticmethod
 	def __dumpContainer(variable):
@@ -184,14 +191,16 @@ class Ls2:
 		if variable.containerSize > 0:
 			Util.dumpUint32(len(variable.type.subTypes))
 			for type in variable.type.subTypes:
-				Ls2._dumpType(type.value)
+				Ls3._dumpType(type.value)
 			for subVariable in variable.subVariables:
-				Ls2.__dumpVariable(subVariable)
+				Ls3.__dumpVariable(subVariable)
 
 	@staticmethod
 	def _dumpString(value):
-		result, id = Util._tryMapString(value)
-		Util.dumpUint32(id)
+		result = True
+		if Util._stringPooling:
+			result, id = Util._tryMapString(value)
+			Util.dumpUint32(id)
 		if result:
 			Util.dumpHstr(value)
 
@@ -221,13 +230,15 @@ class Ls2:
 
 	@staticmethod
 	def _dumpObject(value):
-		result, id = Util._tryMapObject(value)
-		Util.dumpUint32(id)
+		result = True
+		if Util._allowMultiReferencing:
+			result, id = Util._tryMapObject(value)
+			Util.dumpUint32(id)
 		if result:
-			Ls2._dumpString(value.className)
+			Ls3._dumpString(value.className)
 			Util.dumpUint32(len(value.variables))
 			for variable in value.variables:
-				Ls2._dumpString(variable.name)
-				Ls2._dumpType(variable.type.value)
-				Ls2.__dumpVariable(variable)
+				Ls3._dumpString(variable.name)
+				Ls3._dumpType(variable.type.value)
+				Ls3.__dumpVariable(variable)
 

@@ -23,9 +23,11 @@ namespace liteser
 	{
 	public:
 		hversion version;
-		bool allowCircularReferences;
+		bool allowMultiReferencing;
+		bool stringPooling;
 
-		Header(bool allowCircularReferences = true);
+		Header();
+		Header(bool allowMultiReferencing, bool stringPooling);
 		~Header();
 
 	};

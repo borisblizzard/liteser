@@ -35,24 +35,24 @@ namespace liteser
 	liteserExport extern hstr logTag;
 	liteserExport extern hversion version;
 
-	liteserFnExport bool serialize(hsbase* stream, Serializable* object, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<Serializable*>& object, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<char>& value, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<unsigned char>& value, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<short>& value, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<unsigned short>& value, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<int>& value, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<unsigned int>& value, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<int64_t>& value, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<uint64_t>& value, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<float>& value, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<double>& value, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<hstr>& value, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<hversion>& value, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<henum>& value, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<grect>& value, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<gvec2>& value, bool allowCircularReferences = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<gvec3>& value, bool allowCircularReferences = true);
+	liteserFnExport bool serialize(hsbase* stream, Serializable* object, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<Serializable*>& object, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<char>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<unsigned char>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<short>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<unsigned short>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<int>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<unsigned int>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<int64_t>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<uint64_t>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<float>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<double>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<hstr>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<hversion>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<henum>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<grect>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<gvec2>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<gvec3>& value, bool allowMultiReferencing = true, bool stringPooling = true);
 
 	liteserFnExport bool deserialize(hsbase* stream, Serializable** object);
 	liteserFnExport bool deserialize(hsbase* stream, harray<Serializable*>* object);
@@ -75,24 +75,24 @@ namespace liteser
 
 	namespace xml
 	{
-		liteserFnExport bool serialize(hsbase* stream, Serializable* object, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<Serializable*>& object, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<char>& value, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<unsigned char>& value, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<short>& value, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<unsigned short>& value, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<int>& value, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<unsigned int>& value, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<int64_t>& value, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<uint64_t>& value, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<float>& value, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<double>& value, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<hstr>& value, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<hversion>& value, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<henum>& value, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<grect>& value, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<gvec2>& value, bool allowCircularReferences = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<gvec3>& value, bool allowCircularReferences = true);
+		liteserFnExport bool serialize(hsbase* stream, Serializable* object, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<Serializable*>& object, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<char>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<unsigned char>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<short>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<unsigned short>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<int>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<unsigned int>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<int64_t>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<uint64_t>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<float>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<double>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<hstr>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<hversion>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<henum>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<grect>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<gvec2>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<gvec3>& value, bool allowMultiReferencing = true);
 
 		liteserFnExport bool deserialize(hsbase* stream, Serializable** object);
 		liteserFnExport bool deserialize(hsbase* stream, harray<Serializable*>* object);

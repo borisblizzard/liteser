@@ -28,7 +28,7 @@
 
 namespace liteser
 {
-	Type::Value _loadType()
+	inline Type::Value _loadType()
 	{
 		return (Type::Value)stream->loadUint8();
 	}
@@ -203,11 +203,18 @@ namespace liteser
 
 	void _load(hstr* value)
 	{
-		unsigned int id = stream->loadUint32();
-		if (!__tryGetString(id, value))
+		if (!_currentHeader.stringPooling)
 		{
 			*value = stream->loadString();
-			__tryMapString(&id, *value);
+		}
+		else
+		{
+			unsigned int id = stream->loadUint32();
+			if (!__tryGetString(id, value))
+			{
+				*value = stream->loadString();
+				__tryMapString(&id, *value);
+			}
 		}
 	}
 
@@ -257,8 +264,12 @@ namespace liteser
 
 	void __loadObject(Serializable** value)
 	{
-		unsigned int id = stream->loadUint32();
-		if (!__tryGetObject(id, value))
+		unsigned int id = 0;
+		if (_currentHeader.allowMultiReferencing)
+		{
+			id = stream->loadUint32();
+		}
+		if (!_currentHeader.allowMultiReferencing || !__tryGetObject(id, value))
 		{
 			hstr className;
 			_load(&className);
@@ -266,7 +277,10 @@ namespace liteser
 			{
 				*value = Factory::create(className);
 			}
-			__tryMapObject(&id, *value);
+			if (_currentHeader.allowMultiReferencing)
+			{
+				__tryMapObject(&id, *value);
+			}
 			harray<Variable*> variables = (*value)->_lsVars();
 			harray<hstr> missingVariableNames;
 			unsigned int size = stream->loadUint32();
@@ -345,12 +359,19 @@ namespace liteser
 	bool __skipObject()
 	{
 		Serializable* dummy = NULL;
-		unsigned int id = stream->loadUint32();
-		if (!__tryGetObject(id, &dummy))
+		unsigned int id = 0;
+		if (_currentHeader.allowMultiReferencing)
+		{
+			id = stream->loadUint32();
+		}
+		if (!_currentHeader.allowMultiReferencing || !__tryGetObject(id, &dummy))
 		{
 			hstr className;
 			_load(&className);
-			__forceMapEmptyObject(); // required for proper indexing of later variables
+			if (_currentHeader.allowMultiReferencing)
+			{
+				__forceMapEmptyObject(); // required for proper indexing of later variables
+			}
 			unsigned int size = stream->loadUint32();
 			hstr variableName;
 			for_itert (unsigned int, i, 0, size)

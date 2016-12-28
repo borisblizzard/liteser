@@ -17,6 +17,7 @@
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
 #include <hltypes/hstring.h>
+#include <hlxml/Node.h>
 
 #include "Header.h"
 #include "Type.h"
@@ -149,29 +150,51 @@ namespace liteser
 		if (compatibilityVersionMajor == fileDescriptor[2] && compatibilityVersionMinor == fileDescriptor[3])
 		{
 			unsigned int headerSize = stream->loadUint32();
-			// this is for version 3.0, header size should be 4 * 4 + 1 (no checks currently performed)
+			// this is for version 3.0, header size should be sizeof(unsigned int) * 2 + 2 bools (no checks currently performed)
+			header.version.set(0);
 			header.version.major = stream->loadUint32();
 			header.version.minor = stream->loadUint32();
-			header.version.revision = stream->loadUint32();
-			header.version.build = stream->loadUint32();
-			header.allowCircularReferences = stream->loadBool();
+			header.allowMultiReferencing = stream->loadBool();
+			header.stringPooling = stream->loadBool();
 		}
 		else // backwards compatibility with 2.x versions
 		{
 			header.version.set(compatibilityVersionMajor, compatibilityVersionMinor);
-			header.allowCircularReferences = true;
+			header.allowMultiReferencing = true;
+			header.stringPooling = true;
 		}
 	}
 
 	inline void _writeHeader(hsbase* stream, Header& header)
 	{
 		stream->writeRaw(fileDescriptor, sizeof(fileDescriptor));
-		stream->dump(sizeof(unsigned int) * 4 + 1); // sizeof(unsigned int) * 4 + 1 bool
+		stream->dump(sizeof(unsigned int) * 2 + 2); // sizeof(unsigned int) * 2 + 2 bools
 		stream->dump(header.version.major);
 		stream->dump(header.version.minor);
-		stream->dump(header.version.revision);
-		stream->dump(header.version.build);
-		stream->dump(header.allowCircularReferences);
+		stream->dump(header.allowMultiReferencing);
+		stream->dump(header.stringPooling);
+	}
+
+	inline void _readXmlHeader(hlxml::Node* root, Header& header)
+	{
+		if (root->name != "Liteser")
+		{
+			throw Exception("Invalid XML header!");
+		}
+		hstr versionString = root->pstr("version", "");
+		if (versionString.count(".") != 1)
+		{
+			throw Exception("Invalid XML header!");
+		}
+		hstr majorString;
+		hstr minorString;
+		if (!versionString.split('.', majorString, minorString))
+		{
+			throw Exception("Invalid XML header!");
+		}
+		header.version.set((unsigned char)(int)majorString, (unsigned char)(int)minorString);
+		header.allowMultiReferencing = true;
+		header.stringPooling = false;
 	}
 
 	inline bool _isActive()
