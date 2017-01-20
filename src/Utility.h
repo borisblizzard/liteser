@@ -149,7 +149,7 @@ namespace liteser
 		unsigned char compatibilityVersionMinor = readFileDescriptor[3];
 		if (compatibilityVersionMajor == fileDescriptor[2] && compatibilityVersionMinor == fileDescriptor[3])
 		{
-			unsigned int headerSize = stream->loadUint32();
+			stream->loadUint32();
 			// this is for version 3.0, header size should be sizeof(unsigned int) * 2 + 2 bools (no checks currently performed)
 			header.version.set(0);
 			header.version.major = stream->loadUint32();
@@ -200,6 +200,11 @@ namespace liteser
 	inline bool _isActive()
 	{
 		return (stream != NULL);
+	}
+
+	inline Type::Value _loadType()
+	{
+		return (Type::Value)stream->loadUint8();
 	}
 
 	inline void __setupCompatibleTypes()

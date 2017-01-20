@@ -28,11 +28,6 @@
 
 namespace liteser
 {
-	inline Type::Value _loadType()
-	{
-		return (Type::Value)stream->loadUint8();
-	}
-
 	inline void __loadVariableCompatible(Variable* variable, Type::Value loadType)
 	{
 		// these are predefined compatible types only
