@@ -168,7 +168,7 @@ namespace liteser
 	inline void _writeHeader(hsbase* stream, Header& header)
 	{
 		stream->writeRaw(fileDescriptor, sizeof(fileDescriptor));
-		stream->dump(sizeof(unsigned int) * 2 + 2); // sizeof(unsigned int) * 2 + 2 bools
+		stream->dump((unsigned int)(sizeof(unsigned int) * 2 + 2)); // sizeof(unsigned int) * 2 + 2 bools
 		stream->dump(header.version.major);
 		stream->dump(header.version.minor);
 		stream->dump(header.allowMultiReferencing);
