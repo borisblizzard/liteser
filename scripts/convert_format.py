@@ -101,7 +101,7 @@ def help():
 	print "  DELETE_ORIGINALS - 0 or 1, deletes originals after successful conversion."
 	print ""
 	print "Supported formats:"
-	print "  ls3 - Liteser 2 Binary"
+	print "  ls3 - Liteser 3 Binary"
 	print "  lsx - Liteser XML"
 	print ""
 	print "example: convert_format.py ../data data/ls ls3 lsx"

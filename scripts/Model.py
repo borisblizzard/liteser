@@ -8,6 +8,7 @@ from Util import *
 
 class Model:
 
+	HEADER_SIZE = 4 * 2 + 2 # unsigned int * 2 + bool * 2
 	Formats = ["ls3", "lsx"]
 	
 	@staticmethod
@@ -63,6 +64,7 @@ class Model:
 			Util.dumpUint8(Util.Header1)
 			Util.dumpUint8(Util.Header2)
 			Util.dumpUint8(Util.Header3)
+			Util.dumpUint32(Model.HEADER_SIZE)
 			Util.dumpUint32(Util.VersionMajor)
 			Util.dumpUint32(Util.VersionMinor)
 			Util.dumpBool(Util._allowMultiReferencing)
