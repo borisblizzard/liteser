@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		84AFA9091E39361800A332C0 /* Header.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84AFA9081E39361800A332C0 /* Header.cpp */; };
 		84AFA90B1E39362600A332C0 /* Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 84AFA90A1E39362600A332C0 /* Header.h */; };
+		B44EE8961E3F688900FEC65B /* Header.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84AFA9081E39361800A332C0 /* Header.cpp */; };
+		B44EE8971E3F688900FEC65B /* Header.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84AFA9081E39361800A332C0 /* Header.cpp */; };
 		B4B745EC1BECBC460097AD86 /* DeserializeXml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4B745E81BECBC460097AD86 /* DeserializeXml.cpp */; };
 		B4B745ED1BECBC460097AD86 /* DeserializeXml.h in Headers */ = {isa = PBXBuildFile; fileRef = B4B745E91BECBC460097AD86 /* DeserializeXml.h */; };
 		B4B745EE1BECBC460097AD86 /* SerializeXml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4B745EA1BECBC460097AD86 /* SerializeXml.cpp */; };
@@ -327,6 +329,7 @@
 				B4B745F01BECBC650097AD86 /* DeserializeXml.cpp in Sources */,
 				D19C924D1778567000A4BDF4 /* Utility.cpp in Sources */,
 				D19C92501778567000A4BDF4 /* Variable.cpp in Sources */,
+				B44EE8961E3F688900FEC65B /* Header.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,6 +347,7 @@
 				B4B745F21BECBC660097AD86 /* DeserializeXml.cpp in Sources */,
 				D1E1AD831961654600001F36 /* Utility.cpp in Sources */,
 				D1E1AD841961654600001F36 /* Variable.cpp in Sources */,
+				B44EE8971E3F688900FEC65B /* Header.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
