@@ -32,10 +32,10 @@ namespace liteser
 	class Serializable;
 	class Variable;
 
-	Type::Value _loadType();
+	Type::Identifier _loadIdentifier();
 
-	void __loadContainer(Variable* variable, Type::Value type);
-	bool __skipContainer(Type::Value loadType);
+	void __loadContainer(Variable* variable, Type::Identifier loadedIdentifier);
+	bool __skipContainer(Type::Identifier loadedIdentifier);
 
 	void _load(hstr* value);
 	void _load(hversion* value);

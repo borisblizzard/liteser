@@ -28,7 +28,7 @@ namespace liteser
 	class Serializable;
 
 	extern unsigned char fileDescriptor[4]; // Lite Serializer Binary Data
-	extern harray<harray<Type::Value> > compatibleTypes;
+	extern harray<harray<Type::Identifier> > compatibleIdentifiers;
 	extern hsbase* stream;
 	extern Header _currentHeader;
 	extern harray<Serializable*> objects;
@@ -202,38 +202,38 @@ namespace liteser
 		return (stream != NULL);
 	}
 
-	inline Type::Value _loadType()
+	inline Type::Identifier _loadIdentifier()
 	{
-		return (Type::Value)stream->loadUint8();
+		return Type::Identifier::fromUint((unsigned int)stream->loadUint8());
 	}
 
-	inline void __setupCompatibleTypes()
+	inline void __setupCompatibleIdentifiers()
 	{
-		harray<Type::Value> values;
-		values += Type::INT8;
-		values += Type::UINT8;
-		values += Type::INT16;
-		values += Type::UINT16;
-		values += Type::INT32;
-		values += Type::UINT32;
-		values += Type::INT64;
-		values += Type::UINT64;
-		compatibleTypes += values;
-		values.clear();
-		values += Type::FLOAT;
-		values += Type::DOUBLE;
-		compatibleTypes += values;
+		harray<Type::Identifier> identifiers;
+		identifiers += Type::Identifier::Int8;
+		identifiers += Type::Identifier::UInt8;
+		identifiers += Type::Identifier::Int16;
+		identifiers += Type::Identifier::UInt16;
+		identifiers += Type::Identifier::Int32;
+		identifiers += Type::Identifier::UInt32;
+		identifiers += Type::Identifier::Int64;
+		identifiers += Type::Identifier::UInt64;
+		compatibleIdentifiers += identifiers;
+		identifiers.clear();
+		identifiers += Type::Identifier::Float;
+		identifiers += Type::Identifier::Double;
+		compatibleIdentifiers += identifiers;
 	}
 
-	inline bool _isCompatibleType(const Type::Value& variableType, const Type::Value& loadedType)
+	inline bool _isCompatibleType(const Type::Identifier& variableIdentifier, const Type::Identifier& loadedIdentifier)
 	{
-		if (compatibleTypes.size() == 0)
+		if (compatibleIdentifiers.size() == 0)
 		{
-			__setupCompatibleTypes();
+			__setupCompatibleIdentifiers();
 		}
-		foreach (harray<Type::Value>, it, compatibleTypes)
+		foreach (harray<Type::Identifier>, it, compatibleIdentifiers)
 		{
-			if ((*it).has(variableType) && (*it).has(loadedType))
+			if ((*it).has(variableIdentifier) && (*it).has(loadedIdentifier))
 			{
 				return true;
 			}

@@ -39,8 +39,8 @@ namespace liteser
 
 	namespace xml
 	{
-		void __loadContainer(hlxml::Node* node, Variable* variable, Type::Value type);
-		bool __skipContainer(hlxml::Node* node, Type::Value loadType);
+		void __loadContainer(hlxml::Node* node, Variable* variable, Type::Identifier loadedIdentifier);
+		bool __skipContainer(hlxml::Node* node, Type::Identifier loadedIdentifier);
 
 		void _load(hlxml::Node* node, hstr* value);
 		void _load(hlxml::Node* node, hversion* value);

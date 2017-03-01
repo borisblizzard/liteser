@@ -35,96 +35,84 @@ namespace liteser
 {
 	namespace xml
 	{
-		inline void __loadVariableCompatible(hlxml::Node* node, Variable* variable, Type::Value loadType)
+		inline void __loadVariableCompatible(hlxml::Node* node, Variable* variable, Type::Identifier loadedIdentifier)
 		{
 			// these are predefined compatible types only
-			switch (loadType)
-			{
-			case Type::INT8:	variable->setValue(node->pint8(VALUE));		break;
-			case Type::UINT8:	variable->setValue(node->puint8(VALUE));	break;
-			case Type::INT16:	variable->setValue(node->pint16(VALUE));	break;
-			case Type::UINT16:	variable->setValue(node->puint16(VALUE));	break;
-			case Type::INT32:	variable->setValue(node->pint32(VALUE));	break;
-			case Type::UINT32:	variable->setValue(node->puint32(VALUE));	break;
-			case Type::INT64:	variable->setValue(node->pint64(VALUE));	break;
-			case Type::UINT64:	variable->setValue(node->puint64(VALUE));	break;
-			case Type::FLOAT:	variable->setValue(node->pfloat(VALUE));	break;
-			case Type::DOUBLE:	variable->setValue(node->pdouble(VALUE));	break;
-			default:														break;
-			}
+			if (loadedIdentifier == Type::Identifier::Int8)			variable->setValue(node->pint8(VALUE));
+			else if (loadedIdentifier == Type::Identifier::UInt8)	variable->setValue(node->puint8(VALUE));
+			else if (loadedIdentifier == Type::Identifier::Int16)	variable->setValue(node->pint16(VALUE));
+			else if (loadedIdentifier == Type::Identifier::UInt16)	variable->setValue(node->puint16(VALUE));
+			else if (loadedIdentifier == Type::Identifier::Int32)	variable->setValue(node->pint32(VALUE));
+			else if (loadedIdentifier == Type::Identifier::UInt32)	variable->setValue(node->puint32(VALUE));
+			else if (loadedIdentifier == Type::Identifier::Int64)	variable->setValue(node->pint64(VALUE));
+			else if (loadedIdentifier == Type::Identifier::UInt64)	variable->setValue(node->puint64(VALUE));
+			else if (loadedIdentifier == Type::Identifier::Float)	variable->setValue(node->pfloat(VALUE));
+			else if (loadedIdentifier == Type::Identifier::Double)	variable->setValue(node->pdouble(VALUE));
 		}
 
-		inline void __loadVariable(hlxml::Node* node, Variable* variable, Type::Value loadType)
+		inline void __loadVariable(hlxml::Node* node, Variable* variable, Type::Identifier loadedIdentifier)
 		{
-			switch (loadType)
-			{
-			case Type::INT8:		*variable->value<char>()			= node->pint8(VALUE);	break;
-			case Type::UINT8:		*variable->value<unsigned char>()	= node->puint8(VALUE);	break;
-			case Type::INT16:		*variable->value<short>()			= node->pint16(VALUE);	break;
-			case Type::UINT16:		*variable->value<unsigned short>()	= node->puint16(VALUE);	break;
-			case Type::INT32:		*variable->value<int>()				= node->pint32(VALUE);	break;
-			case Type::UINT32:		*variable->value<unsigned int>()	= node->puint32(VALUE);	break;
-			case Type::INT64:		*variable->value<int64_t>()			= node->pint64(VALUE);	break;
-			case Type::UINT64:		*variable->value<uint64_t>()		= node->puint64(VALUE);	break;
-			case Type::FLOAT:		*variable->value<float>()			= node->pfloat(VALUE);	break;
-			case Type::DOUBLE:		*variable->value<double>()			= node->pdouble(VALUE);	break;
-			case Type::BOOL:		*variable->value<bool>()			= node->pbool(VALUE);	break;
-			case Type::HSTR:		_load(node, variable->value<hstr>());						break;
-			case Type::HVERSION:	_load(node, variable->value<hversion>());					break;
-			case Type::HENUM:		_load(node, variable->value<henum>());						break;
-			case Type::GRECT:		_load(node, variable->value<grect>());						break;
-			case Type::GVEC2:		_load(node, variable->value<gvec2>());						break;
-			case Type::GVEC3:		_load(node, variable->value<gvec3>());						break;
-			case Type::OBJECT:		_load(node, variable->value<Serializable>());				break;
-			case Type::OBJPTR:		_load(node, variable->value<Serializable*>());				break;
-			case Type::HARRAY:		__loadContainer(node, variable, loadType);					break;
-			case Type::HMAP:		__loadContainer(node, variable, loadType);					break;
-			default:																			break;
-			}
+			if (loadedIdentifier == Type::Identifier::Int8)				*variable->value<char>()			= node->pint8(VALUE);
+			else if (loadedIdentifier == Type::Identifier::UInt8)		*variable->value<unsigned char>()	= node->puint8(VALUE);
+			else if (loadedIdentifier == Type::Identifier::Int16)		*variable->value<short>()			= node->pint16(VALUE);
+			else if (loadedIdentifier == Type::Identifier::UInt16)		*variable->value<unsigned short>()	= node->puint16(VALUE);
+			else if (loadedIdentifier == Type::Identifier::Int32)		*variable->value<int>()				= node->pint32(VALUE);
+			else if (loadedIdentifier == Type::Identifier::UInt32)		*variable->value<unsigned int>()	= node->puint32(VALUE);
+			else if (loadedIdentifier == Type::Identifier::Int64)		*variable->value<int64_t>()			= node->pint64(VALUE);
+			else if (loadedIdentifier == Type::Identifier::UInt64)		*variable->value<uint64_t>()		= node->puint64(VALUE);
+			else if (loadedIdentifier == Type::Identifier::Float)		*variable->value<float>()			= node->pfloat(VALUE);
+			else if (loadedIdentifier == Type::Identifier::Double)		*variable->value<double>()			= node->pdouble(VALUE);
+			else if (loadedIdentifier == Type::Identifier::Bool)		*variable->value<bool>()			= node->pbool(VALUE);
+			else if (loadedIdentifier == Type::Identifier::Hstr)		_load(node, variable->value<hstr>());
+			else if (loadedIdentifier == Type::Identifier::Hversion)	_load(node, variable->value<hversion>());
+			else if (loadedIdentifier == Type::Identifier::Henum)		_load(node, variable->value<henum>());
+			else if (loadedIdentifier == Type::Identifier::Grect)		_load(node, variable->value<grect>());
+			else if (loadedIdentifier == Type::Identifier::Gvec2)		_load(node, variable->value<gvec2>());
+			else if (loadedIdentifier == Type::Identifier::Gvec3)		_load(node, variable->value<gvec3>());
+			else if (loadedIdentifier == Type::Identifier::ValueObject)	_load(node, variable->value<Serializable>());
+			else if (loadedIdentifier == Type::Identifier::Object)		_load(node, variable->value<Serializable*>());
+			else if (loadedIdentifier == Type::Identifier::Harray)		__loadContainer(node, variable, loadedIdentifier);
+			else if (loadedIdentifier == Type::Identifier::Hmap)		__loadContainer(node, variable, loadedIdentifier);
 		}
 
-		inline bool __skipVariable(hlxml::Node* node, Type::Value loadType)
+		inline bool __skipVariable(hlxml::Node* node, Type::Identifier loadedIdentifier)
 		{
-			switch (loadType)
-			{
-			case Type::OBJECT:	return __skipObject(node);
-			case Type::OBJPTR:	return __skipObject(node);
-			case Type::HARRAY:	return __skipContainer(node, loadType);
-			case Type::HMAP:	return __skipContainer(node, loadType);
-			default:			break;
-			}
+			if (loadedIdentifier == Type::Identifier::ValueObject)	return __skipObject(node);
+			if (loadedIdentifier == Type::Identifier::Object)		return __skipObject(node);
+			if (loadedIdentifier == Type::Identifier::Harray)		return __skipContainer(node, loadedIdentifier);
+			if (loadedIdentifier == Type::Identifier::Hmap)			return __skipContainer(node, loadedIdentifier);
 			return false;
 		}
 
-		void __loadContainer(hlxml::Node* node, Variable* variable, Type::Value type)
+		void __loadContainer(hlxml::Node* node, Variable* variable, Type::Identifier identifier)
 		{
 			variable->containerSize = node->children.size();
 			if (variable->containerSize > 0)
 			{
-				harray<Type::Value> loadTypes;
+				harray<Type::Identifier> loadedIdentifiers;
 				harray<hstr> subTypes = node->pstr(SUB_TYPES).split(SEPARATOR, -1, true);
 				foreach (hstr, it, subTypes)
 				{
-					loadTypes += (Type::Value)(*it).unhex();
+					loadedIdentifiers += Type::Identifier::fromUint((*it).unhex());
 				}
-				if (loadTypes.size() != variable->type->subTypes.size())
+				if (loadedIdentifiers.size() != variable->type->subTypes.size())
 				{
-					throw Exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", variable->type->subTypes.size(), loadTypes.size()));
+					throw Exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", variable->type->subTypes.size(), loadedIdentifiers.size()));
 				}
-				for_iter (i, 0, loadTypes.size())
+				for_iter (i, 0, loadedIdentifiers.size())
 				{
-					if (loadTypes[i] == Type::HARRAY || loadTypes[i] == Type::HMAP)
+					if (loadedIdentifiers[i] == Type::Identifier::Harray || loadedIdentifiers[i] == Type::Identifier::Hmap)
 					{
-						throw Exception(hsprintf("Template container within a template container detected, not supported: %02X", loadTypes[i]));
+						throw Exception(hsprintf("Template container within a template container detected, not supported: %02X", loadedIdentifiers[i].value));
 					}
 				}
-				variable->createSubVariables(type);
-				if (loadTypes.size() > 1) // if more than one load-type, the sub-variables contain the actual data
+				variable->createSubVariables(identifier);
+				if (loadedIdentifiers.size() > 1) // if more than one load-type, the sub-variables contain the actual data
 				{
 					harray<int> sizes;
 					for_iter (i, 0, variable->subVariables.size())
 					{
-						__loadVariable(node->children[i], variable->subVariables[i], variable->subVariables[i]->type->value);
+						__loadVariable(node->children[i], variable->subVariables[i], variable->subVariables[i]->type->identifier);
 						sizes += variable->subVariables[i]->containerSize;
 					}
 					if (sizes.size() > 1 && sizes.removedDuplicates().size() > 1)
@@ -134,61 +122,61 @@ namespace liteser
 				}
 				else if (variable->subVariables.size() > 0)
 				{
-					if (variable->type->subTypes[0]->value == loadTypes[0])
+					if (variable->type->subTypes[0]->identifier == loadedIdentifiers[0])
 					{
 						for_iter (i, 0, variable->subVariables.size())
 						{
-							__loadVariable(node->children[i], variable->subVariables[i], loadTypes[0]);
+							__loadVariable(node->children[i], variable->subVariables[i], loadedIdentifiers[0]);
 						}
 					}
 					else
 					{
-						if (!_isCompatibleType(variable->type->subTypes[0]->value, loadTypes[0]))
+						if (!_isCompatibleType(variable->type->subTypes[0]->identifier, loadedIdentifiers[0]))
 						{
-							throw Exception(hsprintf("Variable subtype of '%s' has changed. Expected: %02X, Got: %02X", variable->name.cStr(), variable->type->subTypes[0]->value, loadTypes[0]));
+							throw Exception(hsprintf("Variable subtype of '%s' has changed. Expected: %02X, Got: %02X", variable->name.cStr(), variable->type->subTypes[0]->identifier.value, loadedIdentifiers[0].value));
 						}
 						hlog::warn(logTag, "Using compatible subtype for: " + variable->subVariables[0]->name);
 						for_iter (i, 0, variable->subVariables.size())
 						{
-							__loadVariableCompatible(node->children[i], variable->subVariables[i], loadTypes[0]);
+							__loadVariableCompatible(node->children[i], variable->subVariables[i], loadedIdentifiers[0]);
 						}
 					}
 				}
-				if (type == Type::HMAP)
+				if (identifier == Type::Identifier::Hmap)
 				{
-					variable->applyHmapSubVariables(type);
+					variable->applyHmapSubVariables(identifier);
 				}
 			}
 		}
 
-		bool __skipContainer(hlxml::Node* node, Type::Value type)
+		bool __skipContainer(hlxml::Node* node, Type::Identifier identifier)
 		{
 			bool result = true;
 			if (node->children.size() > 0)
 			{
-				int subTypesSize = (type == Type::HMAP ? 2 : 1);
-				harray<Type::Value> subTypes;
+				int subTypesSize = (identifier == Type::Identifier::Hmap ? 2 : 1);
+				harray<Type::Identifier> subIdentifiers;
 				harray<hstr> types = node->pstr(SUB_TYPES).split(SEPARATOR, -1, true);
 				foreach (hstr, it, types)
 				{
-					subTypes += (Type::Value)(*it).unhex();
+					subIdentifiers += Type::Identifier::fromUint((*it).unhex());
 				}
-				if (subTypes.size() != subTypesSize)
+				if (subIdentifiers.size() != subTypesSize)
 				{
-					throw Exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", subTypesSize, subTypes.size()));
+					throw Exception(hsprintf("Number of types for container does not match. Expected: %d, Got: %d", subTypesSize, subIdentifiers.size()));
 				}
-				if (subTypes.size() == 1)
+				if (subIdentifiers.size() == 1)
 				{
 					foreach_xmlnode (child, node)
 					{
-						result &= __skipVariable((*child), subTypes.first());
+						result &= __skipVariable((*child), subIdentifiers.first());
 					}
 				}
 				else
 				{
 					foreach_xmlnode (container, node)
 					{
-						foreach(Type::Value, it, subTypes)
+						foreach(Type::Identifier, it, subIdentifiers)
 						{
 							foreach_xmlnode(child, (*container))
 							{
@@ -275,7 +263,7 @@ namespace liteser
 				Variable* variable = NULL;
 				int variableIndex = -1;
 				hstr variableName;
-				Type::Value loadType;
+				Type::Identifier loadedIdentifier;
 				int j = 0;
 				while (j < node->children.size() && variables.size() > 0)
 				{
@@ -291,37 +279,37 @@ namespace liteser
 							break;
 						}
 					}
-					loadType = (Type::Value)node->children[j]->pstr("type").unhex();
+					loadedIdentifier = Type::Identifier::fromUint(node->children[j]->pstr("type").unhex());
 					if (variable != NULL)
 					{
-						if (variable->type->value == loadType)
+						if (variable->type->identifier == loadedIdentifier)
 						{
-							__loadVariable(node->children[j], variable, loadType);
+							__loadVariable(node->children[j], variable, loadedIdentifier);
 						}
 						else
 						{
-							if (!_isCompatibleType(variable->type->value, loadType))
+							if (!_isCompatibleType(variable->type->identifier, loadedIdentifier))
 							{
-								throw Exception(hsprintf("Variable type of '%s' has changed. Expected: %02X, Got: %02X", variable->name.cStr(), variable->type->value, loadType));
+								throw Exception(hsprintf("Variable type of '%s' has changed. Expected: %02X, Got: %02X", variable->name.cStr(), variable->type->identifier.value, loadedIdentifier.value));
 							}
 							hlog::warn(logTag, "Using compatible type for: " + variable->name);
-							__loadVariableCompatible(node->children[j], variable, loadType);
+							__loadVariableCompatible(node->children[j], variable, loadedIdentifier);
 						}
 						delete variables.removeAt(variableIndex);
 					}
 					else
 					{
 						missingVariableNames += variableName;
-						__skipVariable(node->children[j], loadType);
+						__skipVariable(node->children[j], loadedIdentifier);
 					}
 					++j;
 				}
 				while (j < node->children.size())
 				{
 					variableName = node->children[j]->pstr("name");
-					loadType = (Type::Value)node->children[j]->pstr("type").unhex();
+					loadedIdentifier = Type::Identifier::fromUint(node->children[j]->pstr("type").unhex());
 					missingVariableNames += variableName;
-					__skipVariable(node->children[j], loadType);
+					__skipVariable(node->children[j], loadedIdentifier);
 					++j;
 				}
 				if (missingVariableNames.size() > 0)
@@ -363,7 +351,7 @@ namespace liteser
 				__forceMapEmptyObject(); // required for proper indexing of later variables
 				foreach_xmlnode (child, node)
 				{
-					__skipVariable((*child), (Type::Value)(*child)->pstr("type").unhex());
+					__skipVariable((*child), Type::Identifier::fromUint((*child)->pstr("type").unhex()));
 				}
 			}
 			return true;

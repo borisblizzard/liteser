@@ -171,24 +171,20 @@ namespace liteser
 		inline void setValue(const T& value)
 		{
 			// this is from an internal list of possible compatible types
-			switch (this->type->value)
-			{
-			case Type::INT8:	*((VPtr<char>*)this->ptr)->value			= (char)value;				break;
-			case Type::UINT8:	*((VPtr<unsigned char>*)this->ptr)->value	= (unsigned char)value;		break;
-			case Type::INT16:	*((VPtr<short>*)this->ptr)->value			= (short)value;				break;
-			case Type::UINT16:	*((VPtr<unsigned short>*)this->ptr)->value	= (unsigned short)value;	break;
-			case Type::INT32:	*((VPtr<int>*)this->ptr)->value				= (int)value;				break;
-			case Type::UINT32:	*((VPtr<unsigned int>*)this->ptr)->value	= (unsigned int)value;		break;
-			case Type::INT64:	*((VPtr<int64_t>*)this->ptr)->value			= (int64_t)value;			break;
-			case Type::UINT64:	*((VPtr<uint64_t>*)this->ptr)->value		= (uint64_t)value;			break;
-			case Type::FLOAT:	*((VPtr<float>*)this->ptr)->value			= (float)value;				break;
-			case Type::DOUBLE:	*((VPtr<double>*)this->ptr)->value			= (double)value;			break;
-			default:																					break;
-			}
+			if (this->type->identifier == Type::Identifier::Int8)			*((VPtr<char>*)this->ptr)->value			= (char)value;
+			else if (this->type->identifier == Type::Identifier::UInt8)		*((VPtr<unsigned char>*)this->ptr)->value	= (unsigned char)value;
+			else if (this->type->identifier == Type::Identifier::Int16)		*((VPtr<short>*)this->ptr)->value			= (short)value;
+			else if (this->type->identifier == Type::Identifier::UInt16)	*((VPtr<unsigned short>*)this->ptr)->value	= (unsigned short)value;
+			else if (this->type->identifier == Type::Identifier::Int32)		*((VPtr<int>*)this->ptr)->value				= (int)value;
+			else if (this->type->identifier == Type::Identifier::UInt32)	*((VPtr<unsigned int>*)this->ptr)->value	= (unsigned int)value;
+			else if (this->type->identifier == Type::Identifier::Int64)		*((VPtr<int64_t>*)this->ptr)->value			= (int64_t)value;
+			else if (this->type->identifier == Type::Identifier::UInt64)	*((VPtr<uint64_t>*)this->ptr)->value		= (uint64_t)value;
+			else if (this->type->identifier == Type::Identifier::Float)		*((VPtr<float>*)this->ptr)->value			= (float)value;
+			else if (this->type->identifier == Type::Identifier::Double)	*((VPtr<double>*)this->ptr)->value			= (double)value;
 		}
 
-		void createSubVariables(Type::Value type);
-		void applyHmapSubVariables(Type::Value type);
+		void createSubVariables(Type::Identifier identifier);
+		void applyHmapSubVariables(Type::Identifier identifier);
 
 	protected:
 		Ptr* ptrKeys;
@@ -208,36 +204,34 @@ namespace liteser
 				this->subVariables += (new Variable())->assign(new VPtr<S>(&container->operator[](i)));
 			}
 		}
+
 		template <typename key>
-		inline void _addSubVariablesHmapKey(Type::Value value)
+		inline void _addSubVariablesHmapKey(Type::Identifier identifier)
 		{
-			switch (value)
-			{
-			case Type::INT8:		this->_addSubVariablesHmap<key, char>();			break;
-			case Type::UINT8:		this->_addSubVariablesHmap<key, unsigned char>();	break;
-			case Type::INT16:		this->_addSubVariablesHmap<key, short>();			break;
-			case Type::UINT16:		this->_addSubVariablesHmap<key, unsigned short>();	break;
-			case Type::INT32:		this->_addSubVariablesHmap<key, int>();				break;
-			case Type::UINT32:		this->_addSubVariablesHmap<key, unsigned int>();	break;
-			case Type::INT64:		this->_addSubVariablesHmap<key, int64_t>();			break;
-			case Type::UINT64:		this->_addSubVariablesHmap<key, uint64_t>();		break;
-			case Type::FLOAT:		this->_addSubVariablesHmap<key, float>();			break;
-			case Type::DOUBLE:		this->_addSubVariablesHmap<key, double>();			break;
-			case Type::HSTR:		this->_addSubVariablesHmap<key, hstr>();			break;
-			case Type::HVERSION:	this->_addSubVariablesHmap<key, hversion>();		break;
-			case Type::HENUM:		this->_addSubVariablesHmap<key, henum>();			break;
-			case Type::GRECT:		this->_addSubVariablesHmap<key, grect>();			break;
-			case Type::GVEC2:		this->_addSubVariablesHmap<key, gvec2>();			break;
-			case Type::GVEC3:		this->_addSubVariablesHmap<key, gvec3>();			break;
-			case Type::OBJPTR:		this->_addSubVariablesHmap<key, Serializable*>();	break;
-			case Type::NONE:		throw Exception("hmap value cannot be NONE!");		break;
-			case Type::BOOL:		throw Exception("hmap value cannot be BOOL!");		break;
-			case Type::OBJECT:		throw Exception("hmap value cannot be OBJECT!");	break;
-			case Type::HARRAY:		throw Exception("hmap value cannot be HARRAY!");	break;
-			case Type::HMAP:		throw Exception("hmap value cannot be HMAP!");		break;
-			default:																	break;
-			}
+			if (identifier == Type::Identifier::Int8)				this->_addSubVariablesHmap<key, char>();
+			else if (identifier == Type::Identifier::UInt8)			this->_addSubVariablesHmap<key, unsigned char>();
+			else if (identifier == Type::Identifier::Int16)			this->_addSubVariablesHmap<key, short>();
+			else if (identifier == Type::Identifier::UInt16)		this->_addSubVariablesHmap<key, unsigned short>();
+			else if (identifier == Type::Identifier::Int32)			this->_addSubVariablesHmap<key, int>();
+			else if (identifier == Type::Identifier::UInt32)		this->_addSubVariablesHmap<key, unsigned int>();
+			else if (identifier == Type::Identifier::Int64)			this->_addSubVariablesHmap<key, int64_t>();
+			else if (identifier == Type::Identifier::UInt64)		this->_addSubVariablesHmap<key, uint64_t>();
+			else if (identifier == Type::Identifier::Float)			this->_addSubVariablesHmap<key, float>();
+			else if (identifier == Type::Identifier::Double)		this->_addSubVariablesHmap<key, double>();
+			else if (identifier == Type::Identifier::Hstr)			this->_addSubVariablesHmap<key, hstr>();
+			else if (identifier == Type::Identifier::Hversion)		this->_addSubVariablesHmap<key, hversion>();
+			else if (identifier == Type::Identifier::Henum)			this->_addSubVariablesHmap<key, henum>();
+			else if (identifier == Type::Identifier::Grect)			this->_addSubVariablesHmap<key, grect>();
+			else if (identifier == Type::Identifier::Gvec2)			this->_addSubVariablesHmap<key, gvec2>();
+			else if (identifier == Type::Identifier::Gvec3)			this->_addSubVariablesHmap<key, gvec3>();
+			else if (identifier == Type::Identifier::Object)		this->_addSubVariablesHmap<key, Serializable*>();
+			else if (identifier == Type::Identifier::None)			throw Exception("hmap value cannot be None!");
+			else if (identifier == Type::Identifier::Bool)			throw Exception("hmap value cannot be Bool!");
+			else if (identifier == Type::Identifier::ValueObject)	throw Exception("hmap value cannot be ValueObject!");
+			else if (identifier == Type::Identifier::Harray)		throw Exception("hmap value cannot be Harray!");
+			else if (identifier == Type::Identifier::Hmap)			throw Exception("hmap value cannot be Hmap!");
 		}
+
 		template <typename K, typename V>
 		inline void _addSubVariablesHmap()
 		{
@@ -246,36 +240,34 @@ namespace liteser
 				throw Exception("hmap in default constructor not empty initially: " + this->name);
 			}
 		}
+
 		template <typename keyType>
-		inline void _applyHmapSubVariablesKey(Type::Value value)
+		inline void _applyHmapSubVariablesKey(Type::Identifier identifier)
 		{
-			switch (value)
-			{
-			case Type::INT8:		this->_applyHmapSubVariables<keyType, char>();				break;
-			case Type::UINT8:		this->_applyHmapSubVariables<keyType, unsigned char>();		break;
-			case Type::INT16:		this->_applyHmapSubVariables<keyType, short>();				break;
-			case Type::UINT16:		this->_applyHmapSubVariables<keyType, unsigned short>();	break;
-			case Type::INT32:		this->_applyHmapSubVariables<keyType, int>();				break;
-			case Type::UINT32:		this->_applyHmapSubVariables<keyType, unsigned int>();		break;
-			case Type::INT64:		this->_applyHmapSubVariables<keyType, int64_t>();			break;
-			case Type::UINT64:		this->_applyHmapSubVariables<keyType, uint64_t>();			break;
-			case Type::FLOAT:		this->_applyHmapSubVariables<keyType, float>();				break;
-			case Type::DOUBLE:		this->_applyHmapSubVariables<keyType, double>();			break;
-			case Type::HSTR:		this->_applyHmapSubVariables<keyType, hstr>();				break;
-			case Type::HVERSION:	this->_applyHmapSubVariables<keyType, hversion>();			break;
-			case Type::HENUM:		this->_applyHmapSubVariables<keyType, henum>();				break;
-			case Type::GRECT:		this->_applyHmapSubVariables<keyType, grect>();				break;
-			case Type::GVEC2:		this->_applyHmapSubVariables<keyType, gvec2>();				break;
-			case Type::GVEC3:		this->_applyHmapSubVariables<keyType, gvec3>();				break;
-			case Type::OBJPTR:		this->_applyHmapSubVariables<keyType, Serializable*>();		break;
-			case Type::NONE:		throw Exception("hmap value cannot be NONE!");				break;
-			case Type::BOOL:		throw Exception("hmap value cannot be BOOL!");				break;
-			case Type::OBJECT:		throw Exception("hmap value cannot be OBJECT!");			break;
-			case Type::HARRAY:		throw Exception("hmap value cannot be HARRAY!");			break;
-			case Type::HMAP:		throw Exception("hmap value cannot be HMAP!");				break;
-			default:																			break;
-			}
+			if (identifier == Type::Identifier::Int8)				this->_applyHmapSubVariables<keyType, char>();
+			else if (identifier == Type::Identifier::UInt8)			this->_applyHmapSubVariables<keyType, unsigned char>();
+			else if (identifier == Type::Identifier::Int16)			this->_applyHmapSubVariables<keyType, short>();
+			else if (identifier == Type::Identifier::UInt16)		this->_applyHmapSubVariables<keyType, unsigned short>();
+			else if (identifier == Type::Identifier::Int32)			this->_applyHmapSubVariables<keyType, int>();
+			else if (identifier == Type::Identifier::UInt32)		this->_applyHmapSubVariables<keyType, unsigned int>();
+			else if (identifier == Type::Identifier::Int64)			this->_applyHmapSubVariables<keyType, int64_t>();
+			else if (identifier == Type::Identifier::UInt64)		this->_applyHmapSubVariables<keyType, uint64_t>();
+			else if (identifier == Type::Identifier::Float)			this->_applyHmapSubVariables<keyType, float>();
+			else if (identifier == Type::Identifier::Double)		this->_applyHmapSubVariables<keyType, double>();
+			else if (identifier == Type::Identifier::Hstr)			this->_applyHmapSubVariables<keyType, hstr>();
+			else if (identifier == Type::Identifier::Hversion)		this->_applyHmapSubVariables<keyType, hversion>();
+			else if (identifier == Type::Identifier::Henum)			this->_applyHmapSubVariables<keyType, henum>();
+			else if (identifier == Type::Identifier::Grect)			this->_applyHmapSubVariables<keyType, grect>();
+			else if (identifier == Type::Identifier::Gvec2)			this->_applyHmapSubVariables<keyType, gvec2>();
+			else if (identifier == Type::Identifier::Gvec3)			this->_applyHmapSubVariables<keyType, gvec3>();
+			else if (identifier == Type::Identifier::Object)		this->_applyHmapSubVariables<keyType, Serializable*>();
+			else if (identifier == Type::Identifier::None)			throw Exception("hmap value cannot be None!");
+			else if (identifier == Type::Identifier::Bool)			throw Exception("hmap value cannot be Bool!");
+			else if (identifier == Type::Identifier::ValueObject)	throw Exception("hmap value cannot be ValueObject!");
+			else if (identifier == Type::Identifier::Harray)		throw Exception("hmap value cannot be Harray!");
+			else if (identifier == Type::Identifier::Hmap)			throw Exception("hmap value cannot be Hmap!");
 		}
+
 		template <typename K, typename V>
 		inline void _applyHmapSubVariables()
 		{

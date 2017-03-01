@@ -64,7 +64,7 @@
 		_checkVersion(); \
 		if (header.version.major > 2 || (header.version.major == 2 && header.version.minor >= 7)) \
 		{ \
-			if (_loadType() != Type::HARRAY) \
+			if (_loadIdentifier() != Type::Identifier::Harray) \
 			{ \
 				_finish(stream); \
 				throw Exception("Cannot load object from file that does not contain a harray<" #type ">!"); \
@@ -79,7 +79,7 @@
 				} \
 				Type subType; \
 				subType.assign((VPtr<type>*)NULL); \
-				if (_loadType() != subType.value) \
+				if (_loadIdentifier() != subType.identifier) \
 				{ \
 					_finish(stream); \
 					throw Exception("Cannot load object from file that does not contain a harray<" #type ">!"); \
@@ -109,7 +109,7 @@
 		stream->writeLine(LITESER_XML_ROOT_BEGIN); \
 		Type subType; \
 		subType.assign((VPtr<type>*)NULL); \
-		stream->writeLine("\t<Container type=\"" + hsprintf("%02X", Type::HARRAY) + "\" sub_types=\"" + hsprintf("%02X", subType.value) + "\">"); \
+		stream->writeLine("\t<Container type=\"" + hsprintf("%02X", Type::Identifier::Harray.value) + "\" sub_types=\"" + hsprintf("%02X", subType.identifier.value) + "\">"); \
 		_indent += "\t"; \
 		xml::_dumpHarray(&value); \
 		_indent = _indent(0, _indent.size() - 1); \
@@ -140,7 +140,7 @@
 		hlxml::Node* node = root; \
 		if (header.version.major > 2 || (header.version.major == 2 && header.version.minor >= 7)) \
 		{ \
-			if (root->children.size() != 1 || root->children.first()->name != "Container" || root->children.first()->pstr("type", "00").unhex() != Type::HARRAY) \
+			if (root->children.size() != 1 || root->children.first()->name != "Container" || root->children.first()->pstr("type", "00").unhex() != Type::Identifier::Harray.value) \
 			{ \
 				_finish(stream); \
 				throw Exception("Cannot load object from file that does not contain a harray<\"" #type "\">!"); \
@@ -149,7 +149,7 @@
 			Type subType; \
 			subType.assign((VPtr<type>*)NULL); \
 			harray<hstr> subTypes = node->pstr("sub_types", "00").split(',', -1, true); \
-			if (subTypes.size() != 1 || subTypes.first().unhex() != subType.value) \
+			if (subTypes.size() != 1 || subTypes.first().unhex() != subType.identifier.value) \
 			{ \
 				_finish(stream); \
 				throw Exception("Cannot load object from file that does not contain a harray<" #type ">!"); \
@@ -176,7 +176,7 @@ namespace liteser
 		Header header(allowMultiReferencing, stringPooling);
 		_setup(stream, header);
 		_writeHeader(stream, header);
-		_dumpType(Type::OBJPTR);
+		_dumpType(Type::Identifier::Object);
 		_dump(&object);
 		_finish(stream);
 		return true;
@@ -218,8 +218,8 @@ namespace liteser
 		_checkVersion();
 		if (header.version.major > 2 || (header.version.major == 2 && header.version.minor >= 7)) // this compatibility could be limited to only 2.7 at some point
 		{
-			Type::Value type = _loadType();
-			if (type != Type::OBJPTR)
+			Type::Identifier identifier = _loadIdentifier();
+			if (identifier != Type::Identifier::Object)
 			{
 				_finish(stream);
 				throw Exception("Cannot load object from file that does not contain an object!");

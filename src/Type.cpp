@@ -18,9 +18,35 @@
 
 namespace liteser
 {
+	HL_ENUM_CLASS_DEFINE(Type::Identifier,
+	(
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, None, 0x00);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Int8, 0x01);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, UInt8, 0x02);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Int16, 0x03);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, UInt16, 0x04);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Int32, 0x05);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, UInt32, 0x06);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Int64, 0x07);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, UInt64, 0x08);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Float, 0x21);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Double, 0x22);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Bool, 0x41);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, ValueObject, 0x61);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Object, 0x62);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Hstr, 0x81);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Hversion, 0x82);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Henum, 0x83);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Grect, 0x91);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Gvec2, 0x92);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Gvec3, 0x93);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Harray, 0xA1);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Hmap, 0xC1);
+	));
+
 	Type::Type()
 	{
-		this->value = NONE;
+		this->identifier = Identifier::None;
 	}
 
 	Type::~Type()
@@ -33,97 +59,97 @@ namespace liteser
 
 	void Type::assign(VPtr<char>* arg)
 	{
-		this->value = INT8;
+		this->identifier = Identifier::Int8;
 	}
 
 	void Type::assign(VPtr<unsigned char>* arg)
 	{
-		this->value = UINT8;
+		this->identifier = Identifier::UInt8;
 	}
 
 	void Type::assign(VPtr<short>* arg)
 	{
-		this->value = INT16;
+		this->identifier = Identifier::Int16;
 	}
 
 	void Type::assign(VPtr<unsigned short>* arg)
 	{
-		this->value = UINT16;
+		this->identifier = Identifier::UInt16;
 	}
 
 	void Type::assign(VPtr<int>* arg)
 	{
-		this->value = INT32;
+		this->identifier = Identifier::Int32;
 	}
 
 	void Type::assign(VPtr<unsigned int>* arg)
 	{
-		this->value = UINT32;
+		this->identifier = Identifier::UInt32;
 	}
 
 	void Type::assign(VPtr<int64_t>* arg)
 	{
-		this->value = INT64;
+		this->identifier = Identifier::Int64;
 	}
 
 	void Type::assign(VPtr<uint64_t>* arg)
 	{
-		this->value = UINT64;
+		this->identifier = Identifier::UInt64;
 	}
 
 	void Type::assign(VPtr<float>* arg)
 	{
-		this->value = FLOAT;
+		this->identifier = Identifier::Float;
 	}
 
 	void Type::assign(VPtr<double>* arg)
 	{
-		this->value = DOUBLE;
+		this->identifier = Identifier::Double;
 	}
 
 	void Type::assign(VPtr<bool>* arg)
 	{
-		this->value = BOOL;
+		this->identifier = Identifier::Bool;
 	}
 
 	void Type::assign(VPtr<hstr>* arg)
 	{
-		this->value = HSTR;
+		this->identifier = Identifier::Hstr;
 	}
 
 	void Type::assign(VPtr<hversion>* arg)
 	{
-		this->value = HVERSION;
+		this->identifier = Identifier::Hversion;
 	}
 
 	void Type::assign(VPtr<henum>* arg)
 	{
-		this->value = HENUM;
+		this->identifier = Identifier::Henum;
 	}
 
 	void Type::assign(VPtr<grect>* arg)
 	{
-		this->value = GRECT;
+		this->identifier = Identifier::Grect;
 	}
 
 	void Type::assign(VPtr<gvec2>* arg)
 	{
-		this->value = GVEC2;
+		this->identifier = Identifier::Gvec2;
 	}
 
 	void Type::assign(VPtr<gvec3>* arg)
 	{
-		this->value = GVEC3;
+		this->identifier = Identifier::Gvec3;
 	}
 
 	void Type::assign(VPtr<Serializable>* arg)
 	{
-		this->value = OBJECT;
+		this->identifier = Identifier::ValueObject;
 	}
 
 	void Type::assign(VPtr<Serializable*>* arg)
 	{
-		this->value = OBJPTR;
+		this->identifier = Identifier::Object;
 	}
 
 }

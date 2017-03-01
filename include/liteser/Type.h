@@ -35,33 +35,33 @@ namespace liteser
 	class liteserExport Type
 	{
 	public:
-		enum Value
-		{
-			NONE     = 0x00,
-			INT8	 = 0x01,
-			UINT8	 = 0x02,
-			INT16	 = 0x03,
-			UINT16	 = 0x04,
-			INT32    = 0x05,
-			UINT32   = 0x06,
-			INT64    = 0x07,
-			UINT64   = 0x08,
-			FLOAT    = 0x21,
-			DOUBLE	 = 0x22,
-			BOOL	 = 0x41,
-			OBJECT	 = 0x61,
-			OBJPTR	 = 0x62,
-			HSTR	 = 0x81,
-			HVERSION = 0x82,
-			HENUM    = 0x83,
-			GRECT    = 0x91,
-			GVEC2	 = 0x92,
-			GVEC3	 = 0x93,
-			HARRAY	 = 0xA1,
-			HMAP	 = 0xC1,
-		};
+		HL_ENUM_CLASS_PREFIX_DECLARE(liteserExport, Identifier,
+		(
+			HL_ENUM_DECLARE(Identifier, None);
+			HL_ENUM_DECLARE(Identifier, Int8);
+			HL_ENUM_DECLARE(Identifier, UInt8);
+			HL_ENUM_DECLARE(Identifier, Int16);
+			HL_ENUM_DECLARE(Identifier, UInt16);
+			HL_ENUM_DECLARE(Identifier, Int32);
+			HL_ENUM_DECLARE(Identifier, UInt32);
+			HL_ENUM_DECLARE(Identifier, Int64);
+			HL_ENUM_DECLARE(Identifier, UInt64);
+			HL_ENUM_DECLARE(Identifier, Float);
+			HL_ENUM_DECLARE(Identifier, Double);
+			HL_ENUM_DECLARE(Identifier, Bool);
+			HL_ENUM_DECLARE(Identifier, ValueObject);
+			HL_ENUM_DECLARE(Identifier, Object);
+			HL_ENUM_DECLARE(Identifier, Hstr);
+			HL_ENUM_DECLARE(Identifier, Hversion);
+			HL_ENUM_DECLARE(Identifier, Henum);
+			HL_ENUM_DECLARE(Identifier, Grect);
+			HL_ENUM_DECLARE(Identifier, Gvec2);
+			HL_ENUM_DECLARE(Identifier, Gvec3);
+			HL_ENUM_DECLARE(Identifier, Harray);
+			HL_ENUM_DECLARE(Identifier, Hmap);
+		));
 
-		Value value;
+		Identifier identifier;
 		harray<Type*> subTypes;
 
 		Type();
@@ -89,7 +89,7 @@ namespace liteser
 		template <typename T>
 		inline void assign(VPtr<harray<T> >* arg)
 		{
-			this->value = HARRAY;
+			this->identifier = Identifier::Harray;
 			Type* type = new Type();
 			type->assign((VPtr<T>*)NULL);
 			this->subTypes += type;
@@ -97,7 +97,7 @@ namespace liteser
 		template <typename K, typename V>
 		inline void assign(VPtr<hmap<K, V> >* arg)
 		{
-			this->value = HMAP;
+			this->identifier = Identifier::Hmap;
 			Type* type = new Type();
 			type->assign((VPtr<K>*)NULL);
 			this->subTypes += type;

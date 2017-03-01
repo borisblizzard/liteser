@@ -42,42 +42,42 @@ namespace liteser
 	{
 		inline void __dumpVariableStart(Variable* variable)
 		{
-			if (variable->type->value == Type::HARRAY || variable->type->value == Type::HMAP)
+			if (variable->type->identifier == Type::Identifier::Harray || variable->type->identifier == Type::Identifier::Hmap)
 			{
 				harray<hstr> types;
 				foreach (Type*, it, variable->type->subTypes)
 				{
-					types += hsprintf("%02X", (*it)->value);
+					types += hsprintf("%02X", (*it)->identifier.value);
 				}
 				if (variable->containerSize > 0)
 				{
-					OPEN_NODE(hsprintf("Variable name=\"%s\" type=\"%02X\" sub_types=\"%s\"", variable->name.cStr(), variable->type->value, types.joined(',').cStr()));
+					OPEN_NODE(hsprintf("Variable name=\"%s\" type=\"%02X\" sub_types=\"%s\"", variable->name.cStr(), variable->type->identifier.value, types.joined(',').cStr()));
 				}
 				else
 				{
-					WRITE_NODE(hsprintf("Variable name=\"%s\" type=\"%02X\" sub_types=\"%s\"", variable->name.cStr(), variable->type->value, types.joined(',').cStr()));
+					WRITE_NODE(hsprintf("Variable name=\"%s\" type=\"%02X\" sub_types=\"%s\"", variable->name.cStr(), variable->type->identifier.value, types.joined(',').cStr()));
 				}
 			}
-			else if (variable->type->value == Type::OBJECT || variable->type->value == Type::OBJPTR)
+			else if (variable->type->identifier == Type::Identifier::ValueObject || variable->type->identifier == Type::Identifier::Object)
 			{
-				OPEN_NODE(hsprintf("Variable name=\"%s\" type=\"%02X\"", variable->name.cStr(), variable->type->value));
+				OPEN_NODE(hsprintf("Variable name=\"%s\" type=\"%02X\"", variable->name.cStr(), variable->type->identifier.value));
 			}
 			else
 			{
-				START_LINE(hsprintf("Variable name=\"%s\" type=\"%02X\" value=\"", variable->name.cStr(), variable->type->value));
+				START_LINE(hsprintf("Variable name=\"%s\" type=\"%02X\" value=\"", variable->name.cStr(), variable->type->identifier.value));
 			}
 		}
 
 		inline void __dumpVariableFinish(Variable* variable)
 		{
-			if (variable->type->value == Type::HARRAY || variable->type->value == Type::HMAP)
+			if (variable->type->identifier == Type::Identifier::Harray || variable->type->identifier == Type::Identifier::Hmap)
 			{
 				if (variable->containerSize > 0)
 				{
 					CLOSE_NODE("Variable");
 				}
 			}
-			else if (variable->type->value == Type::OBJECT || variable->type->value == Type::OBJPTR)
+			else if (variable->type->identifier == Type::Identifier::ValueObject || variable->type->identifier == Type::Identifier::Object)
 			{
 				CLOSE_NODE("Variable");
 			}
@@ -89,41 +89,37 @@ namespace liteser
 		
 		inline void __dumpVariable(Variable* variable)
 		{
-			switch (variable->type->value)
-			{
-			case Type::INT8:		stream->write((int)*variable->value<char>());				break;
-			case Type::UINT8:		stream->write(*variable->value<unsigned char>());			break;
-			case Type::INT16:		stream->write(*variable->value<short>());					break;
-			case Type::UINT16:		stream->write(*variable->value<unsigned short>());			break;
-			case Type::INT32:		stream->write(*variable->value<int>());						break;
-			case Type::UINT32:		stream->write(*variable->value<unsigned int>());			break;
-			case Type::INT64:		stream->write(*variable->value<int64_t>());					break;
-			case Type::UINT64:		stream->write(*variable->value<uint64_t>());				break;
-			case Type::FLOAT:		stream->write(hsprintf("%g", *variable->value<float>()));	break;
-			case Type::DOUBLE:		stream->write(hsprintf("%g", *variable->value<double>()));	break;
-			case Type::BOOL:		stream->write(*variable->value<bool>());					break;
-			case Type::HSTR:		_dump(variable->value<hstr>());								break;
-			case Type::HVERSION:	_dump(variable->value<hversion>());							break;
-			case Type::HENUM:		_dump(variable->value<henum>());							break;
-			case Type::GRECT:		_dump(variable->value<grect>());							break;
-			case Type::GVEC2:		_dump(variable->value<gvec2>());							break;
-			case Type::GVEC3:		_dump(variable->value<gvec3>());							break;
-			case Type::OBJECT:		_dump(variable->value<Serializable>());						break;
-			case Type::OBJPTR:		_dump(variable->value<Serializable*>());					break;
-			case Type::HARRAY:		__dumpContainer(variable);									break;
-			case Type::HMAP:		__dumpContainer(variable);									break;
-			default:																			break;
-			}
+			if (variable->type->identifier == Type::Identifier::Int8)				stream->write((int)*variable->value<char>());
+			else if (variable->type->identifier == Type::Identifier::UInt8)			stream->write(*variable->value<unsigned char>());
+			else if (variable->type->identifier == Type::Identifier::Int16)			stream->write(*variable->value<short>());
+			else if (variable->type->identifier == Type::Identifier::UInt16)		stream->write(*variable->value<unsigned short>());
+			else if (variable->type->identifier == Type::Identifier::Int32)			stream->write(*variable->value<int>());
+			else if (variable->type->identifier == Type::Identifier::UInt32)		stream->write(*variable->value<unsigned int>());
+			else if (variable->type->identifier == Type::Identifier::Int64)			stream->write(*variable->value<int64_t>());
+			else if (variable->type->identifier == Type::Identifier::UInt64)		stream->write(*variable->value<uint64_t>());
+			else if (variable->type->identifier == Type::Identifier::Float)			stream->write(hsprintf("%g", *variable->value<float>()));
+			else if (variable->type->identifier == Type::Identifier::Double)		stream->write(hsprintf("%g", *variable->value<double>()));
+			else if (variable->type->identifier == Type::Identifier::Bool)			stream->write(*variable->value<bool>());
+			else if (variable->type->identifier == Type::Identifier::Hstr)			_dump(variable->value<hstr>());
+			else if (variable->type->identifier == Type::Identifier::Hversion)		_dump(variable->value<hversion>());
+			else if (variable->type->identifier == Type::Identifier::Henum)			_dump(variable->value<henum>());
+			else if (variable->type->identifier == Type::Identifier::Grect)			_dump(variable->value<grect>());
+			else if (variable->type->identifier == Type::Identifier::Gvec2)			_dump(variable->value<gvec2>());
+			else if (variable->type->identifier == Type::Identifier::Gvec3)			_dump(variable->value<gvec3>());
+			else if (variable->type->identifier == Type::Identifier::ValueObject)	_dump(variable->value<Serializable>());
+			else if (variable->type->identifier == Type::Identifier::Object)		_dump(variable->value<Serializable*>());
+			else if (variable->type->identifier == Type::Identifier::Harray)		__dumpContainer(variable);
+			else if (variable->type->identifier == Type::Identifier::Hmap)			__dumpContainer(variable);
 		}
 
 		inline void __dumpContainerVariableStart(Variable* variable)
 		{
-			if (variable->type->value == Type::HARRAY || variable->type->value == Type::HMAP)
+			if (variable->type->identifier == Type::Identifier::Harray || variable->type->identifier == Type::Identifier::Hmap)
 			{
 				harray<hstr> types;
 				foreach (Type*, it, variable->type->subTypes)
 				{
-					types += hsprintf("%02X", (*it)->value);
+					types += hsprintf("%02X", (*it)->identifier.value);
 				}
 				if (variable->containerSize > 0)
 				{
@@ -134,7 +130,7 @@ namespace liteser
 					WRITE_NODE(hsprintf("Container sub_types=\"%s\"", types.joined(',').cStr()));
 				}
 			}
-			else if (variable->type->value != Type::OBJECT && variable->type->value != Type::OBJPTR)
+			else if (variable->type->identifier != Type::Identifier::ValueObject && variable->type->identifier != Type::Identifier::Object)
 			{
 				START_LINE("Element value=\"");
 			}
@@ -142,14 +138,14 @@ namespace liteser
 
 		inline void __dumpContainerVariableFinish(Variable* variable)
 		{
-			if (variable->type->value == Type::HARRAY || variable->type->value == Type::HMAP)
+			if (variable->type->identifier == Type::Identifier::Harray || variable->type->identifier == Type::Identifier::Hmap)
 			{
 				if (variable->containerSize > 0)
 				{
 					CLOSE_NODE("Container");
 				}
 			}
-			else if (variable->type->value != Type::OBJECT && variable->type->value != Type::OBJPTR)
+			else if (variable->type->identifier != Type::Identifier::ValueObject && variable->type->identifier != Type::Identifier::Object)
 			{
 				FINISH_LINE("\"");
 			}

@@ -25,38 +25,34 @@
 
 namespace liteser
 {
-	void _dumpType(Type::Value typeValue)
+	void _dumpType(Type::Identifier identifier)
 	{
-		stream->dump((unsigned char)typeValue);
+		stream->dump((unsigned char)identifier.value);
 	}
 
 	inline void __dumpVariable(Variable* variable)
 	{
-		switch (variable->type->value)
-		{
-		case Type::INT8:		stream->dump(*variable->value<char>());				break;
-		case Type::UINT8:		stream->dump(*variable->value<unsigned char>());	break;
-		case Type::INT16:		stream->dump(*variable->value<short>());			break;
-		case Type::UINT16:		stream->dump(*variable->value<unsigned short>());	break;
-		case Type::INT32:		stream->dump(*variable->value<int>());				break;
-		case Type::UINT32:		stream->dump(*variable->value<unsigned int>());		break;
-		case Type::INT64:		stream->dump(*variable->value<int64_t>());			break;
-		case Type::UINT64:		stream->dump(*variable->value<uint64_t>());			break;
-		case Type::FLOAT:		stream->dump(*variable->value<float>());			break;
-		case Type::DOUBLE:		stream->dump(*variable->value<double>());			break;
-		case Type::BOOL:		stream->dump(*variable->value<bool>());				break;
-		case Type::HSTR:		_dump(variable->value<hstr>());						break;
-		case Type::HVERSION:	_dump(variable->value<hversion>());					break;
-		case Type::HENUM:		_dump(variable->value<henum>());					break;
-		case Type::GRECT:		_dump(variable->value<grect>());					break;
-		case Type::GVEC2:		_dump(variable->value<gvec2>());					break;
-		case Type::GVEC3:		_dump(variable->value<gvec3>());					break;
-		case Type::OBJECT:		_dump(variable->value<Serializable>());				break;
-		case Type::OBJPTR:		_dump(variable->value<Serializable*>());			break;
-		case Type::HARRAY:		__dumpContainer(variable);							break;
-		case Type::HMAP:		__dumpContainer(variable);							break;
-		default:																	break;
-		}
+		if (variable->type->identifier == Type::Identifier::Int8)				stream->dump(*variable->value<char>());
+		else if (variable->type->identifier == Type::Identifier::UInt8)			stream->dump(*variable->value<unsigned char>());
+		else if (variable->type->identifier == Type::Identifier::Int16)			stream->dump(*variable->value<short>());
+		else if (variable->type->identifier == Type::Identifier::UInt16)		stream->dump(*variable->value<unsigned short>());
+		else if (variable->type->identifier == Type::Identifier::Int32)			stream->dump(*variable->value<int>());
+		else if (variable->type->identifier == Type::Identifier::UInt32)		stream->dump(*variable->value<unsigned int>());
+		else if (variable->type->identifier == Type::Identifier::Int64)			stream->dump(*variable->value<int64_t>());
+		else if (variable->type->identifier == Type::Identifier::UInt64)		stream->dump(*variable->value<uint64_t>());
+		else if (variable->type->identifier == Type::Identifier::Float)			stream->dump(*variable->value<float>());
+		else if (variable->type->identifier == Type::Identifier::Double)		stream->dump(*variable->value<double>());
+		else if (variable->type->identifier == Type::Identifier::Bool)			stream->dump(*variable->value<bool>());
+		else if (variable->type->identifier == Type::Identifier::Hstr)			_dump(variable->value<hstr>());
+		else if (variable->type->identifier == Type::Identifier::Hversion)		_dump(variable->value<hversion>());
+		else if (variable->type->identifier == Type::Identifier::Henum)			_dump(variable->value<henum>());
+		else if (variable->type->identifier == Type::Identifier::Grect)			_dump(variable->value<grect>());
+		else if (variable->type->identifier == Type::Identifier::Gvec2)			_dump(variable->value<gvec2>());
+		else if (variable->type->identifier == Type::Identifier::Gvec3)			_dump(variable->value<gvec3>());
+		else if (variable->type->identifier == Type::Identifier::ValueObject)	_dump(variable->value<Serializable>());
+		else if (variable->type->identifier == Type::Identifier::Object)		_dump(variable->value<Serializable*>());
+		else if (variable->type->identifier == Type::Identifier::Harray)		__dumpContainer(variable);
+		else if (variable->type->identifier == Type::Identifier::Hmap)			__dumpContainer(variable);
 	}
 
 	void __dumpContainer(Variable* variable)
@@ -67,7 +63,7 @@ namespace liteser
 			stream->dump((unsigned int)variable->type->subTypes.size());
 			foreach (Type*, it, variable->type->subTypes)
 			{
-				_dumpType((*it)->value);
+				_dumpType((*it)->identifier);
 			}
 			foreach (Variable*, it, variable->subVariables)
 			{
@@ -144,7 +140,7 @@ namespace liteser
 			foreach (Variable*, it, variables)
 			{
 				_dump(&(*it)->name);
-				_dumpType((*it)->type->value);
+				_dumpType((*it)->type->identifier);
 				__dumpVariable(*it);
 				delete (*it);
 			}
@@ -162,13 +158,13 @@ namespace liteser
 
 	void _dumpHarray(harray<Serializable*>* value)
 	{
-		_dumpType(Type::HARRAY);
+		_dumpType(Type::Identifier::Harray);
 		int size = value->size();
 		stream->dump((unsigned int)size);
 		if (size > 0)
 		{
 			stream->dump(1u);
-			_dumpType(Type::OBJPTR);
+			_dumpType(Type::Identifier::Object);
 			foreach (Serializable*, it, *value)
 			{
 				_dump(*it);
@@ -179,7 +175,7 @@ namespace liteser
 #define DEFINE_DUMP_HARRAY(type) \
 	void _dumpHarray(harray<type>* value) \
 	{ \
-		_dumpType(Type::HARRAY); \
+		_dumpType(Type::Identifier::Harray); \
 		int size = value->size(); \
 		stream->dump((unsigned int)size); \
 		if (size > 0) \
@@ -187,7 +183,7 @@ namespace liteser
 			stream->dump(1u); \
 			Type dumpType; \
 			dumpType.assign((VPtr<type>*)NULL); \
-			_dumpType(dumpType.value); \
+			_dumpType(dumpType.identifier); \
 			foreach (type, it, *value) \
 			{ \
 				stream->dump(*it); \
@@ -198,7 +194,7 @@ namespace liteser
 #define DEFINE_DUMP_HARRAY_C(type) \
 	void _dumpHarray(harray<type>* value) \
 	{ \
-		_dumpType(Type::HARRAY); \
+		_dumpType(Type::Identifier::Harray); \
 		int size = value->size(); \
 		stream->dump((unsigned int)size); \
 		if (size > 0) \
@@ -206,7 +202,7 @@ namespace liteser
 			stream->dump(1u); \
 			Type dumpType; \
 			dumpType.assign((VPtr<type>*)NULL); \
-			_dumpType(dumpType.value); \
+			_dumpType(dumpType.identifier); \
 			stream->dump((unsigned int)value->size()); \
 			foreach (type, it, *value) \
 			{ \

@@ -88,92 +88,77 @@ namespace liteser
 		}
 	}
 
-	void Variable::createSubVariables(Type::Value type)
+	void Variable::createSubVariables(Type::Identifier identifier)
 	{
 		if (this->type->subTypes.size() == 0)
 		{
 			throw Exception("Variable type does not contain subtypes: " + this->name);
 		}
-		switch (type)
+		if (identifier == Type::Identifier::Harray)
 		{
-		case Type::HARRAY:
-			switch (this->type->subTypes[0]->value)
-			{
-			case Type::INT8:		this->_addSubVariablesHarray<char>();			return;
-			case Type::UINT8:		this->_addSubVariablesHarray<unsigned char>();	return;
-			case Type::INT16:		this->_addSubVariablesHarray<short>();			return;
-			case Type::UINT16:		this->_addSubVariablesHarray<unsigned short>();	return;
-			case Type::INT32:		this->_addSubVariablesHarray<int>();			return;
-			case Type::UINT32:		this->_addSubVariablesHarray<unsigned int>();	return;
-			case Type::INT64:		this->_addSubVariablesHarray<int64_t>();		return;
-			case Type::UINT64:		this->_addSubVariablesHarray<uint64_t>();		return;
-			case Type::FLOAT:		this->_addSubVariablesHarray<float>();			return;
-			case Type::DOUBLE:		this->_addSubVariablesHarray<double>();			return;
-			case Type::HSTR:		this->_addSubVariablesHarray<hstr>();			return;
-			case Type::HVERSION:	this->_addSubVariablesHarray<hversion>();		return;
-			case Type::HENUM:		this->_addSubVariablesHarray<henum>();			return;
-			case Type::GRECT:		this->_addSubVariablesHarray<grect>();			return;
-			case Type::GVEC2:		this->_addSubVariablesHarray<gvec2>();			return;
-			case Type::GVEC3:		this->_addSubVariablesHarray<gvec3>();			return;
-			case Type::OBJECT:		this->_addSubVariablesHarray<Serializable>();	return;
-			case Type::OBJPTR:		this->_addSubVariablesHarray<Serializable*>();	return;
-			default:																break;
-			}
-			throw Exception(hsprintf("Subtype is not supported within harray: %s; type: %02X",
-				this->name.cStr(), this->type->subTypes[0]->value));
-			break;
-		case Type::HMAP:
-			switch (this->type->subTypes[0]->value)
-			{
-			case Type::INT8:		this->_addSubVariablesHmapKey<char>(this->type->subTypes[1]->value);			return;
-			case Type::UINT8:		this->_addSubVariablesHmapKey<unsigned char>(this->type->subTypes[1]->value);	return;
-			case Type::INT16:		this->_addSubVariablesHmapKey<short>(this->type->subTypes[1]->value);			return;
-			case Type::UINT16:		this->_addSubVariablesHmapKey<unsigned short>(this->type->subTypes[1]->value);	return;
-			case Type::INT32:		this->_addSubVariablesHmapKey<int>(this->type->subTypes[1]->value);				return;
-			case Type::UINT32:		this->_addSubVariablesHmapKey<unsigned int>(this->type->subTypes[1]->value);	return;
-			case Type::INT64:		this->_addSubVariablesHmapKey<int64_t>(this->type->subTypes[1]->value);			return;
-			case Type::UINT64:		this->_addSubVariablesHmapKey<uint64_t>(this->type->subTypes[1]->value);		return;
-			case Type::FLOAT:		this->_addSubVariablesHmapKey<float>(this->type->subTypes[1]->value);			return;
-			case Type::DOUBLE:		this->_addSubVariablesHmapKey<double>(this->type->subTypes[1]->value);			return;
-			case Type::HSTR:		this->_addSubVariablesHmapKey<hstr>(this->type->subTypes[1]->value);			return;
-			case Type::HVERSION:	this->_addSubVariablesHmapKey<hversion>(this->type->subTypes[1]->value);		return;
-			case Type::HENUM:		this->_addSubVariablesHmapKey<henum>(this->type->subTypes[1]->value);			return;
-			default:																								break;
-			}
-			throw Exception(hsprintf("Subtype is not supported within hmap: %s; types: %02X %02X",
-				this->name.cStr(), this->type->subTypes[0]->value, this->type->subTypes[1]->value));
-			break;
-		default:
-			break;
+			if (this->type->subTypes[0]->identifier == Type::Identifier::Int8)				this->_addSubVariablesHarray<char>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt8)		this->_addSubVariablesHarray<unsigned char>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Int16)		this->_addSubVariablesHarray<short>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt16)		this->_addSubVariablesHarray<unsigned short>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Int32)		this->_addSubVariablesHarray<int>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt32)		this->_addSubVariablesHarray<unsigned int>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Int64)		this->_addSubVariablesHarray<int64_t>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt64)		this->_addSubVariablesHarray<uint64_t>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Float)		this->_addSubVariablesHarray<float>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Double)		this->_addSubVariablesHarray<double>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Hstr)			this->_addSubVariablesHarray<hstr>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Hversion)		this->_addSubVariablesHarray<hversion>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Henum)		this->_addSubVariablesHarray<henum>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Grect)		this->_addSubVariablesHarray<grect>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Gvec2)		this->_addSubVariablesHarray<gvec2>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Gvec3)		this->_addSubVariablesHarray<gvec3>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::ValueObject)	this->_addSubVariablesHarray<Serializable>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Object)		this->_addSubVariablesHarray<Serializable*>();
+			else throw Exception(hsprintf("Subtype is not supported within harray: %s; type: %02X", this->name.cStr(), this->type->subTypes[0]->identifier.value));
 		}
-		throw Exception(hsprintf("Type is not supported for: %s; type: %02X", this->name.cStr(), type));
+		else if (identifier == Type::Identifier::Hmap)
+		{
+			if (this->type->subTypes[0]->identifier == Type::Identifier::Int8)			this->_addSubVariablesHmapKey<char>(this->type->subTypes[1]->identifier);
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt8)	this->_addSubVariablesHmapKey<unsigned char>(this->type->subTypes[1]->identifier);
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Int16)	this->_addSubVariablesHmapKey<short>(this->type->subTypes[1]->identifier);
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt16)	this->_addSubVariablesHmapKey<unsigned short>(this->type->subTypes[1]->identifier);
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Int32)	this->_addSubVariablesHmapKey<int>(this->type->subTypes[1]->identifier);
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt32)	this->_addSubVariablesHmapKey<unsigned int>(this->type->subTypes[1]->identifier);
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Int64)	this->_addSubVariablesHmapKey<int64_t>(this->type->subTypes[1]->identifier);
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt64)	this->_addSubVariablesHmapKey<uint64_t>(this->type->subTypes[1]->identifier);
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Float)	this->_addSubVariablesHmapKey<float>(this->type->subTypes[1]->identifier);
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Double)	this->_addSubVariablesHmapKey<double>(this->type->subTypes[1]->identifier);
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Hstr)		this->_addSubVariablesHmapKey<hstr>(this->type->subTypes[1]->identifier);
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Hversion)	this->_addSubVariablesHmapKey<hversion>(this->type->subTypes[1]->identifier);
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Henum)	this->_addSubVariablesHmapKey<henum>(this->type->subTypes[1]->identifier);
+			else throw Exception(hsprintf("Subtype is not supported within hmap: %s; types: %02X %02X", this->name.cStr(), this->type->subTypes[0]->identifier.value, this->type->subTypes[1]->identifier.value));
+		}
+		else
+		{
+			throw Exception(hsprintf("Type is not supported for: %s; type: %02X", this->name.cStr(), type));
+		}
 	}
 
-	void Variable::applyHmapSubVariables(Type::Value type)
+	void Variable::applyHmapSubVariables(Type::Identifier identifier)
 	{
-		if (type != Type::HMAP)
+		if (identifier != Type::Identifier::Hmap)
 		{
 			throw Exception("Variable type is not hmap!");
 		}
-		switch (this->type->subTypes[0]->value)
-		{
-		case Type::INT8:		this->_applyHmapSubVariablesKey<char>(this->type->subTypes[1]->value);				return;
-		case Type::UINT8:		this->_applyHmapSubVariablesKey<unsigned char>(this->type->subTypes[1]->value);		return;
-		case Type::INT16:		this->_applyHmapSubVariablesKey<short>(this->type->subTypes[1]->value);				return;
-		case Type::UINT16:		this->_applyHmapSubVariablesKey<unsigned short>(this->type->subTypes[1]->value);	return;
-		case Type::INT32:		this->_applyHmapSubVariablesKey<int>(this->type->subTypes[1]->value);				return;
-		case Type::UINT32:		this->_applyHmapSubVariablesKey<unsigned int>(this->type->subTypes[1]->value);		return;
-		case Type::INT64:		this->_applyHmapSubVariablesKey<int64_t>(this->type->subTypes[1]->value);			return;
-		case Type::UINT64:		this->_applyHmapSubVariablesKey<uint64_t>(this->type->subTypes[1]->value);			return;
-		case Type::FLOAT:		this->_applyHmapSubVariablesKey<float>(this->type->subTypes[1]->value);				return;
-		case Type::DOUBLE:		this->_applyHmapSubVariablesKey<double>(this->type->subTypes[1]->value);			return;
-		case Type::HSTR:		this->_applyHmapSubVariablesKey<hstr>(this->type->subTypes[1]->value);				return;
-		case Type::HVERSION:	this->_applyHmapSubVariablesKey<hversion>(this->type->subTypes[1]->value);			return;
-		case Type::HENUM:		this->_applyHmapSubVariablesKey<henum>(this->type->subTypes[1]->value);				return;
-		default:																									break;
-		}
-		throw Exception(hsprintf("Subtype is not supported within hmap: %s; types: %02X %02X",
-			this->name.cStr(), this->type->subTypes[0]->value, this->type->subTypes[1]->value));
+		if (this->type->subTypes[0]->identifier == Type::Identifier::Int8)			this->_applyHmapSubVariablesKey<char>(this->type->subTypes[1]->identifier);	
+		else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt8)	this->_applyHmapSubVariablesKey<unsigned char>(this->type->subTypes[1]->identifier);
+		else if (this->type->subTypes[0]->identifier == Type::Identifier::Int16)	this->_applyHmapSubVariablesKey<short>(this->type->subTypes[1]->identifier);
+		else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt16)	this->_applyHmapSubVariablesKey<unsigned short>(this->type->subTypes[1]->identifier);
+		else if (this->type->subTypes[0]->identifier == Type::Identifier::Int32)	this->_applyHmapSubVariablesKey<int>(this->type->subTypes[1]->identifier);
+		else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt32)	this->_applyHmapSubVariablesKey<unsigned int>(this->type->subTypes[1]->identifier);
+		else if (this->type->subTypes[0]->identifier == Type::Identifier::Int64)	this->_applyHmapSubVariablesKey<int64_t>(this->type->subTypes[1]->identifier);
+		else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt64)	this->_applyHmapSubVariablesKey<uint64_t>(this->type->subTypes[1]->identifier);
+		else if (this->type->subTypes[0]->identifier == Type::Identifier::Float)	this->_applyHmapSubVariablesKey<float>(this->type->subTypes[1]->identifier);
+		else if (this->type->subTypes[0]->identifier == Type::Identifier::Double)	this->_applyHmapSubVariablesKey<double>(this->type->subTypes[1]->identifier);
+		else if (this->type->subTypes[0]->identifier == Type::Identifier::Hstr)		this->_applyHmapSubVariablesKey<hstr>(this->type->subTypes[1]->identifier);
+		else if (this->type->subTypes[0]->identifier == Type::Identifier::Hversion)	this->_applyHmapSubVariablesKey<hversion>(this->type->subTypes[1]->identifier);
+		else if (this->type->subTypes[0]->identifier == Type::Identifier::Henum)	this->_applyHmapSubVariablesKey<henum>(this->type->subTypes[1]->identifier);
+		else throw Exception(hsprintf("Subtype is not supported within hmap: %s; types: %02X %02X", this->name.cStr(), this->type->subTypes[0]->identifier.value, this->type->subTypes[1]->identifier.value));
 	}
 
 }

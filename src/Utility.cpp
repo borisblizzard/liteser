@@ -18,7 +18,7 @@
 namespace liteser
 {
 	unsigned char fileDescriptor[4] = { 'L', 'S', 'B', 'D' }; // Lite Serializer Binary Data
-	harray<harray<Type::Value> > compatibleTypes;
+	harray<harray<Type::Identifier> > compatibleIdentifiers;
 	hsbase* stream = NULL;
 	Header _currentHeader;
 
