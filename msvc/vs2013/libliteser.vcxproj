@@ -54,6 +54,7 @@
     <ProjectGuid>{572A78A4-8516-407F-9DC3-2E3493663168}</ProjectGuid>
     <RootNamespace>liteser</RootNamespace>
   </PropertyGroup>
+  <Import Project="..\..\..\hltypes\msvc\vs2013\props-generic\system.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="props\default.props" />
   <Import Project="..\..\..\hltypes\msvc\vs2013\props-generic\platform-$(Platform).props" />
