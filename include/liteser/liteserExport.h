@@ -34,13 +34,6 @@
 			#define liteserFnExport __attribute__ ((visibility("default")))
 		#endif
 	#endif
-	#ifndef DEPRECATED_ATTRIBUTE
-		#ifdef _MSC_VER
-			#define DEPRECATED_ATTRIBUTE(message) __declspec(deprecated(message))
-		#else
-			#define DEPRECATED_ATTRIBUTE(message) __attribute__((deprecated(message)))
-		#endif
-	#endif
 
 #endif
 
