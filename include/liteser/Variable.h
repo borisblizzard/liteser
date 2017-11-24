@@ -126,10 +126,10 @@ namespace liteser
 		template <typename K, typename V>
 		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<K, Serializable>::value, Variable*>::type assign(VPtr<hmap<K*, V> >* ptr)
 		{
-			this->type->assign((VPtr<harray<Serializable*> >*)NULL);
+			this->type->template assign<Serializable*, V>(NULL);
 			this->ptr = ptr;
 			this->containerSize = ptr->value->size();
-			harray<K*> originalKeys = ptr->value->keys();
+			harray<K*>& originalKeys = ptr->value->keys();
 			harray<Serializable*>* keys = new harray<Serializable*>(originalKeys.template cast<Serializable*>());
 			harray<V>* values = new harray<V>();
 			for_iter (i, 0, originalKeys.size()) // cannot use foreach here because GCC can't compile it properly
@@ -140,6 +140,24 @@ namespace liteser
 			this->ptrValues = new CPtr<V>(values);
 			this->subVariables += (new Variable())->assign(new VPtr<harray<Serializable*> >(keys));
 			this->subVariables += (new Variable())->assign(new VPtr<harray<V> >(values));
+			return this;
+		}
+		template <typename K, typename V>
+		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<V, Serializable>::value, Variable*>::type assign(VPtr<hmap<K, V*> >* ptr)
+		{
+			this->type->template assign<K, Serializable*>(NULL);
+			this->ptr = ptr;
+			this->containerSize = ptr->value->size();
+			harray<K>* keys = new harray<K>(ptr->value->keys());
+			harray<Serializable*>* values = new harray<Serializable*>();
+			for_iter (i, 0, keys->size()) // cannot use foreach here because GCC can't compile it properly
+			{
+				values->add((Serializable*)ptr->value->operator[](keys->operator[](i)));
+			}
+			this->ptrKeys = new CPtr<K>(keys);
+			this->ptrValues = new CPtr<Serializable*>(values);
+			this->subVariables += (new Variable())->assign(new VPtr<harray<K> >(keys));
+			this->subVariables += (new Variable())->assign(new VPtr<harray<Serializable*> >(values));
 			return this;
 		}
 		template <typename K, typename V>
