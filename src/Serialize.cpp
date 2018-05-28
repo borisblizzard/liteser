@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -10,6 +10,7 @@
 
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
+#include <gtypes/Vector3.h>
 #include <hltypes/harray.h>
 #include <hltypes/hmap.h>
 #include <hltypes/hsbase.h>
@@ -46,9 +47,15 @@ namespace liteser
 		else if (variable->type->identifier == Type::Identifier::Hstr)			_dump(variable->value<hstr>());
 		else if (variable->type->identifier == Type::Identifier::Hversion)		_dump(variable->value<hversion>());
 		else if (variable->type->identifier == Type::Identifier::Henum)			_dump(variable->value<henum>());
-		else if (variable->type->identifier == Type::Identifier::Grectf)			_dump(variable->value<grectf>());
-		else if (variable->type->identifier == Type::Identifier::Gvec2f)			_dump(variable->value<gvec2f>());
-		else if (variable->type->identifier == Type::Identifier::Gvec3f)			_dump(variable->value<gvec3f>());
+		else if (variable->type->identifier == Type::Identifier::Grectf)		_dump(variable->value<grectf>());
+		else if (variable->type->identifier == Type::Identifier::Gvec2f)		_dump(variable->value<gvec2f>());
+		else if (variable->type->identifier == Type::Identifier::Gvec3f)		_dump(variable->value<gvec3f>());
+		else if (variable->type->identifier == Type::Identifier::Grecti)		_dump(variable->value<grecti>());
+		else if (variable->type->identifier == Type::Identifier::Gvec2i)		_dump(variable->value<gvec2i>());
+		else if (variable->type->identifier == Type::Identifier::Gvec3i)		_dump(variable->value<gvec3i>());
+		else if (variable->type->identifier == Type::Identifier::Grectd)		_dump(variable->value<grectd>());
+		else if (variable->type->identifier == Type::Identifier::Gvec2d)		_dump(variable->value<gvec2d>());
+		else if (variable->type->identifier == Type::Identifier::Gvec3d)		_dump(variable->value<gvec3d>());
 		else if (variable->type->identifier == Type::Identifier::ValueObject)	_dump(variable->value<Serializable>());
 		else if (variable->type->identifier == Type::Identifier::Object)		_dump(variable->value<Serializable*>());
 		else if (variable->type->identifier == Type::Identifier::Harray)		__dumpContainer(variable);
@@ -118,6 +125,48 @@ namespace liteser
 	}
 
 	void _dump(gvec3f* value)
+	{
+		stream->dump(value->x);
+		stream->dump(value->y);
+		stream->dump(value->z);
+	}
+
+	void _dump(grecti* value)
+	{
+		stream->dump(value->x);
+		stream->dump(value->y);
+		stream->dump(value->w);
+		stream->dump(value->h);
+	}
+
+	void _dump(gvec2i* value)
+	{
+		stream->dump(value->x);
+		stream->dump(value->y);
+	}
+
+	void _dump(gvec3i* value)
+	{
+		stream->dump(value->x);
+		stream->dump(value->y);
+		stream->dump(value->z);
+	}
+
+	void _dump(grectd* value)
+	{
+		stream->dump(value->x);
+		stream->dump(value->y);
+		stream->dump(value->w);
+		stream->dump(value->h);
+	}
+
+	void _dump(gvec2d* value)
+	{
+		stream->dump(value->x);
+		stream->dump(value->y);
+	}
+
+	void _dump(gvec3d* value)
 	{
 		stream->dump(value->x);
 		stream->dump(value->y);
@@ -227,5 +276,11 @@ namespace liteser
 	DEFINE_DUMP_HARRAY_C(grectf);
 	DEFINE_DUMP_HARRAY_C(gvec2f);
 	DEFINE_DUMP_HARRAY_C(gvec3f);
+	DEFINE_DUMP_HARRAY_C(grecti);
+	DEFINE_DUMP_HARRAY_C(gvec2i);
+	DEFINE_DUMP_HARRAY_C(gvec3i);
+	DEFINE_DUMP_HARRAY_C(grectd);
+	DEFINE_DUMP_HARRAY_C(gvec2d);
+	DEFINE_DUMP_HARRAY_C(gvec3d);
 
 }

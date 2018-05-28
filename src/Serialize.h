@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -42,6 +42,12 @@ namespace liteser
 	void _dump(grectf* value);
 	void _dump(gvec2f* value);
 	void _dump(gvec3f* value);
+	void _dump(grecti* value);
+	void _dump(gvec2i* value);
+	void _dump(gvec3i* value);
+	void _dump(grectd* value);
+	void _dump(gvec2d* value);
+	void _dump(gvec3d* value);
 	void _dump(Serializable* value);
 	void _dump(Serializable** value);
 
@@ -61,6 +67,12 @@ namespace liteser
 	void _dumpHarray(harray<grectf>* value);
 	void _dumpHarray(harray<gvec2f>* value);
 	void _dumpHarray(harray<gvec3f>* value);
+	void _dumpHarray(harray<grecti>* value);
+	void _dumpHarray(harray<gvec2i>* value);
+	void _dumpHarray(harray<gvec3i>* value);
+	void _dumpHarray(harray<grectd>* value);
+	void _dumpHarray(harray<gvec2d>* value);
+	void _dumpHarray(harray<gvec3d>* value);
 	void _dumpHarray(harray<Serializable*>* value);
 
 }

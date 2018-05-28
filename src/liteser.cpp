@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -163,7 +163,7 @@
 namespace liteser
 {
 	hstr logTag = "liteser";
-	hversion version(3, 0);
+	hversion version(3, 1);
 
 	bool serialize(hsbase* stream, Serializable* object, bool allowMultiReferencing, bool stringPooling)
 	{
@@ -199,6 +199,12 @@ namespace liteser
 	DEFINE_HARRAY_SERIALIZER(grectf);
 	DEFINE_HARRAY_SERIALIZER(gvec2f);
 	DEFINE_HARRAY_SERIALIZER(gvec3f);
+	DEFINE_HARRAY_SERIALIZER(grecti);
+	DEFINE_HARRAY_SERIALIZER(gvec2i);
+	DEFINE_HARRAY_SERIALIZER(gvec3i);
+	DEFINE_HARRAY_SERIALIZER(grectd);
+	DEFINE_HARRAY_SERIALIZER(gvec2d);
+	DEFINE_HARRAY_SERIALIZER(gvec3d);
 
 	bool deserialize(hsbase* stream, Serializable** object)
 	{
@@ -247,6 +253,12 @@ namespace liteser
 	DEFINE_HARRAY_DESERIALIZER(grectf);
 	DEFINE_HARRAY_DESERIALIZER(gvec2f);
 	DEFINE_HARRAY_DESERIALIZER(gvec3f);
+	DEFINE_HARRAY_DESERIALIZER(grecti);
+	DEFINE_HARRAY_DESERIALIZER(gvec2i);
+	DEFINE_HARRAY_DESERIALIZER(gvec3i);
+	DEFINE_HARRAY_DESERIALIZER(grectd);
+	DEFINE_HARRAY_DESERIALIZER(gvec2d);
+	DEFINE_HARRAY_DESERIALIZER(gvec3d);
 
 	namespace xml
 	{
@@ -285,6 +297,12 @@ namespace liteser
 		DEFINE_HARRAY_SERIALIZER_XML(grectf);
 		DEFINE_HARRAY_SERIALIZER_XML(gvec2f);
 		DEFINE_HARRAY_SERIALIZER_XML(gvec3f);
+		DEFINE_HARRAY_SERIALIZER_XML(grecti);
+		DEFINE_HARRAY_SERIALIZER_XML(gvec2i);
+		DEFINE_HARRAY_SERIALIZER_XML(gvec3i);
+		DEFINE_HARRAY_SERIALIZER_XML(grectd);
+		DEFINE_HARRAY_SERIALIZER_XML(gvec2d);
+		DEFINE_HARRAY_SERIALIZER_XML(gvec3d);
 
 		bool deserialize(hsbase* stream, Serializable** object)
 		{
@@ -336,6 +354,12 @@ namespace liteser
 		DEFINE_HARRAY_DESERIALIZER_XML(grectf);
 		DEFINE_HARRAY_DESERIALIZER_XML(gvec2f);
 		DEFINE_HARRAY_DESERIALIZER_XML(gvec3f);
+		DEFINE_HARRAY_DESERIALIZER_XML(grecti);
+		DEFINE_HARRAY_DESERIALIZER_XML(gvec2i);
+		DEFINE_HARRAY_DESERIALIZER_XML(gvec3i);
+		DEFINE_HARRAY_DESERIALIZER_XML(grectd);
+		DEFINE_HARRAY_DESERIALIZER_XML(gvec2d);
+		DEFINE_HARRAY_DESERIALIZER_XML(gvec3d);
 
 	}
 

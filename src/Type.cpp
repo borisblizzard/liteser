@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -40,6 +40,12 @@ namespace liteser
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Grectf, 0x91);
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Gvec2f, 0x92);
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Gvec3f, 0x93);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Grecti, 0x94);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Gvec2i, 0x95);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Gvec3i, 0x96);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Grectd, 0x97);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Gvec2d, 0x98);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Gvec3d, 0x99);
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Harray, 0xA1);
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Hmap, 0xC1);
 	));
@@ -140,6 +146,36 @@ namespace liteser
 	void Type::assign(VPtr<gvec3f>* arg)
 	{
 		this->identifier = Identifier::Gvec3f;
+	}
+
+	void Type::assign(VPtr<grecti>* arg)
+	{
+		this->identifier = Identifier::Grecti;
+	}
+
+	void Type::assign(VPtr<gvec2i>* arg)
+	{
+		this->identifier = Identifier::Gvec2i;
+	}
+
+	void Type::assign(VPtr<gvec3i>* arg)
+	{
+		this->identifier = Identifier::Gvec3i;
+	}
+
+	void Type::assign(VPtr<grectd>* arg)
+	{
+		this->identifier = Identifier::Grectd;
+	}
+
+	void Type::assign(VPtr<gvec2d>* arg)
+	{
+		this->identifier = Identifier::Gvec2d;
+	}
+
+	void Type::assign(VPtr<gvec3d>* arg)
+	{
+		this->identifier = Identifier::Gvec3d;
 	}
 
 	void Type::assign(VPtr<Serializable>* arg)

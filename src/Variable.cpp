@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -59,6 +59,12 @@ namespace liteser
 	DEFINE_ASSIGNERS(grectf);
 	DEFINE_ASSIGNERS(gvec2f);
 	DEFINE_ASSIGNERS(gvec3f);
+	DEFINE_ASSIGNERS(grecti);
+	DEFINE_ASSIGNERS(gvec2i);
+	DEFINE_ASSIGNERS(gvec3i);
+	DEFINE_ASSIGNERS(grectd);
+	DEFINE_ASSIGNERS(gvec2d);
+	DEFINE_ASSIGNERS(gvec3d);
 	DEFINE_ASSIGNER(bool);
 
 	Variable::Variable(chstr name) : ptr(NULL), containerSize(0), ptrKeys(NULL), ptrValues(NULL)
@@ -112,6 +118,12 @@ namespace liteser
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::Grectf)		this->_addSubVariablesHarray<grectf>();
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::Gvec2f)		this->_addSubVariablesHarray<gvec2f>();
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::Gvec3f)		this->_addSubVariablesHarray<gvec3f>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Grecti)		this->_addSubVariablesHarray<grecti>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Gvec2i)		this->_addSubVariablesHarray<gvec2i>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Gvec3i)		this->_addSubVariablesHarray<gvec3i>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Grectd)		this->_addSubVariablesHarray<grectd>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Gvec2d)		this->_addSubVariablesHarray<gvec2d>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Gvec3d)		this->_addSubVariablesHarray<gvec3d>();
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::ValueObject)	this->_addSubVariablesHarray<Serializable>();
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::Object)		this->_addSubVariablesHarray<Serializable*>();
 			else throw Exception(hsprintf("Subtype is not supported within harray: %s; type: %02X", this->name.cStr(), this->type->subTypes[0]->identifier.value));

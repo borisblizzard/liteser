@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -43,6 +43,12 @@ namespace liteser
 	void _load(grectf* value);
 	void _load(gvec2f* value);
 	void _load(gvec3f* value);
+	void _load(grecti* value);
+	void _load(gvec2i* value);
+	void _load(gvec3i* value);
+	void _load(grectd* value);
+	void _load(gvec2d* value);
+	void _load(gvec3d* value);
 	void _load(Serializable* value);
 	void _load(Serializable** value);
 	void __loadObject(Serializable** value);
@@ -64,6 +70,12 @@ namespace liteser
 	void _loadHarray(harray<grectf>* value, unsigned int size);
 	void _loadHarray(harray<gvec2f>* value, unsigned int size);
 	void _loadHarray(harray<gvec3f>* value, unsigned int size);
+	void _loadHarray(harray<grecti>* value, unsigned int size);
+	void _loadHarray(harray<gvec2i>* value, unsigned int size);
+	void _loadHarray(harray<gvec3i>* value, unsigned int size);
+	void _loadHarray(harray<grectd>* value, unsigned int size);
+	void _loadHarray(harray<gvec2d>* value, unsigned int size);
+	void _loadHarray(harray<gvec3d>* value, unsigned int size);
 	void _loadHarray(harray<Serializable*>* value, unsigned int size);
 
 }

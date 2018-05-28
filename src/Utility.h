@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -222,6 +222,21 @@ namespace liteser
 		identifiers.clear();
 		identifiers += Type::Identifier::Float;
 		identifiers += Type::Identifier::Double;
+		compatibleIdentifiers += identifiers;
+		identifiers.clear();
+		identifiers += Type::Identifier::Gvec2f;
+		identifiers += Type::Identifier::Gvec2i;
+		identifiers += Type::Identifier::Gvec2d;
+		compatibleIdentifiers += identifiers;
+		identifiers.clear();
+		identifiers += Type::Identifier::Gvec3f;
+		identifiers += Type::Identifier::Gvec3i;
+		identifiers += Type::Identifier::Gvec3d;
+		compatibleIdentifiers += identifiers;
+		identifiers.clear();
+		identifiers += Type::Identifier::Grectf;
+		identifiers += Type::Identifier::Grecti;
+		identifiers += Type::Identifier::Grectd;
 		compatibleIdentifiers += identifiers;
 	}
 

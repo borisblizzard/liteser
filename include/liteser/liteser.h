@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -53,6 +53,12 @@ namespace liteser
 	liteserFnExport bool serialize(hsbase* stream, harray<grectf>& value, bool allowMultiReferencing = true, bool stringPooling = true);
 	liteserFnExport bool serialize(hsbase* stream, harray<gvec2f>& value, bool allowMultiReferencing = true, bool stringPooling = true);
 	liteserFnExport bool serialize(hsbase* stream, harray<gvec3f>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<grecti>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<gvec2i>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<gvec3i>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<grectd>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<gvec2d>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<gvec3d>& value, bool allowMultiReferencing = true, bool stringPooling = true);
 
 	liteserFnExport bool deserialize(hsbase* stream, Serializable** object);
 	liteserFnExport bool deserialize(hsbase* stream, harray<Serializable*>* object);
@@ -72,6 +78,12 @@ namespace liteser
 	liteserFnExport bool deserialize(hsbase* stream, harray<grectf>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<gvec2f>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<gvec3f>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<grecti>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<gvec2i>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<gvec3i>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<grectd>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<gvec2d>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<gvec3d>* value);
 
 	namespace xml
 	{
@@ -93,6 +105,12 @@ namespace liteser
 		liteserFnExport bool serialize(hsbase* stream, harray<grectf>& value, bool allowMultiReferencing = true);
 		liteserFnExport bool serialize(hsbase* stream, harray<gvec2f>& value, bool allowMultiReferencing = true);
 		liteserFnExport bool serialize(hsbase* stream, harray<gvec3f>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<grecti>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<gvec2i>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<gvec3i>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<grectd>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<gvec2d>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<gvec3d>& value, bool allowMultiReferencing = true);
 
 		liteserFnExport bool deserialize(hsbase* stream, Serializable** object);
 		liteserFnExport bool deserialize(hsbase* stream, harray<Serializable*>* object);
@@ -112,6 +130,12 @@ namespace liteser
 		liteserFnExport bool deserialize(hsbase* stream, harray<grectf>* value);
 		liteserFnExport bool deserialize(hsbase* stream, harray<gvec2f>* value);
 		liteserFnExport bool deserialize(hsbase* stream, harray<gvec3f>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<grecti>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<gvec2i>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<gvec3i>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<grectd>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<gvec2d>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<gvec3d>* value);
 	}
 
 	/// @brief Creates a deep copy of an object.

@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -62,6 +62,12 @@ namespace liteser
 		else if (loadedIdentifier == Type::Identifier::Grectf)		_load(variable->value<grectf>());
 		else if (loadedIdentifier == Type::Identifier::Gvec2f)		_load(variable->value<gvec2f>());
 		else if (loadedIdentifier == Type::Identifier::Gvec3f)		_load(variable->value<gvec3f>());
+		else if (loadedIdentifier == Type::Identifier::Grecti)		_load(variable->value<grecti>());
+		else if (loadedIdentifier == Type::Identifier::Gvec2i)		_load(variable->value<gvec2i>());
+		else if (loadedIdentifier == Type::Identifier::Gvec3i)		_load(variable->value<gvec3i>());
+		else if (loadedIdentifier == Type::Identifier::Grectd)		_load(variable->value<grectd>());
+		else if (loadedIdentifier == Type::Identifier::Gvec2d)		_load(variable->value<gvec2d>());
+		else if (loadedIdentifier == Type::Identifier::Gvec3d)		_load(variable->value<gvec3d>());
 		else if (loadedIdentifier == Type::Identifier::ValueObject)	_load(variable->value<Serializable>());
 		else if (loadedIdentifier == Type::Identifier::Object)		_load(variable->value<Serializable*>());
 		else if (loadedIdentifier == Type::Identifier::Harray)		__loadContainer(variable, loadedIdentifier);
@@ -87,6 +93,12 @@ namespace liteser
 		if (loadedIdentifier == Type::Identifier::Grectf)		{ grectf var;	_load(&var);	return true; }
 		if (loadedIdentifier == Type::Identifier::Gvec2f)		{ gvec2f var;	_load(&var);	return true; }
 		if (loadedIdentifier == Type::Identifier::Gvec3f)		{ gvec3f var;	_load(&var);	return true; }
+		if (loadedIdentifier == Type::Identifier::Grecti)		{ grecti var;	_load(&var);	return true; }
+		if (loadedIdentifier == Type::Identifier::Gvec2i)		{ gvec2i var;	_load(&var);	return true; }
+		if (loadedIdentifier == Type::Identifier::Gvec3i)		{ gvec3i var;	_load(&var);	return true; }
+		if (loadedIdentifier == Type::Identifier::Grectd)		{ grectd var;	_load(&var);	return true; }
+		if (loadedIdentifier == Type::Identifier::Gvec2d)		{ gvec2d var;	_load(&var);	return true; }
+		if (loadedIdentifier == Type::Identifier::Gvec3d)		{ gvec3d var;	_load(&var);	return true; }
 		if (loadedIdentifier == Type::Identifier::ValueObject)	return __skipObject();
 		if (loadedIdentifier == Type::Identifier::Object)		return __skipObject();
 		if (loadedIdentifier == Type::Identifier::Harray)		return __skipContainer(loadedIdentifier);
@@ -233,6 +245,48 @@ namespace liteser
 		value->x = stream->loadFloat();
 		value->y = stream->loadFloat();
 		value->z = stream->loadFloat();
+	}
+
+	void _load(grecti* value)
+	{
+		value->x = stream->loadInt32();
+		value->y = stream->loadInt32();
+		value->w = stream->loadInt32();
+		value->h = stream->loadInt32();
+	}
+
+	void _load(gvec2i* value)
+	{
+		value->x = stream->loadInt32();
+		value->y = stream->loadInt32();
+	}
+
+	void _load(gvec3i* value)
+	{
+		value->x = stream->loadInt32();
+		value->y = stream->loadInt32();
+		value->z = stream->loadInt32();
+	}
+
+	void _load(grectd* value)
+	{
+		value->x = stream->loadDouble();
+		value->y = stream->loadDouble();
+		value->w = stream->loadDouble();
+		value->h = stream->loadDouble();
+	}
+
+	void _load(gvec2d* value)
+	{
+		value->x = stream->loadDouble();
+		value->y = stream->loadDouble();
+	}
+
+	void _load(gvec3d* value)
+	{
+		value->x = stream->loadDouble();
+		value->y = stream->loadDouble();
+		value->z = stream->loadDouble();
 	}
 
 	void _load(Serializable* value)
@@ -413,5 +467,11 @@ namespace liteser
 	DEFINE_LOAD_HARRAY_F(grectf);
 	DEFINE_LOAD_HARRAY_F(gvec2f);
 	DEFINE_LOAD_HARRAY_F(gvec3f);
+	DEFINE_LOAD_HARRAY_F(grecti);
+	DEFINE_LOAD_HARRAY_F(gvec2i);
+	DEFINE_LOAD_HARRAY_F(gvec3i);
+	DEFINE_LOAD_HARRAY_F(grectd);
+	DEFINE_LOAD_HARRAY_F(gvec2d);
+	DEFINE_LOAD_HARRAY_F(gvec3d);
 
 }

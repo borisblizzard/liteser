@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -48,6 +48,12 @@ namespace liteser
 		void _load(hlxml::Node* node, grectf* value);
 		void _load(hlxml::Node* node, gvec2f* value);
 		void _load(hlxml::Node* node, gvec3f* value);
+		void _load(hlxml::Node* node, grecti* value);
+		void _load(hlxml::Node* node, gvec2i* value);
+		void _load(hlxml::Node* node, gvec3i* value);
+		void _load(hlxml::Node* node, grectd* value);
+		void _load(hlxml::Node* node, gvec2d* value);
+		void _load(hlxml::Node* node, gvec3d* value);
 		void _load(hlxml::Node* node, Serializable* value);
 		void _load(hlxml::Node* node, Serializable** value);
 		void __loadObject(hlxml::Node* node, Serializable** value);
@@ -69,6 +75,12 @@ namespace liteser
 		void _loadHarray(hlxml::Node* node, harray<grectf>* value);
 		void _loadHarray(hlxml::Node* node, harray<gvec2f>* value);
 		void _loadHarray(hlxml::Node* node, harray<gvec3f>* value);
+		void _loadHarray(hlxml::Node* node, harray<grecti>* value);
+		void _loadHarray(hlxml::Node* node, harray<gvec2i>* value);
+		void _loadHarray(hlxml::Node* node, harray<gvec3i>* value);
+		void _loadHarray(hlxml::Node* node, harray<grectd>* value);
+		void _loadHarray(hlxml::Node* node, harray<gvec2d>* value);
+		void _loadHarray(hlxml::Node* node, harray<gvec3d>* value);
 		void _loadHarray(hlxml::Node* node, harray<Serializable*>* value);
 
 	}

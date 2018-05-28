@@ -108,9 +108,15 @@ Following types can be declared as serializable variables.
 	- hltypes::String
 	- hltypes::Enum
 	- hltypes::Version
-	- gtypes::Vector2
-	- gtypes::Vector3
-	- gtypes::Rectangle
+	- gtypes::Vector2<float>
+	- gtypes::Vector3<float>
+	- gtypes::Rectangle<float>
+	- gtypes::Vector2<int>
+	- gtypes::Vector3<int>
+	- gtypes::Rectangle<int>
+	- gtypes::Vector2<double>
+	- gtypes::Vector3<double>
+	- gtypes::Rectangle<double>
 	
 3. container types:
 	- hltypes::Array (see "Limitations" for more information)

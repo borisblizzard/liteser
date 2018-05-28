@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -69,6 +69,12 @@ namespace liteser
 			else if (loadedIdentifier == Type::Identifier::Grectf)		_load(node, variable->value<grectf>());
 			else if (loadedIdentifier == Type::Identifier::Gvec2f)		_load(node, variable->value<gvec2f>());
 			else if (loadedIdentifier == Type::Identifier::Gvec3f)		_load(node, variable->value<gvec3f>());
+			else if (loadedIdentifier == Type::Identifier::Grecti)		_load(node, variable->value<grecti>());
+			else if (loadedIdentifier == Type::Identifier::Gvec2i)		_load(node, variable->value<gvec2i>());
+			else if (loadedIdentifier == Type::Identifier::Gvec3i)		_load(node, variable->value<gvec3i>());
+			else if (loadedIdentifier == Type::Identifier::Grectd)		_load(node, variable->value<grectd>());
+			else if (loadedIdentifier == Type::Identifier::Gvec2d)		_load(node, variable->value<gvec2d>());
+			else if (loadedIdentifier == Type::Identifier::Gvec3d)		_load(node, variable->value<gvec3d>());
 			else if (loadedIdentifier == Type::Identifier::ValueObject)	_load(node, variable->value<Serializable>());
 			else if (loadedIdentifier == Type::Identifier::Object)		_load(node, variable->value<Serializable*>());
 			else if (loadedIdentifier == Type::Identifier::Harray)		__loadContainer(node, variable, loadedIdentifier);
@@ -226,6 +232,54 @@ namespace liteser
 			value->x = (float)data[0];
 			value->y = (float)data[1];
 			value->z = (float)data[2];
+		}
+
+		void _load(hlxml::Node* node, grecti* value)
+		{
+			harray<hstr> data = node->pstr(VALUE).split(SEPARATOR);
+			value->x = (int)data[0];
+			value->y = (int)data[1];
+			value->w = (int)data[2];
+			value->h = (int)data[3];
+		}
+
+		void _load(hlxml::Node* node, gvec2i* value)
+		{
+			harray<hstr> data = node->pstr(VALUE).split(SEPARATOR);
+			value->x = (int)data[0];
+			value->y = (int)data[1];
+		}
+
+		void _load(hlxml::Node* node, gvec3i* value)
+		{
+			harray<hstr> data = node->pstr(VALUE).split(SEPARATOR);
+			value->x = (int)data[0];
+			value->y = (int)data[1];
+			value->z = (int)data[2];
+		}
+
+		void _load(hlxml::Node* node, grectd* value)
+		{
+			harray<hstr> data = node->pstr(VALUE).split(SEPARATOR);
+			value->x = (double)data[0];
+			value->y = (double)data[1];
+			value->w = (double)data[2];
+			value->h = (double)data[3];
+		}
+
+		void _load(hlxml::Node* node, gvec2d* value)
+		{
+			harray<hstr> data = node->pstr(VALUE).split(SEPARATOR);
+			value->x = (double)data[0];
+			value->y = (double)data[1];
+		}
+
+		void _load(hlxml::Node* node, gvec3d* value)
+		{
+			harray<hstr> data = node->pstr(VALUE).split(SEPARATOR);
+			value->x = (double)data[0];
+			value->y = (double)data[1];
+			value->z = (double)data[2];
 		}
 
 		void _load(hlxml::Node* node, Serializable* value)
@@ -404,6 +458,12 @@ namespace liteser
 		DEFINE_LOAD_HARRAY_F(grectf);
 		DEFINE_LOAD_HARRAY_F(gvec2f);
 		DEFINE_LOAD_HARRAY_F(gvec3f);
+		DEFINE_LOAD_HARRAY_F(grecti);
+		DEFINE_LOAD_HARRAY_F(gvec2i);
+		DEFINE_LOAD_HARRAY_F(gvec3i);
+		DEFINE_LOAD_HARRAY_F(grectd);
+		DEFINE_LOAD_HARRAY_F(gvec2d);
+		DEFINE_LOAD_HARRAY_F(gvec3d);
 
 	}
 

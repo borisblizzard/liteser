@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -57,6 +57,12 @@ namespace liteser
 			HL_ENUM_DECLARE(Identifier, Grectf);
 			HL_ENUM_DECLARE(Identifier, Gvec2f);
 			HL_ENUM_DECLARE(Identifier, Gvec3f);
+			HL_ENUM_DECLARE(Identifier, Grecti);
+			HL_ENUM_DECLARE(Identifier, Gvec2i);
+			HL_ENUM_DECLARE(Identifier, Gvec3i);
+			HL_ENUM_DECLARE(Identifier, Grectd);
+			HL_ENUM_DECLARE(Identifier, Gvec2d);
+			HL_ENUM_DECLARE(Identifier, Gvec3d);
 			HL_ENUM_DECLARE(Identifier, Harray);
 			HL_ENUM_DECLARE(Identifier, Hmap);
 		));
@@ -84,6 +90,12 @@ namespace liteser
 		void assign(VPtr<grectf>* arg);
 		void assign(VPtr<gvec2f>* arg);
 		void assign(VPtr<gvec3f>* arg);
+		void assign(VPtr<grecti>* arg);
+		void assign(VPtr<gvec2i>* arg);
+		void assign(VPtr<gvec3i>* arg);
+		void assign(VPtr<grectd>* arg);
+		void assign(VPtr<gvec2d>* arg);
+		void assign(VPtr<gvec3d>* arg);
 		void assign(VPtr<Serializable>* arg);
 		void assign(VPtr<Serializable*>* arg);
 		template <typename T>

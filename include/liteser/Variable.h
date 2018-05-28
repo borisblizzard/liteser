@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.0
+/// @version 3.1
 /// 
 /// @section LICENSE
 /// 
@@ -61,6 +61,12 @@ namespace liteser
 		Variable* assign(VPtr<grectf>* ptr);
 		Variable* assign(VPtr<gvec2f>* ptr);
 		Variable* assign(VPtr<gvec3f>* ptr);
+		Variable* assign(VPtr<grecti>* ptr);
+		Variable* assign(VPtr<gvec2i>* ptr);
+		Variable* assign(VPtr<gvec3i>* ptr);
+		Variable* assign(VPtr<grectd>* ptr);
+		Variable* assign(VPtr<gvec2d>* ptr);
+		Variable* assign(VPtr<gvec3d>* ptr);
 		Variable* assign(VPtr<harray<char> >* ptr);
 		Variable* assign(VPtr<harray<unsigned char> >* ptr);
 		Variable* assign(VPtr<harray<short> >* ptr);
@@ -76,6 +82,12 @@ namespace liteser
 		Variable* assign(VPtr<harray<grectf> >* ptr);
 		Variable* assign(VPtr<harray<gvec2f> >* ptr);
 		Variable* assign(VPtr<harray<gvec3f> >* ptr);
+		Variable* assign(VPtr<harray<grecti> >* ptr);
+		Variable* assign(VPtr<harray<gvec2i> >* ptr);
+		Variable* assign(VPtr<harray<gvec3i> >* ptr);
+		Variable* assign(VPtr<harray<grectd> >* ptr);
+		Variable* assign(VPtr<harray<gvec2d> >* ptr);
+		Variable* assign(VPtr<harray<gvec3d> >* ptr);
 		template <typename T>
 		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<T, henum>::value, Variable*>::type assign(VPtr<T>* ptr)
 		{
@@ -239,9 +251,15 @@ namespace liteser
 			else if (identifier == Type::Identifier::Hstr)			this->_addSubVariablesHmap<key, hstr>();
 			else if (identifier == Type::Identifier::Hversion)		this->_addSubVariablesHmap<key, hversion>();
 			else if (identifier == Type::Identifier::Henum)			this->_addSubVariablesHmap<key, henum>();
-			else if (identifier == Type::Identifier::Grectf)			this->_addSubVariablesHmap<key, grectf>();
-			else if (identifier == Type::Identifier::Gvec2f)			this->_addSubVariablesHmap<key, gvec2f>();
-			else if (identifier == Type::Identifier::Gvec3f)			this->_addSubVariablesHmap<key, gvec3f>();
+			else if (identifier == Type::Identifier::Grectf)		this->_addSubVariablesHmap<key, grectf>();
+			else if (identifier == Type::Identifier::Gvec2f)		this->_addSubVariablesHmap<key, gvec2f>();
+			else if (identifier == Type::Identifier::Gvec3f)		this->_addSubVariablesHmap<key, gvec3f>();
+			else if (identifier == Type::Identifier::Grecti)		this->_addSubVariablesHmap<key, grecti>();
+			else if (identifier == Type::Identifier::Gvec2i)		this->_addSubVariablesHmap<key, gvec2i>();
+			else if (identifier == Type::Identifier::Gvec3i)		this->_addSubVariablesHmap<key, gvec3i>();
+			else if (identifier == Type::Identifier::Grectd)		this->_addSubVariablesHmap<key, grectd>();
+			else if (identifier == Type::Identifier::Gvec2d)		this->_addSubVariablesHmap<key, gvec2d>();
+			else if (identifier == Type::Identifier::Gvec3d)		this->_addSubVariablesHmap<key, gvec3d>();
 			else if (identifier == Type::Identifier::Object)		this->_addSubVariablesHmap<key, Serializable*>();
 			else if (identifier == Type::Identifier::None)			throw Exception("hmap value cannot be None!");
 			else if (identifier == Type::Identifier::Bool)			throw Exception("hmap value cannot be Bool!");
@@ -275,9 +293,15 @@ namespace liteser
 			else if (identifier == Type::Identifier::Hstr)			this->_applyHmapSubVariables<keyType, hstr>();
 			else if (identifier == Type::Identifier::Hversion)		this->_applyHmapSubVariables<keyType, hversion>();
 			else if (identifier == Type::Identifier::Henum)			this->_applyHmapSubVariables<keyType, henum>();
-			else if (identifier == Type::Identifier::Grectf)			this->_applyHmapSubVariables<keyType, grectf>();
-			else if (identifier == Type::Identifier::Gvec2f)			this->_applyHmapSubVariables<keyType, gvec2f>();
-			else if (identifier == Type::Identifier::Gvec3f)			this->_applyHmapSubVariables<keyType, gvec3f>();
+			else if (identifier == Type::Identifier::Grectf)		this->_applyHmapSubVariables<keyType, grectf>();
+			else if (identifier == Type::Identifier::Gvec2f)		this->_applyHmapSubVariables<keyType, gvec2f>();
+			else if (identifier == Type::Identifier::Gvec3f)		this->_applyHmapSubVariables<keyType, gvec3f>();
+			else if (identifier == Type::Identifier::Grecti)		this->_applyHmapSubVariables<keyType, grecti>();
+			else if (identifier == Type::Identifier::Gvec2i)		this->_applyHmapSubVariables<keyType, gvec2i>();
+			else if (identifier == Type::Identifier::Gvec3i)		this->_applyHmapSubVariables<keyType, gvec3i>();
+			else if (identifier == Type::Identifier::Grectd)		this->_applyHmapSubVariables<keyType, grectd>();
+			else if (identifier == Type::Identifier::Gvec2d)		this->_applyHmapSubVariables<keyType, gvec2d>();
+			else if (identifier == Type::Identifier::Gvec3d)		this->_applyHmapSubVariables<keyType, gvec3d>();
 			else if (identifier == Type::Identifier::Object)		this->_applyHmapSubVariables<keyType, Serializable*>();
 			else if (identifier == Type::Identifier::None)			throw Exception("hmap value cannot be None!");
 			else if (identifier == Type::Identifier::Bool)			throw Exception("hmap value cannot be Bool!");
