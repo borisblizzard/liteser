@@ -46,12 +46,24 @@ class Ls3:
 			variable.value = Ls3._loadVersion()
 		elif loadType == Type.HENUM:
 			variable.value = Ls3._loadEnum()
-		elif loadType == Type.GRECT:
-			variable.value = Ls3._loadGrect()
-		elif loadType == Type.GVEC2:
-			variable.value = Ls3._loadGvec2()
-		elif loadType == Type.GVEC3:
-			variable.value = Ls3._loadGvec3()
+		elif loadType == Type.GRECTF:
+			variable.value = Ls3._loadGrectf()
+		elif loadType == Type.GVEC2F:
+			variable.value = Ls3._loadGvec2f()
+		elif loadType == Type.GVEC3F:
+			variable.value = Ls3._loadGvec3f()
+		elif loadType == Type.GRECTI:
+			variable.value = Ls3._loadGrecti()
+		elif loadType == Type.GVEC2I:
+			variable.value = Ls3._loadGvec2i()
+		elif loadType == Type.GVEC3I:
+			variable.value = Ls3._loadGvec3i()
+		elif loadType == Type.GRECTD:
+			variable.value = Ls3._loadGrectd()
+		elif loadType == Type.GVEC2D:
+			variable.value = Ls3._loadGvec2d()
+		elif loadType == Type.GVEC3D:
+			variable.value = Ls3._loadGvec3d()
 		elif loadType == Type.OBJECT:
 			variable.value = Ls3._loadObject()
 		elif loadType == Type.OBJPTR:
@@ -97,16 +109,40 @@ class Ls3:
 		return Util.loadUint32()
 
 	@staticmethod
-	def _loadGrect():
+	def _loadGrectf():
 		return [Util.loadFloat(), Util.loadFloat(), Util.loadFloat(), Util.loadFloat()]
 
 	@staticmethod
-	def _loadGvec2():
+	def _loadGvec2f():
 		return [Util.loadFloat(), Util.loadFloat()]
 
 	@staticmethod
-	def _loadGvec3():
+	def _loadGvec3f():
 		return [Util.loadFloat(), Util.loadFloat(), Util.loadFloat()]
+
+	@staticmethod
+	def _loadGrecti():
+		return [Util.loadInt32(), Util.loadInt32(), Util.loadInt32(), Util.loadInt32()]
+
+	@staticmethod
+	def _loadGvec2i():
+		return [Util.loadInt32(), Util.loadInt32()]
+
+	@staticmethod
+	def _loadGvec3i():
+		return [Util.loadInt32(), Util.loadInt32(), Util.loadInt32()]
+
+	@staticmethod
+	def _loadGrectd():
+		return [Util.loadDouble(), Util.loadDouble(), Util.loadDouble(), Util.loadDouble()]
+
+	@staticmethod
+	def _loadGvec2d():
+		return [Util.loadDouble(), Util.loadDouble()]
+
+	@staticmethod
+	def _loadGvec3d():
+		return [Util.loadDouble(), Util.loadDouble(), Util.loadDouble()]
 
 	@staticmethod
 	def _loadObject():
@@ -170,12 +206,24 @@ class Ls3:
 			Ls3._dumpVersion(variable.value)
 		elif variable.type.value == Type.HENUM:
 			Ls3._dumpEnum(variable.value)
-		elif variable.type.value == Type.GRECT:
-			Ls3._dumpGrect(variable.value)
-		elif variable.type.value == Type.GVEC2:
-			Ls3._dumpGvec2(variable.value)
-		elif variable.type.value == Type.GVEC3:
-			Ls3._dumpGvec3(variable.value)
+		elif variable.type.value == Type.GRECTF:
+			Ls3._dumpGrectf(variable.value)
+		elif variable.type.value == Type.GVEC2F:
+			Ls3._dumpGvec2f(variable.value)
+		elif variable.type.value == Type.GVEC3F:
+			Ls3._dumpGvec3f(variable.value)
+		elif variable.type.value == Type.GRECTI:
+			Ls3._dumpGrecti(variable.value)
+		elif variable.type.value == Type.GVEC2I:
+			Ls3._dumpGvec2i(variable.value)
+		elif variable.type.value == Type.GVEC3I:
+			Ls3._dumpGvec3i(variable.value)
+		elif variable.type.value == Type.GRECTD:
+			Ls3._dumpGrectd(variable.value)
+		elif variable.type.value == Type.GVEC2D:
+			Ls3._dumpGvec2d(variable.value)
+		elif variable.type.value == Type.GVEC3D:
+			Ls3._dumpGvec3d(variable.value)
 		elif variable.type.value == Type.OBJECT:
 			Ls3._dumpObject(variable.value)
 		elif variable.type.value == Type.OBJPTR:
@@ -214,19 +262,49 @@ class Ls3:
 		Util.dumpUint32(value)
 
 	@staticmethod
-	def _dumpGrect(value):
+	def _dumpGrectf(value):
 		for i in value:
 			Util.dumpFloat(i)
 
 	@staticmethod
-	def _dumpGvec2(value):
+	def _dumpGvec2f(value):
 		for i in value:
 			Util.dumpFloat(i)
 
 	@staticmethod
-	def _dumpGvec3(value):
+	def _dumpGvec3f(value):
 		for i in value:
 			Util.dumpFloat(i)
+
+	@staticmethod
+	def _dumpGrecti(value):
+		for i in value:
+			Util.dumpInt32(i)
+
+	@staticmethod
+	def _dumpGvec2i(value):
+		for i in value:
+			Util.dumpInt32(i)
+
+	@staticmethod
+	def _dumpGvec3i(value):
+		for i in value:
+			Util.dumpInt32(i)
+
+	@staticmethod
+	def _dumpGrectd(value):
+		for i in value:
+			Util.dumpDouble(i)
+
+	@staticmethod
+	def _dumpGvec2d(value):
+		for i in value:
+			Util.dumpDouble(i)
+
+	@staticmethod
+	def _dumpGvec3d(value):
+		for i in value:
+			Util.dumpDouble(i)
 
 	@staticmethod
 	def _dumpObject(value):

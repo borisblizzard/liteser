@@ -11,7 +11,7 @@ class Util:
 	Header2 = struct.unpack("<b", "B")[0]
 	Header3 = struct.unpack("<b", "D")[0]
 	VersionMajor = 3
-	VersionMinor = 0
+	VersionMinor = 1
 	
 	@staticmethod
 	def getFileList(path):

@@ -53,12 +53,24 @@ class Lsx:
 			variable.value = Lsx._loadVersion(node)
 		elif loadType == Type.HENUM:
 			variable.value = Lsx._loadEnum(node)
-		elif loadType == Type.GRECT:
-			variable.value = Lsx._loadGrect(node)
-		elif loadType == Type.GVEC2:
-			variable.value = Lsx._loadGvec2(node)
-		elif loadType == Type.GVEC3:
-			variable.value = Lsx._loadGvec3(node)
+		elif loadType == Type.GRECTF:
+			variable.value = Lsx._loadGrectf(node)
+		elif loadType == Type.GVEC2F:
+			variable.value = Lsx._loadGvec2f(node)
+		elif loadType == Type.GVEC3F:
+			variable.value = Lsx._loadGvec3f(node)
+		elif loadType == Type.GRECTI:
+			variable.value = Lsx._loadGrecti(node)
+		elif loadType == Type.GVEC2I:
+			variable.value = Lsx._loadGvec2i(node)
+		elif loadType == Type.GVEC3I:
+			variable.value = Lsx._loadGvec3i(node)
+		elif loadType == Type.GRECTD:
+			variable.value = Lsx._loadGrectd(node)
+		elif loadType == Type.GVEC2D:
+			variable.value = Lsx._loadGvec2d(node)
+		elif loadType == Type.GVEC3D:
+			variable.value = Lsx._loadGvec3d(node)
 		elif loadType == Type.OBJECT:
 			variable.value = Lsx._loadObject(node)
 		elif loadType == Type.OBJPTR:
@@ -103,21 +115,63 @@ class Lsx:
 		return int(node.getAttribute("value"))
 
 	@staticmethod
-	def _loadGrect(node):
+	def _loadGrectf(node):
 		values = node.getAttribute("value").split(",")
 		for i in xrange(len(values)):
 			values[i] = float(values[i])
 		return values
 
 	@staticmethod
-	def _loadGvec2(node):
+	def _loadGvec2f(node):
 		values = node.getAttribute("value").split(",")
 		for i in xrange(len(values)):
 			values[i] = float(values[i])
 		return values
 
 	@staticmethod
-	def _loadGvec3(node):
+	def _loadGvec3f(node):
+		values = node.getAttribute("value").split(",")
+		for i in xrange(len(values)):
+			values[i] = float(values[i])
+		return values
+
+	@staticmethod
+	def _loadGrecti(node):
+		values = node.getAttribute("value").split(",")
+		for i in xrange(len(values)):
+			values[i] = int(values[i])
+		return values
+
+	@staticmethod
+	def _loadGvec2i(node):
+		values = node.getAttribute("value").split(",")
+		for i in xrange(len(values)):
+			values[i] = int(values[i])
+		return values
+
+	@staticmethod
+	def _loadGvec3i(node):
+		values = node.getAttribute("value").split(",")
+		for i in xrange(len(values)):
+			values[i] = int(values[i])
+		return values
+
+	@staticmethod
+	def _loadGrectd(node):
+		values = node.getAttribute("value").split(",")
+		for i in xrange(len(values)):
+			values[i] = float(values[i])
+		return values
+
+	@staticmethod
+	def _loadGvec2d(node):
+		values = node.getAttribute("value").split(",")
+		for i in xrange(len(values)):
+			values[i] = float(values[i])
+		return values
+
+	@staticmethod
+	def _loadGvec3d(node):
 		values = node.getAttribute("value").split(",")
 		for i in xrange(len(values)):
 			values[i] = float(values[i])
@@ -220,12 +274,24 @@ class Lsx:
 			Lsx._dumpVersion(variable.value)
 		elif variable.type.value == Type.HENUM:
 			Lsx._dumpEnum(variable.value)
-		elif variable.type.value == Type.GRECT:
-			Lsx._dumpGrect(variable.value)
-		elif variable.type.value == Type.GVEC2:
-			Lsx._dumpGvec2(variable.value)
-		elif variable.type.value == Type.GVEC3:
-			Lsx._dumpGvec3(variable.value)
+		elif variable.type.value == Type.GRECTF:
+			Lsx._dumpGrectf(variable.value)
+		elif variable.type.value == Type.GVEC2F:
+			Lsx._dumpGvec2f(variable.value)
+		elif variable.type.value == Type.GVEC3F:
+			Lsx._dumpGvec3f(variable.value)
+		elif variable.type.value == Type.GRECTI:
+			Lsx._dumpGrecti(variable.value)
+		elif variable.type.value == Type.GVEC2I:
+			Lsx._dumpGvec2i(variable.value)
+		elif variable.type.value == Type.GVEC3I:
+			Lsx._dumpGvec3i(variable.value)
+		elif variable.type.value == Type.GRECTD:
+			Lsx._dumpGrectd(variable.value)
+		elif variable.type.value == Type.GVEC2D:
+			Lsx._dumpGvec2d(variable.value)
+		elif variable.type.value == Type.GVEC3D:
+			Lsx._dumpGvec3d(variable.value)
 		elif variable.type.value == Type.OBJECT:
 			Lsx._dumpObject(variable.value)
 		elif variable.type.value == Type.OBJPTR:
@@ -280,21 +346,63 @@ class Lsx:
 		Util.stream.write(str(value))
 
 	@staticmethod
-	def _dumpGrect(value):
+	def _dumpGrectf(value):
 		values = []
 		for i in value:
 			values.append("%g" % i)
 		Util.stream.write(",".join(values))
 
 	@staticmethod
-	def _dumpGvec2(value):
+	def _dumpGvec2f(value):
 		values = []
 		for i in value:
 			values.append("%g" % i)
 		Util.stream.write(",".join(values))
 
 	@staticmethod
-	def _dumpGvec3(value):
+	def _dumpGvec3f(value):
+		values = []
+		for i in value:
+			values.append("%g" % i)
+		Util.stream.write(",".join(values))
+
+	@staticmethod
+	def _dumpGrecti(value):
+		values = []
+		for i in value:
+			values.append("%d" % i)
+		Util.stream.write(",".join(values))
+
+	@staticmethod
+	def _dumpGvec2i(value):
+		values = []
+		for i in value:
+			values.append("%d" % i)
+		Util.stream.write(",".join(values))
+
+	@staticmethod
+	def _dumpGvec3i(value):
+		values = []
+		for i in value:
+			values.append("%d" % i)
+		Util.stream.write(",".join(values))
+
+	@staticmethod
+	def _dumpGrectd(value):
+		values = []
+		for i in value:
+			values.append("%g" % i)
+		Util.stream.write(",".join(values))
+
+	@staticmethod
+	def _dumpGvec2d(value):
+		values = []
+		for i in value:
+			values.append("%g" % i)
+		Util.stream.write(",".join(values))
+
+	@staticmethod
+	def _dumpGvec3d(value):
 		values = []
 		for i in value:
 			values.append("%g" % i)
