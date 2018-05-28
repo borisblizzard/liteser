@@ -37,9 +37,9 @@ namespace liteser
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Hstr, 0x81);
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Hversion, 0x82);
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Henum, 0x83);
-		HL_ENUM_DEFINE_VALUE(Type::Identifier, Grect, 0x91);
-		HL_ENUM_DEFINE_VALUE(Type::Identifier, Gvec2, 0x92);
-		HL_ENUM_DEFINE_VALUE(Type::Identifier, Gvec3, 0x93);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Grectf, 0x91);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Gvec2f, 0x92);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Gvec3f, 0x93);
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Harray, 0xA1);
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Hmap, 0xC1);
 	));
@@ -129,17 +129,17 @@ namespace liteser
 
 	void Type::assign(VPtr<grectf>* arg)
 	{
-		this->identifier = Identifier::Grect;
+		this->identifier = Identifier::Grectf;
 	}
 
 	void Type::assign(VPtr<gvec2f>* arg)
 	{
-		this->identifier = Identifier::Gvec2;
+		this->identifier = Identifier::Gvec2f;
 	}
 
 	void Type::assign(VPtr<gvec3f>* arg)
 	{
-		this->identifier = Identifier::Gvec3;
+		this->identifier = Identifier::Gvec3f;
 	}
 
 	void Type::assign(VPtr<Serializable>* arg)

@@ -46,9 +46,9 @@ namespace liteser
 		else if (variable->type->identifier == Type::Identifier::Hstr)			_dump(variable->value<hstr>());
 		else if (variable->type->identifier == Type::Identifier::Hversion)		_dump(variable->value<hversion>());
 		else if (variable->type->identifier == Type::Identifier::Henum)			_dump(variable->value<henum>());
-		else if (variable->type->identifier == Type::Identifier::Grect)			_dump(variable->value<grectf>());
-		else if (variable->type->identifier == Type::Identifier::Gvec2)			_dump(variable->value<gvec2f>());
-		else if (variable->type->identifier == Type::Identifier::Gvec3)			_dump(variable->value<gvec3f>());
+		else if (variable->type->identifier == Type::Identifier::Grectf)			_dump(variable->value<grectf>());
+		else if (variable->type->identifier == Type::Identifier::Gvec2f)			_dump(variable->value<gvec2f>());
+		else if (variable->type->identifier == Type::Identifier::Gvec3f)			_dump(variable->value<gvec3f>());
 		else if (variable->type->identifier == Type::Identifier::ValueObject)	_dump(variable->value<Serializable>());
 		else if (variable->type->identifier == Type::Identifier::Object)		_dump(variable->value<Serializable*>());
 		else if (variable->type->identifier == Type::Identifier::Harray)		__dumpContainer(variable);

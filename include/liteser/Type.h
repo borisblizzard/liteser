@@ -54,9 +54,9 @@ namespace liteser
 			HL_ENUM_DECLARE(Identifier, Hstr);
 			HL_ENUM_DECLARE(Identifier, Hversion);
 			HL_ENUM_DECLARE(Identifier, Henum);
-			HL_ENUM_DECLARE(Identifier, Grect);
-			HL_ENUM_DECLARE(Identifier, Gvec2);
-			HL_ENUM_DECLARE(Identifier, Gvec3);
+			HL_ENUM_DECLARE(Identifier, Grectf);
+			HL_ENUM_DECLARE(Identifier, Gvec2f);
+			HL_ENUM_DECLARE(Identifier, Gvec3f);
 			HL_ENUM_DECLARE(Identifier, Harray);
 			HL_ENUM_DECLARE(Identifier, Hmap);
 		));

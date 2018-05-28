@@ -66,9 +66,9 @@ namespace liteser
 			else if (loadedIdentifier == Type::Identifier::Hstr)		_load(node, variable->value<hstr>());
 			else if (loadedIdentifier == Type::Identifier::Hversion)	_load(node, variable->value<hversion>());
 			else if (loadedIdentifier == Type::Identifier::Henum)		_load(node, variable->value<henum>());
-			else if (loadedIdentifier == Type::Identifier::Grect)		_load(node, variable->value<grectf>());
-			else if (loadedIdentifier == Type::Identifier::Gvec2)		_load(node, variable->value<gvec2f>());
-			else if (loadedIdentifier == Type::Identifier::Gvec3)		_load(node, variable->value<gvec3f>());
+			else if (loadedIdentifier == Type::Identifier::Grectf)		_load(node, variable->value<grectf>());
+			else if (loadedIdentifier == Type::Identifier::Gvec2f)		_load(node, variable->value<gvec2f>());
+			else if (loadedIdentifier == Type::Identifier::Gvec3f)		_load(node, variable->value<gvec3f>());
 			else if (loadedIdentifier == Type::Identifier::ValueObject)	_load(node, variable->value<Serializable>());
 			else if (loadedIdentifier == Type::Identifier::Object)		_load(node, variable->value<Serializable*>());
 			else if (loadedIdentifier == Type::Identifier::Harray)		__loadContainer(node, variable, loadedIdentifier);

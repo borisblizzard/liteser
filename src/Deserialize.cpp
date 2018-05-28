@@ -59,9 +59,9 @@ namespace liteser
 		else if (loadedIdentifier == Type::Identifier::Hstr)		_load(variable->value<hstr>());
 		else if (loadedIdentifier == Type::Identifier::Hversion)	_load(variable->value<hversion>());
 		else if (loadedIdentifier == Type::Identifier::Henum)		_load(variable->value<henum>());
-		else if (loadedIdentifier == Type::Identifier::Grect)		_load(variable->value<grectf>());
-		else if (loadedIdentifier == Type::Identifier::Gvec2)		_load(variable->value<gvec2f>());
-		else if (loadedIdentifier == Type::Identifier::Gvec3)		_load(variable->value<gvec3f>());
+		else if (loadedIdentifier == Type::Identifier::Grectf)		_load(variable->value<grectf>());
+		else if (loadedIdentifier == Type::Identifier::Gvec2f)		_load(variable->value<gvec2f>());
+		else if (loadedIdentifier == Type::Identifier::Gvec3f)		_load(variable->value<gvec3f>());
 		else if (loadedIdentifier == Type::Identifier::ValueObject)	_load(variable->value<Serializable>());
 		else if (loadedIdentifier == Type::Identifier::Object)		_load(variable->value<Serializable*>());
 		else if (loadedIdentifier == Type::Identifier::Harray)		__loadContainer(variable, loadedIdentifier);
@@ -84,9 +84,9 @@ namespace liteser
 		if (loadedIdentifier == Type::Identifier::Hstr)			{ hstr var;		_load(&var);	return true; }
 		if (loadedIdentifier == Type::Identifier::Hversion)		{ hversion var;	_load(&var);	return true; }
 		if (loadedIdentifier == Type::Identifier::Henum)		{ henum var;	_load(&var);	return true; }
-		if (loadedIdentifier == Type::Identifier::Grect)		{ grectf var;	_load(&var);	return true; }
-		if (loadedIdentifier == Type::Identifier::Gvec2)		{ gvec2f var;	_load(&var);	return true; }
-		if (loadedIdentifier == Type::Identifier::Gvec3)		{ gvec3f var;	_load(&var);	return true; }
+		if (loadedIdentifier == Type::Identifier::Grectf)		{ grectf var;	_load(&var);	return true; }
+		if (loadedIdentifier == Type::Identifier::Gvec2f)		{ gvec2f var;	_load(&var);	return true; }
+		if (loadedIdentifier == Type::Identifier::Gvec3f)		{ gvec3f var;	_load(&var);	return true; }
 		if (loadedIdentifier == Type::Identifier::ValueObject)	return __skipObject();
 		if (loadedIdentifier == Type::Identifier::Object)		return __skipObject();
 		if (loadedIdentifier == Type::Identifier::Harray)		return __skipContainer(loadedIdentifier);

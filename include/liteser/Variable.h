@@ -239,9 +239,9 @@ namespace liteser
 			else if (identifier == Type::Identifier::Hstr)			this->_addSubVariablesHmap<key, hstr>();
 			else if (identifier == Type::Identifier::Hversion)		this->_addSubVariablesHmap<key, hversion>();
 			else if (identifier == Type::Identifier::Henum)			this->_addSubVariablesHmap<key, henum>();
-			else if (identifier == Type::Identifier::Grect)			this->_addSubVariablesHmap<key, grectf>();
-			else if (identifier == Type::Identifier::Gvec2)			this->_addSubVariablesHmap<key, gvec2f>();
-			else if (identifier == Type::Identifier::Gvec3)			this->_addSubVariablesHmap<key, gvec3f>();
+			else if (identifier == Type::Identifier::Grectf)			this->_addSubVariablesHmap<key, grectf>();
+			else if (identifier == Type::Identifier::Gvec2f)			this->_addSubVariablesHmap<key, gvec2f>();
+			else if (identifier == Type::Identifier::Gvec3f)			this->_addSubVariablesHmap<key, gvec3f>();
 			else if (identifier == Type::Identifier::Object)		this->_addSubVariablesHmap<key, Serializable*>();
 			else if (identifier == Type::Identifier::None)			throw Exception("hmap value cannot be None!");
 			else if (identifier == Type::Identifier::Bool)			throw Exception("hmap value cannot be Bool!");
@@ -275,9 +275,9 @@ namespace liteser
 			else if (identifier == Type::Identifier::Hstr)			this->_applyHmapSubVariables<keyType, hstr>();
 			else if (identifier == Type::Identifier::Hversion)		this->_applyHmapSubVariables<keyType, hversion>();
 			else if (identifier == Type::Identifier::Henum)			this->_applyHmapSubVariables<keyType, henum>();
-			else if (identifier == Type::Identifier::Grect)			this->_applyHmapSubVariables<keyType, grectf>();
-			else if (identifier == Type::Identifier::Gvec2)			this->_applyHmapSubVariables<keyType, gvec2f>();
-			else if (identifier == Type::Identifier::Gvec3)			this->_applyHmapSubVariables<keyType, gvec3f>();
+			else if (identifier == Type::Identifier::Grectf)			this->_applyHmapSubVariables<keyType, grectf>();
+			else if (identifier == Type::Identifier::Gvec2f)			this->_applyHmapSubVariables<keyType, gvec2f>();
+			else if (identifier == Type::Identifier::Gvec3f)			this->_applyHmapSubVariables<keyType, gvec3f>();
 			else if (identifier == Type::Identifier::Object)		this->_applyHmapSubVariables<keyType, Serializable*>();
 			else if (identifier == Type::Identifier::None)			throw Exception("hmap value cannot be None!");
 			else if (identifier == Type::Identifier::Bool)			throw Exception("hmap value cannot be Bool!");
