@@ -58,9 +58,9 @@ namespace liteser
 		Variable* assign(VPtr<bool>* ptr);
 		Variable* assign(VPtr<hstr>* ptr);
 		Variable* assign(VPtr<hversion>* ptr);
-		Variable* assign(VPtr<grect>* ptr);
-		Variable* assign(VPtr<gvec2>* ptr);
-		Variable* assign(VPtr<gvec3>* ptr);
+		Variable* assign(VPtr<grectf>* ptr);
+		Variable* assign(VPtr<gvec2f>* ptr);
+		Variable* assign(VPtr<gvec3f>* ptr);
 		Variable* assign(VPtr<harray<char> >* ptr);
 		Variable* assign(VPtr<harray<unsigned char> >* ptr);
 		Variable* assign(VPtr<harray<short> >* ptr);
@@ -73,9 +73,9 @@ namespace liteser
 		Variable* assign(VPtr<harray<double> >* ptr);
 		Variable* assign(VPtr<harray<hstr> >* ptr);
 		Variable* assign(VPtr<harray<hversion> >* ptr);
-		Variable* assign(VPtr<harray<grect> >* ptr);
-		Variable* assign(VPtr<harray<gvec2> >* ptr);
-		Variable* assign(VPtr<harray<gvec3> >* ptr);
+		Variable* assign(VPtr<harray<grectf> >* ptr);
+		Variable* assign(VPtr<harray<gvec2f> >* ptr);
+		Variable* assign(VPtr<harray<gvec3f> >* ptr);
 		template <typename T>
 		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<T, henum>::value, Variable*>::type assign(VPtr<T>* ptr)
 		{
@@ -239,9 +239,9 @@ namespace liteser
 			else if (identifier == Type::Identifier::Hstr)			this->_addSubVariablesHmap<key, hstr>();
 			else if (identifier == Type::Identifier::Hversion)		this->_addSubVariablesHmap<key, hversion>();
 			else if (identifier == Type::Identifier::Henum)			this->_addSubVariablesHmap<key, henum>();
-			else if (identifier == Type::Identifier::Grect)			this->_addSubVariablesHmap<key, grect>();
-			else if (identifier == Type::Identifier::Gvec2)			this->_addSubVariablesHmap<key, gvec2>();
-			else if (identifier == Type::Identifier::Gvec3)			this->_addSubVariablesHmap<key, gvec3>();
+			else if (identifier == Type::Identifier::Grect)			this->_addSubVariablesHmap<key, grectf>();
+			else if (identifier == Type::Identifier::Gvec2)			this->_addSubVariablesHmap<key, gvec2f>();
+			else if (identifier == Type::Identifier::Gvec3)			this->_addSubVariablesHmap<key, gvec3f>();
 			else if (identifier == Type::Identifier::Object)		this->_addSubVariablesHmap<key, Serializable*>();
 			else if (identifier == Type::Identifier::None)			throw Exception("hmap value cannot be None!");
 			else if (identifier == Type::Identifier::Bool)			throw Exception("hmap value cannot be Bool!");
@@ -275,9 +275,9 @@ namespace liteser
 			else if (identifier == Type::Identifier::Hstr)			this->_applyHmapSubVariables<keyType, hstr>();
 			else if (identifier == Type::Identifier::Hversion)		this->_applyHmapSubVariables<keyType, hversion>();
 			else if (identifier == Type::Identifier::Henum)			this->_applyHmapSubVariables<keyType, henum>();
-			else if (identifier == Type::Identifier::Grect)			this->_applyHmapSubVariables<keyType, grect>();
-			else if (identifier == Type::Identifier::Gvec2)			this->_applyHmapSubVariables<keyType, gvec2>();
-			else if (identifier == Type::Identifier::Gvec3)			this->_applyHmapSubVariables<keyType, gvec3>();
+			else if (identifier == Type::Identifier::Grect)			this->_applyHmapSubVariables<keyType, grectf>();
+			else if (identifier == Type::Identifier::Gvec2)			this->_applyHmapSubVariables<keyType, gvec2f>();
+			else if (identifier == Type::Identifier::Gvec3)			this->_applyHmapSubVariables<keyType, gvec3f>();
 			else if (identifier == Type::Identifier::Object)		this->_applyHmapSubVariables<keyType, Serializable*>();
 			else if (identifier == Type::Identifier::None)			throw Exception("hmap value cannot be None!");
 			else if (identifier == Type::Identifier::Bool)			throw Exception("hmap value cannot be Bool!");

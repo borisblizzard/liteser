@@ -127,17 +127,17 @@ namespace liteser
 		this->identifier = Identifier::Henum;
 	}
 
-	void Type::assign(VPtr<grect>* arg)
+	void Type::assign(VPtr<grectf>* arg)
 	{
 		this->identifier = Identifier::Grect;
 	}
 
-	void Type::assign(VPtr<gvec2>* arg)
+	void Type::assign(VPtr<gvec2f>* arg)
 	{
 		this->identifier = Identifier::Gvec2;
 	}
 
-	void Type::assign(VPtr<gvec3>* arg)
+	void Type::assign(VPtr<gvec3f>* arg)
 	{
 		this->identifier = Identifier::Gvec3;
 	}

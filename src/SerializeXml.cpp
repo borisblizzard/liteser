@@ -103,9 +103,9 @@ namespace liteser
 			else if (variable->type->identifier == Type::Identifier::Hstr)			_dump(variable->value<hstr>());
 			else if (variable->type->identifier == Type::Identifier::Hversion)		_dump(variable->value<hversion>());
 			else if (variable->type->identifier == Type::Identifier::Henum)			_dump(variable->value<henum>());
-			else if (variable->type->identifier == Type::Identifier::Grect)			_dump(variable->value<grect>());
-			else if (variable->type->identifier == Type::Identifier::Gvec2)			_dump(variable->value<gvec2>());
-			else if (variable->type->identifier == Type::Identifier::Gvec3)			_dump(variable->value<gvec3>());
+			else if (variable->type->identifier == Type::Identifier::Grect)			_dump(variable->value<grectf>());
+			else if (variable->type->identifier == Type::Identifier::Gvec2)			_dump(variable->value<gvec2f>());
+			else if (variable->type->identifier == Type::Identifier::Gvec3)			_dump(variable->value<gvec3f>());
 			else if (variable->type->identifier == Type::Identifier::ValueObject)	_dump(variable->value<Serializable>());
 			else if (variable->type->identifier == Type::Identifier::Object)		_dump(variable->value<Serializable*>());
 			else if (variable->type->identifier == Type::Identifier::Harray)		__dumpContainer(variable);
@@ -179,17 +179,17 @@ namespace liteser
 			stream->write(value->value);
 		}
 
-		void _dump(grect* value)
+		void _dump(grectf* value)
 		{
 			stream->write(hsprintf("%g,%g,%g,%g", value->x, value->y, value->w, value->h));
 		}
 
-		void _dump(gvec2* value)
+		void _dump(gvec2f* value)
 		{
 			stream->write(hsprintf("%g,%g", value->x, value->y));
 		}
 
-		void _dump(gvec3* value)
+		void _dump(gvec3f* value)
 		{
 			stream->write(hsprintf("%g,%g,%g", value->x, value->y, value->z));
 		}
@@ -293,9 +293,9 @@ namespace liteser
 		DEFINE_DUMP_HARRAY_C(hstr);
 		DEFINE_DUMP_HARRAY_C(hversion);
 		DEFINE_DUMP_HARRAY_C(henum);
-		DEFINE_DUMP_HARRAY_C(grect);
-		DEFINE_DUMP_HARRAY_C(gvec2);
-		DEFINE_DUMP_HARRAY_C(gvec3);
+		DEFINE_DUMP_HARRAY_C(grectf);
+		DEFINE_DUMP_HARRAY_C(gvec2f);
+		DEFINE_DUMP_HARRAY_C(gvec3f);
 	}
 
 }

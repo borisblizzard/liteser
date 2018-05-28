@@ -66,9 +66,9 @@ namespace liteser
 			else if (loadedIdentifier == Type::Identifier::Hstr)		_load(node, variable->value<hstr>());
 			else if (loadedIdentifier == Type::Identifier::Hversion)	_load(node, variable->value<hversion>());
 			else if (loadedIdentifier == Type::Identifier::Henum)		_load(node, variable->value<henum>());
-			else if (loadedIdentifier == Type::Identifier::Grect)		_load(node, variable->value<grect>());
-			else if (loadedIdentifier == Type::Identifier::Gvec2)		_load(node, variable->value<gvec2>());
-			else if (loadedIdentifier == Type::Identifier::Gvec3)		_load(node, variable->value<gvec3>());
+			else if (loadedIdentifier == Type::Identifier::Grect)		_load(node, variable->value<grectf>());
+			else if (loadedIdentifier == Type::Identifier::Gvec2)		_load(node, variable->value<gvec2f>());
+			else if (loadedIdentifier == Type::Identifier::Gvec3)		_load(node, variable->value<gvec3f>());
 			else if (loadedIdentifier == Type::Identifier::ValueObject)	_load(node, variable->value<Serializable>());
 			else if (loadedIdentifier == Type::Identifier::Object)		_load(node, variable->value<Serializable*>());
 			else if (loadedIdentifier == Type::Identifier::Harray)		__loadContainer(node, variable, loadedIdentifier);
@@ -204,7 +204,7 @@ namespace liteser
 			value->value = node->pint32(VALUE);
 		}
 
-		void _load(hlxml::Node* node, grect* value)
+		void _load(hlxml::Node* node, grectf* value)
 		{
 			harray<hstr> data = node->pstr(VALUE).split(SEPARATOR);
 			value->x = (float)data[0];
@@ -213,14 +213,14 @@ namespace liteser
 			value->h = (float)data[3];
 		}
 
-		void _load(hlxml::Node* node, gvec2* value)
+		void _load(hlxml::Node* node, gvec2f* value)
 		{
 			harray<hstr> data = node->pstr(VALUE).split(SEPARATOR);
 			value->x = (float)data[0];
 			value->y = (float)data[1];
 		}
 
-		void _load(hlxml::Node* node, gvec3* value)
+		void _load(hlxml::Node* node, gvec3f* value)
 		{
 			harray<hstr> data = node->pstr(VALUE).split(SEPARATOR);
 			value->x = (float)data[0];
@@ -401,9 +401,9 @@ namespace liteser
 		DEFINE_LOAD_HARRAY_F(hstr);
 		DEFINE_LOAD_HARRAY_F(hversion);
 		DEFINE_LOAD_HARRAY_F(henum);
-		DEFINE_LOAD_HARRAY_F(grect);
-		DEFINE_LOAD_HARRAY_F(gvec2);
-		DEFINE_LOAD_HARRAY_F(gvec3);
+		DEFINE_LOAD_HARRAY_F(grectf);
+		DEFINE_LOAD_HARRAY_F(gvec2f);
+		DEFINE_LOAD_HARRAY_F(gvec3f);
 
 	}
 

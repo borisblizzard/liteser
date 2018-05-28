@@ -39,9 +39,9 @@ namespace liteser
 	void _dump(hstr* value);
 	void _dump(hversion* value);
 	void _dump(henum* value);
-	void _dump(grect* value);
-	void _dump(gvec2* value);
-	void _dump(gvec3* value);
+	void _dump(grectf* value);
+	void _dump(gvec2f* value);
+	void _dump(gvec3f* value);
 	void _dump(Serializable* value);
 	void _dump(Serializable** value);
 
@@ -58,9 +58,9 @@ namespace liteser
 	void _dumpHarray(harray<hstr>* value);
 	void _dumpHarray(harray<hversion>* value);
 	void _dumpHarray(harray<henum>* value);
-	void _dumpHarray(harray<grect>* value);
-	void _dumpHarray(harray<gvec2>* value);
-	void _dumpHarray(harray<gvec3>* value);
+	void _dumpHarray(harray<grectf>* value);
+	void _dumpHarray(harray<gvec2f>* value);
+	void _dumpHarray(harray<gvec3f>* value);
 	void _dumpHarray(harray<Serializable*>* value);
 
 }

@@ -81,9 +81,9 @@ namespace liteser
 		void assign(VPtr<hstr>* arg);
 		void assign(VPtr<hversion>* arg);
 		void assign(VPtr<henum>* arg);
-		void assign(VPtr<grect>* arg);
-		void assign(VPtr<gvec2>* arg);
-		void assign(VPtr<gvec3>* arg);
+		void assign(VPtr<grectf>* arg);
+		void assign(VPtr<gvec2f>* arg);
+		void assign(VPtr<gvec3f>* arg);
 		void assign(VPtr<Serializable>* arg);
 		void assign(VPtr<Serializable*>* arg);
 		template <typename T>

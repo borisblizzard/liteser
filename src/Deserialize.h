@@ -40,9 +40,9 @@ namespace liteser
 	void _load(hstr* value);
 	void _load(hversion* value);
 	void _load(henum* value);
-	void _load(grect* value);
-	void _load(gvec2* value);
-	void _load(gvec3* value);
+	void _load(grectf* value);
+	void _load(gvec2f* value);
+	void _load(gvec3f* value);
 	void _load(Serializable* value);
 	void _load(Serializable** value);
 	void __loadObject(Serializable** value);
@@ -61,9 +61,9 @@ namespace liteser
 	void _loadHarray(harray<hstr>* value, unsigned int size);
 	void _loadHarray(harray<hversion>* value, unsigned int size);
 	void _loadHarray(harray<henum>* value, unsigned int size);
-	void _loadHarray(harray<grect>* value, unsigned int size);
-	void _loadHarray(harray<gvec2>* value, unsigned int size);
-	void _loadHarray(harray<gvec3>* value, unsigned int size);
+	void _loadHarray(harray<grectf>* value, unsigned int size);
+	void _loadHarray(harray<gvec2f>* value, unsigned int size);
+	void _loadHarray(harray<gvec3f>* value, unsigned int size);
 	void _loadHarray(harray<Serializable*>* value, unsigned int size);
 
 }

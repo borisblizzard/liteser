@@ -50,9 +50,9 @@ namespace liteser
 	liteserFnExport bool serialize(hsbase* stream, harray<hstr>& value, bool allowMultiReferencing = true, bool stringPooling = true);
 	liteserFnExport bool serialize(hsbase* stream, harray<hversion>& value, bool allowMultiReferencing = true, bool stringPooling = true);
 	liteserFnExport bool serialize(hsbase* stream, harray<henum>& value, bool allowMultiReferencing = true, bool stringPooling = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<grect>& value, bool allowMultiReferencing = true, bool stringPooling = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<gvec2>& value, bool allowMultiReferencing = true, bool stringPooling = true);
-	liteserFnExport bool serialize(hsbase* stream, harray<gvec3>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<grectf>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<gvec2f>& value, bool allowMultiReferencing = true, bool stringPooling = true);
+	liteserFnExport bool serialize(hsbase* stream, harray<gvec3f>& value, bool allowMultiReferencing = true, bool stringPooling = true);
 
 	liteserFnExport bool deserialize(hsbase* stream, Serializable** object);
 	liteserFnExport bool deserialize(hsbase* stream, harray<Serializable*>* object);
@@ -69,9 +69,9 @@ namespace liteser
 	liteserFnExport bool deserialize(hsbase* stream, harray<hstr>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<hversion>* value);
 	liteserFnExport bool deserialize(hsbase* stream, harray<henum>* value);
-	liteserFnExport bool deserialize(hsbase* stream, harray<grect>* value);
-	liteserFnExport bool deserialize(hsbase* stream, harray<gvec2>* value);
-	liteserFnExport bool deserialize(hsbase* stream, harray<gvec3>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<grectf>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<gvec2f>* value);
+	liteserFnExport bool deserialize(hsbase* stream, harray<gvec3f>* value);
 
 	namespace xml
 	{
@@ -90,9 +90,9 @@ namespace liteser
 		liteserFnExport bool serialize(hsbase* stream, harray<hstr>& value, bool allowMultiReferencing = true);
 		liteserFnExport bool serialize(hsbase* stream, harray<hversion>& value, bool allowMultiReferencing = true);
 		liteserFnExport bool serialize(hsbase* stream, harray<henum>& value, bool allowMultiReferencing = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<grect>& value, bool allowMultiReferencing = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<gvec2>& value, bool allowMultiReferencing = true);
-		liteserFnExport bool serialize(hsbase* stream, harray<gvec3>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<grectf>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<gvec2f>& value, bool allowMultiReferencing = true);
+		liteserFnExport bool serialize(hsbase* stream, harray<gvec3f>& value, bool allowMultiReferencing = true);
 
 		liteserFnExport bool deserialize(hsbase* stream, Serializable** object);
 		liteserFnExport bool deserialize(hsbase* stream, harray<Serializable*>* object);
@@ -109,9 +109,9 @@ namespace liteser
 		liteserFnExport bool deserialize(hsbase* stream, harray<hstr>* value);
 		liteserFnExport bool deserialize(hsbase* stream, harray<hversion>* value);
 		liteserFnExport bool deserialize(hsbase* stream, harray<henum>* value);
-		liteserFnExport bool deserialize(hsbase* stream, harray<grect>* value);
-		liteserFnExport bool deserialize(hsbase* stream, harray<gvec2>* value);
-		liteserFnExport bool deserialize(hsbase* stream, harray<gvec3>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<grectf>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<gvec2f>* value);
+		liteserFnExport bool deserialize(hsbase* stream, harray<gvec3f>* value);
 	}
 
 	/// @brief Creates a deep copy of an object.
