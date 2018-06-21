@@ -50,9 +50,9 @@ namespace liteser
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Hmap, 0xC1);
 	));
 
-	Type::Type()
+	Type::Type() :
+		identifier(Identifier::None)
 	{
-		this->identifier = Identifier::None;
 	}
 
 	Type::~Type()

@@ -67,7 +67,11 @@ namespace liteser
 	DEFINE_ASSIGNERS(gvec3d);
 	DEFINE_ASSIGNER(bool);
 
-	Variable::Variable(chstr name) : ptr(NULL), containerSize(0), ptrKeys(NULL), ptrValues(NULL)
+	Variable::Variable(chstr name) :
+		ptr(NULL),
+		containerSize(0),
+		ptrKeys(NULL),
+		ptrValues(NULL)
 	{
 		this->name = name;
 		this->type = new Type();
