@@ -39,6 +39,7 @@
 		} \
 		_start(stream); \
 		Header header(allowMultiReferencing, stringPooling); \
+		_setup(stream, header); \
 		_writeHeader(stream, header); \
 		_dumpHarray(&value); \
 		_finish(stream); \
