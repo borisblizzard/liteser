@@ -14,7 +14,6 @@ file(
 add_library(liteser STATIC ${CppSrc})
 
 include_directories(AFTER "../../include/liteser")
-include_directories(AFTER "../../src")
 include_directories(AFTER "../../../hltypes/xlxml/include")
 include_directories(AFTER "../../../hltypes/include")
 include_directories(AFTER "../../../gtypes/include")
