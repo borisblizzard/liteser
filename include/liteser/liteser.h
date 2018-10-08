@@ -138,6 +138,25 @@ namespace liteser
 		liteserFnExport bool deserialize(hsbase* stream, harray<gvec3d>* value);
 	}
 
+	/// @param[out] object Output object.
+	/// @return True if successful.
+	liteserFnExport bool loadObjectFromFile(chstr path, liteser::Serializable** object, bool warn = true);
+	/// @param[out] object Output object.
+	/// @return True if successful.
+	liteserFnExport bool loadObjectFromResource(chstr path, liteser::Serializable** object, bool warn = true);
+	/// @param[out] dataArray Output object array.
+	/// @return True if successful.
+	liteserFnExport bool loadArrayFromFile(chstr path, harray<liteser::Serializable*>* dataArray, bool warn = true);
+	/// @param[out] dataArray Output object array.
+	/// @return True if successful.
+	liteserFnExport bool loadArrayFromResource(chstr path, harray<liteser::Serializable*>* dataArray, bool warn = true);
+	/// @param[out] dataArray Output object array.
+	/// @return True if successful.
+	liteserFnExport bool loadArrayFromDirectory(chstr path, harray<liteser::Serializable*>* dataArray, bool warn = true);
+	/// @param[out] dataArray Output object array.
+	/// @return True if successful.
+	liteserFnExport bool loadArrayFromResourceDirectory(chstr path, harray<liteser::Serializable*>* dataArray, bool warn = true);
+
 	/// @brief Creates a deep copy of an object.
 	/// @note The cloning only affects variables that were declared as serializable.
 	liteserFnExport bool clone(Serializable* input, Serializable** output);

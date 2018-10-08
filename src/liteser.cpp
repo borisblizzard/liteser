@@ -6,9 +6,13 @@
 /// This program is free software; you can redistribute it and/or modify it under
 /// the terms of the BSD license: http://opensource.org/licenses/BSD-3-Clause
 
+#include <hltypes/hdir.h>
 #include <hltypes/hexception.h>
-#include <hltypes/hmap.h>
+#include <hltypes/hfile.h>
 #include <hltypes/hlog.h>
+#include <hltypes/hmap.h>
+#include <hltypes/hrdir.h>
+#include <hltypes/hresource.h>
 #include <hltypes/hsbase.h>
 #include <hltypes/hstream.h>
 #include <hltypes/hstring.h>
@@ -25,6 +29,9 @@
 #include "SerializeXml.h"
 #include "Utility.h"
 #include "Variable.h"
+
+#define LS3_EXTENSION ".ls3"
+#define LSX_EXTENSION ".lsx"
 
 #define XML_HEADER "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
 #define LITESER_XML_ROOT_BEGIN hsprintf("<Liteser version=\"%s\">\n", version.toString(2).cStr())
@@ -362,6 +369,184 @@ namespace liteser
 		DEFINE_HARRAY_DESERIALIZER_XML(gvec2d);
 		DEFINE_HARRAY_DESERIALIZER_XML(gvec3d);
 
+	}
+
+	bool loadObjectFromFile(chstr path, liteser::Serializable** object, bool warn)
+	{
+		hstr pathLsb = path + LS3_EXTENSION;
+		hstr pathLsx = path + LSX_EXTENSION;
+		hfile stream;
+		if (hfile::exists(pathLsb))
+		{
+			hlog::write(logTag, "Loading: " + pathLsb);
+			stream.open(pathLsb);
+			deserialize(&stream, object);
+			return true;
+		}
+		if (hfile::exists(pathLsx))
+		{
+			hlog::write(logTag, "Loading: " + pathLsx);
+			stream.open(pathLsx);
+			xml::deserialize(&stream, object);
+			return true;
+		}
+		if (warn)
+		{
+			hlog::warn(logTag, "Could not load: " + path);
+		}
+		return false;
+	}
+
+	bool loadObjectFromResource(chstr path, liteser::Serializable** object, bool warn)
+	{
+		hstr pathLsb = path + LS3_EXTENSION;
+		hstr pathLsx = path + LSX_EXTENSION;
+		hresource stream;
+		if (hresource::exists(pathLsb))
+		{
+			hlog::write(logTag, "Loading: " + pathLsb);
+			stream.open(pathLsb);
+			deserialize(&stream, object);
+			return true;
+		}
+		if (hresource::exists(pathLsx))
+		{
+			hlog::write(logTag, "Loading: " + pathLsx);
+			stream.open(pathLsx);
+			xml::deserialize(&stream, object);
+			return true;
+		}
+		if (warn)
+		{
+			hlog::warn(logTag, "Could not load: " + path);
+		}
+		return false;
+	}
+
+	bool loadArrayFromFile(chstr path, harray<liteser::Serializable*>* dataArray, bool warn)
+	{
+		hstr pathLsb = path + LS3_EXTENSION;
+		hstr pathLsx = path + LSX_EXTENSION;
+		hfile stream;
+		if (hfile::exists(pathLsb))
+		{
+			hlog::write(logTag, "Loading: " + pathLsb);
+			stream.open(pathLsb);
+			deserialize(&stream, dataArray);
+			return true;
+		}
+		if (hfile::exists(pathLsx))
+		{
+			hlog::write(logTag, "Loading: " + pathLsx);
+			stream.open(pathLsx);
+			xml::deserialize(&stream, dataArray);
+			return true;
+		}
+		if (warn)
+		{
+			hlog::warn(logTag, "Could not load: " + path);
+		}
+		return false;
+	}
+
+	bool loadArrayFromResource(chstr path, harray<liteser::Serializable*>* dataArray, bool warn)
+	{
+		hstr pathLsb = path + LS3_EXTENSION;
+		hstr pathLsx = path + LSX_EXTENSION;
+		hresource stream;
+		if (hresource::exists(pathLsb))
+		{
+			hlog::write(logTag, "Loading: " + pathLsb);
+			stream.open(pathLsb);
+			deserialize(&stream, dataArray);
+			return true;
+		}
+		if (hresource::exists(pathLsx))
+		{
+			hlog::write(logTag, "Loading: " + pathLsx);
+			stream.open(pathLsx);
+			xml::deserialize(&stream, dataArray);
+			return true;
+		}
+		if (warn)
+		{
+			hlog::warn(logTag, "Could not load: " + path);
+		}
+		return false;
+	}
+
+	bool loadArrayFromDirectory(chstr path, harray<liteser::Serializable*>* dataArray, bool warn)
+	{
+		if (hdir::exists(path))
+		{
+			hlog::write(logTag, "Loading: " + path);
+			harray<hstr> files = hdir::files(path).sorted();
+			harray<hstr> filesLs3;
+			harray<hstr> filesLsx;
+			foreach (hstr, it, files)
+			{
+				if ((*it).endsWith(LS3_EXTENSION))
+				{
+					filesLs3 += hfile::withoutExtension(*it);
+				}
+				else if ((*it).endsWith(LSX_EXTENSION))
+				{
+					filesLsx += hfile::withoutExtension(*it);
+				}
+			}
+			filesLsx /= filesLs3;
+			files = filesLs3 + filesLsx;
+			liteser::Serializable* object = NULL;
+			foreach (hstr, it, files)
+			{
+				object = NULL;
+				loadObjectFromFile(hdir::joinPath(path, (*it)), &object);
+				dataArray->add(object);
+			}
+			return true;
+		}
+		if (warn)
+		{
+			hlog::warn(logTag, "Could not load: " + path);
+		}
+		return false;
+	}
+
+	bool loadArrayFromResourceDirectory(chstr path, harray<liteser::Serializable*>* dataArray, bool warn)
+	{
+		if (hrdir::exists(path))
+		{
+			hlog::write(logTag, "Loading: " + path);
+			harray<hstr> files = hrdir::files(path).sorted();
+			harray<hstr> filesLs3;
+			harray<hstr> filesLsx;
+			foreach (hstr, it, files)
+			{
+				if ((*it).endsWith(LS3_EXTENSION))
+				{
+					filesLs3 += hresource::withoutExtension(*it);
+				}
+				else if ((*it).endsWith(LSX_EXTENSION))
+				{
+					filesLsx += hresource::withoutExtension(*it);
+				}
+			}
+			filesLsx /= filesLs3;
+			files = filesLs3 + filesLsx;
+			liteser::Serializable* object = NULL;
+			foreach (hstr, it, files)
+			{
+				object = NULL;
+				loadObjectFromResource(hrdir::joinPath(path, (*it)), &object);
+				dataArray->add(object);
+			}
+			return true;
+		}
+		if (warn)
+		{
+			hlog::warn(logTag, "Could not load: " + path);
+		}
+		return false;
 	}
 
 	bool clone(Serializable* input, Serializable** output)
