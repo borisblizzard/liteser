@@ -28,7 +28,6 @@ namespace liteser
 
 		Header();
 		Header(bool allowMultiReferencing, bool stringPooling);
-		~Header();
 
 	};
 

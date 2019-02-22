@@ -22,10 +22,6 @@ namespace liteser
 	{
 	}
 
-	Factory::~Factory()
-	{
-	}
-
 	Serializable* Factory::create(chstr name)
 	{
 		Serializable* (*constructor)() = __lsConstructors->tryGet(name, NULL);

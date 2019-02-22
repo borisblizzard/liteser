@@ -36,7 +36,6 @@ namespace liteser
 		T* value;
 
 		inline VPtr(T* value) { this->value = value; }
-		inline ~VPtr() { }
 
 	};
 

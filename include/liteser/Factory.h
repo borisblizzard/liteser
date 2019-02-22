@@ -33,13 +33,7 @@ namespace liteser
 				Factory::_register(name, &_create<T>);
 			}
 
-			inline ~Register()
-			{
-			}
-
 		};
-
-		~Factory();
 
 		template <typename T>
 		static inline Serializable* _create() { return new T(); }

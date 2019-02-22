@@ -25,8 +25,4 @@ namespace liteser
 		this->stringPooling = stringPooling;
 	}
 
-	Header::~Header()
-	{
-	}
-	
 }
