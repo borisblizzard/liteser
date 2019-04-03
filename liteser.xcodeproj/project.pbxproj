@@ -280,9 +280,6 @@
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
-				Japanese,
-				French,
-				German,
 			);
 			mainGroup = 0867D691FE84028FC02AAC07 /* libliteser */;
 			productRefGroup = 0867D691FE84028FC02AAC07 /* libliteser */;
