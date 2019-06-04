@@ -1,0 +1,22 @@
+apply plugin: "com.android.library"
+apply from: "../../../hltypes/android-studio/generic/default.gradle"
+apply from: "../../../hltypes/android-studio/generic/native.gradle"
+apply from: "../../../hltypes/android-studio/generic/cpp.gradle"
+
+android {
+	defaultConfig {
+		versionCode 1120
+		versionName "1.1.2"
+	}
+	externalNativeBuild {
+		cmake {
+			path "CMakeLists.txt"
+		}
+	}
+}
+
+dependencies {
+	implementation project(":hlxml")
+	implementation project(":hltypes")
+	implementation project(":gtypes")
+}
