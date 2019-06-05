@@ -7,29 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C9C04D0F14BAE83A005BD333 /* liteser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04D0D14BAE83A005BD333 /* liteser.cpp */; };
-		C9C04D1014BAE83A005BD333 /* liteser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04D0D14BAE83A005BD333 /* liteser.cpp */; };
-		C9C04D1114BAE83A005BD333 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04D0E14BAE83A005BD333 /* Serializable.cpp */; };
-		C9C04D1214BAE83A005BD333 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04D0E14BAE83A005BD333 /* Serializable.cpp */; };
-		C9C04D1614BAE84B005BD333 /* liteser.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04D1314BAE84B005BD333 /* liteser.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C9C04D1814BAE84B005BD333 /* liteserExport.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04D1414BAE84B005BD333 /* liteserExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C9C04D1A14BAE84B005BD333 /* Serializable.h in Headers */ = {isa = PBXBuildFile; fileRef = C9C04D1514BAE84B005BD333 /* Serializable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C9C04D3E14BAEA01005BD333 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9C04D3D14BAEA01005BD333 /* hltypes.framework */; };
-		D147DED517A8343900D6F2CA /* liteser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04D0D14BAE83A005BD333 /* liteser.cpp */; };
-		D147DED617A8343900D6F2CA /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9C04D0E14BAE83A005BD333 /* Serializable.cpp */; };
+		D16D2E6B177864E7005DD948 /* gtypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16D2E6A177864E7005DD948 /* gtypes.framework */; };
+		D19C92431778567000A4BDF4 /* liteser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92361778567000A4BDF4 /* liteser.cpp */; };
+		D19C92441778567000A4BDF4 /* liteser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92361778567000A4BDF4 /* liteser.cpp */; };
+		D19C92451778567000A4BDF4 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92371778567000A4BDF4 /* Serializable.cpp */; };
+		D19C92461778567000A4BDF4 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92371778567000A4BDF4 /* Serializable.cpp */; };
+		D19C925A1778567E00A4BDF4 /* liteser.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C92521778567E00A4BDF4 /* liteser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D19C925B1778567E00A4BDF4 /* liteserExport.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C92531778567E00A4BDF4 /* liteserExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D19C925E1778567E00A4BDF4 /* Serializable.h in Headers */ = {isa = PBXBuildFile; fileRef = D19C92561778567E00A4BDF4 /* Serializable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D1E1AD7D1961654600001F36 /* liteser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92361778567000A4BDF4 /* liteser.cpp */; };
+		D1E1AD801961654600001F36 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92371778567000A4BDF4 /* Serializable.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C9C04D0D14BAE83A005BD333 /* liteser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = liteser.cpp; path = src/liteser.cpp; sourceTree = "<group>"; };
-		C9C04D0E14BAE83A005BD333 /* Serializable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Serializable.cpp; path = src/Serializable.cpp; sourceTree = "<group>"; };
-		C9C04D1314BAE84B005BD333 /* liteser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = liteser.h; path = include/liteser/liteser.h; sourceTree = "<group>"; };
-		C9C04D1414BAE84B005BD333 /* liteserExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = liteserExport.h; path = include/liteser/liteserExport.h; sourceTree = "<group>"; };
-		C9C04D1514BAE84B005BD333 /* Serializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serializable.h; path = include/liteser/Serializable.h; sourceTree = "<group>"; };
+		A16AB33B18DCCB7700B78CD1 /* iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = iOS.xcconfig; path = xcconfig/iOS.xcconfig; sourceTree = "<group>"; };
+		A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Mac.xcconfig; path = xcconfig/Mac.xcconfig; sourceTree = "<group>"; };
+		B40183E71BA976AF007314AC /* libliteser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libliteser.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9C04D3D14BAEA01005BD333 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = "../../__build__/pharaoh/Build/Products/Debug-LLVM/hltypes.framework"; sourceTree = "<group>"; };
 		C9C04D7314BAEB2A005BD333 /* liteser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = liteser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9C04D7414BAEB2A005BD333 /* libliteser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libliteser.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		D147DEDD17A8343900D6F2CA /* libliteser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libliteser.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D16D2E6A177864E7005DD948 /* gtypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtypes.framework; path = "../../__build__/products/Debug-LLVM/gtypes.framework"; sourceTree = "<group>"; };
+		D19C92361778567000A4BDF4 /* liteser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = liteser.cpp; path = src/liteser.cpp; sourceTree = "<group>"; };
+		D19C92371778567000A4BDF4 /* Serializable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Serializable.cpp; path = src/Serializable.cpp; sourceTree = "<group>"; };
+		D19C92521778567E00A4BDF4 /* liteser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = liteser.h; path = include/liteser/liteser.h; sourceTree = "<group>"; };
+		D19C92531778567E00A4BDF4 /* liteserExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = liteserExport.h; path = include/liteser/liteserExport.h; sourceTree = "<group>"; };
+		D19C92561778567E00A4BDF4 /* Serializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serializable.h; path = include/liteser/Serializable.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D16D2E6B177864E7005DD948 /* gtypes.framework in Frameworks */,
 				C9C04D3E14BAEA01005BD333 /* hltypes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -47,12 +52,12 @@
 		0867D691FE84028FC02AAC07 /* libliteser */ = {
 			isa = PBXGroup;
 			children = (
-				8DC2EF5A0486A6940098B216 /* Info.plist */,
+				D14D3811195D49F700BF8935 /* config */,
 				7F42F6E811EB0E0600B1C1DF /* include */,
 				7F42F6E711EB0E0200B1C1DF /* src */,
 				C9C04DA114BAEB5F005BD333 /* Products */,
 				C9C04D3F14BAEA26005BD333 /* Frameworks */,
-				D147DEDD17A8343900D6F2CA /* libliteser.a */,
+				B40183E71BA976AF007314AC /* libliteser.a */,
 			);
 			name = libliteser;
 			sourceTree = "<group>";
@@ -60,8 +65,8 @@
 		7F42F6E711EB0E0200B1C1DF /* src */ = {
 			isa = PBXGroup;
 			children = (
-				C9C04D0D14BAE83A005BD333 /* liteser.cpp */,
-				C9C04D0E14BAE83A005BD333 /* Serializable.cpp */,
+				D19C92361778567000A4BDF4 /* liteser.cpp */,
+				D19C92371778567000A4BDF4 /* Serializable.cpp */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -69,9 +74,9 @@
 		7F42F6E811EB0E0600B1C1DF /* include */ = {
 			isa = PBXGroup;
 			children = (
-				C9C04D1314BAE84B005BD333 /* liteser.h */,
-				C9C04D1414BAE84B005BD333 /* liteserExport.h */,
-				C9C04D1514BAE84B005BD333 /* Serializable.h */,
+				D19C92521778567E00A4BDF4 /* liteser.h */,
+				D19C92531778567E00A4BDF4 /* liteserExport.h */,
+				D19C92561778567E00A4BDF4 /* Serializable.h */,
 			);
 			name = include;
 			sourceTree = "<group>";
@@ -79,6 +84,7 @@
 		C9C04D3F14BAEA26005BD333 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D16D2E6A177864E7005DD948 /* gtypes.framework */,
 				C9C04D3D14BAEA01005BD333 /* hltypes.framework */,
 			);
 			name = Frameworks;
@@ -93,6 +99,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		D14D3811195D49F700BF8935 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				A16AB33B18DCCB7700B78CD1 /* iOS.xcconfig */,
+				A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */,
+				8DC2EF5A0486A6940098B216 /* Info.plist */,
+			);
+			name = config;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -100,9 +116,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9C04D1614BAE84B005BD333 /* liteser.h in Headers */,
-				C9C04D1814BAE84B005BD333 /* liteserExport.h in Headers */,
-				C9C04D1A14BAE84B005BD333 /* Serializable.h in Headers */,
+				D19C925A1778567E00A4BDF4 /* liteser.h in Headers */,
+				D19C925B1778567E00A4BDF4 /* liteserExport.h in Headers */,
+				D19C925E1778567E00A4BDF4 /* Serializable.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,21 +143,6 @@
 			productReference = C9C04D7314BAEB2A005BD333 /* liteser.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		D147DED317A8343900D6F2CA /* liteser (Mac) */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D147DED717A8343900D6F2CA /* Build configuration list for PBXNativeTarget "liteser (Mac)" */;
-			buildPhases = (
-				D147DED417A8343900D6F2CA /* Sources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "liteser (Mac)";
-			productName = "libliteser-ios";
-			productReference = D147DEDD17A8343900D6F2CA /* libliteser.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		D1522F1B140F79500012F290 /* liteser (iOS) */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D1522F2B140F79500012F290 /* Build configuration list for PBXNativeTarget "liteser (iOS)" */;
@@ -157,13 +158,28 @@
 			productReference = C9C04D7414BAEB2A005BD333 /* libliteser.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		D1E1AD7B1961654600001F36 /* liteser (Mac) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D1E1AD851961654600001F36 /* Build configuration list for PBXNativeTarget "liteser (Mac)" */;
+			buildPhases = (
+				D1E1AD7C1961654600001F36 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "liteser (Mac)";
+			productName = "libliteser-ios";
+			productReference = B40183E71BA976AF007314AC /* libliteser.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0940;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "liteser" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -181,8 +197,8 @@
 			projectRoot = "";
 			targets = (
 				8DC2EF4F0486A6940098B216 /* liteser */,
-				D147DED317A8343900D6F2CA /* liteser (Mac) */,
 				D1522F1B140F79500012F290 /* liteser (iOS) */,
+				D1E1AD7B1961654600001F36 /* liteser (Mac) */,
 			);
 		};
 /* End PBXProject section */
@@ -192,17 +208,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9C04D0F14BAE83A005BD333 /* liteser.cpp in Sources */,
-				C9C04D1114BAE83A005BD333 /* Serializable.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D147DED417A8343900D6F2CA /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D147DED517A8343900D6F2CA /* liteser.cpp in Sources */,
-				D147DED617A8343900D6F2CA /* Serializable.cpp in Sources */,
+				D19C92431778567000A4BDF4 /* liteser.cpp in Sources */,
+				D19C92451778567000A4BDF4 /* Serializable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,131 +217,73 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9C04D1014BAE83A005BD333 /* liteser.cpp in Sources */,
-				C9C04D1214BAE83A005BD333 /* Serializable.cpp in Sources */,
+				D19C92441778567000A4BDF4 /* liteser.cpp in Sources */,
+				D19C92461778567000A4BDF4 /* Serializable.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1E1AD7C1961654600001F36 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1E1AD7D1961654600001F36 /* liteser.cpp in Sources */,
+				D1E1AD801961654600001F36 /* Serializable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		1DEB91AE08733DA50010E9CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_LOCATION = YES;
-				DSTROOT = /;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = Info.plist;
-				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = liteser;
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc";
-				WRAPPER_EXTENSION = framework;
-			};
-			name = Debug;
-		};
-		1DEB91AF08733DA50010E9CD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_LOCATION = YES;
-				DSTROOT = /;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
-				GCC_MODEL_TUNING = G5;
-				INFOPLIST_FILE = Info.plist;
-				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = liteser;
-				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64 ppc";
-				WRAPPER_EXTENSION = framework;
-			};
-			name = Release;
-		};
-		1DEB91B208733DA50010E9CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../hltypes/include",
-					"${SRCROOT}/include",
-				);
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = liteser;
-				SDKROOT = macosx;
-			};
-			name = Debug;
-		};
-		1DEB91B308733DA50010E9CD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"${SRCROOT}/../hltypes/include",
-					"${SRCROOT}/include",
-				);
-				PRODUCT_NAME = liteser;
-				SDKROOT = macosx;
-			};
-			name = Release;
-		};
 		7F7A5614129D436D00E0ED12 /* App Store */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = i386;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
 					"${SRCROOT}/include",
 				);
 				PRODUCT_NAME = liteser;
-				SDKROOT = macosx;
+				SDKROOT = iphoneos;
 			};
 			name = "App Store";
 		};
 		7F7A5615129D436D00E0ED12 /* App Store */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_LOCATION = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -342,87 +291,137 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.googlecode.${PRODUCT_NAME:rfc1034Identifier}";
 				PRODUCT_NAME = liteser;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = "App Store";
 		};
-		C9160585132AE60400914FFC /* Debug-LLVM */ = {
+		C9160585132AE60400914FFC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = _DEBUG;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
 					"${SRCROOT}/include",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = liteser;
-				SDKROOT = macosx;
+				SDKROOT = iphoneos;
 			};
-			name = "Debug-LLVM";
+			name = Debug;
 		};
-		C9160586132AE60400914FFC /* Debug-LLVM */ = {
+		C9160586132AE60400914FFC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
-				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.googlecode.${PRODUCT_NAME:rfc1034Identifier}";
 				PRODUCT_NAME = liteser;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
-			name = "Debug-LLVM";
+			name = Debug;
 		};
-		C9160587132AE61000914FFC /* Release-LLVM */ = {
+		C9160587132AE61000914FFC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
 					"${SRCROOT}/include",
 				);
 				PRODUCT_NAME = liteser;
-				SDKROOT = macosx;
+				SDKROOT = iphoneos;
 			};
-			name = "Release-LLVM";
+			name = Release;
 		};
-		C9160588132AE61000914FFC /* Release-LLVM */ = {
+		C9160588132AE61000914FFC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEPLOYMENT_LOCATION = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DSTROOT = /;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -430,230 +429,178 @@
 				GCC_MODEL_TUNING = G5;
 				INFOPLIST_FILE = Info.plist;
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/$(EXECUTABLE_PATH)";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.googlecode.${PRODUCT_NAME:rfc1034Identifier}";
 				PRODUCT_NAME = liteser;
 				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
 				VALID_ARCHS = "i386 x86_64 ppc";
 				WRAPPER_EXTENSION = framework;
 			};
-			name = "Release-LLVM";
+			name = Release;
 		};
-		D147DED817A8343900D6F2CA /* Debug */ = {
+		D1522F27140F79500012F290 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A16AB33B18DCCB7700B78CD1 /* iOS.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COPY_PHASE_STRIP = NO;
-				DSTROOT = /tmp/libliteser_ios.dst;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					_IOS,
+					_LIB,
 					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/include",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = liteser;
-				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
-		D147DED917A8343900D6F2CA /* Debug-LLVM */ = {
+		D1522F29140F79500012F290 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A16AB33B18DCCB7700B78CD1 /* iOS.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COPY_PHASE_STRIP = NO;
-				DSTROOT = /tmp/libliteser_ios.dst;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					_IOS,
+					_LIB,
 					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/include",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = liteser;
-				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-			};
-			name = "Debug-LLVM";
-		};
-		D147DEDA17A8343900D6F2CA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COPY_PHASE_STRIP = YES;
-				DSTROOT = /tmp/libliteser_ios.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = liteser;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
-		};
-		D147DEDB17A8343900D6F2CA /* Release-LLVM */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COPY_PHASE_STRIP = YES;
-				DSTROOT = /tmp/libliteser_ios.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = liteser;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release-LLVM";
-		};
-		D147DEDC17A8343900D6F2CA /* App Store */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
-				COPY_PHASE_STRIP = YES;
-				DSTROOT = /tmp/libliteser_ios.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = liteser;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "App Store";
-		};
-		D1522F26140F79500012F290 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				DSTROOT = /tmp/libliteser_ios.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
-				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_THUMB_SUPPORT = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = liteser;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		D1522F27140F79500012F290 /* Debug-LLVM */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				DSTROOT = /tmp/libliteser_ios.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
-				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_THUMB_SUPPORT = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = liteser;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = "Debug-LLVM";
-		};
-		D1522F28140F79500012F290 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DSTROOT = /tmp/libliteser_ios.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				GCC_THUMB_SUPPORT = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = liteser;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		D1522F29140F79500012F290 /* Release-LLVM */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DSTROOT = /tmp/libliteser_ios.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				GCC_THUMB_SUPPORT = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = liteser;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release-LLVM";
 		};
 		D1522F2A140F79500012F290 /* App Store */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A16AB33B18DCCB7700B78CD1 /* iOS.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COPY_PHASE_STRIP = YES;
-				DSTROOT = /tmp/libliteser_ios.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				GCC_THUMB_SUPPORT = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_IOS,
+					_LIB,
+					"$(inherited)",
+				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/include",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = liteser;
-				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = "App Store";
+		};
+		D1E1AD861961654600001F36 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/libliteser_ios.dst;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					_LIB,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/include",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = liteser;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D1E1AD871961654600001F36 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libliteser_ios.dst;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					_LIB,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/include",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = liteser;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D1E1AD881961654600001F36 /* App Store */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A16AB33C18DCCD1500B78CD1 /* Mac.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/libliteser_ios.dst;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					_MAC,
+					_LIB,
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				HEADER_SEARCH_PATHS = (
+					"${SRCROOT}/../hltypes/include",
+					"${SRCROOT}/../gtypes/include",
+					"${SRCROOT}/../hltypes/hlxml/include",
+					"${SRCROOT}/include",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = liteser;
+				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -665,50 +612,42 @@
 		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "liteser" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB91AE08733DA50010E9CD /* Debug */,
-				C9160586132AE60400914FFC /* Debug-LLVM */,
-				1DEB91AF08733DA50010E9CD /* Release */,
-				C9160588132AE61000914FFC /* Release-LLVM */,
+				C9160586132AE60400914FFC /* Debug */,
+				C9160588132AE61000914FFC /* Release */,
 				7F7A5615129D436D00E0ED12 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "liteser" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB91B208733DA50010E9CD /* Debug */,
-				C9160585132AE60400914FFC /* Debug-LLVM */,
-				1DEB91B308733DA50010E9CD /* Release */,
-				C9160587132AE61000914FFC /* Release-LLVM */,
+				C9160585132AE60400914FFC /* Debug */,
+				C9160587132AE61000914FFC /* Release */,
 				7F7A5614129D436D00E0ED12 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D147DED717A8343900D6F2CA /* Build configuration list for PBXNativeTarget "liteser (Mac)" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D147DED817A8343900D6F2CA /* Debug */,
-				D147DED917A8343900D6F2CA /* Debug-LLVM */,
-				D147DEDA17A8343900D6F2CA /* Release */,
-				D147DEDB17A8343900D6F2CA /* Release-LLVM */,
-				D147DEDC17A8343900D6F2CA /* App Store */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		D1522F2B140F79500012F290 /* Build configuration list for PBXNativeTarget "liteser (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D1522F26140F79500012F290 /* Debug */,
-				D1522F27140F79500012F290 /* Debug-LLVM */,
-				D1522F28140F79500012F290 /* Release */,
-				D1522F29140F79500012F290 /* Release-LLVM */,
+				D1522F27140F79500012F290 /* Debug */,
+				D1522F29140F79500012F290 /* Release */,
 				D1522F2A140F79500012F290 /* App Store */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
+		};
+		D1E1AD851961654600001F36 /* Build configuration list for PBXNativeTarget "liteser (Mac)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1E1AD861961654600001F36 /* Debug */,
+				D1E1AD871961654600001F36 /* Release */,
+				D1E1AD881961654600001F36 /* App Store */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
