@@ -80,7 +80,7 @@ class Lsx:
 		elif loadType == Type.HMAP:
 			Lsx.__loadContainer(node, variable, loadType)
 		else:
-			print ("ERROR: Load type not recognized!")
+			print("ERROR: Load type not recognized!")
 
 	@staticmethod
 	def __loadContainer(node, variable, type):

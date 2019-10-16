@@ -73,14 +73,14 @@ class Ls3:
 		elif loadType == Type.HMAP:
 			Ls3.__loadContainer(variable, loadType)
 		else:
-			print ("ERROR: Load type not recognized!")
+			print("ERROR: Load type not recognized!")
 
 	@staticmethod
 	def __loadContainer(variable, type):
 		variable.containerSize = Util.loadUint32()
 		if variable.containerSize > 0:
 			typeSize = Util.loadUint32()
-			for i in xrange(typeSize):
+			for i in range(typeSize):
 				loadType = Ls3._loadType()
 				if loadType == Type.HARRAY or loadType == Type.HMAP:
 					raise Exception("Template container within a template container detected, not supported: %02X" % loadType)
@@ -159,7 +159,7 @@ class Ls3:
 			if Util._allowMultiReferencing:
 				Util._tryMapObject(object)
 			size = Util.loadUint32()
-			for i in xrange(size):
+			for i in range(size):
 				variableName = Ls3._loadString()
 				loadType = Ls3._loadType()
 				variable = Variable(variableName, loadType)
