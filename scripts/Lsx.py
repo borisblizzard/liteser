@@ -80,7 +80,7 @@ class Lsx:
 		elif loadType == Type.HMAP:
 			Lsx.__loadContainer(node, variable, loadType)
 		else:
-			print "ERROR: Load type not recognized!"
+			print ("ERROR: Load type not recognized!")
 
 	@staticmethod
 	def __loadContainer(node, variable, type):
@@ -94,7 +94,7 @@ class Lsx:
 					raise Exception("Template container within a template container detected, not supported: %02X" % loadType)
 				variable.type.subTypes.append(Type(loadType))
 			variable.createSubVariables()
-			for i in xrange(len(variable.subVariables)):
+			for i in range(len(variable.subVariables)):
 				Lsx.__loadVariable(children[i], variable.subVariables[i], variable.subVariables[i].type.value)
 			if len(variable.type.subTypes) > 1: # requires this correction due to HMAP having subcontainers
 				variable.containerSize = variable.subVariables[0].containerSize
@@ -106,7 +106,7 @@ class Lsx:
 	@staticmethod
 	def _loadVersion(node):
 		values = node.getAttribute("value").split(".")
-		for i in xrange(len(values)):
+		for i in range(len(values)):
 			values[i] = int(values[i])
 		return values
 
@@ -117,63 +117,63 @@ class Lsx:
 	@staticmethod
 	def _loadGrectf(node):
 		values = node.getAttribute("value").split(",")
-		for i in xrange(len(values)):
+		for i in range(len(values)):
 			values[i] = float(values[i])
 		return values
 
 	@staticmethod
 	def _loadGvec2f(node):
 		values = node.getAttribute("value").split(",")
-		for i in xrange(len(values)):
+		for i in range(len(values)):
 			values[i] = float(values[i])
 		return values
 
 	@staticmethod
 	def _loadGvec3f(node):
 		values = node.getAttribute("value").split(",")
-		for i in xrange(len(values)):
+		for i in range(len(values)):
 			values[i] = float(values[i])
 		return values
 
 	@staticmethod
 	def _loadGrecti(node):
 		values = node.getAttribute("value").split(",")
-		for i in xrange(len(values)):
+		for i in range(len(values)):
 			values[i] = int(values[i])
 		return values
 
 	@staticmethod
 	def _loadGvec2i(node):
 		values = node.getAttribute("value").split(",")
-		for i in xrange(len(values)):
+		for i in range(len(values)):
 			values[i] = int(values[i])
 		return values
 
 	@staticmethod
 	def _loadGvec3i(node):
 		values = node.getAttribute("value").split(",")
-		for i in xrange(len(values)):
+		for i in range(len(values)):
 			values[i] = int(values[i])
 		return values
 
 	@staticmethod
 	def _loadGrectd(node):
 		values = node.getAttribute("value").split(",")
-		for i in xrange(len(values)):
+		for i in range(len(values)):
 			values[i] = float(values[i])
 		return values
 
 	@staticmethod
 	def _loadGvec2d(node):
 		values = node.getAttribute("value").split(",")
-		for i in xrange(len(values)):
+		for i in range(len(values)):
 			values[i] = float(values[i])
 		return values
 
 	@staticmethod
 	def _loadGvec3d(node):
 		values = node.getAttribute("value").split(",")
-		for i in xrange(len(values)):
+		for i in range(len(values)):
 			values[i] = float(values[i])
 		return values
 

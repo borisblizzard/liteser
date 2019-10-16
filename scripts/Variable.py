@@ -11,8 +11,8 @@ class Variable:
 		
 	def createSubVariables(self):
 		if self.type.value == Type.HARRAY:
-			for i in xrange(self.containerSize):
+			for i in range(self.containerSize):
 				self.subVariables.append(Variable("", self.type.subTypes[0].value))
 		if self.type.value == Type.HMAP:
-			for i in xrange(2):
+			for i in range(2):
 				self.subVariables.append(Variable("", Type.HARRAY))

@@ -6,16 +6,16 @@ from xml.dom.minidom import parse
 
 class Util:
 	
-	Header0 = struct.unpack("<b", "L")[0]
-	Header1 = struct.unpack("<b", "S")[0]
-	Header2 = struct.unpack("<b", "B")[0]
-	Header3 = struct.unpack("<b", "D")[0]
+	Header0 = struct.unpack(b"<b", b"L")[0]
+	Header1 = struct.unpack(b"<b", b"S")[0]
+	Header2 = struct.unpack(b"<b", b"B")[0]
+	Header3 = struct.unpack(b"<b", b"D")[0]
 	VersionMajor = 3
 	VersionMinor = 1
 	
 	@staticmethod
 	def getFileList(path):
-		print "  checking %s" % path
+		print ("  checking %s" % path)
 		files = []
 		dirs = []
 		for f in os.listdir(path + "/"):
@@ -238,5 +238,5 @@ class Util:
 	@staticmethod
 	def dumpHstr(value):
 		Util.dumpUint32(len(value))
-		Util.stream.write(value)
+		Util.stream.write(value.encode())
 	

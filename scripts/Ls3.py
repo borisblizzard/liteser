@@ -73,7 +73,7 @@ class Ls3:
 		elif loadType == Type.HMAP:
 			Ls3.__loadContainer(variable, loadType)
 		else:
-			print "ERROR: Load type not recognized!"
+			print ("ERROR: Load type not recognized!")
 
 	@staticmethod
 	def __loadContainer(variable, type):
