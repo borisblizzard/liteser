@@ -1,9 +1,12 @@
+/*.db
 /*.lnk
 /*.mk
-/*.ncb
+/*.opendb
 /*.opensdf
 /*.sdf
 /*.suo
 /*.user
+/.vs
 /Generated Files
-/bin
+/bin*
+/Debug
