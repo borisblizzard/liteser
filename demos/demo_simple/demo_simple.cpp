@@ -82,9 +82,9 @@ protected:
 		liteser::Serializable,
 		(hstr) string,
 		(hversion) version,
-		(grect) rect,
-		(gvec2) vec2,
-		(gvec3) vec3,
+		(grectf) rect,
+		(gvec2f) vec2,
+		(gvec3f) vec3,
 		(harray<hstr>) moreStrings
 	);
 
@@ -241,7 +241,7 @@ int main(int argc, char **argv)
 	Type1 type1(arg1, arg2, arg3);
 	Type1* loaded = NULL;
 	// binary test
-	file.open(TEST_FILENAME, hfile::WRITE);
+	file.open(TEST_FILENAME, hfile::AccessMode::Write);
 	liteser::serialize(&file, &type1);
 	file.close();
 	file.open(TEST_FILENAME);
@@ -256,7 +256,7 @@ int main(int argc, char **argv)
 	delete loaded;
 	loaded = NULL;
 	// XML test
-	file.open(XML_FILENAME, hfile::WRITE);
+	file.open(XML_FILENAME, hfile::AccessMode::Write);
 	liteser::xml::serialize(&file, &type1);
 	file.close();
 	file.open(XML_FILENAME);
