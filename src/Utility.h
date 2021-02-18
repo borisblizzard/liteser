@@ -33,8 +33,8 @@ namespace liteser
 	extern Header _currentHeader;
 	extern harray<Serializable*> objects;
 	extern harray<hstr> strings;
-	extern hmap<Serializable*, unsigned int> objectIds;
-	extern hmap<hstr, unsigned int> stringIds;
+	extern hmap<Serializable*, int> objectIds;
+	extern hmap<hstr, int> stringIds;
 	extern hstr _indent;
 
 	void _checkVersion();

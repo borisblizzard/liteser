@@ -29,7 +29,7 @@
 	liteser::Factory::Register<classe> classe::_lsRegister(#classe);
 /// @brief Use this instead of LS_CLASS_DECLARE if class contains pure virtual methods. In this case LS_CLASS_DEFINE is not needed.
 #define LS_CLASS_DECLARE_ABSTRACT(classe) \
-	inline hstr _lsName() const { return #classe; }
+	inline hstr _lsName() const override { return #classe; }
 
 #define LS_CLASS_DECLARE_CLONEABLE(classe) \
 	LS_CLASS_DECLARE(classe); \
@@ -40,7 +40,7 @@
 
 #define LS_VARS(superclass, ...) \
 	__LS_FOREACH(__LS_VAR, (__VA_ARGS__)) \
-	inline harray<liteser::Variable*> _lsVars() \
+	inline harray<liteser::Variable*> _lsVars() override \
 	{ \
 		harray<liteser::Variable*> variables = superclass::_lsVars(); \
 		__LS_FOREACH(__LS_REF, (__VA_ARGS__)) \
@@ -50,7 +50,7 @@
 	__LS_FOREACH(__LS_VAR, (__VA_ARGS__)) \
 	harray<liteser::Variable*> _lsVars();
 #define LS_VARS_DEFINE(classe, superclass, ...) \
-	harray<liteser::Variable*> classe::_lsVars() \
+	harray<liteser::Variable*> classe::_lsVars() override \
 	{ \
 		harray<liteser::Variable*> variables = superclass::_lsVars(); \
 		__LS_FOREACH(__LS_REF, (__VA_ARGS__)) \

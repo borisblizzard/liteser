@@ -25,8 +25,8 @@ namespace liteser
 	// this hybrid implementation for indexing gave the best results in benchmarking with larger files
 	harray<Serializable*> objects;
 	harray<hstr> strings;
-	hmap<Serializable*, unsigned int> objectIds;
-	hmap<hstr, unsigned int> stringIds;
+	hmap<Serializable*, int> objectIds;
+	hmap<hstr, int> stringIds;
 	hstr _indent = "\t";
 
 	void _checkVersion()
