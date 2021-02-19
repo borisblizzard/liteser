@@ -33,7 +33,7 @@
 
 #define LS_CLASS_DECLARE_CLONEABLE(classe) \
 	LS_CLASS_DECLARE(classe); \
-	virtual classe* clone();
+	classe* clone() override;
 #define LS_CLASS_DEFINE_CLONEABLE(classe, superclass) \
 	LS_CLASS_DEFINE(classe); \
 	classe* classe::clone() { return (classe*)superclass::clone(); }
@@ -48,9 +48,9 @@
 	}
 #define LS_VARS_DECLARE(...) \
 	__LS_FOREACH(__LS_VAR, (__VA_ARGS__)) \
-	harray<liteser::Variable*> _lsVars();
+	harray<liteser::Variable*> _lsVars() override;
 #define LS_VARS_DEFINE(classe, superclass, ...) \
-	harray<liteser::Variable*> classe::_lsVars() override \
+	harray<liteser::Variable*> classe::_lsVars() \
 	{ \
 		harray<liteser::Variable*> variables = superclass::_lsVars(); \
 		__LS_FOREACH(__LS_REF, (__VA_ARGS__)) \
