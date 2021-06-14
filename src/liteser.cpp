@@ -30,9 +30,6 @@
 #include "Utility.h"
 #include "Variable.h"
 
-#define LS3_EXTENSION ".ls3"
-#define LSX_EXTENSION ".lsx"
-
 #define XML_HEADER "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
 #define LITESER_XML_ROOT_BEGIN hsprintf("<Liteser version=\"%s\">\n", version.toString(2).cStr())
 #define LITESER_XML_ROOT_END "\n</Liteser>"
@@ -373,13 +370,13 @@ namespace liteser
 
 	bool loadObjectFromFile(chstr path, liteser::Serializable** object, bool warn)
 	{
-		hstr pathLsb = path + LS3_EXTENSION;
+		hstr pathLs3 = path + LS3_EXTENSION;
 		hstr pathLsx = path + LSX_EXTENSION;
 		hfile stream;
-		if (hfile::exists(pathLsb))
+		if (hfile::exists(pathLs3))
 		{
-			hlog::write(logTag, "Loading: " + pathLsb);
-			stream.open(pathLsb);
+			hlog::write(logTag, "Loading: " + pathLs3);
+			stream.open(pathLs3);
 			deserialize(&stream, object);
 			return true;
 		}
@@ -399,13 +396,13 @@ namespace liteser
 
 	bool loadObjectFromResource(chstr path, liteser::Serializable** object, bool warn)
 	{
-		hstr pathLsb = path + LS3_EXTENSION;
+		hstr pathLs3 = path + LS3_EXTENSION;
 		hstr pathLsx = path + LSX_EXTENSION;
 		hresource stream;
-		if (hresource::exists(pathLsb))
+		if (hresource::exists(pathLs3))
 		{
-			hlog::write(logTag, "Loading: " + pathLsb);
-			stream.open(pathLsb);
+			hlog::write(logTag, "Loading: " + pathLs3);
+			stream.open(pathLs3);
 			deserialize(&stream, object);
 			return true;
 		}
@@ -425,13 +422,13 @@ namespace liteser
 
 	bool loadArrayFromFile(chstr path, harray<liteser::Serializable*>* dataArray, bool warn)
 	{
-		hstr pathLsb = path + LS3_EXTENSION;
+		hstr pathLs3 = path + LS3_EXTENSION;
 		hstr pathLsx = path + LSX_EXTENSION;
 		hfile stream;
-		if (hfile::exists(pathLsb))
+		if (hfile::exists(pathLs3))
 		{
-			hlog::write(logTag, "Loading: " + pathLsb);
-			stream.open(pathLsb);
+			hlog::write(logTag, "Loading: " + pathLs3);
+			stream.open(pathLs3);
 			deserialize(&stream, dataArray);
 			return true;
 		}
@@ -451,13 +448,13 @@ namespace liteser
 
 	bool loadArrayFromResource(chstr path, harray<liteser::Serializable*>* dataArray, bool warn)
 	{
-		hstr pathLsb = path + LS3_EXTENSION;
+		hstr pathLs3 = path + LS3_EXTENSION;
 		hstr pathLsx = path + LSX_EXTENSION;
 		hresource stream;
-		if (hresource::exists(pathLsb))
+		if (hresource::exists(pathLs3))
 		{
-			hlog::write(logTag, "Loading: " + pathLsb);
-			stream.open(pathLsb);
+			hlog::write(logTag, "Loading: " + pathLs3);
+			stream.open(pathLs3);
 			deserialize(&stream, dataArray);
 			return true;
 		}
