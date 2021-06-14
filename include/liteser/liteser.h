@@ -30,8 +30,8 @@
 #include "macros.h"
 #include "Serializable.h"
 
-#define LS3_EXTENSION ".ls3"
-#define LSX_EXTENSION ".lsx"
+#define LITESER_LS3_EXTENSION ".ls3"
+#define LITESER_LSX_EXTENSION ".lsx"
 
 namespace liteser
 {

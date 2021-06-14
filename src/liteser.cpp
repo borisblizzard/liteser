@@ -370,8 +370,8 @@ namespace liteser
 
 	bool loadObjectFromFile(chstr path, liteser::Serializable** object, bool warn)
 	{
-		hstr pathLs3 = path + LS3_EXTENSION;
-		hstr pathLsx = path + LSX_EXTENSION;
+		hstr pathLs3 = path + LITESER_LS3_EXTENSION;
+		hstr pathLsx = path + LITESER_LSX_EXTENSION;
 		hfile stream;
 		if (hfile::exists(pathLs3))
 		{
@@ -396,8 +396,8 @@ namespace liteser
 
 	bool loadObjectFromResource(chstr path, liteser::Serializable** object, bool warn)
 	{
-		hstr pathLs3 = path + LS3_EXTENSION;
-		hstr pathLsx = path + LSX_EXTENSION;
+		hstr pathLs3 = path + LITESER_LS3_EXTENSION;
+		hstr pathLsx = path + LITESER_LSX_EXTENSION;
 		hresource stream;
 		if (hresource::exists(pathLs3))
 		{
@@ -422,8 +422,8 @@ namespace liteser
 
 	bool loadArrayFromFile(chstr path, harray<liteser::Serializable*>* dataArray, bool warn)
 	{
-		hstr pathLs3 = path + LS3_EXTENSION;
-		hstr pathLsx = path + LSX_EXTENSION;
+		hstr pathLs3 = path + LITESER_LS3_EXTENSION;
+		hstr pathLsx = path + LITESER_LSX_EXTENSION;
 		hfile stream;
 		if (hfile::exists(pathLs3))
 		{
@@ -448,8 +448,8 @@ namespace liteser
 
 	bool loadArrayFromResource(chstr path, harray<liteser::Serializable*>* dataArray, bool warn)
 	{
-		hstr pathLs3 = path + LS3_EXTENSION;
-		hstr pathLsx = path + LSX_EXTENSION;
+		hstr pathLs3 = path + LITESER_LS3_EXTENSION;
+		hstr pathLsx = path + LITESER_LSX_EXTENSION;
 		hresource stream;
 		if (hresource::exists(pathLs3))
 		{
@@ -482,11 +482,11 @@ namespace liteser
 			harray<hstr> filesLsx;
 			foreach (hstr, it, files)
 			{
-				if ((*it).endsWith(LS3_EXTENSION))
+				if ((*it).endsWith(LITESER_LS3_EXTENSION))
 				{
 					filesLs3 += hfile::withoutExtension(*it);
 				}
-				else if ((*it).endsWith(LSX_EXTENSION))
+				else if ((*it).endsWith(LITESER_LSX_EXTENSION))
 				{
 					filesLsx += hfile::withoutExtension(*it);
 				}
@@ -519,11 +519,11 @@ namespace liteser
 			harray<hstr> filesLsx;
 			foreach (hstr, it, files)
 			{
-				if ((*it).endsWith(LS3_EXTENSION))
+				if ((*it).endsWith(LITESER_LS3_EXTENSION))
 				{
 					filesLs3 += hresource::withoutExtension(*it);
 				}
-				else if ((*it).endsWith(LSX_EXTENSION))
+				else if ((*it).endsWith(LITESER_LSX_EXTENSION))
 				{
 					filesLsx += hresource::withoutExtension(*it);
 				}
