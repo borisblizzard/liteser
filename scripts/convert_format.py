@@ -1,5 +1,3 @@
-# Cateia Games Upsell Screen Graphics Assembler
-
 import os
 import shutil
 import sys
