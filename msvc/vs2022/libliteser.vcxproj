@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugS|Win32">
+      <Configuration>DebugS</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseS|Win32">
+      <Configuration>ReleaseS</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugS|x64">
+      <Configuration>DebugS</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseS|x64">
+      <Configuration>ReleaseS</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{572A78A4-8516-407F-9DC3-2E3493663168}</ProjectGuid>
+    <RootNamespace>liteser</RootNamespace>
+  </PropertyGroup>
+  <Import Project="..\..\..\hltypes\msvc\vs2022\props-generic\system.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="props\default.props" />
+  <Import Project="..\..\..\hltypes\msvc\vs2022\props-generic\platform-$(Platform).props" />
+  <Import Project="..\..\..\hltypes\msvc\vs2022\props-generic\configurations.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="..\..\..\hltypes\msvc\vs2022\props-generic\build-defaults.props" />
+  <Import Project="props\configuration.props" />
+  <ItemGroup>
+    <ClInclude Include="..\..\include\liteser\Factory.h" />
+    <ClInclude Include="..\..\include\liteser\Header.h" />
+    <ClInclude Include="..\..\include\liteser\liteser.h" />
+    <ClInclude Include="..\..\include\liteser\liteserExport.h" />
+    <ClInclude Include="..\..\include\liteser\macros.h" />
+    <ClInclude Include="..\..\include\liteser\Ptr.h" />
+    <ClInclude Include="..\..\include\liteser\Serializable.h" />
+    <ClInclude Include="..\..\include\liteser\templates.h" />
+    <ClInclude Include="..\..\include\liteser\Type.h" />
+    <ClInclude Include="..\..\include\liteser\Variable.h" />
+    <ClInclude Include="..\..\src\Deserialize.h" />
+    <ClInclude Include="..\..\src\DeserializeXml.h" />
+    <ClInclude Include="..\..\src\Serialize.h" />
+    <ClInclude Include="..\..\src\SerializeXml.h" />
+    <ClInclude Include="..\..\src\Utility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\Deserialize.cpp" />
+    <ClCompile Include="..\..\src\DeserializeXml.cpp" />
+    <ClCompile Include="..\..\src\Factory.cpp" />
+    <ClCompile Include="..\..\src\Header.cpp" />
+    <ClCompile Include="..\..\src\liteser.cpp" />
+    <ClCompile Include="..\..\src\Serializable.cpp" />
+    <ClCompile Include="..\..\src\Serialize.cpp" />
+    <ClCompile Include="..\..\src\SerializeXml.cpp" />
+    <ClCompile Include="..\..\src\Type.cpp" />
+    <ClCompile Include="..\..\src\Utility.cpp" />
+    <ClCompile Include="..\..\src\Variable.cpp">
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\fileproperties.rc">
+      <ExcludedFromBuild Condition="'$(ConfigurationType)'=='StaticLibrary'">true</ExcludedFromBuild>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\gtypes\msvc\vs2022\libgtypes.vcxproj">
+      <Project>{9c043b29-db40-48d5-97d8-1bc44128e3ba}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\hltypes\hlxml\msvc\vs2022\libhlxml.vcxproj">
+      <Project>{601bcb9e-aaf2-412e-8aeb-9fc77d0505d8}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\hltypes\msvc\vs2022\libhltypes.vcxproj">
+      <Project>{e4d373bf-e227-48b9-99e6-84987e8674ec}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>
