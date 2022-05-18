@@ -318,6 +318,7 @@ namespace liteser
 			{
 				__tryMapObject(&id, *value);
 			}
+			(*value)->_lsOnDeserializing();
 			harray<Variable*> variables = (*value)->_lsVars();
 			harray<hstr> missingVariableNames;
 			unsigned int size = stream->loadUint32();
@@ -386,6 +387,7 @@ namespace liteser
 				}
 				hlog::warn(logTag, className + " - Not all variables were previously saved: " + names.joined(',').cStr());
 			}
+			(*value)->_lsOnDeserialized();
 		}
 		else if (id == 0)
 		{

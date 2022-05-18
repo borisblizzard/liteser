@@ -236,6 +236,7 @@ namespace liteser
 			unsigned int id = 0;
 			if (!_currentHeader.allowMultiReferencing || __tryMapObject(&id, value))
 			{
+				value->_lsOnSerializing();
 				hstr name = value->_lsName();
 				harray<Variable*> variables = value->_lsVars();
 				int variablesSize = variables.size();
@@ -266,6 +267,7 @@ namespace liteser
 				{
 					WRITE_NODE(hsprintf("Object name=\"%s\"", name.cStr()));
 				}
+				value->_lsOnSerialized();
 			}
 			else
 			{

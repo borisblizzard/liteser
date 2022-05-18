@@ -182,6 +182,7 @@ namespace liteser
 			{
 				stream->dump(id);
 			}
+			value->_lsOnSerializing();
 			hstr name = value->_lsName();
 			_dump(&name);
 			harray<Variable*> variables = value->_lsVars();
@@ -193,6 +194,7 @@ namespace liteser
 				__dumpVariable(*it);
 				delete (*it);
 			}
+			value->_lsOnSerialized();
 		}
 		else
 		{
