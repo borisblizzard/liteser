@@ -77,7 +77,7 @@ namespace liteser
 		virtual inline void _lsOnSerialized() { }
 		virtual inline void _lsOnDeserializing() { }
 		virtual inline void _lsOnDeserialized() { }
-#
+
 	protected:
 		virtual Serializable* clone();
 
