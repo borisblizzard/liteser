@@ -27,7 +27,13 @@ namespace liteser
 		Serializable* (*constructor)() = __lsConstructors->tryGet(name, NULL);
 		if (constructor == NULL)
 		{
-			throw Exception("Detected class not registered as a Serializable: '" + name + "'");
+			hstr error = "Detected class not registered as a Serializable: '" + name + "'";
+			harray<hstr> names = __lsConstructors->keys();
+			if (names.size() > 0)
+			{
+				error += "\nCurrently registered classes:\n- " + names.joined("\n- ");
+			}
+			throw Exception(error);
 		}
 		return (*constructor)();
 	}
