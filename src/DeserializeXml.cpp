@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.1
+/// @version 3.2
 /// 
 /// @section LICENSE
 /// 
@@ -294,9 +294,19 @@ namespace liteser
 
 		void __loadObject(hlxml::Node* node, Serializable** value)
 		{
-			if (node->name != "Object")
+			if (node->name != "Object" && node->name != "Null")
 			{
+				if (node->children.size() == 0)
+				{
+					*value = NULL;
+					return;
+				}
 				node = node->children.first();
+			}
+			if (node->name == "Null")
+			{
+				*value = NULL;
+				return;
 			}
 			unsigned int id = 0;
 			bool idExists = node->pexists(OBJECT_ID);

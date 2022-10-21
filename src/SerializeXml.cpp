@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.1
+/// @version 3.2
 /// 
 /// @section LICENSE
 /// 
@@ -41,8 +41,9 @@ namespace liteser
 {
 	namespace xml
 	{
-		inline void __dumpVariableStart(Variable* variable)
+		inline bool __dumpVariableStart(Variable* variable)
 		{
+			bool result = true;
 			if (variable->type->identifier == Type::Identifier::Harray || variable->type->identifier == Type::Identifier::Hmap)
 			{
 				harray<hstr> types;
@@ -59,14 +60,27 @@ namespace liteser
 					WRITE_NODE(hsprintf("Variable name=\"%s\" type=\"%02X\" sub_types=\"%s\"", variable->name.cStr(), variable->type->identifier.value, types.joined(',').cStr()));
 				}
 			}
-			else if (variable->type->identifier == Type::Identifier::ValueObject || variable->type->identifier == Type::Identifier::Object)
+			else if (variable->type->identifier == Type::Identifier::ValueObject)
 			{
 				OPEN_NODE(hsprintf("Variable name=\"%s\" type=\"%02X\"", variable->name.cStr(), variable->type->identifier.value));
+			}
+			else if (variable->type->identifier == Type::Identifier::Object)
+			{
+				if (*variable->value<Serializable*>() != NULL)
+				{
+					OPEN_NODE(hsprintf("Variable name=\"%s\" type=\"%02X\"", variable->name.cStr(), variable->type->identifier.value));
+				}
+				else
+				{
+					WRITE_NODE(hsprintf("Variable name=\"%s\" type=\"%02X\"", variable->name.cStr(), variable->type->identifier.value));
+					result = false;
+				}
 			}
 			else
 			{
 				START_LINE(hsprintf("Variable name=\"%s\" type=\"%02X\" value=\"", variable->name.cStr(), variable->type->identifier.value));
 			}
+			return result;
 		}
 
 		inline void __dumpVariableFinish(Variable* variable)
@@ -78,9 +92,16 @@ namespace liteser
 					CLOSE_NODE("Variable");
 				}
 			}
-			else if (variable->type->identifier == Type::Identifier::ValueObject || variable->type->identifier == Type::Identifier::Object)
+			else if (variable->type->identifier == Type::Identifier::ValueObject)
 			{
 				CLOSE_NODE("Variable");
+			}
+			else if (variable->type->identifier == Type::Identifier::Object)
+			{
+				if (*variable->value<Serializable*>() != NULL)
+				{
+					CLOSE_NODE("Variable");
+				}
 			}
 			else
 			{
@@ -234,6 +255,11 @@ namespace liteser
 		void _dump(Serializable* value)
 		{
 			unsigned int id = 0;
+			if (value == NULL)
+			{
+				WRITE_NODE("Null");
+				return;
+			}
 			if (!_currentHeader.allowMultiReferencing || __tryMapObject(&id, value))
 			{
 				value->_lsOnSerializing();
@@ -252,9 +278,11 @@ namespace liteser
 					}
 					foreach (Variable*, it, variables)
 					{
-						__dumpVariableStart(*it);
-						__dumpVariable(*it);
-						__dumpVariableFinish(*it);
+						if (__dumpVariableStart(*it))
+						{
+							__dumpVariable(*it);
+							__dumpVariableFinish(*it);
+						}
 						delete (*it);
 					}
 					CLOSE_NODE("Object");

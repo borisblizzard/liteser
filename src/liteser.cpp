@@ -1,5 +1,5 @@
 /// @file
-/// @version 3.1
+/// @version 3.2
 /// 
 /// @section LICENSE
 /// 
@@ -168,7 +168,7 @@
 namespace liteser
 {
 	hstr logTag = "liteser";
-	hversion version(3, 1);
+	hversion version(3, 2);
 
 	bool serialize(hsbase* stream, Serializable* object, bool allowMultiReferencing, bool stringPooling)
 	{
