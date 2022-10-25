@@ -179,8 +179,13 @@ class Lsx:
 
 	@staticmethod
 	def _loadObject(node):
-		if node.tagName != "Object":
-			node = Util._getChildNodes(node)[0]
+		if node.tagName != "Object" and node.tagName != "Null":
+			children = Util._getChildNodes(node)
+			if len(children) == 0:
+				return None
+			node = children[0]
+		if node.tagName == "Null":
+			return None
 		id = 0
 		idExists = node.hasAttribute("id")
 		if idExists:
@@ -218,6 +223,7 @@ class Lsx:
 
 	@staticmethod
 	def __dumpVariableStart(variable):
+		result = True
 		if variable.type.value == Type.HARRAY or variable.type.value == Type.HMAP:
 			types = []
 			for type in variable.type.subTypes:
@@ -226,10 +232,17 @@ class Lsx:
 				Util._openNode("Variable name=\"%s\" type=\"%02X\" sub_types=\"%s\"" % (variable.name, variable.type.value, ",".join(types)))
 			else:
 				Util._writeNode("Variable name=\"%s\" type=\"%02X\" sub_types=\"%s\"" % (variable.name, variable.type.value, ",".join(types)))
-		elif variable.type.value == Type.OBJECT or variable.type.value == Type.OBJPTR:
+		elif variable.type.value == Type.OBJECT:
 			Util._openNode("Variable name=\"%s\" type=\"%02X\"" % (variable.name, variable.type.value))
+		elif variable.type.value == Type.OBJPTR:
+			if variable.value != None:
+				Util._openNode("Variable name=\"%s\" type=\"%02X\"" % (variable.name, variable.type.value))
+			else:
+				Util._writeNode("Variable name=\"%s\" type=\"%02X\"" % (variable.name, variable.type.value))
+				result = False
 		else:
 			Util._startLine("Variable name=\"%s\" type=\"%02X\" value=\"" % (variable.name, variable.type.value))
+		return result
 
 	@staticmethod
 	def __dumpVariableFinish(variable):
@@ -418,9 +431,9 @@ class Lsx:
 				else:
 					Util._openNode("Object name=\"%s\"" % value.className)
 				for variable in value.variables:
-					Lsx.__dumpVariableStart(variable)
-					Lsx.__dumpVariable(variable)
-					Lsx.__dumpVariableFinish(variable)
+					if Lsx.__dumpVariableStart(variable):
+						Lsx.__dumpVariable(variable)
+						Lsx.__dumpVariableFinish(variable)
 				Util._closeNode("Object");
 			elif Util._allowMultiReferencing:
 				Util._writeNode("Object name=\"%s\" id=\"%d\"" % (value.className, id))

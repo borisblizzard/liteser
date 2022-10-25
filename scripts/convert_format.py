@@ -5,7 +5,7 @@ import sys
 from Model import *
 from Util import *
 
-VERSION = "3.1"
+VERSION = "3.2"
 
 def process():
 	print("")
