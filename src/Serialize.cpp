@@ -26,7 +26,7 @@
 
 namespace liteser
 {
-	void _dumpType(Type::Identifier identifier)
+	void _dumpType(const Type::Identifier& identifier)
 	{
 		stream->dump((unsigned char)identifier.value);
 	}
@@ -79,7 +79,7 @@ namespace liteser
 		}
 	}
 
-	void _dump(hstr* value)
+	void _dump(const hstr* value)
 	{
 		unsigned int id = 0;
 		if (!_currentHeader.stringPooling)
@@ -97,7 +97,7 @@ namespace liteser
 		}
 	}
 
-	void _dump(hversion* value)
+	void _dump(const hversion* value)
 	{
 		stream->dump(value->major);
 		stream->dump(value->minor);
@@ -105,12 +105,12 @@ namespace liteser
 		stream->dump(value->build);
 	}
 
-	void _dump(henum* value)
+	void _dump(const henum* value)
 	{
 		stream->dump(value->value);
 	}
 
-	void _dump(grectf* value)
+	void _dump(const grectf* value)
 	{
 		stream->dump(value->x);
 		stream->dump(value->y);
@@ -118,20 +118,20 @@ namespace liteser
 		stream->dump(value->h);
 	}
 
-	void _dump(gvec2f* value)
+	void _dump(const gvec2f* value)
 	{
 		stream->dump(value->x);
 		stream->dump(value->y);
 	}
 
-	void _dump(gvec3f* value)
+	void _dump(const gvec3f* value)
 	{
 		stream->dump(value->x);
 		stream->dump(value->y);
 		stream->dump(value->z);
 	}
 
-	void _dump(grecti* value)
+	void _dump(const grecti* value)
 	{
 		stream->dump(value->x);
 		stream->dump(value->y);
@@ -139,20 +139,20 @@ namespace liteser
 		stream->dump(value->h);
 	}
 
-	void _dump(gvec2i* value)
+	void _dump(const gvec2i* value)
 	{
 		stream->dump(value->x);
 		stream->dump(value->y);
 	}
 
-	void _dump(gvec3i* value)
+	void _dump(const gvec3i* value)
 	{
 		stream->dump(value->x);
 		stream->dump(value->y);
 		stream->dump(value->z);
 	}
 
-	void _dump(grectd* value)
+	void _dump(const grectd* value)
 	{
 		stream->dump(value->x);
 		stream->dump(value->y);
@@ -160,13 +160,13 @@ namespace liteser
 		stream->dump(value->h);
 	}
 
-	void _dump(gvec2d* value)
+	void _dump(const gvec2d* value)
 	{
 		stream->dump(value->x);
 		stream->dump(value->y);
 	}
 
-	void _dump(gvec3d* value)
+	void _dump(const gvec3d* value)
 	{
 		stream->dump(value->x);
 		stream->dump(value->y);
@@ -207,7 +207,7 @@ namespace liteser
 		_dump(*value);
 	}
 
-	void _dumpHarray(harray<Serializable*>* value)
+	void _dumpHarray(const harray<Serializable*>* value)
 	{
 		_dumpType(Type::Identifier::Harray);
 		int size = value->size();
@@ -216,7 +216,7 @@ namespace liteser
 		{
 			stream->dump(1u);
 			_dumpType(Type::Identifier::Object);
-			foreach (Serializable*, it, *value)
+			foreachc (Serializable*, it, *value)
 			{
 				_dump(*it);
 			}
@@ -224,7 +224,7 @@ namespace liteser
 	}
 
 #define DEFINE_DUMP_HARRAY(type) \
-	void _dumpHarray(harray<type>* value) \
+	void _dumpHarray(const harray<type>* value) \
 	{ \
 		_dumpType(Type::Identifier::Harray); \
 		int size = value->size(); \
@@ -235,7 +235,7 @@ namespace liteser
 			Type dumpType; \
 			dumpType.assign((VPtr<type>*)NULL); \
 			_dumpType(dumpType.identifier); \
-			foreach (type, it, *value) \
+			foreachc (type, it, *value) \
 			{ \
 				stream->dump(*it); \
 			} \
@@ -243,7 +243,7 @@ namespace liteser
 	}
 
 #define DEFINE_DUMP_HARRAY_C(type) \
-	void _dumpHarray(harray<type>* value) \
+	void _dumpHarray(const harray<type>* value) \
 	{ \
 		_dumpType(Type::Identifier::Harray); \
 		int size = value->size(); \
@@ -255,7 +255,7 @@ namespace liteser
 			dumpType.assign((VPtr<type>*)NULL); \
 			_dumpType(dumpType.identifier); \
 			stream->dump((unsigned int)value->size()); \
-			foreach (type, it, *value) \
+			foreachc (type, it, *value) \
 			{ \
 				_dump(&(*it)); \
 			} \

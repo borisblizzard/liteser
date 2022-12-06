@@ -192,62 +192,62 @@ namespace liteser
 			}
 		}
 
-		void _dump(hstr* value)
+		void _dump(const hstr* value)
 		{
 			stream->write(*value);
 		}
 
-		void _dump(hversion* value)
+		void _dump(const hversion* value)
 		{
 			stream->write(value->toString(4));
 		}
 
-		void _dump(henum* value)
+		void _dump(const henum* value)
 		{
 			stream->write(value->value);
 		}
 
-		void _dump(grectf* value)
+		void _dump(const grectf* value)
 		{
 			stream->write(hsprintf("%g,%g,%g,%g", value->x, value->y, value->w, value->h));
 		}
 
-		void _dump(gvec2f* value)
+		void _dump(const gvec2f* value)
 		{
 			stream->write(hsprintf("%g,%g", value->x, value->y));
 		}
 
-		void _dump(gvec3f* value)
+		void _dump(const gvec3f* value)
 		{
 			stream->write(hsprintf("%g,%g,%g", value->x, value->y, value->z));
 		}
 
-		void _dump(grecti* value)
+		void _dump(const grecti* value)
 		{
 			stream->write(hsprintf("%d,%d,%d,%d", value->x, value->y, value->w, value->h));
 		}
 
-		void _dump(gvec2i* value)
+		void _dump(const gvec2i* value)
 		{
 			stream->write(hsprintf("%d,%d", value->x, value->y));
 		}
 
-		void _dump(gvec3i* value)
+		void _dump(const gvec3i* value)
 		{
 			stream->write(hsprintf("%d,%d,%d", value->x, value->y, value->z));
 		}
 
-		void _dump(grectd* value)
+		void _dump(const grectd* value)
 		{
 			stream->write(hsprintf("%g,%g,%g,%g", value->x, value->y, value->w, value->h));
 		}
 
-		void _dump(gvec2d* value)
+		void _dump(const gvec2d* value)
 		{
 			stream->write(hsprintf("%g,%g", value->x, value->y));
 		}
 
-		void _dump(gvec3d* value)
+		void _dump(const gvec3d* value)
 		{
 			stream->write(hsprintf("%g,%g,%g", value->x, value->y, value->z));
 		}
@@ -308,17 +308,17 @@ namespace liteser
 			_dump(*value);
 		}
 
-		void _dumpHarray(harray<Serializable*>* value)
+		void _dumpHarray(const harray<Serializable*>* value)
 		{
-			foreach (Serializable*, it, *value)
+			foreachc (Serializable*, it, *value)
 			{
 				_dump(*it);
 			}
 		}
 
-		void _dumpHarray(harray<char>* value)
+		void _dumpHarray(const harray<char>* value)
 		{
-			foreach (char, it, *value)
+			foreachc (char, it, *value)
 			{
 				START_LINE("Element value=\"");
 				stream->write((int)(*it));
@@ -327,9 +327,9 @@ namespace liteser
 		}
 
 #define DEFINE_DUMP_HARRAY(type) \
-		void _dumpHarray(harray<type>* value) \
+		void _dumpHarray(const harray<type>* value) \
 		{ \
-			foreach (type, it, *value) \
+			foreachc (type, it, *value) \
 			{ \
 				START_LINE("Element value=\""); \
 				stream->write(*it); \
@@ -338,9 +338,9 @@ namespace liteser
 		}
 
 #define DEFINE_DUMP_HARRAY_C(type) \
-		void _dumpHarray(harray<type>* value) \
+		void _dumpHarray(const harray<type>* value) \
 		{ \
-			foreach (type, it, *value) \
+			foreachc (type, it, *value) \
 			{ \
 				START_LINE("Element value=\""); \
 				_dump(&(*it)); \
