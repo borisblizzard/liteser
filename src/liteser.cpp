@@ -169,14 +169,14 @@
 	bool loadArrayFromFile(chstr path, harray<type>* dataArray, bool warn) \
 	{ \
 		hfile stream; \
-		return _loadArrayFrom<type>(&stream, path, dataArray, warn); \
+		return _loadArrayFrom<type>(&stream, &hfile::exists, path, dataArray, warn); \
 	}
 
 #define DEFINE_LOAD_HARRAY_FROM_RESOURCE(type) \
 	bool loadArrayFromResource(chstr path, harray<type>* dataArray, bool warn) \
 	{ \
 		hresource stream; \
-		return _loadArrayFrom<type>(&stream, path, dataArray, warn); \
+		return _loadArrayFrom<type>(&stream, &hresource::exists, path, dataArray, warn); \
 	}
 
 namespace liteser
@@ -383,18 +383,18 @@ namespace liteser
 	}
 
 	template <typename T>
-	inline bool _loadArrayFrom(hfbase* stream, chstr path, harray<T>* dataArray, bool warn)
+	inline bool _loadArrayFrom(hfbase* stream, bool (*fileExists)(chstr, bool), chstr path, harray<T>* dataArray, bool warn)
 	{
 		hstr pathLs3 = path + LITESER_LS3_EXTENSION;
 		hstr pathLsx = path + LITESER_LSX_EXTENSION;
-		if (hfile::exists(pathLs3))
+		if (fileExists(pathLs3, true))
 		{
 			hlog::write(logTag, "Loading: " + pathLs3);
 			stream->open(pathLs3);
 			deserialize(stream, dataArray);
 			return true;
 		}
-		if (hfile::exists(pathLsx))
+		if (fileExists(pathLsx, true))
 		{
 			hlog::write(logTag, "Loading: " + pathLsx);
 			stream->open(pathLsx);
@@ -456,18 +456,18 @@ namespace liteser
 	DEFINE_LOAD_HARRAY_FROM_RESOURCE(gvec2d);
 	DEFINE_LOAD_HARRAY_FROM_RESOURCE(gvec3d);
 
-	inline bool _loadObjectFrom(hfbase* stream, chstr path, liteser::Serializable** object, bool warn)
+	inline bool _loadObjectFrom(hfbase* stream, bool (*fileExists)(chstr, bool), chstr path, liteser::Serializable** object, bool warn)
 	{
 		hstr pathLs3 = path + LITESER_LS3_EXTENSION;
 		hstr pathLsx = path + LITESER_LSX_EXTENSION;
-		if (hfile::exists(pathLs3))
+		if (fileExists(pathLs3, true))
 		{
 			hlog::write(logTag, "Loading: " + pathLs3);
 			stream->open(pathLs3);
 			deserialize(stream, object);
 			return true;
 		}
-		if (hfile::exists(pathLsx))
+		if (fileExists(pathLsx, true))
 		{
 			hlog::write(logTag, "Loading: " + pathLsx);
 			stream->open(pathLsx);
@@ -484,13 +484,13 @@ namespace liteser
 	bool loadObjectFromFile(chstr path, liteser::Serializable** object, bool warn)
 	{
 		hfile stream;
-		return _loadObjectFrom(&stream, path, object, warn);
+		return _loadObjectFrom(&stream, &hfile::exists, path, object, warn);
 	}
 
 	bool loadObjectFromResource(chstr path, liteser::Serializable** object, bool warn)
 	{
 		hresource stream;
-		return _loadObjectFrom(&stream, path, object, warn);
+		return _loadObjectFrom(&stream, &hresource::exists, path, object, warn);
 	}
 
 	inline bool _loadArrayFromList(const harray<hstr>& files, bool (*loader)(chstr, liteser::Serializable**, bool),
@@ -502,11 +502,11 @@ namespace liteser
 		{
 			if ((*it).endsWith(LITESER_LS3_EXTENSION))
 			{
-				filesLs3 += hfile::withoutExtension(*it);
+				filesLs3 += hfbase::withoutExtension(*it);
 			}
 			else if ((*it).endsWith(LITESER_LSX_EXTENSION))
 			{
-				filesLsx += hfile::withoutExtension(*it);
+				filesLsx += hfbase::withoutExtension(*it);
 			}
 		}
 		filesLsx /= filesLs3;
@@ -515,7 +515,7 @@ namespace liteser
 		foreach (hstr, it, filenames)
 		{
 			object = NULL;
-			loader(hdir::joinPath(path, (*it)), &object, warn);
+			loader(hdbase::joinPath(path, (*it)), &object, warn);
 			dataArray->add(object);
 		}
 		return true;
