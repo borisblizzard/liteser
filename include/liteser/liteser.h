@@ -202,6 +202,58 @@ namespace liteser
 	/// @return True if successful.
 	liteserFnExport bool loadArrayFromResourceDirectory(chstr path, harray<liteser::Serializable*>* dataArray, bool warn = true);
 
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<liteser::Serializable*>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<char>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<unsigned char>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<short>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<unsigned short>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<int>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<unsigned int>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<int64_t>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<uint64_t>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<float>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<double>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<hstr>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<hversion>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<henum>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<grectf>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<gvec2f>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<gvec3f>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<grecti>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<gvec2i>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<gvec3i>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<grectd>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<gvec2d>& dataArray, bool warn = true);
+	liteserFnExport bool saveArrayToFile(chstr path, const harray<gvec3d>& dataArray, bool warn = true);
+
+	namespace xml
+	{
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<liteser::Serializable*>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<char>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<unsigned char>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<short>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<unsigned short>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<int>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<unsigned int>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<int64_t>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<uint64_t>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<float>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<double>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<hstr>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<hversion>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<henum>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<grectf>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<gvec2f>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<gvec3f>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<grecti>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<gvec2i>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<gvec3i>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<grectd>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<gvec2d>& dataArray, bool warn = true);
+		liteserFnExport bool saveArrayToFile(chstr path, const harray<gvec3d>& dataArray, bool warn = true);
+
+	}
+
 	/// @brief Creates a deep copy of an object.
 	/// @note The cloning only affects variables that were declared as serializable.
 	liteserFnExport bool clone(Serializable* input, Serializable** output);

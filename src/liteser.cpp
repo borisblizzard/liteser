@@ -179,6 +179,48 @@
 		return _loadArrayFrom<type>(&stream, &hresource::exists, path, dataArray, warn); \
 	}
 
+#define DEFINE_SAVE_HARRAY_TO_FILE(type, allowMultiReferencing) \
+	bool saveArrayToFile(chstr path, const harray<type>& dataArray, bool warn) \
+	{ \
+		try \
+		{ \
+			hfile file; \
+			file.open(path, hfile::AccessMode::Write); \
+			serialize(&file, dataArray, allowMultiReferencing, true); \
+			file.close(); \
+			return true; \
+		} \
+		catch (hexception& e) \
+		{ \
+			if (warn) \
+			{ \
+				hlog::error(logTag, "Could not save: " + path + "\n" + e.getMessage()); \
+			} \
+		} \
+		return false; \
+	}
+
+#define DEFINE_SAVE_HARRAY_TO_FILE_XML(type, allowMultiReferencing) \
+	bool saveArrayToFile(chstr path, const harray<type>& dataArray, bool warn) \
+	{ \
+		try \
+		{ \
+			hfile file; \
+			file.open(path, hfile::AccessMode::Write); \
+			xml::serialize(&file, dataArray, allowMultiReferencing); \
+			file.close(); \
+			return true; \
+		} \
+		catch (hexception& e) \
+		{ \
+			if (warn) \
+			{ \
+				hlog::error(logTag, "Could not save: " + path + "\n" + e.getMessage()); \
+			} \
+		} \
+		return false; \
+	}
+
 namespace liteser
 {
 	hstr logTag = "liteser";
@@ -548,6 +590,59 @@ namespace liteser
 		}
 		return false;
 	}
+
+	DEFINE_SAVE_HARRAY_TO_FILE(Serializable*, true);
+	DEFINE_SAVE_HARRAY_TO_FILE(char, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(unsigned char, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(short, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(unsigned short, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(int, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(unsigned int, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(int64_t, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(uint64_t, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(float, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(double, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(hstr, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(hversion, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(henum, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(grectf, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(gvec2f, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(gvec3f, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(grecti, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(gvec2i, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(gvec3i, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(grectd, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(gvec2d, false);
+	DEFINE_SAVE_HARRAY_TO_FILE(gvec3d, false);
+
+	namespace xml
+	{
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(Serializable*, true);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(char, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(unsigned char, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(short, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(unsigned short, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(int, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(unsigned int, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(int64_t, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(uint64_t, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(float, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(double, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(hstr, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(hversion, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(henum, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(grectf, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(gvec2f, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(gvec3f, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(grecti, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(gvec2i, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(gvec3i, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(grectd, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(gvec2d, false);
+		DEFINE_SAVE_HARRAY_TO_FILE_XML(gvec3d, false);
+
+	}
+
 
 	bool clone(Serializable* input, Serializable** output)
 	{
