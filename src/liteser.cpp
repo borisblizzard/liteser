@@ -223,8 +223,8 @@
 
 namespace liteser
 {
-	hstr logTag = "liteser";
-	hversion version(3, 2);
+	const hstr logTag = "liteser";
+	const hversion version(3, 2);
 
 	bool serialize(hsbase* stream, Serializable* object, bool allowMultiReferencing, bool stringPooling)
 	{

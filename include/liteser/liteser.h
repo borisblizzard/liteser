@@ -35,8 +35,8 @@
 
 namespace liteser
 {
-	liteserExport extern hstr logTag;
-	liteserExport extern hversion version;
+	liteserExport extern const hstr logTag;
+	liteserExport extern const hversion version;
 
 	liteserFnExport bool serialize(hsbase* stream, Serializable* object, bool allowMultiReferencing = true, bool stringPooling = true);
 	liteserFnExport bool serialize(hsbase* stream, const harray<Serializable*>& object, bool allowMultiReferencing = true, bool stringPooling = true);
