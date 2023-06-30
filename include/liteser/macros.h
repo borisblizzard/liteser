@@ -120,9 +120,8 @@
 #define __LS_FOREACH_59(m, n, args) m(n, __LS_FIRSTARG args) __LS_FOREACH_58(m, (n + 1), __LS_RESTARGS args)
 #define __LS_FOREACH_60(m, n, args) m(n, __LS_FIRSTARG args) __LS_FOREACH_59(m, (n + 1), __LS_RESTARGS args)
 #define __LS_FOREACH_61(m, n, args) m(n, __LS_FIRSTARG args) __LS_FOREACH_60(m, (n + 1), __LS_RESTARGS args)
-#define __LS_FOREACH_62(m, n, args) m(n, __LS_FIRSTARG args) __LS_FOREACH_60(m, (n + 1), __LS_RESTARGS args)
-#define __LS_FOREACH_63(m, n, args) m(n, __LS_FIRSTARG args) __LS_FOREACH_60(m, (n + 1), __LS_RESTARGS args)
-
+#define __LS_FOREACH_62(m, n, args) m(n, __LS_FIRSTARG args) __LS_FOREACH_61(m, (n + 1), __LS_RESTARGS args)
+#define __LS_FOREACH_63(m, n, args) m(n, __LS_FIRSTARG args) __LS_FOREACH_62(m, (n + 1), __LS_RESTARGS args)
 
 #define __LS_VAR(i, x) \
 	__LS_PAIR(x);
