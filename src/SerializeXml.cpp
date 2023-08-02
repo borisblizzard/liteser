@@ -194,7 +194,47 @@ namespace liteser
 
 		void _dump(const hstr* value)
 		{
-			stream->write(*value);
+			if (value->size() > 0)
+			{
+				static std::ustring _chars = hstr("<>\"'&").uStr();
+				static hmap<unsigned int, hstr> _substitutes;
+				if (_substitutes.size() == 0)
+				{
+					_substitutes['<'] = "&lt;";
+					_substitutes['>'] = "&gt;";
+					_substitutes['"'] = "&quot;";
+					_substitutes['\''] = "&apos;";
+					_substitutes['&'] = "&amp;";
+				}
+				harray<hstr> segments;
+				int index = 0;
+				int foundIndex = -1;
+				std::ustring uString = value->uStr();
+				while (true)
+				{
+					foundIndex = (int)uString.find_first_of(_chars, index);
+					if (foundIndex < 0)
+					{
+						break;
+					}
+					segments += hstr::fromUnicode(uString.substr(index, foundIndex - index).c_str());
+					index = foundIndex + 1;
+					segments += _substitutes[uString[foundIndex]];
+				}
+				if (segments.size() > 0)
+				{
+					int size = (int)uString.size();
+					if (index < size)
+					{
+						segments += hstr::fromUnicode(uString.substr(index, size - index).c_str());
+					}
+					stream->write(segments.joined(""));
+				}
+				else
+				{
+					stream->write(*value);
+				}
+			}
 		}
 
 		void _dump(const hversion* value)
