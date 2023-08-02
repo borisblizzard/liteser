@@ -196,14 +196,12 @@ namespace liteser
 		{
 			if (value->size() > 0)
 			{
-				static std::ustring _chars = hstr("<>\"'&").uStr();
+				static std::ustring _chars = hstr("<\"&").uStr();
 				static hmap<unsigned int, hstr> _substitutes;
 				if (_substitutes.size() == 0)
 				{
 					_substitutes['<'] = "&lt;";
-					_substitutes['>'] = "&gt;";
 					_substitutes['"'] = "&quot;";
-					_substitutes['\''] = "&apos;";
 					_substitutes['&'] = "&amp;";
 				}
 				harray<hstr> segments;
