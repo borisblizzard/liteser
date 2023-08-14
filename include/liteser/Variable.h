@@ -27,7 +27,6 @@
 #include "liteser.h"
 #include "liteserExport.h"
 #include "Ptr.h"
-#include "templates.h"
 #include "Type.h"
 
 namespace liteser
@@ -90,28 +89,28 @@ namespace liteser
 		Variable* assign(VPtr<harray<gvec2d> >* ptr);
 		Variable* assign(VPtr<harray<gvec3d> >* ptr);
 		template <typename T>
-		inline __LS_ENABLE_IF_T<__LS_IS_BASE_OF<T, henum>::value, Variable*> assign(VPtr<T>* ptr)
+		inline std::enable_if_t<std::is_base_of<henum, T>::value, Variable*> assign(VPtr<T>* ptr)
 		{
 			this->type->assign((VPtr<henum>*)NULL);
 			this->ptr = ptr;
 			return this;
 		}
 		template <class T>
-		inline __LS_ENABLE_IF_T<__LS_IS_BASE_OF<T, Serializable>::value, Variable*> assign(VPtr<T>* ptr)
+		inline std::enable_if_t<std::is_base_of<Serializable, T>::value, Variable*> assign(VPtr<T>* ptr)
 		{
 			this->type->assign((VPtr<Serializable>*)NULL);
 			this->ptr = ptr;
 			return this;
 		}
 		template <typename T>
-		inline __LS_ENABLE_IF_T<__LS_IS_BASE_OF<T, Serializable>::value, Variable*> assign(VPtr<T*>* ptr)
+		inline std::enable_if_t<std::is_base_of<Serializable, T>::value, Variable*> assign(VPtr<T*>* ptr)
 		{
 			this->type->assign((VPtr<Serializable*>*)NULL);
 			this->ptr = ptr;
 			return this;
 		}
 		template <typename T>
-		inline __LS_ENABLE_IF_T<__LS_IS_BASE_OF<T, henum>::value, Variable*> assign(VPtr<harray<T> >* ptr)
+		inline std::enable_if_t<std::is_base_of<henum, T>::value, Variable*> assign(VPtr<harray<T> >* ptr)
 		{
 			this->type->assign((VPtr<harray<henum> >*)NULL);
 			this->ptr = ptr;
@@ -124,7 +123,7 @@ namespace liteser
 			return this;
 		}
 		template <typename T>
-		inline __LS_ENABLE_IF_T<__LS_IS_BASE_OF<T, Serializable>::value, Variable*> assign(VPtr<harray<T*> >* ptr)
+		inline std::enable_if_t<std::is_base_of<Serializable, T>::value, Variable*> assign(VPtr<harray<T*> >* ptr)
 		{
 			this->type->assign((VPtr<harray<Serializable*> >*)NULL);
 			this->ptr = ptr;
@@ -137,7 +136,7 @@ namespace liteser
 			return this;
 		}
 		template <typename K, typename V>
-		inline __LS_ENABLE_IF_T<__LS_IS_BASE_OF<K, Serializable>::value, Variable*> assign(VPtr<hmap<K*, V> >* ptr)
+		inline std::enable_if_t<std::is_base_of<Serializable, K>::value, Variable*> assign(VPtr<hmap<K*, V> >* ptr)
 		{
 			this->type->template assign<Serializable*, V>(NULL);
 			this->ptr = ptr;
@@ -156,7 +155,7 @@ namespace liteser
 			return this;
 		}
 		template <typename K, typename V>
-		inline __LS_ENABLE_IF_T<__LS_IS_BASE_OF<V, Serializable>::value, Variable*> assign(VPtr<hmap<K, V*> >* ptr)
+		inline std::enable_if_t<std::is_base_of<Serializable, V>::value, Variable*> assign(VPtr<hmap<K, V*> >* ptr)
 		{
 			this->type->template assign<K, Serializable*>(NULL);
 			this->ptr = ptr;
