@@ -14,6 +14,7 @@
 #define LITESER_VARIABLE_H
 
 #include <stdint.h>
+#include <type_traits>
 
 #include <gtypes/Rectangle.h>
 #include <gtypes/Vector2.h>
@@ -89,28 +90,28 @@ namespace liteser
 		Variable* assign(VPtr<harray<gvec2d> >* ptr);
 		Variable* assign(VPtr<harray<gvec3d> >* ptr);
 		template <typename T>
-		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<T, henum>::value, Variable*>::type assign(VPtr<T>* ptr)
+		inline __LS_ENABLE_IF_T<__LS_IS_BASE_OF<T, henum>::value, Variable*> assign(VPtr<T>* ptr)
 		{
 			this->type->assign((VPtr<henum>*)NULL);
 			this->ptr = ptr;
 			return this;
 		}
 		template <class T>
-		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<T, Serializable>::value, Variable*>::type assign(VPtr<T>* ptr)
+		inline __LS_ENABLE_IF_T<__LS_IS_BASE_OF<T, Serializable>::value, Variable*> assign(VPtr<T>* ptr)
 		{
 			this->type->assign((VPtr<Serializable>*)NULL);
 			this->ptr = ptr;
 			return this;
 		}
 		template <typename T>
-		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<T, Serializable>::value, Variable*>::type assign(VPtr<T*>* ptr)
+		inline __LS_ENABLE_IF_T<__LS_IS_BASE_OF<T, Serializable>::value, Variable*> assign(VPtr<T*>* ptr)
 		{
 			this->type->assign((VPtr<Serializable*>*)NULL);
 			this->ptr = ptr;
 			return this;
 		}
 		template <typename T>
-		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<T, henum>::value, Variable*>::type assign(VPtr<harray<T> >* ptr)
+		inline __LS_ENABLE_IF_T<__LS_IS_BASE_OF<T, henum>::value, Variable*> assign(VPtr<harray<T> >* ptr)
 		{
 			this->type->assign((VPtr<harray<henum> >*)NULL);
 			this->ptr = ptr;
@@ -123,7 +124,7 @@ namespace liteser
 			return this;
 		}
 		template <typename T>
-		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<T, Serializable>::value, Variable*>::type assign(VPtr<harray<T*> >* ptr)
+		inline __LS_ENABLE_IF_T<__LS_IS_BASE_OF<T, Serializable>::value, Variable*> assign(VPtr<harray<T*> >* ptr)
 		{
 			this->type->assign((VPtr<harray<Serializable*> >*)NULL);
 			this->ptr = ptr;
@@ -136,7 +137,7 @@ namespace liteser
 			return this;
 		}
 		template <typename K, typename V>
-		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<K, Serializable>::value, Variable*>::type assign(VPtr<hmap<K*, V> >* ptr)
+		inline __LS_ENABLE_IF_T<__LS_IS_BASE_OF<K, Serializable>::value, Variable*> assign(VPtr<hmap<K*, V> >* ptr)
 		{
 			this->type->template assign<Serializable*, V>(NULL);
 			this->ptr = ptr;
@@ -155,7 +156,7 @@ namespace liteser
 			return this;
 		}
 		template <typename K, typename V>
-		inline typename __LS_ENABLE_IF<__LS_IS_BASE_OF<V, Serializable>::value, Variable*>::type assign(VPtr<hmap<K, V*> >* ptr)
+		inline __LS_ENABLE_IF_T<__LS_IS_BASE_OF<V, Serializable>::value, Variable*> assign(VPtr<hmap<K, V*> >* ptr)
 		{
 			this->type->template assign<K, Serializable*>(NULL);
 			this->ptr = ptr;
@@ -202,13 +203,13 @@ namespace liteser
 		{
 			// this is from an internal list of possible compatible types
 			if (this->type->identifier == Type::Identifier::Int8)			*((VPtr<char>*)this->ptr)->value			= (char)value;
-			else if (this->type->identifier == Type::Identifier::UInt8)		*((VPtr<unsigned char>*)this->ptr)->value	= (unsigned char)value;
+			else if (this->type->identifier == Type::Identifier::Uint8)		*((VPtr<unsigned char>*)this->ptr)->value	= (unsigned char)value;
 			else if (this->type->identifier == Type::Identifier::Int16)		*((VPtr<short>*)this->ptr)->value			= (short)value;
-			else if (this->type->identifier == Type::Identifier::UInt16)	*((VPtr<unsigned short>*)this->ptr)->value	= (unsigned short)value;
+			else if (this->type->identifier == Type::Identifier::Uint16)	*((VPtr<unsigned short>*)this->ptr)->value	= (unsigned short)value;
 			else if (this->type->identifier == Type::Identifier::Int32)		*((VPtr<int>*)this->ptr)->value				= (int)value;
-			else if (this->type->identifier == Type::Identifier::UInt32)	*((VPtr<unsigned int>*)this->ptr)->value	= (unsigned int)value;
+			else if (this->type->identifier == Type::Identifier::Uint32)	*((VPtr<unsigned int>*)this->ptr)->value	= (unsigned int)value;
 			else if (this->type->identifier == Type::Identifier::Int64)		*((VPtr<int64_t>*)this->ptr)->value			= (int64_t)value;
-			else if (this->type->identifier == Type::Identifier::UInt64)	*((VPtr<uint64_t>*)this->ptr)->value		= (uint64_t)value;
+			else if (this->type->identifier == Type::Identifier::Uint64)	*((VPtr<uint64_t>*)this->ptr)->value		= (uint64_t)value;
 			else if (this->type->identifier == Type::Identifier::Float)		*((VPtr<float>*)this->ptr)->value			= (float)value;
 			else if (this->type->identifier == Type::Identifier::Double)	*((VPtr<double>*)this->ptr)->value			= (double)value;
 		}
@@ -239,13 +240,13 @@ namespace liteser
 		inline void _addSubVariablesHmapKey(Type::Identifier identifier)
 		{
 			if (identifier == Type::Identifier::Int8)				this->_addSubVariablesHmap<key, char>();
-			else if (identifier == Type::Identifier::UInt8)			this->_addSubVariablesHmap<key, unsigned char>();
+			else if (identifier == Type::Identifier::Uint8)			this->_addSubVariablesHmap<key, unsigned char>();
 			else if (identifier == Type::Identifier::Int16)			this->_addSubVariablesHmap<key, short>();
-			else if (identifier == Type::Identifier::UInt16)		this->_addSubVariablesHmap<key, unsigned short>();
+			else if (identifier == Type::Identifier::Uint16)		this->_addSubVariablesHmap<key, unsigned short>();
 			else if (identifier == Type::Identifier::Int32)			this->_addSubVariablesHmap<key, int>();
-			else if (identifier == Type::Identifier::UInt32)		this->_addSubVariablesHmap<key, unsigned int>();
+			else if (identifier == Type::Identifier::Uint32)		this->_addSubVariablesHmap<key, unsigned int>();
 			else if (identifier == Type::Identifier::Int64)			this->_addSubVariablesHmap<key, int64_t>();
-			else if (identifier == Type::Identifier::UInt64)		this->_addSubVariablesHmap<key, uint64_t>();
+			else if (identifier == Type::Identifier::Uint64)		this->_addSubVariablesHmap<key, uint64_t>();
 			else if (identifier == Type::Identifier::Float)			this->_addSubVariablesHmap<key, float>();
 			else if (identifier == Type::Identifier::Double)		this->_addSubVariablesHmap<key, double>();
 			else if (identifier == Type::Identifier::Hstr)			this->_addSubVariablesHmap<key, hstr>();
@@ -281,13 +282,13 @@ namespace liteser
 		inline void _applyHmapSubVariablesKey(Type::Identifier identifier)
 		{
 			if (identifier == Type::Identifier::Int8)				this->_applyHmapSubVariables<keyType, char>();
-			else if (identifier == Type::Identifier::UInt8)			this->_applyHmapSubVariables<keyType, unsigned char>();
+			else if (identifier == Type::Identifier::Uint8)			this->_applyHmapSubVariables<keyType, unsigned char>();
 			else if (identifier == Type::Identifier::Int16)			this->_applyHmapSubVariables<keyType, short>();
-			else if (identifier == Type::Identifier::UInt16)		this->_applyHmapSubVariables<keyType, unsigned short>();
+			else if (identifier == Type::Identifier::Uint16)		this->_applyHmapSubVariables<keyType, unsigned short>();
 			else if (identifier == Type::Identifier::Int32)			this->_applyHmapSubVariables<keyType, int>();
-			else if (identifier == Type::Identifier::UInt32)		this->_applyHmapSubVariables<keyType, unsigned int>();
+			else if (identifier == Type::Identifier::Uint32)		this->_applyHmapSubVariables<keyType, unsigned int>();
 			else if (identifier == Type::Identifier::Int64)			this->_applyHmapSubVariables<keyType, int64_t>();
-			else if (identifier == Type::Identifier::UInt64)		this->_applyHmapSubVariables<keyType, uint64_t>();
+			else if (identifier == Type::Identifier::Uint64)		this->_applyHmapSubVariables<keyType, uint64_t>();
 			else if (identifier == Type::Identifier::Float)			this->_applyHmapSubVariables<keyType, float>();
 			else if (identifier == Type::Identifier::Double)		this->_applyHmapSubVariables<keyType, double>();
 			else if (identifier == Type::Identifier::Hstr)			this->_applyHmapSubVariables<keyType, hstr>();

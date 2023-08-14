@@ -126,6 +126,6 @@
 #define __LS_VAR(i, x) \
 	__LS_PAIR(x);
 #define __LS_REF(i, x) \
-	variables += (new liteser::Variable(hstr(__LS_STRINGIFY(__LS_STRIP x)).trimmed()))->assign(new liteser::VPtr<__LS_TYPEOF x>(&this->__LS_STRIP x));
+	variables += (new liteser::Variable(hstr(__LS_STRINGIFY(__LS_STRIP x)).trimmed()))->assign(new liteser::VPtr<__LS_TYPEOF x >(&this->__LS_STRIP x));
 
 #endif

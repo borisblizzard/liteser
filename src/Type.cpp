@@ -22,13 +22,13 @@ namespace liteser
 	(
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, None, 0x00);
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Int8, 0x01);
-		HL_ENUM_DEFINE_VALUE(Type::Identifier, UInt8, 0x02);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Uint8, 0x02);
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Int16, 0x03);
-		HL_ENUM_DEFINE_VALUE(Type::Identifier, UInt16, 0x04);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Uint16, 0x04);
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Int32, 0x05);
-		HL_ENUM_DEFINE_VALUE(Type::Identifier, UInt32, 0x06);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Uint32, 0x06);
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Int64, 0x07);
-		HL_ENUM_DEFINE_VALUE(Type::Identifier, UInt64, 0x08);
+		HL_ENUM_DEFINE_VALUE(Type::Identifier, Uint64, 0x08);
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Float, 0x21);
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Double, 0x22);
 		HL_ENUM_DEFINE_VALUE(Type::Identifier, Bool, 0x41);
@@ -70,7 +70,7 @@ namespace liteser
 
 	void Type::assign(VPtr<unsigned char>* arg)
 	{
-		this->identifier = Identifier::UInt8;
+		this->identifier = Identifier::Uint8;
 	}
 
 	void Type::assign(VPtr<short>* arg)
@@ -80,7 +80,7 @@ namespace liteser
 
 	void Type::assign(VPtr<unsigned short>* arg)
 	{
-		this->identifier = Identifier::UInt16;
+		this->identifier = Identifier::Uint16;
 	}
 
 	void Type::assign(VPtr<int>* arg)
@@ -90,7 +90,7 @@ namespace liteser
 
 	void Type::assign(VPtr<unsigned int>* arg)
 	{
-		this->identifier = Identifier::UInt32;
+		this->identifier = Identifier::Uint32;
 	}
 
 	void Type::assign(VPtr<int64_t>* arg)
@@ -100,7 +100,7 @@ namespace liteser
 
 	void Type::assign(VPtr<uint64_t>* arg)
 	{
-		this->identifier = Identifier::UInt64;
+		this->identifier = Identifier::Uint64;
 	}
 
 	void Type::assign(VPtr<float>* arg)

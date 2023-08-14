@@ -32,13 +32,13 @@ namespace liteser
 	{
 		// these are predefined compatible types only
 		if (loadedIdentifier == Type::Identifier::Int8)			variable->setValue(stream->loadInt8());
-		else if (loadedIdentifier == Type::Identifier::UInt8)	variable->setValue(stream->loadUint8());
+		else if (loadedIdentifier == Type::Identifier::Uint8)	variable->setValue(stream->loadUint8());
 		else if (loadedIdentifier == Type::Identifier::Int16)	variable->setValue(stream->loadInt16());
-		else if (loadedIdentifier == Type::Identifier::UInt16)	variable->setValue(stream->loadUint16());
+		else if (loadedIdentifier == Type::Identifier::Uint16)	variable->setValue(stream->loadUint16());
 		else if (loadedIdentifier == Type::Identifier::Int32)	variable->setValue(stream->loadInt32());
-		else if (loadedIdentifier == Type::Identifier::UInt32)	variable->setValue(stream->loadUint32());
+		else if (loadedIdentifier == Type::Identifier::Uint32)	variable->setValue(stream->loadUint32());
 		else if (loadedIdentifier == Type::Identifier::Int64)	variable->setValue(stream->loadInt64());
-		else if (loadedIdentifier == Type::Identifier::UInt64)	variable->setValue(stream->loadUint64());
+		else if (loadedIdentifier == Type::Identifier::Uint64)	variable->setValue(stream->loadUint64());
 		else if (loadedIdentifier == Type::Identifier::Float)	variable->setValue(stream->loadFloat());
 		else if (loadedIdentifier == Type::Identifier::Double)	variable->setValue(stream->loadDouble());
 	}
@@ -46,13 +46,13 @@ namespace liteser
 	inline void __loadVariable(Variable* variable, Type::Identifier loadedIdentifier)
 	{
 		if (loadedIdentifier == Type::Identifier::Int8)				*variable->value<char>()			= stream->loadInt8();
-		else if (loadedIdentifier == Type::Identifier::UInt8)		*variable->value<unsigned char>()	= stream->loadUint8();
+		else if (loadedIdentifier == Type::Identifier::Uint8)		*variable->value<unsigned char>()	= stream->loadUint8();
 		else if (loadedIdentifier == Type::Identifier::Int16)		*variable->value<short>()			= stream->loadInt16();
-		else if (loadedIdentifier == Type::Identifier::UInt16)		*variable->value<unsigned short>()	= stream->loadUint16();
+		else if (loadedIdentifier == Type::Identifier::Uint16)		*variable->value<unsigned short>()	= stream->loadUint16();
 		else if (loadedIdentifier == Type::Identifier::Int32)		*variable->value<int>()				= stream->loadInt32();
-		else if (loadedIdentifier == Type::Identifier::UInt32)		*variable->value<unsigned int>()	= stream->loadUint32();
+		else if (loadedIdentifier == Type::Identifier::Uint32)		*variable->value<unsigned int>()	= stream->loadUint32();
 		else if (loadedIdentifier == Type::Identifier::Int64)		*variable->value<int64_t>()			= stream->loadInt64();
-		else if (loadedIdentifier == Type::Identifier::UInt64)		*variable->value<uint64_t>()		= stream->loadUint64();
+		else if (loadedIdentifier == Type::Identifier::Uint64)		*variable->value<uint64_t>()		= stream->loadUint64();
 		else if (loadedIdentifier == Type::Identifier::Float)		*variable->value<float>()			= stream->loadFloat();
 		else if (loadedIdentifier == Type::Identifier::Double)		*variable->value<double>()			= stream->loadDouble();
 		else if (loadedIdentifier == Type::Identifier::Bool)		*variable->value<bool>()			= stream->loadBool();
@@ -77,13 +77,13 @@ namespace liteser
 	inline bool __skipVariable(Type::Identifier loadedIdentifier)
 	{
 		if (loadedIdentifier == Type::Identifier::Int8)			{ stream->loadInt8();			return true; }
-		if (loadedIdentifier == Type::Identifier::UInt8)		{ stream->loadUint8();			return true; }
+		if (loadedIdentifier == Type::Identifier::Uint8)		{ stream->loadUint8();			return true; }
 		if (loadedIdentifier == Type::Identifier::Int16)		{ stream->loadInt16();			return true; }
-		if (loadedIdentifier == Type::Identifier::UInt16)		{ stream->loadUint16();			return true; }
+		if (loadedIdentifier == Type::Identifier::Uint16)		{ stream->loadUint16();			return true; }
 		if (loadedIdentifier == Type::Identifier::Int32)		{ stream->loadInt32();			return true; }
-		if (loadedIdentifier == Type::Identifier::UInt32)		{ stream->loadUint32();			return true; }
+		if (loadedIdentifier == Type::Identifier::Uint32)		{ stream->loadUint32();			return true; }
 		if (loadedIdentifier == Type::Identifier::Int64)		{ stream->loadInt64();			return true; }
-		if (loadedIdentifier == Type::Identifier::UInt64)		{ stream->loadUint64();			return true; }
+		if (loadedIdentifier == Type::Identifier::Uint64)		{ stream->loadUint64();			return true; }
 		if (loadedIdentifier == Type::Identifier::Float)		{ stream->loadFloat();			return true; }
 		if (loadedIdentifier == Type::Identifier::Double)		{ stream->loadDouble();			return true; }
 		if (loadedIdentifier == Type::Identifier::Bool)			{ stream->loadBool();			return true; }

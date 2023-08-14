@@ -107,13 +107,13 @@ namespace liteser
 		if (identifier == Type::Identifier::Harray)
 		{
 			if (this->type->subTypes[0]->identifier == Type::Identifier::Int8)				this->_addSubVariablesHarray<char>();
-			else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt8)		this->_addSubVariablesHarray<unsigned char>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Uint8)		this->_addSubVariablesHarray<unsigned char>();
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::Int16)		this->_addSubVariablesHarray<short>();
-			else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt16)		this->_addSubVariablesHarray<unsigned short>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Uint16)		this->_addSubVariablesHarray<unsigned short>();
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::Int32)		this->_addSubVariablesHarray<int>();
-			else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt32)		this->_addSubVariablesHarray<unsigned int>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Uint32)		this->_addSubVariablesHarray<unsigned int>();
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::Int64)		this->_addSubVariablesHarray<int64_t>();
-			else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt64)		this->_addSubVariablesHarray<uint64_t>();
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Uint64)		this->_addSubVariablesHarray<uint64_t>();
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::Float)		this->_addSubVariablesHarray<float>();
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::Double)		this->_addSubVariablesHarray<double>();
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::Hstr)			this->_addSubVariablesHarray<hstr>();
@@ -135,13 +135,13 @@ namespace liteser
 		else if (identifier == Type::Identifier::Hmap)
 		{
 			if (this->type->subTypes[0]->identifier == Type::Identifier::Int8)			this->_addSubVariablesHmapKey<char>(this->type->subTypes[1]->identifier);
-			else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt8)	this->_addSubVariablesHmapKey<unsigned char>(this->type->subTypes[1]->identifier);
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Uint8)	this->_addSubVariablesHmapKey<unsigned char>(this->type->subTypes[1]->identifier);
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::Int16)	this->_addSubVariablesHmapKey<short>(this->type->subTypes[1]->identifier);
-			else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt16)	this->_addSubVariablesHmapKey<unsigned short>(this->type->subTypes[1]->identifier);
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Uint16)	this->_addSubVariablesHmapKey<unsigned short>(this->type->subTypes[1]->identifier);
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::Int32)	this->_addSubVariablesHmapKey<int>(this->type->subTypes[1]->identifier);
-			else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt32)	this->_addSubVariablesHmapKey<unsigned int>(this->type->subTypes[1]->identifier);
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Uint32)	this->_addSubVariablesHmapKey<unsigned int>(this->type->subTypes[1]->identifier);
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::Int64)	this->_addSubVariablesHmapKey<int64_t>(this->type->subTypes[1]->identifier);
-			else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt64)	this->_addSubVariablesHmapKey<uint64_t>(this->type->subTypes[1]->identifier);
+			else if (this->type->subTypes[0]->identifier == Type::Identifier::Uint64)	this->_addSubVariablesHmapKey<uint64_t>(this->type->subTypes[1]->identifier);
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::Float)	this->_addSubVariablesHmapKey<float>(this->type->subTypes[1]->identifier);
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::Double)	this->_addSubVariablesHmapKey<double>(this->type->subTypes[1]->identifier);
 			else if (this->type->subTypes[0]->identifier == Type::Identifier::Hstr)		this->_addSubVariablesHmapKey<hstr>(this->type->subTypes[1]->identifier);
@@ -162,13 +162,13 @@ namespace liteser
 			throw Exception("Variable type is not hmap!");
 		}
 		if (this->type->subTypes[0]->identifier == Type::Identifier::Int8)			this->_applyHmapSubVariablesKey<char>(this->type->subTypes[1]->identifier);	
-		else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt8)	this->_applyHmapSubVariablesKey<unsigned char>(this->type->subTypes[1]->identifier);
+		else if (this->type->subTypes[0]->identifier == Type::Identifier::Uint8)	this->_applyHmapSubVariablesKey<unsigned char>(this->type->subTypes[1]->identifier);
 		else if (this->type->subTypes[0]->identifier == Type::Identifier::Int16)	this->_applyHmapSubVariablesKey<short>(this->type->subTypes[1]->identifier);
-		else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt16)	this->_applyHmapSubVariablesKey<unsigned short>(this->type->subTypes[1]->identifier);
+		else if (this->type->subTypes[0]->identifier == Type::Identifier::Uint16)	this->_applyHmapSubVariablesKey<unsigned short>(this->type->subTypes[1]->identifier);
 		else if (this->type->subTypes[0]->identifier == Type::Identifier::Int32)	this->_applyHmapSubVariablesKey<int>(this->type->subTypes[1]->identifier);
-		else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt32)	this->_applyHmapSubVariablesKey<unsigned int>(this->type->subTypes[1]->identifier);
+		else if (this->type->subTypes[0]->identifier == Type::Identifier::Uint32)	this->_applyHmapSubVariablesKey<unsigned int>(this->type->subTypes[1]->identifier);
 		else if (this->type->subTypes[0]->identifier == Type::Identifier::Int64)	this->_applyHmapSubVariablesKey<int64_t>(this->type->subTypes[1]->identifier);
-		else if (this->type->subTypes[0]->identifier == Type::Identifier::UInt64)	this->_applyHmapSubVariablesKey<uint64_t>(this->type->subTypes[1]->identifier);
+		else if (this->type->subTypes[0]->identifier == Type::Identifier::Uint64)	this->_applyHmapSubVariablesKey<uint64_t>(this->type->subTypes[1]->identifier);
 		else if (this->type->subTypes[0]->identifier == Type::Identifier::Float)	this->_applyHmapSubVariablesKey<float>(this->type->subTypes[1]->identifier);
 		else if (this->type->subTypes[0]->identifier == Type::Identifier::Double)	this->_applyHmapSubVariablesKey<double>(this->type->subTypes[1]->identifier);
 		else if (this->type->subTypes[0]->identifier == Type::Identifier::Hstr)		this->_applyHmapSubVariablesKey<hstr>(this->type->subTypes[1]->identifier);

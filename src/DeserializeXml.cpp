@@ -39,13 +39,13 @@ namespace liteser
 		{
 			// these are predefined compatible types only
 			if (loadedIdentifier == Type::Identifier::Int8)			variable->setValue(node->pint8(VALUE));
-			else if (loadedIdentifier == Type::Identifier::UInt8)	variable->setValue(node->puint8(VALUE));
+			else if (loadedIdentifier == Type::Identifier::Uint8)	variable->setValue(node->puint8(VALUE));
 			else if (loadedIdentifier == Type::Identifier::Int16)	variable->setValue(node->pint16(VALUE));
-			else if (loadedIdentifier == Type::Identifier::UInt16)	variable->setValue(node->puint16(VALUE));
+			else if (loadedIdentifier == Type::Identifier::Uint16)	variable->setValue(node->puint16(VALUE));
 			else if (loadedIdentifier == Type::Identifier::Int32)	variable->setValue(node->pint32(VALUE));
-			else if (loadedIdentifier == Type::Identifier::UInt32)	variable->setValue(node->puint32(VALUE));
+			else if (loadedIdentifier == Type::Identifier::Uint32)	variable->setValue(node->puint32(VALUE));
 			else if (loadedIdentifier == Type::Identifier::Int64)	variable->setValue(node->pint64(VALUE));
-			else if (loadedIdentifier == Type::Identifier::UInt64)	variable->setValue(node->puint64(VALUE));
+			else if (loadedIdentifier == Type::Identifier::Uint64)	variable->setValue(node->puint64(VALUE));
 			else if (loadedIdentifier == Type::Identifier::Float)	variable->setValue(node->pfloat(VALUE));
 			else if (loadedIdentifier == Type::Identifier::Double)	variable->setValue(node->pdouble(VALUE));
 		}
@@ -53,13 +53,13 @@ namespace liteser
 		inline void __loadVariable(hlxml::Node* node, Variable* variable, Type::Identifier loadedIdentifier)
 		{
 			if (loadedIdentifier == Type::Identifier::Int8)				*variable->value<char>()			= node->pint8(VALUE);
-			else if (loadedIdentifier == Type::Identifier::UInt8)		*variable->value<unsigned char>()	= node->puint8(VALUE);
+			else if (loadedIdentifier == Type::Identifier::Uint8)		*variable->value<unsigned char>()	= node->puint8(VALUE);
 			else if (loadedIdentifier == Type::Identifier::Int16)		*variable->value<short>()			= node->pint16(VALUE);
-			else if (loadedIdentifier == Type::Identifier::UInt16)		*variable->value<unsigned short>()	= node->puint16(VALUE);
+			else if (loadedIdentifier == Type::Identifier::Uint16)		*variable->value<unsigned short>()	= node->puint16(VALUE);
 			else if (loadedIdentifier == Type::Identifier::Int32)		*variable->value<int>()				= node->pint32(VALUE);
-			else if (loadedIdentifier == Type::Identifier::UInt32)		*variable->value<unsigned int>()	= node->puint32(VALUE);
+			else if (loadedIdentifier == Type::Identifier::Uint32)		*variable->value<unsigned int>()	= node->puint32(VALUE);
 			else if (loadedIdentifier == Type::Identifier::Int64)		*variable->value<int64_t>()			= node->pint64(VALUE);
-			else if (loadedIdentifier == Type::Identifier::UInt64)		*variable->value<uint64_t>()		= node->puint64(VALUE);
+			else if (loadedIdentifier == Type::Identifier::Uint64)		*variable->value<uint64_t>()		= node->puint64(VALUE);
 			else if (loadedIdentifier == Type::Identifier::Float)		*variable->value<float>()			= node->pfloat(VALUE);
 			else if (loadedIdentifier == Type::Identifier::Double)		*variable->value<double>()			= node->pdouble(VALUE);
 			else if (loadedIdentifier == Type::Identifier::Bool)		*variable->value<bool>()			= node->pbool(VALUE);

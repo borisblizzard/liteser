@@ -29,8 +29,11 @@ struct __LS_ENABLE_IF
 template <class T>
 struct __LS_ENABLE_IF<true, T>
 {
-	typedef T type;
+	using type = T;
 };
+
+template <bool _Test, class T>
+using __LS_ENABLE_IF_T = typename __LS_ENABLE_IF<_Test, T>::type;
 
 // determine whether _Base is a base of or the same as _Der
 template <class T, class S>

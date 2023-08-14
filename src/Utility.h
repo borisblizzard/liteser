@@ -211,13 +211,13 @@ namespace liteser
 	{
 		harray<Type::Identifier> identifiers;
 		identifiers += Type::Identifier::Int8;
-		identifiers += Type::Identifier::UInt8;
+		identifiers += Type::Identifier::Uint8;
 		identifiers += Type::Identifier::Int16;
-		identifiers += Type::Identifier::UInt16;
+		identifiers += Type::Identifier::Uint16;
 		identifiers += Type::Identifier::Int32;
-		identifiers += Type::Identifier::UInt32;
+		identifiers += Type::Identifier::Uint32;
 		identifiers += Type::Identifier::Int64;
-		identifiers += Type::Identifier::UInt64;
+		identifiers += Type::Identifier::Uint64;
 		compatibleIdentifiers += identifiers;
 		identifiers.clear();
 		identifiers += Type::Identifier::Float;

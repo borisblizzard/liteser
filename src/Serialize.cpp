@@ -34,13 +34,13 @@ namespace liteser
 	inline void __dumpVariable(Variable* variable)
 	{
 		if (variable->type->identifier == Type::Identifier::Int8)				stream->dump(*variable->value<char>());
-		else if (variable->type->identifier == Type::Identifier::UInt8)			stream->dump(*variable->value<unsigned char>());
+		else if (variable->type->identifier == Type::Identifier::Uint8)			stream->dump(*variable->value<unsigned char>());
 		else if (variable->type->identifier == Type::Identifier::Int16)			stream->dump(*variable->value<short>());
-		else if (variable->type->identifier == Type::Identifier::UInt16)		stream->dump(*variable->value<unsigned short>());
+		else if (variable->type->identifier == Type::Identifier::Uint16)		stream->dump(*variable->value<unsigned short>());
 		else if (variable->type->identifier == Type::Identifier::Int32)			stream->dump(*variable->value<int>());
-		else if (variable->type->identifier == Type::Identifier::UInt32)		stream->dump(*variable->value<unsigned int>());
+		else if (variable->type->identifier == Type::Identifier::Uint32)		stream->dump(*variable->value<unsigned int>());
 		else if (variable->type->identifier == Type::Identifier::Int64)			stream->dump(*variable->value<int64_t>());
-		else if (variable->type->identifier == Type::Identifier::UInt64)		stream->dump(*variable->value<uint64_t>());
+		else if (variable->type->identifier == Type::Identifier::Uint64)		stream->dump(*variable->value<uint64_t>());
 		else if (variable->type->identifier == Type::Identifier::Float)			stream->dump(*variable->value<float>());
 		else if (variable->type->identifier == Type::Identifier::Double)		stream->dump(*variable->value<double>());
 		else if (variable->type->identifier == Type::Identifier::Bool)			stream->dump(*variable->value<bool>());

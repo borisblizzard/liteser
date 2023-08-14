@@ -39,13 +39,13 @@ namespace liteser
 		(
 			HL_ENUM_DECLARE(Identifier, None);
 			HL_ENUM_DECLARE(Identifier, Int8);
-			HL_ENUM_DECLARE(Identifier, UInt8);
+			HL_ENUM_DECLARE(Identifier, Uint8);
 			HL_ENUM_DECLARE(Identifier, Int16);
-			HL_ENUM_DECLARE(Identifier, UInt16);
+			HL_ENUM_DECLARE(Identifier, Uint16);
 			HL_ENUM_DECLARE(Identifier, Int32);
-			HL_ENUM_DECLARE(Identifier, UInt32);
+			HL_ENUM_DECLARE(Identifier, Uint32);
 			HL_ENUM_DECLARE(Identifier, Int64);
-			HL_ENUM_DECLARE(Identifier, UInt64);
+			HL_ENUM_DECLARE(Identifier, Uint64);
 			HL_ENUM_DECLARE(Identifier, Float);
 			HL_ENUM_DECLARE(Identifier, Double);
 			HL_ENUM_DECLARE(Identifier, Bool);
