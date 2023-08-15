@@ -19,7 +19,6 @@
 		B4B745F11BECBC650097AD86 /* SerializeXml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4B745EA1BECBC460097AD86 /* SerializeXml.cpp */; };
 		B4B745F21BECBC660097AD86 /* DeserializeXml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4B745E81BECBC460097AD86 /* DeserializeXml.cpp */; };
 		B4B745F31BECBC660097AD86 /* SerializeXml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4B745EA1BECBC460097AD86 /* SerializeXml.cpp */; };
-		B4EB9BE31B9EEF0C002454DC /* templates.h in Headers */ = {isa = PBXBuildFile; fileRef = B4EB9BE21B9EEF0C002454DC /* templates.h */; };
 		C9C04D3E14BAEA01005BD333 /* hltypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9C04D3D14BAEA01005BD333 /* hltypes.framework */; };
 		D16D2E6B177864E7005DD948 /* gtypes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D16D2E6A177864E7005DD948 /* gtypes.framework */; };
 		D19C923E1778567000A4BDF4 /* Deserialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D19C92331778567000A4BDF4 /* Deserialize.cpp */; };
@@ -70,7 +69,6 @@
 		B4B745E91BECBC460097AD86 /* DeserializeXml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeserializeXml.h; path = src/DeserializeXml.h; sourceTree = "<group>"; };
 		B4B745EA1BECBC460097AD86 /* SerializeXml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SerializeXml.cpp; path = src/SerializeXml.cpp; sourceTree = "<group>"; };
 		B4B745EB1BECBC460097AD86 /* SerializeXml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SerializeXml.h; path = src/SerializeXml.h; sourceTree = "<group>"; };
-		B4EB9BE21B9EEF0C002454DC /* templates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = templates.h; path = include/liteser/templates.h; sourceTree = "<group>"; };
 		C9C04D3D14BAEA01005BD333 /* hltypes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hltypes.framework; path = "../../__build__/pharaoh/Build/Products/Debug-LLVM/hltypes.framework"; sourceTree = "<group>"; };
 		C9C04D7314BAEB2A005BD333 /* liteser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = liteser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9C04D7414BAEB2A005BD333 /* libliteser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libliteser.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,7 +147,6 @@
 			isa = PBXGroup;
 			children = (
 				84AFA90A1E39362600A332C0 /* Header.h */,
-				B4EB9BE21B9EEF0C002454DC /* templates.h */,
 				D19C92511778567E00A4BDF4 /* Factory.h */,
 				D19C92521778567E00A4BDF4 /* liteser.h */,
 				D19C92531778567E00A4BDF4 /* liteserExport.h */,
@@ -201,7 +198,6 @@
 				D19C925A1778567E00A4BDF4 /* liteser.h in Headers */,
 				D19C925B1778567E00A4BDF4 /* liteserExport.h in Headers */,
 				D19C925C1778567E00A4BDF4 /* macros.h in Headers */,
-				B4EB9BE31B9EEF0C002454DC /* templates.h in Headers */,
 				D19C925D1778567E00A4BDF4 /* Ptr.h in Headers */,
 				D19C925E1778567E00A4BDF4 /* Serializable.h in Headers */,
 				B4B745EF1BECBC460097AD86 /* SerializeXml.h in Headers */,
