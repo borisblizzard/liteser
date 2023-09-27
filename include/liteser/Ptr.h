@@ -35,7 +35,7 @@ namespace liteser
 	public:
 		T* value;
 
-		inline VPtr(T* value) { this->value = value; }
+		inline VPtr(T* value) : Ptr() { this->value = value; }
 
 	};
 
@@ -45,7 +45,7 @@ namespace liteser
 	public:
 		harray<T>* data;
 
-		inline CPtr(harray<T>* data) { this->data = data; }
+		inline CPtr(harray<T>* data) : Ptr() { this->data = data; }
 		inline ~CPtr() { delete this->data; }
 
 	};
