@@ -29,8 +29,11 @@ class Type:
 	HARRAY		= 0xA1
 	HMAP		= 0xC1
 	
-	def __init__(self, value):
+	def __init__(self, value, subTypes = None):
 		self.value = value
 		self.subTypes = []
+		if subTypes != None:
+			for subType in subTypes:
+				self.subTypes.append(Type(subType))
 
 	

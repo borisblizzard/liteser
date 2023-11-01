@@ -118,25 +118,29 @@ class Util:
 		
 	@staticmethod
 	def _writeNode(string):
-		Util.stream.write(Util._indent + "<" + string + "/>\n")
+		Util._write(Util._indent + "<" + string + "/>\n")
 
 	@staticmethod
 	def _openNode(string):
-		Util.stream.write(Util._indent + "<" + string + ">\n")
+		Util._write(Util._indent + "<" + string + ">\n")
 		Util._indentIncrease()
 		
 	@staticmethod
 	def _closeNode(string):
 		Util._indentDecrease()
-		Util.stream.write(Util._indent + "</" + string + ">\n")
+		Util._write(Util._indent + "</" + string + ">\n")
 
 	@staticmethod
 	def _startLine(string):
-		Util.stream.write(Util._indent + "<" + string)
+		Util._write(Util._indent + "<" + string)
 
 	@staticmethod
 	def _finishLine(string):
-		Util.stream.write(string + "/>\n")
+		Util._write(string + "/>\n")
+
+	@staticmethod
+	def _write(string):
+		Util.stream.write(string.encode())
 
 	# binary data loading
 	@staticmethod
@@ -190,53 +194,53 @@ class Util:
 	# binary data dumping
 	@staticmethod
 	def dumpInt8(value):
-		return Util.stream.write(struct.pack("<b", value))
+		return Util._write(struct.pack("<b", value))
 		
 	@staticmethod
 	def dumpUint8(value):
-		return Util.stream.write(struct.pack("<B", value))
+		return Util._write(struct.pack("<B", value))
 		
 	@staticmethod
 	def dumpInt16(value):
-		return Util.stream.write(struct.pack("<h", value))
+		return Util._write(struct.pack("<h", value))
 		
 	@staticmethod
 	def dumpUint16(value):
-		return Util.stream.write(struct.pack("<H", value))
+		return Util._write(struct.pack("<H", value))
 		
 	@staticmethod
 	def dumpInt32(value):
-		return Util.stream.write(struct.pack("<i", value))
+		return Util._write(struct.pack("<i", value))
 		
 	@staticmethod
 	def dumpUint32(value):
-		return Util.stream.write(struct.pack("<I", value))
+		return Util._write(struct.pack("<I", value))
 		
 	@staticmethod
 	def dumpInt64(value):
-		return Util.stream.write(struct.pack("<q", value))
+		return Util._write(struct.pack("<q", value))
 		
 	@staticmethod
 	def dumpUint64(value):
-		return Util.stream.write(struct.pack("<Q", value))
+		return Util._write(struct.pack("<Q", value))
 		
 	@staticmethod
 	def dumpFloat(value):
-		return Util.stream.write(struct.pack("<f", value))
+		return Util._write(struct.pack("<f", value))
 		
 	@staticmethod
 	def dumpDouble(value):
-		return Util.stream.write(struct.pack("<d", value))
+		return Util._write(struct.pack("<d", value))
 		
 	@staticmethod
 	def dumpBool(value):
 		data = 0
 		if value:
 			data = 1
-		return Util.stream.write(struct.pack("<b", data))
+		return Util._write(struct.pack("<b", data))
 		
 	@staticmethod
 	def dumpHstr(value):
 		Util.dumpUint32(len(value))
-		Util.stream.write(value.encode())
+		Util._write(value.encode())
 	

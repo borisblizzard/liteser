@@ -1,13 +1,13 @@
-from Object import *
-from Type import *
-from Util import *
-from Variable import *
+from .Object import *
+from .Type import *
+from .Util import *
+from .Variable import *
 
 class Lsx:
 
-	XML_HEADER = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-	LITESER_XML_ROOT_BEGIN = "<Liteser version=\"%d.%d\">\n\t\n" % (Util.VersionMajor, Util.VersionMinor)
-	LITESER_XML_ROOT_END = "\t\n</Liteser>\n"
+	XML_HEADER = b"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+	LITESER_XML_ROOT_BEGIN = b"<Liteser version=\"%d.%d\">\n\t\n" % (Util.VersionMajor, Util.VersionMinor)
+	LITESER_XML_ROOT_END = b"\t\n</Liteser>\n"
 	
 	@staticmethod
 	def load(node):
@@ -257,30 +257,30 @@ class Lsx:
 	@staticmethod
 	def __dumpVariable(variable):
 		if variable.type.value == Type.INT8:
-			Util.stream.write(str(variable.value))
+			Util._write(str(variable.value))
 		elif variable.type.value == Type.UINT8:
-			Util.stream.write(str(variable.value))
+			Util._write(str(variable.value))
 		elif variable.type.value == Type.INT16:
-			Util.stream.write(str(variable.value))
+			Util._write(str(variable.value))
 		elif variable.type.value == Type.UINT16:
-			Util.stream.write(str(variable.value))
+			Util._write(str(variable.value))
 		elif variable.type.value == Type.INT32:
-			Util.stream.write(str(variable.value))
+			Util._write(str(variable.value))
 		elif variable.type.value == Type.UINT32:
-			Util.stream.write(str(variable.value))
+			Util._write(str(variable.value))
 		elif variable.type.value == Type.INT64:
-			Util.stream.write(str(variable.value))
+			Util._write(str(variable.value))
 		elif variable.type.value == Type.UINT64:
-			Util.stream.write(str(variable.value))
+			Util._write(str(variable.value))
 		elif variable.type.value == Type.FLOAT:
-			Util.stream.write("%g" % variable.value)
+			Util._write("%g" % variable.value)
 		elif variable.type.value == Type.DOUBLE:
-			Util.stream.write("%g" % variable.value)
+			Util._write("%g" % variable.value)
 		elif variable.type.value == Type.BOOL:
 			value = 0
 			if variable.value:
 				value = 1
-			Util.stream.write(str(value))
+			Util._write(str(value))
 		elif variable.type.value == Type.HSTR:
 			Lsx._dumpString(variable.value)
 		elif variable.type.value == Type.HVERSION:
@@ -345,81 +345,81 @@ class Lsx:
 
 	@staticmethod
 	def _dumpString(value):
-		Util.stream.write(value)
+		Util._write(value)
 
 	@staticmethod
 	def _dumpVersion(value):
 		values = []
 		for i in value:
 			values.append(str(i))
-		Util.stream.write(".".join(values))
+		Util._write(".".join(values))
 
 	@staticmethod
 	def _dumpEnum(value):
-		Util.stream.write(str(value))
+		Util._write(str(value))
 
 	@staticmethod
 	def _dumpGrectf(value):
 		values = []
 		for i in value:
 			values.append("%g" % i)
-		Util.stream.write(",".join(values))
+		Util._write(",".join(values))
 
 	@staticmethod
 	def _dumpGvec2f(value):
 		values = []
 		for i in value:
 			values.append("%g" % i)
-		Util.stream.write(",".join(values))
+		Util._write(",".join(values))
 
 	@staticmethod
 	def _dumpGvec3f(value):
 		values = []
 		for i in value:
 			values.append("%g" % i)
-		Util.stream.write(",".join(values))
+		Util._write(",".join(values))
 
 	@staticmethod
 	def _dumpGrecti(value):
 		values = []
 		for i in value:
 			values.append("%d" % i)
-		Util.stream.write(",".join(values))
+		Util._write(",".join(values))
 
 	@staticmethod
 	def _dumpGvec2i(value):
 		values = []
 		for i in value:
 			values.append("%d" % i)
-		Util.stream.write(",".join(values))
+		Util._write(",".join(values))
 
 	@staticmethod
 	def _dumpGvec3i(value):
 		values = []
 		for i in value:
 			values.append("%d" % i)
-		Util.stream.write(",".join(values))
+		Util._write(",".join(values))
 
 	@staticmethod
 	def _dumpGrectd(value):
 		values = []
 		for i in value:
 			values.append("%g" % i)
-		Util.stream.write(",".join(values))
+		Util._write(",".join(values))
 
 	@staticmethod
 	def _dumpGvec2d(value):
 		values = []
 		for i in value:
 			values.append("%g" % i)
-		Util.stream.write(",".join(values))
+		Util._write(",".join(values))
 
 	@staticmethod
 	def _dumpGvec3d(value):
 		values = []
 		for i in value:
 			values.append("%g" % i)
-		Util.stream.write(",".join(values))
+		Util._write(",".join(values))
 
 	@staticmethod
 	def _dumpObject(value):

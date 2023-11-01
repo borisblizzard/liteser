@@ -1,7 +1,7 @@
-from Object import *
-from Type import *
-from Util import *
-from Variable import *
+from .Object import *
+from .Type import *
+from .Util import *
+from .Variable import *
 
 class Ls3:
 

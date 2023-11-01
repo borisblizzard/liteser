@@ -2,9 +2,9 @@ import xml.dom.minidom
 
 from xml.dom.minidom import parse
 
-from Ls3 import *
-from Lsx import *
-from Util import *
+from .Ls3 import *
+from .Lsx import *
+from .Util import *
 
 class Model:
 
