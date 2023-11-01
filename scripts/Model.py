@@ -102,12 +102,12 @@ class Model:
 		return data
 		
 	@staticmethod
-	def writeLsx(filename, data):
+	def writeLsx(filename, data, allowMultiReferencing = True):
 		file = None
 		try:
 			file = open(filename, "wb")
 			Util.start(file)
-			Util._allowMultiReferencing = True
+			Util._allowMultiReferencing = allowMultiReferencing
 			Util._stringPooling = True
 			Util.stream.write(Lsx.XML_HEADER)
 			Util.stream.write(Lsx.LITESER_XML_ROOT_BEGIN)
