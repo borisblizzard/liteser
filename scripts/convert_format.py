@@ -2,8 +2,7 @@ import os
 import shutil
 import sys
 
-from Model import *
-from Util import *
+import liteser
 
 VERSION = "3.2"
 
@@ -23,10 +22,10 @@ def process():
 	deleteOriginals = False
 	if len(sys.argv) > 5:
 		deleteOriginals = (sys.argv[5] == "1")
-	if not inputFormat in Model.Formats:
+	if not inputFormat in liteser.Model.Formats:
 		print("ERROR: Format not supported: " + inputFormat)
 		return
-	if not outputFormat in Model.Formats:
+	if not outputFormat in liteser.Model.Formats:
 		print("ERROR: Format not supported: " + outputFormat)
 		return
 	
@@ -34,7 +33,7 @@ def process():
 		print("")
 		print("-- Finding files...")
 		print("")
-		files = Util.getFileList(inputPath)
+		files = liteser.Util.getFileList(inputPath)
 		inputFiles = []
 		outputFiles = []
 		inputExtension = "." + inputFormat
@@ -57,7 +56,7 @@ def process():
 	data = []
 	for file in inputFiles:
 		print("  reading: " + file)
-		data.append(Model.readFile(inputFormat, file))
+		data.append(liteser.Model.readFile(inputFormat, file))
 	if len(data) != len(outputFiles):
 		print("ERROR: Data size and outputFiles size don't match: %d and %d" % (len(data), len(outputFiles)))
 		return
@@ -71,7 +70,7 @@ def process():
 			os.makedirs(os.path.dirname(outputFiles[i]))
 		except:
 			pass
-		Model.writeFile(outputFormat, outputFiles[i], data[i])
+		liteser.Model.writeFile(outputFormat, outputFiles[i], data[i])
 	
 	if deleteOriginals:
 		print("")
